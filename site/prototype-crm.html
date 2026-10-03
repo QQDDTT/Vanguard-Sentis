@@ -1790,8 +1790,8 @@
         <div class="ai-drawer-header">
           <div class="ai-drawer-title">
             <span style="font-size:16px;">🤖</span>
-            <span>SENTIS AI 宅建事務補佐官</span>
-            <span class="ai-status-indicator">● 待機中</span>
+            <span>SENTIS AI 宅建事務補佐官（プロトタイプ）</span>
+            <span class="ai-status-indicator" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">● 検証用</span>
           </div>
           <div class="drawer-header-actions">
             <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
@@ -1804,7 +1804,7 @@
           <!-- AI 挨拶・案内バブル -->
           <div class="chat-bubble agent">
             <div class="chat-meta">
-              <span>🤖 専属宅建AI (Sentis Legal Engine)</span>
+              <span>🤖 専属宅建AI（実務支援プロトタイプ）</span>
               <span>10:42</span>
             </div>
             能勢課長、執務お疲れ様です。宅建業法第35条の重要事項説明、第37条契約書面、または銀行融資特約の期日管理や条項ドラフトの作成・点検を即時支援いたします。ご指示をどうぞ。
@@ -1829,26 +1829,26 @@
             1. <strong>解除期日</strong>：融資承認予定日（10/24）と解除権行使期限を同日または直後に明確設定。<br>
             2. <strong>義務規定</strong>：買主の故意の不承認（虚偽申告・書類不提出）は特約適用外とし、違約解約扱いとなる旨を明記。<br>
             3. <strong>金融機関指定</strong>：三井住友銀行を指定し、事前承認金額（4,850万円）を明記。<br>
-            ※ ドラフト条項は『モジュール3: 売買契約・重説審査』の特約欄に自動転記可能です。
+            ※ ドラフト条項は『モジュール3: 売買契約・重説審査』の特約欄に転記支援可能です。
           </div>
 
           <!-- 執務支援クイックアクション提案 -->
           <div class="ai-quick-actions">
-            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション</div>
+            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション（予定機能コンセプト）</div>
             <button class="quick-action-btn" data-prompt="板橋区物件Cの重要事項説明書（第35条）記載漏れチェックを実行して">
-              <span>📝 重説第35条 記載漏れ自動点検</span>
+              <span>📝 重要事項説明書レビュー支援</span>
               <span>➔</span>
             </button>
             <button class="quick-action-btn" data-prompt="本日の住宅ローン本審査ステータスと未着手案件をリストアップして">
-              <span>🏦 住宅ローン本審査の進捗アラート確認</span>
+              <span>🏦 住宅ローンスケジュール管理支援</span>
               <span>➔</span>
             </button>
             <button class="quick-action-btn" data-prompt="反響受付台帳の最新案件（大田区）の初回ヒアリング確認票を作成して">
-              <span>📋 初回来店顧客ヒアリング項目の作成</span>
+              <span>📋 初回来店顧客ヒアリング作成支援</span>
               <span>➔</span>
             </button>
             <button class="quick-action-btn" data-prompt="土砂災害警戒区域およびハザードマップ説明義務条項の最新書式を出力して">
-              <span>🗺️ 水防法・土砂災害ハザード条項の出力</span>
+              <span>🗺️ ハザード説明チェック支援</span>
               <span>➔</span>
             </button>
           </div>
@@ -1868,11 +1868,11 @@
          ====================================================================== -->
     <footer class="office-footer">
       <div class="footer-status-pills">
-        <span><span class="status-dot-active"></span>事務監査システム：正常稼働中</span>
+        <span><span class="status-dot-active" style="background:#0284c7;"></span>執務支援画面様板：プロトタイプ検証中</span>
         <span>｜</span>
         <span>全公文書 暗号化通信保全</span>
         <span>｜</span>
-        <span>宅地建物取引業法第49条 帳簿法定備置準拠</span>
+        <span>宅地建物取引業法第49条 帳簿実務ベース設計</span>
       </div>
 
       <div class="footer-ticker">
@@ -2094,32 +2094,32 @@
         const lower = queryText.toLowerCase();
 
         if (queryText.includes("重説") || queryText.includes("35条") || queryText.includes("記載漏れ")) {
-          reply = `<strong>【重要事項説明書（第35条）自動点検レポート】</strong><br>
+          reply = `<strong>【重要事項説明書（第35条）レビュー支援サンプル】</strong><br>
           ・対象物件：板橋区常盤台三丁目 一戸建<br>
-          ・未記入検出：私道負担に関する事項（第35条第1項第3号）の持分比率が空欄です。<br>
+          ・未記入候補検出：私道負担に関する事項（第35条第1項第3号）の持分比率が空欄です。<br>
           ・水防法ハザードマップ：高潮浸水想定区域外、洪水浸水区域内（0.5m未満）の最新図面添付が確認されました。<br>
-          ➔ モジュール3『売買契約・重説審査』の補正申請ドラフトを生成しました。`;
+          ➔ モジュール3『売買契約・重説審査』の確認メモ案を生成しました。（※最終判断は専任宅建士が実施）`;
         } else if (queryText.includes("ローン") || queryText.includes("融資") || queryText.includes("審査")) {
-          reply = `<strong>【住宅ローン融資進捗アラート】</strong><br>
+          reply = `<strong>【住宅ローン融資進捗管理支援サンプル】</strong><br>
           ・三井住友銀行（板橋区物件C / 鈴木様）：事前審査承認済、本審査結果受領待ち（本日着信予定）。<br>
-          ・みずほ銀行（新宿区マンション / 佐藤様）：追加所得証明書提出要請あり。担当者より本日連絡が必要です。<br>
-          ➔ 融資特約期日管理台帳と金融機関ポータルを自動更新しました。`;
+          ・みずほ銀行（新宿区マンション / 佐藤様）：追加所得証明書提出要請あり。担当者より本日連絡推奨。<br>
+          ➔ 融資特約期日管理台帳の確認推奨フラグを更新しました。`;
         } else if (queryText.includes("ヒアリング") || queryText.includes("反響") || queryText.includes("来店")) {
           reply = `<strong>【初回来店ヒアリング確認票（大田区売却案件）】</strong><br>
           ・顧客種別：相続による空家売却査定依頼<br>
           ・重点確認事項：①登記簿上の被相続人名義と遺産分割協議書の有無、②解体更地引渡しまたは現況渡しの希望、③境界標の確認状況。<br>
           ➔ 商談受付台帳（モジュール1）にヒアリング票雛形を紐付けました。`;
         } else if (queryText.includes("ハザード") || queryText.includes("水防") || queryText.includes("土砂")) {
-          reply = `<strong>【水防法・土砂災害警戒区域 説明義務書式】</strong><br>
-          令和8年最新公布書式に基づき、所在地市区町村のハザードマップ最新改訂版（令和8年4月公表版）の指定状況を記載。<br>
+          reply = `<strong>【水防法・土砂災害ハザード説明チェック支援サンプル】</strong><br>
+          令和8年最新公布書式に基づき、所在地市区町村のハザードマップ最新改訂版（令和8年4月公表版）の指定状況を表示。<br>
           ・土砂災害警戒区域（イエロー）：該当なし<br>
           ・土砂災害特別警戒区域（レッド）：該当なし<br>
           ・浸水想定水深：0.5m〜1.0m（第2次浸水区域）<br>
-          重要事項説明書別紙として印刷可能です。`;
+          重要事項説明書別紙の確認用参考として活用可能です。`;
         } else {
-          reply = `<strong>【事務補佐官 照会完了】</strong><br>
-          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法規則を参照いたしました。<br>
-          関連する契約書面ドラフト及び審査ログを作成し、担当部署トレイに回覧登録しました。必要に応じて各モジュール台帳をご確認ください。`;
+          reply = `<strong>【AI執務支援プロトタイプ 照会シミュレーション】</strong><br>
+          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法実務ベースの参照例を提示します。<br>
+          関連する契約書面ドラフト及びレビュー支援ログのシミュレーションを作成しました。必要に応じて各モジュール台帳をご確認ください。`;
         }
 
         appendChatMessage('agent', reply);

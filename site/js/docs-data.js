@@ -25,7 +25,7 @@ const documentStore = {
             <div><strong>案件标识：</strong><code>sentis-crm-system</code></div>
             <div><strong>所属分類：</strong>製品企画・業務アーキテクチャ</div>
             <div><strong>策定担当：</strong>Vanguard 策定評議会</div>
-            <div><strong>状態：</strong>正式受渡完了 (Release v1.2)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ const documentStore = {
             <tr>
               <td><strong>第 1 期</strong></td>
               <td><strong>2 名体制</strong></td>
-              <td>成約プロセス標準化率 100%</td>
+              <td>成約プロセス標準化の徹底推進</td>
               <td>小紅書集客基盤の確立、成約SOPの定着、ミスゼロ管理</td>
             </tr>
             <tr>
@@ -95,13 +95,13 @@ const documentStore = {
           <div class="doc-badge-pill">DEL-04 ｜ 業務SOP</div>
           <h1>02. 不動産売買標準業務フロー設計書</h1>
           <p class="doc-lead-desc">
-            《売買契約の流れ》《売買契約流れ ローン利用》《宅地建物取引業法》及び反社・AML審査基準に完全準拠した標準実務SOP。
+            《売買契約の流れ》《売買契約流れ ローン利用》《宅地建物取引業法》及び反社・AML審査実務を前提とした標準実務SOP設計（査閲案）。
           </p>
           <div class="doc-meta-table">
             <div><strong>案件标识：</strong><code>sentis-crm-system</code></div>
             <div><strong>管理区分：</strong>標準業務手順書（SOP）</div>
-            <div><strong>適用法令：</strong>宅建業法35条・37条・49条</div>
-            <div><strong>状態：</strong>正式受渡完了 (Release v1.2)</div>
+            <div><strong>適用法令：</strong>宅建業法35条・37条・49条実務対応</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
           </div>
         </div>
 
@@ -185,13 +185,13 @@ const documentStore = {
           <div class="doc-badge-pill">DEL-05 ｜ アーキテクチャ</div>
           <h1>03. 次世代システム要件定義及びアーキテクチャ設計書</h1>
           <p class="doc-lead-desc">
-            Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、及びシステム管轄境界の完全策定。
+            Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、及びシステム管轄境界の設計仕様。
           </p>
           <div class="doc-meta-table">
             <div><strong>システム呼称：</strong>Sentis Realty Core</div>
             <div><strong>稼働モデル：</strong>Vanilla Web (Zero-Build)</div>
             <div><strong>配信方式：</strong>GitHub Pages ＋ 独自ドメイン (CNAME)</div>
-            <div><strong>状態：</strong>正式受渡完了 (Release v1.2)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
           </div>
         </div>
 
@@ -306,10 +306,10 @@ const documentStore = {
             フェーズ1（基盤仕様確定）からフェーズ4（本番受渡・運用開始）までの8週間マイルストーン展開及び品質保証規程。
           </p>
           <div class="doc-meta-table">
-            <div><strong>展開期間：</strong>2026年10月 〜 2026年12月（計8週間）</div>
-            <div><strong>受入責任者：</strong>株式会社センティス 代表取締役 阿部 翔平</div>
+            <div><strong>展開期間：</strong>2026年10月 〜 2026年12月（計8週間・予定）</div>
+            <div><strong>査閲責任者：</strong>株式会社センティス 代表取締役 阿部 翔平</div>
             <div><strong>策定総括：</strong>Vanguard 策定評議会</div>
-            <div><strong>状態：</strong>正式受渡完了 (Release v1.2)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
           </div>
         </div>
 

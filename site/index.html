@@ -1245,19 +1245,19 @@
           <div class="header-titles">
             <span class="brand-platform">VANGUARD PLATFORM</span>
             <span class="brand-project">
-              成果物総覧ポータル
+              詳細設計査閲ポータル
               <span class="sentis-tag">株式会社センティス (SENTIS)</span>
             </span>
           </div>
         </a>
 
         <div class="header-right">
-          <div class="release-status-badge">
-            <span class="pulse-dot"></span>
-            <span>受渡完了 · Release v1.2</span>
+          <div class="release-status-badge" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">
+            <span class="pulse-dot" style="background:#2563eb;"></span>
+            <span>査閲受付中 · Design Review v0.9</span>
           </div>
           <button class="btn-header-action" onclick="window.print()">
-            <span>🖨️</span> 納品目録印刷
+            <span>🖨️</span> 査閲目録印刷
           </button>
           <button class="btn-logout" onclick="handleLogout()" title="セッションを破棄して再施錠">
             <span>⏻</span> 施錠 / 退出
@@ -1269,19 +1269,19 @@
     <!-- 2. Hero Header Section (展示導入看板) -->
     <section class="hero-section">
       <div class="hero-eyebrow">
-        <span>DELIVERABLES DIRECTORY</span>
+        <span>DESIGN REVIEW DIRECTORY</span>
         <span>•</span>
-        <span>SENTIS REALTY CORE TRANSFORMATION</span>
+        <span>SENTIS REALTY CORE ARCHITECTURE</span>
       </div>
 
       <h1 class="hero-title">
         株式会社センティス 次世代不動産売買業務基幹システム<br>
-        <span class="accent-highlight">要件定義・業務SOP及び統合執務プロトタイプ成果物総覧</span>
+        <span class="accent-highlight">要件定義・業務SOP及び統合執務プロトタイプ 詳細設計査閲ポータル</span>
       </h1>
 
       <p class="hero-description">
         本ポータルは、株式会社センティス（SENTIS）の創業計画書及び不動産売買・住宅ローン審査実務規程に基づき、
-        Vanguard プラットフォームが策定・設計したすべての公式成果物（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様へ一覧展示するための統合ディレクトリです。
+        Vanguard プラットフォームが策定した詳細設計仕様（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様と共に確認・合意形成するための査閲ディレクトリ（Design Review Phase）です。
       </p>
 
       <!-- 交付 KPI 看板（脱敏后：无任何具体金额数字） -->
@@ -1289,7 +1289,7 @@
         <div class="metric-card">
           <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
           <div class="metric-label">画面プロトタイプ</div>
-          <div class="metric-sub">6大台帳執務デスク ＋ AI事務代理チャット</div>
+          <div class="metric-sub">6大台帳執務デスク ＋ AI事務補佐（検証画面）</div>
         </div>
 
         <div class="metric-card">
@@ -1299,9 +1299,9 @@
         </div>
 
         <div class="metric-card">
-          <div class="metric-value">100%</div>
-          <div class="metric-label">宅建業法整合モデル</div>
-          <div class="metric-sub">第35条重説・第37条書面・49条帳簿保全</div>
+          <div class="metric-value">実務準拠</div>
+          <div class="metric-label">宅建業法対応設計</div>
+          <div class="metric-sub">第35条重説・第37条書面・49条帳簿の実務ベースモデル</div>
         </div>
 
         <div class="metric-card">
@@ -1351,8 +1351,8 @@
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 稼働中 (Online)
+            <div class="card-status-info" style="color: #0284c7;">
+              <span>●</span> Prototype Active (検証用)
             </div>
             <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
               <span>画面样板を開く</span> <span class="external-icon">↗</span>
@@ -1360,33 +1360,32 @@
           </div>
         </article>
 
-        <!-- DEL-02: AI Agent Prototype -->
+        <!-- DEL-02: AI Agent Prototype (Concept) -->
         <article class="deliverable-card" data-category="prototype">
           <div>
             <div class="card-top-meta">
-              <span class="card-category-badge badge-prototype">PROTOTYPE / AI AGENT</span>
+              <span class="card-category-badge badge-prototype">CONCEPT / AI PROTOTYPE</span>
               <span class="card-code">DEL-02</span>
             </div>
-            <h3 class="card-title">SENTIS AI 宅建事務補佐官・代理対話エージェント</h3>
+            <h3 class="card-title">SENTIS AI 宅建事務補佐官（対話型アシスタント・プロトタイプ）</h3>
             <p class="card-desc">
-              右端の活頁インデックスから滑出するAI事務補佐官チャット。
-              宅建業法第35条重要事項説明書の記載漏れ自動スクリーニング、水防法・土砂災害ハザード条項の最新書式出力、
-              及び住宅ローン特約解除期日の自動アラート機能を提供。
+              右端の活頁インデックスから滑出するAI事務補佐官の概念検証プロトタイプ。
+              将来の構想機能として「重要事項説明書レビュー支援」「ハザード説明チェック支援」「住宅ローンスケジュール管理支援」の対話UI導線を提示。
             </p>
             <div class="card-tags">
-              <span class="card-tag">AI Agent 対話</span>
-              <span class="card-tag">右側スライドドロワー</span>
-              <span class="card-tag">重説35条点検</span>
-              <span class="card-tag">ピン留め常駐対応</span>
+              <span class="card-tag">予定機能コンセプト</span>
+              <span class="card-tag">重要事項説明書レビュー支援</span>
+              <span class="card-tag">ハザード説明チェック支援</span>
+              <span class="card-tag">住宅ローンスケジュール管理支援</span>
             </div>
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 稼働中 (Online)
+            <div class="card-status-info" style="color: #0284c7;">
+              <span>●</span> Prototype Active (検証用)
             </div>
             <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-              <span>AI代理を体験</span> <span class="external-icon">↗</span>
+              <span>AI支援UIを体験</span> <span class="external-icon">↗</span>
             </a>
           </div>
         </article>
@@ -1413,8 +1412,8 @@
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 策定完了
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
             </div>
             <div class="card-actions-group">
               <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
@@ -1448,8 +1447,8 @@
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 策定完了
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
             </div>
             <div class="card-actions-group">
               <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
@@ -1478,13 +1477,13 @@
               <span class="card-tag">純静的フロントエンド</span>
               <span class="card-tag">動的Checklist判定</span>
               <span class="card-tag">逆算タイムライン</span>
-              <span class="card-tag">精算明細自動照合</span>
+              <span class="card-tag">精算明細照合設計</span>
             </div>
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 策定完了
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
             </div>
             <div class="card-actions-group">
               <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
@@ -1518,8 +1517,8 @@
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 策定完了
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
             </div>
             <div class="card-actions-group">
               <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
@@ -1553,8 +1552,8 @@
           </div>
 
           <div class="card-footer">
-            <div class="card-status-info">
-              <span>●</span> 配備済
+            <div class="card-status-info" style="color: #059669;">
+              <span>●</span> Design Delivered (配備済)
             </div>
             <div class="card-actions-group">
               <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="この画面で簡易プレビュー">
@@ -1602,7 +1601,7 @@
             © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
           </div>
           <div class="footer-disclaimer">
-            本成果物群は GitHub Pages 静的ホスティング規程及び純粋 Vanilla Web 規格に準拠して編纂されています。
+            本成果物群は詳細設計査閲（Design Review v0.9）段階における合意形成およびプロトタイプ検証用資料として編纂されています。
           </div>
         </div>
 
@@ -1610,16 +1609,16 @@
           <div class="signature-seal-block">
             <div class="seal-circle-stamp">VG</div>
             <div>
-              <div style="font-weight:700; color:#090d16;">Vanguard 策定受渡</div>
-              <div style="font-size:10px; color:#64748b;">2026-10-03 正式承認</div>
+              <div style="font-weight:700; color:#090d16;">Vanguard 設計提出</div>
+              <div style="font-size:10px; color:#64748b;">2026-10-03 Review v0.9</div>
             </div>
           </div>
 
           <div class="signature-seal-block">
-            <div class="seal-circle-stamp" style="border-color:#059669; color:#059669;">OK</div>
+            <div class="seal-circle-stamp" style="border-color:#d97706; color:#d97706;">REV</div>
             <div>
-              <div style="font-weight:700; color:#090d16;">SENTIS 検収受領</div>
-              <div style="font-size:10px; color:#64748b;">専任宅地建物取引士確認済</div>
+              <div style="font-weight:700; color:#090d16;">SENTIS 査閲確認</div>
+              <div style="font-size:10px; color:#64748b;">Internal Review (照合中)</div>
             </div>
           </div>
         </div>
