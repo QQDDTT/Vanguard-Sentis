@@ -1,4 +1,9 @@
-# Vanguard-Sentis: 房产中介内部综合业务管理系统 (Realty Core)
+﻿# Vanguard-Sentis: 房产中介内部综合业务管理系统 (Realty Core)
+
+<p align="center">
+  <img src="site/assets/logo/sentis-logo-full-400w.png" alt="株式会社 SENTIS" width="320" /><br>
+  <strong>「不動産提案に確かな指針を。」</strong>
+</p>
 
 [![Deploy to GitHub Pages](https://github.com/QQDDTT/Vanguard-Sentis/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/QQDDTT/Vanguard-Sentis/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -22,10 +27,10 @@
 
 ## 2. 线上设计展示样板网页 (Showcase)
 
-本项目设计展示样板网页采用纯原生前端技术（Vanilla HTML/CSS/JS）构建，并通过 GitHub Actions 自动持续部署：
+本项目设计展示样板网页采用**日本不动产事务所纸质办公美学（Paper-textured Office Stationery）**与纯原生前端技术（Vanilla HTML/CSS/JS）构建，并通过 GitHub Actions 自动持续部署：
 
-- 🌐 **GitHub Pages 在线访问入口**：[https://qqddtt.github.io/Vanguard-Sentis/](https://qqddtt.github.io/Vanguard-Sentis/)
-- 🔗 **自定义独立域名**：`https://sentis.evotensor.dev/`（需完成 DNS CNAME 解析生效）
+- 🌐 **专属独立域名访问**：**[https://vanguard-sentis.evotensor.dev](https://vanguard-sentis.evotensor.dev)**（已启用免费专属 HTTPS）
+- 🔗 **GitHub 默认域名**：[https://qqddtt.github.io/Vanguard-Sentis/](https://qqddtt.github.io/Vanguard-Sentis/)（自动 301 重定向）
 - 💻 **本地离线双击浏览**：克隆本仓库后，直接在文件管理器中双击 [`site/index.html`](./site/index.html) 即可开箱体验，无需任何本地 Server 或 Node.js 运行环境。
 
 ---
@@ -47,8 +52,15 @@ Vanguard-Sentis/
 │   ├── 売買契約の流れ.docx     # 签约与决算实务 SOP
 │   └── 売買契約流れ　ローン利用.pdf # 银行房贷利用指南
 ├── site/                       # 设计展示样板网页产物
-│   ├── index.html              # 纯静态高保真控制台交互原型
-│   └── CNAME                   # 自定义域名配置文件
+│   ├── index.html              # 纯静态高保真纸质办公室风控制台原型
+│   ├── favicon.ico             # 浏览器原生标签页图标
+│   ├── assets/
+│   │   └── logo/               # SENTIS 官方 CI/VI 全规格多尺寸素材库
+│   │       ├── sentis-emblem-512.png # 高清罗盘透明徽标 (512x512)
+│   │       ├── sentis-logo-full-400w.png # 完整组合透明标志
+│   │       ├── apple-touch-icon.png  # 移动端桌面图标 (180x180)
+│   │       └── ... (各尺寸 PNG 与 ICO)
+│   └── CNAME                   # 自定义域名配置文件 (vanguard-sentis.evotensor.dev)
 ├── metadata.json               # 案件元数据与规范校验
 └── README.md                   # 本说明文档
 ```
@@ -60,3 +72,4 @@ Vanguard-Sentis/
 本项目遵循 **Vanguard 平台化双层仓库规范**：
 - 核心平台规范库（Private）：仅维护通用模板、Windows 原生 PowerShell 自动化脚本与架构规范。
 - 案件独立公开仓（Public）：维护独立案件的完整生命周期资产与在线静态样板。
+

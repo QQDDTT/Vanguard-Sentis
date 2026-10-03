@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>株式会社センティス (SENTIS Realty) - 不動産売買業務統合台帳システム</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
   <style>
     /* ==========================================================================
        1. 執務室・紙質ステーショナリー デザインシステム (Paper Office Design System)
@@ -548,6 +551,24 @@
       margin-bottom: 24px;
     }
 
+    /* 活頁公文書の背景防偽透かし (Watermark Emblem) */
+    .dossier-paper-sheet::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 440px;
+      height: 440px;
+      background-image: url('./assets/logo/sentis-emblem-512.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.038;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     /* 2穴バインダー孔と綴じ代マージン */
     .dossier-paper-sheet::before {
       content: "";
@@ -956,13 +977,13 @@
     <header class="office-header">
       <!-- 会社ロゴと部署 -->
       <div class="header-branding">
-        <div class="brand-emblem">セン</div>
+        <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" style="width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));" />
         <div class="brand-titles">
           <div class="brand-main">
             株式会社センティス
             <span class="branch-pill">東京中央営業本部 · 第1仲介課</span>
           </div>
-          <span class="brand-sub">SENTIS REALTY CO., LTD. · 不動産売買契約・事務管理台帳</span>
+          <span class="brand-sub">SENTIS REALTY CO., LTD. · 不動産提案に確かな指針を。</span>
         </div>
       </div>
 
@@ -1029,7 +1050,8 @@
       <nav class="office-sidebar-drawer" id="sidebar-drawer">
         <div class="drawer-header">
           <div class="drawer-title">
-            <span>🗂️</span> 会社基礎業務区分
+            <img src="./assets/logo/sentis-emblem-32.png" alt="SENTIS" style="width:20px; height:20px; vertical-align:middle; margin-right:4px;" />
+            会社基礎業務区分
           </div>
           <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">
             📌 固定
@@ -1668,4 +1690,5 @@
   </script>
 </body>
 </html>
+
 

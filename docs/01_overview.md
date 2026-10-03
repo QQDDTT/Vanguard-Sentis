@@ -1,4 +1,4 @@
-# [sentis-crm-system] Sentis 房产中介内部综合业务管理系统规划
+﻿# [sentis-crm-system] Sentis 房产中介内部综合业务管理系统规划
 
 > **案例标识**：`sentis-crm-system`  
 > **所属分类**：产品规划与业务架构  
@@ -66,3 +66,36 @@ Sentis 不做低客单价的粗放扫街中介，而是依托**“五维一体�
 - **前链路贯通**：从小红书/转介绍客户意向 ➔ 远程 VR 咨询 ➔ 意向锁房。
 - **中链路核验**：买卖契约 ➔ 银行房贷审查（或海外资金合规入境）➔ 金融金消 ➔ 决算交房全自动 Checklist 与倒排工期。
 - **纯本地极简交付**：无需架设复杂服务端与云数据库，依托 Vanguard 本地优先与纯静态产物规范，本地即刻运行。
+
+---
+
+## 4. 品牌 CI/VI 视觉体系与 Logo 资产规范
+
+### 4.1 品牌图腾与核心寓意
+株式会社 SENTIS 确立了以**“罗盘（Compass / 羅針盤）与核心英文字母 S”**为核心图腾的企业标志：
+
+![SENTIS 组合标志](../raw/SENTIS_01.jpg)
+
+- **罗盘指针 (The Compass Needle)**：四方罗盘刻度与北方锋芒，象征在瞬息万变的全球宏观经济与东京不动产市场中，为海内外投资者与购房家庭锚定最具确定性的核心资产。
+- **字母 S 动势 (The S Curve)**：融合 SENTIS 首字母，兼具 Security（合规安全）、Speed（敏捷人效）与 Specialist（专任宅建士）三重内涵。
+- **品牌格言 (Slogan)**：**「不動産提案に確かな指針を。」**（为不动产提案提供确切的指针）。
+- **标准色系 (Brand Palette)**：
+  - **主色 (Forest Deep Green)**：`#184332`（沉稳典雅的森林墨绿，代表资产稳健与长期信赖）
+  - **辅色 (Official Ink Black)**：`#1a1e24`（庄重内敛的日式公文墨黑）
+  - **底色 (Parchment Washi Cream)**：`#fbf9f4`（温润的和纸羊皮纸色，烘托传统不动产事务所纸质厚重感）
+  - **印鉴色 (Seal Cinnabar Red)**：`#b82c2c`（朱砂红印，用于契印、消印与专任宅建士确权）
+
+### 4.2 衍生生成的多规格素材清单 (Assets Suite)
+所有衍生多尺寸、透明抗锯齿素材均统一维护于 [`site/assets/logo/`](../site/assets/logo/) 目录中：
+
+| 资产文件 | 规格 / 尺寸 | 适用场景 |
+| :--- | :--- | :--- |
+| [`sentis-emblem-512.png`](../site/assets/logo/sentis-emblem-512.png) | 512×512 (PNG透明) | 高清印刷、大屏展示、Retina 视网膜矢量占位 |
+| [`sentis-emblem-256.png`](../site/assets/logo/sentis-emblem-256.png) | 256×256 (PNG透明) | 系统关于弹窗、高分辨率应用图标 |
+| [`apple-touch-icon.png`](../site/assets/logo/apple-touch-icon.png) | 180×180 (PNG) | iOS / iPad / Android 桌面书签高清图标 |
+| [`sentis-emblem-64.png`](../site/assets/logo/sentis-emblem-64.png) | 64×64 (PNG透明) | 样板网站 Header 顶栏品牌徽标、侧边栏水印 |
+| [`sentis-emblem-32.png`](../site/assets/logo/sentis-emblem-32.png) | 32×32 (PNG透明) | 侧边栏抽屉标头、紧凑型状态栏图标 |
+| [`favicon.ico`](../site/assets/logo/favicon.ico) | 32×32 (Windows ICO) | 浏览器标签页原生图标（根目录 [`site/favicon.ico`](../site/favicon.ico) 同步生效） |
+| [`sentis-logo-full-800w.png`](../site/assets/logo/sentis-logo-full-800w.png)| 800×312 (PNG透明) | 正式公文信头、大画幅横幅 Header、重要事项说明书抬头 |
+| [`sentis-logo-full-400w.png`](../site/assets/logo/sentis-logo-full-400w.png)| 400×156 (PNG透明) | 移动端信头、商业计划书 PPT 封面标志 |
+
