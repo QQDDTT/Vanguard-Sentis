@@ -328,6 +328,11 @@
       color: #0d3828;
     }
 
+    .btn-menu-drawer {
+      display: none;
+      font-size: 15px;
+    }
+
     .user-profile-badge {
       display: flex;
       align-items: center;
@@ -1486,16 +1491,50 @@
         padding: 8px 12px;
       }
 
-      /* 8. ハンドル極小化・視界妨害ゼロ */
+      /* 8. ハンドル：移動端触控最適化・タップ領域拡張 */
+      .btn-menu-drawer {
+        display: inline-flex !important;
+        margin-right: 2px;
+      }
       .binder-index-handle {
-        width: 24px;
-        height: 32px;
-        opacity: 0.85;
+        width: 32px;
+        height: 44px;
+        opacity: 0.95;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.35);
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .binder-index-handle::after {
+        content: "";
+        position: absolute;
+        top: -12px;
+        bottom: -12px;
+        left: 0;
+        right: -16px; /* 向内扩展点击热区 */
+      }
+      .binder-index-handle .handle-icon {
+        font-size: 17px;
       }
       .ai-agent-handle {
-        width: 24px;
-        height: 32px;
-        opacity: 0.85;
+        width: 32px;
+        height: 44px;
+        opacity: 0.95;
+        border-radius: 8px 0 0 8px;
+        box-shadow: -2px 3px 12px rgba(0, 0, 0, 0.35);
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .ai-agent-handle::after {
+        content: "";
+        position: absolute;
+        top: -12px;
+        bottom: -12px;
+        right: 0;
+        left: -16px; /* 向内扩展点击热区 */
+      }
+      .ai-agent-handle .handle-icon {
+        font-size: 17px;
       }
 
       /* 9. フッター下部 */
@@ -1536,6 +1575,9 @@
     <header class="office-header">
       <!-- 会社ロゴと部署 -->
       <div class="header-branding">
+        <button type="button" class="btn-office-action btn-menu-drawer" id="mobile-menu-btn" title="業務区分目録を展開">
+          <span>☰</span>
+        </button>
         <a href="./index.html" class="brand-logo-link" title="詳細設計査閲ポータルへ戻る">
           <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
         </a>
@@ -2191,10 +2233,12 @@
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const drawerBackdrop = document.getElementById('drawer-backdrop');
     const binderIndexHandle = document.getElementById('binder-index-handle');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const drawerPinBtn = document.getElementById('drawer-pin-btn');
     const drawerCloseBtn = document.getElementById('drawer-close-btn');
 
     let isDrawerPinned = false;
+    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     function openDrawer() {
       sidebarDrawer.classList.add('open');
@@ -2210,20 +2254,28 @@
       }
     }
 
-    // ハンドルのホバー及びクリックで展開
-    binderIndexHandle.addEventListener('mouseenter', openDrawer);
-    binderIndexHandle.addEventListener('click', () => {
+    function toggleDrawer(e) {
+      if (e) e.stopPropagation();
       if (sidebarDrawer.classList.contains('open')) {
         closeDrawer();
       } else {
         openDrawer();
       }
-    });
+    }
 
-    // ドロワーからマウスが離れたら自動収納（未ピン留め時）
-    sidebarDrawer.addEventListener('mouseleave', () => {
-      closeDrawer();
-    });
+    // 仅在真实桌面悬停环境下允许鼠标进出自动展开/收起
+    if (isFinePointer) {
+      binderIndexHandle.addEventListener('mouseenter', openDrawer);
+      sidebarDrawer.addEventListener('mouseleave', () => {
+        closeDrawer();
+      });
+    }
+
+    // 移动端和桌面端均支持点击/触控精准开闭
+    binderIndexHandle.addEventListener('click', toggleDrawer);
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', toggleDrawer);
+    }
 
     // 遮光幕クリックで両側ドロワーを閉じる
     drawerBackdrop.addEventListener('click', () => {
@@ -2299,21 +2351,26 @@
       }
     }
 
-    if (aiAgentHandle) {
-      aiAgentHandle.addEventListener('mouseenter', openAiDrawer);
-      aiAgentHandle.addEventListener('click', () => {
-        if (aiAgentDrawer.classList.contains('open')) {
-          closeAiDrawer();
-        } else {
-          openAiDrawer();
-        }
-      });
+    function toggleAiDrawer(e) {
+      if (e) e.stopPropagation();
+      if (aiAgentDrawer && aiAgentDrawer.classList.contains('open')) {
+        closeAiDrawer();
+      } else {
+        openAiDrawer();
+      }
     }
 
-    if (aiAgentDrawer) {
+    if (isFinePointer && aiAgentHandle) {
+      aiAgentHandle.addEventListener('mouseenter', openAiDrawer);
+    }
+    if (isFinePointer && aiAgentDrawer) {
       aiAgentDrawer.addEventListener('mouseleave', () => {
         closeAiDrawer();
       });
+    }
+
+    if (aiAgentHandle) {
+      aiAgentHandle.addEventListener('click', toggleAiDrawer);
     }
 
     if (aiDrawerCloseBtn) {
