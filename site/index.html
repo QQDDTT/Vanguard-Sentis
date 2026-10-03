@@ -1305,9 +1305,9 @@
         </div>
 
         <div class="metric-card">
-          <div class="metric-value">Global <span style="font-size:16px; font-weight:normal; color:#64748b;">Cross-Border</span></div>
-          <div class="metric-label">海外富裕層・越境取引対応</div>
-          <div class="metric-sub">小紅書送客・非居住者向け特別決済分岐SOP</div>
+          <div class="metric-value">国内基軸 <span style="font-size:15px; font-weight:normal; color:#64748b;">＋越境拡張</span></div>
+          <div class="metric-label">売買実務・融資決済全包摂</div>
+          <div class="metric-sub">国内住宅ローン仲介実務を主軸に、非居住者越境送金分岐にも拡張対応</div>
         </div>
       </div>
     </section>
@@ -1317,8 +1317,8 @@
       <div class="filter-bar">
         <div class="tab-pills">
           <button class="tab-pill active" data-filter="all">すべて表示 (7)</button>
-          <button class="tab-pill" data-filter="prototype">💻 画面样板 (2)</button>
-          <button class="tab-pill" data-filter="document">📄 策定仕様書 (4)</button>
+          <button class="tab-pill" data-filter="document">📄 業務設計仕様書 (4)</button>
+          <button class="tab-pill" data-filter="prototype">💻 画面様板プロトタイプ (2)</button>
           <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
         </div>
 
@@ -1329,11 +1329,159 @@
 
       <div class="deliverables-grid" id="deliverables-container">
 
+        <!-- ==================================================================
+             CATEGORY 1: BUSINESS DESIGN & SPECIFICATIONS (業務設計・仕様策定書群)
+             ================================================================== -->
+
+        <!-- DEL-03: 文档 01 (业务概况与课题定义) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">BUSINESS DESIGN / SPEC-01</span>
+              <span class="card-code">DEL-03</span>
+            </div>
+            <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
+            <p class="card-desc">
+              少人数精鋭体制における仲介業務高人効モデルの確立と、取引リスク・手戻りゼロを担保する業務設計書。
+              国内優良実需・投資物件仲介を中核とする事業戦略、5大競争優位性、及びシステム基本理念を定義。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">高人効モデル設計</span>
+              <span class="card-tag">国内実需・投資仲介</span>
+              <span class="card-tag">5大競争優位性</span>
+              <span class="card-tag">システム基本構想</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>概要書を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-04: 文档 02 (SOP业务流) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-workflow">BUSINESS DESIGN / SOP-02</span>
+              <span class="card-code">DEL-04</span>
+            </div>
+            <h3 class="card-title">02. 不動産売買標準業務フロー設計書 (SOP)</h3>
+            <p class="card-desc">
+              ①相談買付 ➔ ②物件・法令調査 ➔ ③重説35条 ➔ ④契約締結 ➔ ⑤ローン・金消 ➔ ⑥司法書士照合・残金決済 ➔ ⑦登記移転引渡の全7段階SOP。
+              国内住宅ローン仲介実務を基軸とし、非居住者向け越境送金分岐にも対応する実務手順書。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">全7段階標準実務</span>
+              <span class="card-tag">役所・登記・重説調査</span>
+              <span class="card-tag">住宅ローン・金消実務</span>
+              <span class="card-tag">司法書士・残金決済引渡</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>SOP仕様を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-05: 文档 03 (要件定义与架构) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">SYSTEM ARCHITECTURE / REQ-03</span>
+              <span class="card-code">DEL-05</span>
+            </div>
+            <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
+            <p class="card-desc">
+              Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
+              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び各種精算明細・法定書類チェックロジック。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">純静的フロントエンド</span>
+              <span class="card-tag">動的Checklist判定</span>
+              <span class="card-tag">逆算タイムライン</span>
+              <span class="card-tag">精算明細照合設計</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>要件定義を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-06: 文档 04 (推进日程与计划) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">PROJECT ROADMAP / PLN-04</span>
+              <span class="card-code">DEL-06</span>
+            </div>
+            <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
+            <p class="card-desc">
+              フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
+              週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">4段階ロードマップ</span>
+              <span class="card-tag">週次マイルストーン</span>
+              <span class="card-tag">受入検査基準</span>
+              <span class="card-tag">緊急切戻し規程</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>計画日程を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             CATEGORY 2: INTERACTIVE PROTOTYPES (画面様板プロトタイプ群)
+             ================================================================== -->
+
         <!-- DEL-01: 画面样板 (Interactive Prototype) -->
         <article class="deliverable-card" data-category="prototype">
           <div>
             <div class="card-top-meta">
-              <span class="card-category-badge badge-prototype">PROTOTYPE / LIVE APP</span>
+              <span class="card-category-badge badge-prototype">INTERACTIVE PROTOTYPE</span>
               <span class="card-code">DEL-01</span>
             </div>
             <h3 class="card-title">不動産売買台帳・統合執務ワークベンチ</h3>
@@ -1390,152 +1538,15 @@
           </div>
         </article>
 
-        <!-- DEL-03: 文档 01 -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">SPECIFICATION / DOC</span>
-              <span class="card-code">DEL-03</span>
-            </div>
-            <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
-            <p class="card-desc">
-              代表阿部翔平氏の防衛省航空自衛隊情報隊及びリノベスト8年の実績を基軸とした事業戦略。
-              少人数精鋭体制から中長期展開を見据えた高人効モデルの確立と、
-              高度かつ厳密な取引実務に伴う「ミスゼロ・手戻りゼロ」を実現するシステム基本構想。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">創業計画書整合</span>
-              <span class="card-tag">5大競争優位性</span>
-              <span class="card-tag">高生産性モデル</span>
-              <span class="card-tag">CI/VI規格</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
-              </button>
-              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>概要書を開く</span> <span class="external-icon">↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- DEL-04: 文档 02 -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-workflow">SOP / WORKFLOW</span>
-              <span class="card-code">DEL-04</span>
-            </div>
-            <h3 class="card-title">02. 不動産売買標準業務フロー設計書</h3>
-            <p class="card-desc">
-              前置集客・相談 ➔ 契約締結 ➔ 資金決済準備 ➔ 金融機関金消契約 ➔ 残金決済引渡の全5段階SOP。
-              日本国内在住買主（住宅ローン）と海外非居住富裕層（国際電信送金・公証認証）の二重分岐処理マトリクスを策定。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">売買契約の流れ</span>
-              <span class="card-tag">住宅ローン実務SOP</span>
-              <span class="card-tag">海外送金全額分岐</span>
-              <span class="card-tag">Mermaid全景図</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
-              </button>
-              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>SOP仕様を開く</span> <span class="external-icon">↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- DEL-05: 文档 03 -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">ARCHITECTURE / DOC</span>
-              <span class="card-code">DEL-05</span>
-            </div>
-            <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
-            <p class="card-desc">
-              Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
-              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び各種精算明細・法定書類チェックロジック。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">純静的フロントエンド</span>
-              <span class="card-tag">動的Checklist判定</span>
-              <span class="card-tag">逆算タイムライン</span>
-              <span class="card-tag">精算明細照合設計</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
-              </button>
-              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>要件定義を開く</span> <span class="external-icon">↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- DEL-06: 文档 04 -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">ROADMAP / DOC</span>
-              <span class="card-code">DEL-06</span>
-            </div>
-            <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
-            <p class="card-desc">
-              フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
-              週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">4段階ロードマップ</span>
-              <span class="card-tag">週次マイルストーン</span>
-              <span class="card-tag">受入検査基準</span>
-              <span class="card-tag">緊急切戻し規程</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
-              </button>
-              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>計画日程を開く</span> <span class="external-icon">↗</span>
-              </a>
-            </div>
-          </div>
-        </article>
+        <!-- ==================================================================
+             CATEGORY 3: BRAND ASSET KIT (公式ブランドCI/VI資産)
+             ================================================================== -->
 
         <!-- DEL-07: 品牌资产包 (Assets) -->
         <article class="deliverable-card" data-category="assets">
           <div>
             <div class="card-top-meta">
-              <span class="card-category-badge badge-assets">ASSET KIT / VI</span>
+              <span class="card-category-badge badge-assets">BRAND ASSET / VI-01</span>
               <span class="card-code">DEL-07</span>
             </div>
             <h3 class="card-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h3>
