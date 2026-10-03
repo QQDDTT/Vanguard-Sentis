@@ -14,6 +14,9 @@
   <script>
     (function() {
       var currentHost = window.location.hostname;
+      if (window.location.protocol === 'file:' || !currentHost) {
+        return; // 本地双击离线浏览放行
+      }
       var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
       if (!authorizedHosts.includes(currentHost)) {
         window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
@@ -830,6 +833,59 @@
       color: #0f172a;
     }
 
+    .card-actions-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-card-quick-preview {
+      background: #ffffff;
+      color: var(--vg-text-secondary);
+      border: 1px solid var(--vg-border-light);
+      padding: 7px 11px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-card-quick-preview:hover {
+      background: #f1f5f9;
+      color: #090d16;
+      border-color: #cbd5e1;
+    }
+
+    .btn-modal-action-newtab {
+      background: #ffffff;
+      color: var(--vg-text-primary);
+      border: 1px solid var(--vg-border-strong);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-modal-action-newtab:hover {
+      background: #090d16;
+      color: #ffffff;
+      border-color: #090d16;
+    }
+
+    .external-icon {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: bold;
+    }
+
     /* ==========================================================================
        4. Document Modal Viewer (成果物ドキュメント即時インライン閲覧窓)
        ========================================================================== */
@@ -1298,8 +1354,8 @@
             <div class="card-status-info">
               <span>●</span> 稼働中 (Online)
             </div>
-            <a href="./prototype-crm.html" class="btn-card-launch">
-              <span>画面样板を開く</span> ➔
+            <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+              <span>画面样板を開く</span> <span class="external-icon">↗</span>
             </a>
           </div>
         </article>
@@ -1329,8 +1385,8 @@
             <div class="card-status-info">
               <span>●</span> 稼働中 (Online)
             </div>
-            <a href="./prototype-crm.html?drawer=ai" class="btn-card-launch">
-              <span>AI代理を体験</span> ➔
+            <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+              <span>AI代理を体験</span> <span class="external-icon">↗</span>
             </a>
           </div>
         </article>
@@ -1360,9 +1416,14 @@
             <div class="card-status-info">
               <span>●</span> 策定完了
             </div>
-            <button class="btn-card-view-doc" onclick="openDocModal('doc01')">
-              <span>📖</span> 概要書を読む
-            </button>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>概要書を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1390,9 +1451,14 @@
             <div class="card-status-info">
               <span>●</span> 策定完了
             </div>
-            <button class="btn-card-view-doc" onclick="openDocModal('doc02')">
-              <span>📖</span> SOP仕様を読む
-            </button>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>SOP仕様を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1420,9 +1486,14 @@
             <div class="card-status-info">
               <span>●</span> 策定完了
             </div>
-            <button class="btn-card-view-doc" onclick="openDocModal('doc03')">
-              <span>📖</span> 要件定義を読む
-            </button>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>要件定義を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1450,9 +1521,14 @@
             <div class="card-status-info">
               <span>●</span> 策定完了
             </div>
-            <button class="btn-card-view-doc" onclick="openDocModal('doc04')">
-              <span>📖</span> 計画日程を読む
-            </button>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>計画日程を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1480,9 +1556,14 @@
             <div class="card-status-info">
               <span>●</span> 配備済
             </div>
-            <button class="btn-card-view-doc" onclick="openDocModal('docAssets')">
-              <span>📁</span> 素材一覧を表示
-            </button>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>素材一覧を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1498,6 +1579,9 @@
             <span class="modal-doc-title" id="modalDocTitle">仕様書タイトル</span>
           </div>
           <div class="modal-header-actions">
+            <a id="btnModalOpenTab" href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-modal-action-newtab" title="新しいタブで全画面表示">
+              <span>↗</span> 別タブで開く
+            </a>
             <button class="btn-modal-close" onclick="closeDocModal()" title="閉じる (Esc)">✕</button>
           </div>
         </div>
@@ -1543,6 +1627,9 @@
     </footer>
 
   </div> <!-- /.portal-main-wrapper -->
+
+  <!-- 成果物仕様書データストア（DEL-03〜DEL-07） -->
+  <script src="./js/docs-data.js"></script>
 
   <!-- ======================================================================
        Vanilla JS : セキュリティ認証ゲートウェイ ＆ 成果物ポータル制御
@@ -1644,285 +1731,7 @@
       });
     });
 
-    // ドキュメントデータ辞書（金銭情報完全除去・業務SOP及び品質設計準拠）
-    const documentStore = {
-      doc01: {
-        id: "DEL-03",
-        title: "01. プロジェクト概要及び業務課題定義書",
-        content: `
-          <div class="doc-content">
-            <h1>01. プロジェクト概要及び業務課題定義書</h1>
-            <blockquote>
-              <strong>案例标识</strong>：<code>sentis-crm-system</code> ｜ <strong>所属分類</strong>：製品企画・業務アーキテクチャ<br>
-              <strong>策定担当</strong>：Vanguard 策定評議会 ｜ <strong>状態</strong>：正式受渡完了
-            </blockquote>
-
-            <h2>1. 商業背景と株式会社センティス（SENTIS）のポジショニング</h2>
-            <p>株式会社 SENTIS は令和8年（2026年）5月に設立された、海外富裕層（中華圏・台湾・アジア圏）及び国内優良物件仲介に特化した精鋭不動産プロフェッショナルファームです。</p>
-            <ul>
-              <li><strong>代表取締役</strong>：阿部 翔平（防衛省 航空自衛隊 作戦情報隊 第二収集隊 歴任、株式会社リノベスト 法人営業責任者として大規模取引・優良物件仲介を多数成約）。</li>
-              <li><strong>所在地</strong>：東京都千代田区神田須田町 2-3-12 12KANDA 705。</li>
-              <li><strong>事業領域</strong>：宅地建物取引業、海外投資家向け不動産コンサルティング、資産運用サポート。</li>
-              <li><strong>ブランドスローガン</strong>：「不動産提案に確かな指針を。」（羅針盤とS字シンボル）。</li>
-            </ul>
-
-            <h2>2. 5大コア競争優位性と中期事業展開ロードマップ</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>事業期別</th>
-                  <th>組織体制</th>
-                  <th>業務品質目標</th>
-                  <th>主要戦略重点</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>第 1 期</strong></td>
-                  <td><strong>2 名体制</strong></td>
-                  <td>成約プロセス標準化率 100%</td>
-                  <td>小紅書集客基盤の確立、成約SOPの定着</td>
-                </tr>
-                <tr>
-                  <td><strong>第 2 期</strong></td>
-                  <td><strong>3 名体制</strong></td>
-                  <td>顧客満足度・再成約率 向上</td>
-                  <td>優良投資物件仲介網の拡大、法人紹介制度運用</td>
-                </tr>
-                <tr>
-                  <td><strong>第 3 期</strong></td>
-                  <td><strong>5 名体制</strong></td>
-                  <td>海外アライアンス網 確立</td>
-                  <td>多言語対応強化、組織的規模拡大</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h2>3. 内部管理システム Sentis Realty Core への要請</h2>
-            <p>少人数精鋭体制において高品質な取引を着実に完遂するためには、手作業のリマインドや紙束捜索を根絶し、以下の3本柱を担保する中枢が必要です：</p>
-            <ol>
-              <li><strong>リードから決済までの全工程可視化</strong>：海外顧客特有の決済プロセス（送金・公証認証）と国内在住顧客（住宅ローン）の自動分岐。</li>
-              <li><strong>手戻りゼロの動的チェックリスト</strong>：物件属性・売主属性に応じた必要書類（重説部数、法定公文書、管理会社引渡届）の自動判定。</li>
-              <li><strong>純静的・ゼロサーバー運用</strong>：サーバー保守費や障害リスクを排除し、Vanguard 標準に準拠した即時立ち上げを実現。</li>
-            </ol>
-          </div>
-        `
-      },
-      doc02: {
-        id: "DEL-04",
-        title: "02. 不動産売買標準業務フロー設計書",
-        content: `
-          <div class="doc-content">
-            <h1>02. 不動産売買標準業務フロー設計書</h1>
-            <blockquote>
-              <strong>準拠規程</strong>：《売買契約の流れ》《売買契約流れ ローン利用》《宅地建物取引業法》<br>
-              <strong>管理区分</strong>：標準業務手順書（SOP）
-            </blockquote>
-
-            <h2>1. 全体5段階エンドツーエンド業務フロー</h2>
-            <p>相談・受付から最終決済・引渡まで、抜け漏れを防止するための5大フェーズを定義：</p>
-            <ul>
-              <li><strong>フェーズ 0（前置集客・相談）</strong>：小紅書（RED）反響、多言語（中/日/英）ヒアリング、VR内覧、購入意向分類。</li>
-              <li><strong>フェーズ 1（契約締結）</strong>：ATBB最新登記簿取得、重要事項説明書（第35条）作成・記名押印、契約着手手続き、法定証紙確認。</li>
-              <li><strong>フェーズ 2（資金決済準備）</strong>：住宅ローン本審査申請（または海外全額送金手配）、新住所住民票・印鑑証明書回収、司法書士調整。</li>
-              <li><strong>フェーズ 3（金消契約）</strong>：金融機関窓口での金銭消費貸借契約締結、新住所照合（全額自己資金客は本工程免除）。</li>
-              <li><strong>フェーズ 4（残金決済・引渡）</strong>：管理会社変更届・振替用紙取寄、3者精算明細書（諸費用精算・登記関連）、実印押印、鍵引渡。</li>
-            </ul>
-
-            <h2>2. 顧客属性別（国内在住 vs 海外非居住）確認対照表</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>確認項目</th>
-                  <th>ルートA：国内在住買主</th>
-                  <th>ルートB：海外非居住買主</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>身元確認書類</strong></td>
-                  <td>在留カード、運転免許証、健康保険証</td>
-                  <td>旅券（パスポート原本＋コピー、有効期限照合）</td>
-                </tr>
-                <tr>
-                  <td><strong>住所・印鑑証明</strong></td>
-                  <td>新住所住民票（マイナンバー無記載）、印鑑証明書</td>
-                  <td>現地公証役場の公証書・署名証明書（日本語訳文添付）</td>
-                </tr>
-                <tr>
-                  <td><strong>資金決済手段</strong></td>
-                  <td>三井住友/みずほ等 都市銀行住宅ローン融資</td>
-                  <td>海外銀行からの外貨電信送金（外国送金計算書保管）</td>
-                </tr>
-                <tr>
-                  <td><strong>重要事項説明</strong></td>
-                  <td>対面またはIT重説（宅建士証提示・録画）</td>
-                  <td>IT重説（通訳介在・書面事前郵送受領確認必須）</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `
-      },
-      doc03: {
-        id: "DEL-05",
-        title: "03. 次世代システム要件定義及びアーキテクチャ設計書",
-        content: `
-          <div class="doc-content">
-            <h1>03. 次世代システム要件定義及びアーキテクチャ設計書</h1>
-            <blockquote>
-              <strong>システム呼称</strong>：Sentis Realty Core ｜ <strong>稼働モデル</strong>：Vanilla Web (Zero-Build)<br>
-              <strong>アーキテクチャ</strong>：完全静的クライアントサイド ＋ GitHub Pages 分散配信
-            </blockquote>
-
-            <h2>1. 主要5大コアモジュール仕様</h2>
-            <ul>
-              <li><strong>商談・反響受付台帳 (Consult Hub)</strong>：ポータル/小紅書リードの即時登録、買主属性（国内ローン/海外全額）ルーティング。</li>
-              <li><strong>物件台帳・登記原簿 (Property Ledger)</strong>：法務局ATBB登記情報連携、持分・私道負担・建蔽率・容積率管理。</li>
-              <li><strong>売買契約・重説審査 (Contract & Legal)</strong>：第35条重要事項説明書ドラフト、ハザードマップ水防法条項検証、専任宅建士押印管理。</li>
-              <li><strong>住宅ローン金融連携 (Mortgage Monitor)</strong>：事前/本審査進捗ステータス追跡、融資利用特約期日（D-Day）アラート。</li>
-              <li><strong>残金決済・引渡清算 (Settlement Workbench)</strong>：三方清算計算書作成、領収証受領書式及び法定帳票照合。</li>
-            </ul>
-
-            <h2>2. 決算日逆算マイルストーン管理（リバースタイムライン）</h2>
-            <pre>
-[D-14日] 新築一戸建て・リフォーム完工現場の立会内覧（買主・売主・仲介同席）
-[D-10日] 管理会社へ区分所有者変更届・管理費口座振替用紙の郵送手配依頼
-[D-07日] 司法書士へ登記費用見積書・抹消登記書類の確認催促
-[D-02日] 銀行送信用三方支払明細書（PDF）の提出及び融資実行依頼最終確認
-[D-当日] 銀行ブースにて着金確認、領収書交付、鍵および評価証明書原本引渡
-            </pre>
-          </div>
-        `
-      },
-      doc04: {
-        id: "DEL-06",
-        title: "04. 導入展開計画及びプロジェクト推進日程表",
-        content: `
-          <div class="doc-content">
-            <h1>04. 導入展開計画及びプロジェクト推進日程表</h1>
-            <blockquote>
-              <strong>展開期間</strong>：2026年10月 〜 2026年12月（計8週間）<br>
-              <strong>受入責任者</strong>：株式会社センティス 代表取締役 阿部 翔平
-            </blockquote>
-
-            <h2>1. 4段階フェーズ別日程表</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>フェーズ</th>
-                  <th>期間</th>
-                  <th>主要タスク</th>
-                  <th>受入成果物</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>P1: 基盤仕様確定</strong></td>
-                  <td>Week 1〜2</td>
-                  <td>創業計画書照合、SOPフロー文書化、VIロゴ全規格作成</td>
-                  <td>要件定義書 4篇、ブランドロゴキット</td>
-                </tr>
-                <tr>
-                  <td><strong>P2: プロトタイプ構築</strong></td>
-                  <td>Week 3〜4</td>
-                  <td>6大台帳画面様板設計、AI補佐官スライドドロワー実装</td>
-                  <td>統合執務画面プロトタイプ (HTML/CSS)</td>
-                </tr>
-                <tr>
-                  <td><strong>P3: 内部試運用</strong></td>
-                  <td>Week 5〜6</td>
-                  <td>模擬案件（板橋区物件C等）による実務ウォークスルーテスト</td>
-                  <td>受入テスト検収書、修正パッチ</td>
-                </tr>
-                <tr>
-                  <td><strong>P4: 本稼働・受渡</strong></td>
-                  <td>Week 7〜8</td>
-                  <td>GitHub Pages本番ドメイン運用、業務マニュアル整備</td>
-                  <td>成果物総覧ポータル正式受渡・運用開始</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h2>2. 品質保証と切戻し（ロールバック）規程</h2>
-            <p>本システムは完全静的ファイルで構成されているため、Gitリビジョン管理により任意のコミット時点へ秒単位でロールバック可能です。外部依存データベースの破損リスクは原理的にゼロとなっています。</p>
-          </div>
-        `
-      },
-      docAssets: {
-        id: "DEL-07",
-        title: "SENTIS 品牌公式 CI/VI 資産パッケージ",
-        content: `
-          <div class="doc-content">
-            <h1>SENTIS 品牌公式 CI/VI 資産パッケージ</h1>
-            <p>株式会社センティスの企業アイデンティティを構成する公式アセット群です。全ファイル透過PNG・高精細ICOにて配備済です：</p>
-            
-            <div style="display:flex; align-items:center; gap:20px; padding:20px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; margin:20px 0;">
-              <img src="./assets/logo/sentis-emblem-512.png" style="width:72px; height:72px; object-fit:contain;" alt="SENTIS 512" />
-              <div>
-                <div style="font-weight:700; font-size:16px;">羅針盤エンブレム (The Compass & S-Curve)</div>
-                <div style="font-size:12px; color:#64748b;">コーポレートカラー：森林深緑 (#184332) ｜ 公文書墨黒 (#1a1e24)</div>
-              </div>
-            </div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>アセットファイル</th>
-                  <th>規格・寸法</th>
-                  <th>用途・適用画面</th>
-                  <th>パス</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>sentis-emblem-512.png</strong></td>
-                  <td>512×512 (PNG透過)</td>
-                  <td>公式公文書、高解像度印刷、Retina大画面</td>
-                  <td><code>./assets/logo/sentis-emblem-512.png</code></td>
-                </tr>
-                <tr>
-                  <td><strong>sentis-emblem-256.png</strong></td>
-                  <td>256×256 (PNG透過)</td>
-                  <td>システムアバウト画面、中型バナー</td>
-                  <td><code>./assets/logo/sentis-emblem-256.png</code></td>
-                </tr>
-                <tr>
-                  <td><strong>apple-touch-icon.png</strong></td>
-                  <td>180×180 (PNG)</td>
-                  <td>iOS / iPad / Android ホーム画面ブックマーク</td>
-                  <td><code>./assets/logo/apple-touch-icon.png</code></td>
-                </tr>
-                <tr>
-                  <td><strong>sentis-emblem-64.png</strong></td>
-                  <td>64×64 (PNG透過)</td>
-                  <td>業務画面上部ヘッダー、サイドバーロゴ</td>
-                  <td><code>./assets/logo/sentis-emblem-64.png</code></td>
-                </tr>
-                <tr>
-                  <td><strong>sentis-emblem-32.png</strong></td>
-                  <td>32×32 (PNG透過)</td>
-                  <td>ドロワー標題、コンパクトアイコン</td>
-                  <td><code>./assets/logo/sentis-emblem-32.png</code></td>
-                </tr>
-                <tr>
-                  <td><strong>favicon.ico</strong></td>
-                  <td>32×32 (Windows ICO)</td>
-                  <td>ブラウザタブ標準ファビコン</td>
-                  <td><code>./assets/logo/favicon.ico</code></td>
-                </tr>
-                <tr>
-                  <td><strong>sentis-logo-full-800w.png</strong></td>
-                  <td>800×312 (PNG透過)</td>
-                  <td>正式レターヘッド、契約書表紙見出し</td>
-                  <td><code>./assets/logo/sentis-logo-full-800w.png</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `
-      }
-    };
+    // documentStore is loaded globally from ./js/docs-data.js
 
     // ドキュメントモーダル表示・非表示ロジック
     const docModalOverlay = document.getElementById('docModalOverlay');
@@ -1937,6 +1746,11 @@
       modalDocId.innerText = doc.id;
       modalDocTitle.innerText = doc.title;
       modalDocBody.innerHTML = doc.content;
+
+      const btnModalOpenTab = document.getElementById('btnModalOpenTab');
+      if (btnModalOpenTab) {
+        btnModalOpenTab.href = `./document.html?id=${docKey}`;
+      }
 
       docModalOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';

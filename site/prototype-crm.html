@@ -15,6 +15,10 @@
   <script>
     (function() {
       var currentHost = window.location.hostname;
+      if (window.location.protocol === 'file:' || !currentHost) {
+        return; // 本地双击离线浏览放行
+      }
+
       var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
       if (!authorizedHosts.includes(currentHost)) {
         window.location.replace('https://vanguard-sentis.evotensor.dev/prototype-crm.html');

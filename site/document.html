@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>成果物仕様書リーダー | Vanguard × 株式会社センティス (SENTIS)</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- ======================================================================
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       （本地双击 file:/// 与 localhost 模式自动放行）
+       ====================================================================== -->
+  <script>
+    (function() {
+      var currentHost = window.location.hostname;
+      if (window.location.protocol === 'file:' || !currentHost) {
+        return; // 本地双击离线浏览放行
+      }
+      var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
+      if (!authorizedHosts.includes(currentHost)) {
+        window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
+      }
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       Vanguard Design System - Document Viewer Style (白を基調とした極簡・仕様書リーダー)
+       ========================================================================== */
+    :root {
+      --vg-bg-canvas: #ffffff;
+      --vg-bg-surface: #f8fafc;
+      --vg-bg-subtle: #f1f5f9;
+      --vg-border-light: #e2e8f0;
+      --vg-border-strong: #cbd5e1;
+
+      --vg-text-primary: #090d16;
+      --vg-text-secondary: #475569;
+      --vg-text-tertiary: #94a3b8;
+
+      --vg-accent-primary: #090d16;
+      --vg-accent-sentis: #184332;
+      --vg-accent-blue: #2563eb;
+      --vg-accent-emerald: #059669;
+
+      --vg-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Meiryo", sans-serif;
+      --vg-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+      --vg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --vg-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --vg-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: var(--vg-text-primary);
+      font-family: var(--vg-font-sans);
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 顶部导航条 */
+    .doc-nav-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--vg-border-light);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-branding-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .vanguard-badge-symbol {
+      width: 28px;
+      height: 28px;
+      background: #090d16;
+      color: #ffffff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      font-family: var(--vg-font-mono);
+      flex-shrink: 0;
+    }
+
+    .nav-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-titles .platform-tag {
+      font-family: var(--vg-font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--vg-text-tertiary);
+      letter-spacing: 0.8px;
+    }
+
+    .nav-titles .doc-case-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--vg-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-titles .doc-case-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: var(--vg-font-mono);
+    }
+
+    /* 快速切换与操作栏 */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .doc-select-box {
+      background: #ffffff;
+      border: 1px solid var(--vg-border-strong);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--vg-text-primary);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s ease;
+      max-width: 320px;
+    }
+
+    .doc-select-box:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-nav-action {
+      background: #ffffff;
+      border: 1px solid var(--vg-border-light);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--vg-text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-nav-action:hover {
+      background: #f1f5f9;
+      color: #090d16;
+      border-color: #cbd5e1;
+    }
+
+    .btn-nav-primary {
+      background: #090d16;
+      color: #ffffff;
+      border-color: #090d16;
+    }
+
+    .btn-nav-primary:hover {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+    /* 主内容阅读器容器 */
+    .doc-page-container {
+      max-width: 960px;
+      width: 100%;
+      margin: 32px auto 64px auto;
+      padding: 0 24px;
+      flex: 1;
+    }
+
+    .doc-paper-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--vg-border-light);
+      box-shadow: var(--vg-shadow-md);
+      padding: 48px;
+    }
+
+    /* 文档排版样式 */
+    .doc-content {
+      color: var(--vg-text-primary);
+    }
+
+    .doc-header-block {
+      border-bottom: 2px solid var(--vg-bg-subtle);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .doc-badge-pill {
+      display: inline-block;
+      font-family: var(--vg-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .doc-content h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--vg-text-primary);
+      margin-bottom: 12px;
+    }
+
+    .doc-lead-desc {
+      font-size: 15px;
+      color: var(--vg-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .doc-meta-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: var(--vg-bg-surface);
+      border: 1px solid var(--vg-border-light);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 12.5px;
+      color: var(--vg-text-secondary);
+    }
+
+    .doc-meta-table strong {
+      color: var(--vg-text-primary);
+    }
+
+    .doc-content h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--vg-text-primary);
+      margin-top: 36px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--vg-border-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-content h2::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: #090d16;
+      border-radius: 2px;
+    }
+
+    .doc-content p {
+      margin-bottom: 16px;
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: #334155;
+    }
+
+    .doc-content ul, .doc-content ol {
+      margin-bottom: 20px;
+      padding-left: 22px;
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: #334155;
+    }
+
+    .doc-content li {
+      margin-bottom: 8px;
+    }
+
+    .doc-content table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 20px 0 28px 0;
+      font-size: 13.5px;
+      border: 1px solid var(--vg-border-light);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .doc-content th {
+      background: #f8fafc;
+      padding: 12px 14px;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: left;
+      border-bottom: 1px solid var(--vg-border-light);
+      border-right: 1px solid var(--vg-border-light);
+      white-space: nowrap;
+    }
+
+    .doc-content th:last-child {
+      border-right: none;
+    }
+
+    .doc-content td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--vg-border-light);
+      border-right: 1px solid var(--vg-border-light);
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .doc-content td:last-child {
+      border-right: none;
+    }
+
+    .doc-content tr:last-child td {
+      border-bottom: none;
+    }
+
+    .doc-content tr:hover td {
+      background: #fbfcfe;
+    }
+
+    .doc-content blockquote {
+      border-left: 3px solid #090d16;
+      background: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 0 6px 6px 0;
+      margin: 18px 0;
+      font-size: 13.5px;
+      color: #475569;
+    }
+
+    .doc-content pre, .doc-code-preview {
+      background: #090d16;
+      color: #e2e8f0;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-family: var(--vg-font-mono);
+      font-size: 12.5px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 18px 0 24px 0;
+      border: 1px solid #1e293b;
+      white-space: pre-wrap;
+    }
+
+    .doc-content code {
+      font-family: var(--vg-font-mono);
+      font-size: 12px;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-table-asset {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: #090d16;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-table-asset:hover {
+      background: #2563eb;
+    }
+
+    /* 文档底部切换条 */
+    .doc-footer-nav {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--vg-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .btn-page-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: #ffffff;
+      border: 1px solid var(--vg-border-light);
+      border-radius: 8px;
+      color: var(--vg-text-primary);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .btn-page-step:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    /* 页脚 */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--vg-border-light);
+      padding: 24px 0;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--vg-text-tertiary);
+    }
+
+    /* ==========================================================================
+       轻量安全验证遮罩（若用户直接访问本独立文档页且未曾登录时提示输入口令）
+       ========================================================================== */
+    .security-auth-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(9, 13, 22, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .security-auth-card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 440px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: var(--vg-shadow-lg);
+      border: 1px solid var(--vg-border-light);
+      text-align: center;
+    }
+
+    .auth-input-box {
+      margin: 20px 0;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--vg-border-strong);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .auth-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-auth-submit {
+      width: 100%;
+      padding: 10px;
+      background: #090d16;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btn-auth-submit:hover {
+      background: #2563eb;
+    }
+
+    /* 打印专用优化 */
+    @media print {
+      .doc-nav-header, .doc-footer-nav, .site-footer, .security-auth-modal {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+      }
+      .doc-page-container {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .doc-paper-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-actions {
+        flex-wrap: wrap;
+      }
+      .doc-select-box {
+        max-width: 100%;
+        flex: 1;
+      }
+      .doc-paper-card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       未授权访问拦截遮罩
+       ====================================================================== -->
+  <div class="security-auth-modal" id="authGatewayModal" style="display: none;">
+    <div class="security-auth-card">
+      <div style="font-size:32px; margin-bottom:12px;">🔒</div>
+      <h3 style="font-size:18px; margin-bottom:8px; color:#090d16;">機密成果物アクセス認証</h3>
+      <p style="font-size:13px; color:#64748b; line-height:1.6;">
+        本ドキュメントは関係者限定の内部仕様書です。閲覧セキュリティパスワードを入力してください。
+      </p>
+      <form onsubmit="handleDocAuth(event)">
+        <div class="auth-input-box">
+          <input type="password" id="authPassInput" class="auth-input" placeholder="アクセスパスワードを入力..." required autofocus />
+        </div>
+        <button type="submit" class="btn-auth-submit">閲覧認証を実行 ➔</button>
+        <div id="authErrMsg" style="display:none; color:#dc2626; font-size:12px; margin-top:10px;">
+          ⚠️ 認証キーが一致しません。
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       主ドキュメントナビゲーション
+       ====================================================================== -->
+  <header class="doc-nav-header">
+    <div class="nav-container">
+      <a href="./index.html" class="nav-branding-group" title="成果物総覧ポータルへ戻る">
+        <div class="vanguard-badge-symbol">V</div>
+        <div class="nav-titles">
+          <span class="platform-tag">VANGUARD PLATFORM · SPECIFICATION</span>
+          <span class="doc-case-title">
+            <span id="navDocId" class="doc-case-badge">DEL-03</span>
+            <span id="navDocTitle">01. プロジェクト概要及び業務課題定義書</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <!-- 仕様書クイック切り替え -->
+        <select id="docSelectBox" class="doc-select-box" onchange="switchDoc(this.value)">
+          <option value="doc01">DEL-03: 01. プロジェクト概要及び業務課題定義書</option>
+          <option value="doc02">DEL-04: 02. 不動産売買標準業務フロー設計書</option>
+          <option value="doc03">DEL-05: 03. 次世代システム要件定義及びアーキテクチャ設計書</option>
+          <option value="doc04">DEL-06: 04. 導入展開計画及びプロジェクト推進日程表</option>
+          <option value="docAssets">DEL-07: SENTIS 品牌公式 CI/VI 資産パッケージ</option>
+        </select>
+
+        <button class="btn-nav-action" onclick="window.print()" title="本仕様書を印刷またはPDF出力">
+          <span>🖨️</span> 印刷
+        </button>
+
+        <a href="./index.html" class="btn-nav-action btn-nav-primary" title="成果物総覧ポータル主画面へ">
+          <span>🏠</span> 主ポータル
+        </a>
+
+        <button class="btn-nav-action" onclick="window.close()" title="本タブを閉じる">
+          <span>✕</span> 閉じる
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       文書本文エリア
+       ====================================================================== -->
+  <main class="doc-page-container">
+    <article class="doc-paper-card">
+      <div id="docRenderArea">
+        <!-- ドキュメントコンテンツがここに動的注入されます -->
+      </div>
+
+      <!-- 前後のドキュメント案内ナビ -->
+      <div class="doc-footer-nav">
+        <a href="#" id="btnPrevDoc" class="btn-page-step" style="visibility:hidden;">
+          <span>←</span> 前の仕様書
+        </a>
+        <div style="font-size:12px; color:#64748b; font-family:var(--vg-font-mono);">
+          SENTIS REALTY CORE · FORMAL DELIVERABLE
+        </div>
+        <a href="#" id="btnNextDoc" class="btn-page-step" style="visibility:hidden;">
+          次の仕様書 <span>→</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <!-- 全域フッター -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>
+        <strong>VANGUARD PLATFORM</strong> ｜ 株式会社センティス (SENTIS REALTY CO., LTD.) 正式成果物群
+      </div>
+      <div>
+        © 2026 Vanguard. Zero Server Runtime · Pure Vanilla Web Architecture.
+      </div>
+    </div>
+  </footer>
+
+  <!-- 成果物データ辞書スクリプト -->
+  <script src="./js/docs-data.js"></script>
+
+  <script>
+    const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
+    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
+
+    const docOrder = ["doc01", "doc02", "doc03", "doc04", "docAssets"];
+
+    // SHA-256 计算工具
+    async function computeSha256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // 检查认证状态
+    function checkDocAuth() {
+      // 若处于本地 file 协议离线查阅，放行
+      if (window.location.protocol === 'file:') return true;
+
+      const savedAuth = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      const hasCookieAuth = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
+
+      if (savedAuth === TARGET_AUTH_HASH || hasCookieAuth) {
+        return true;
+      }
+      return false;
+    }
+
+    async function handleDocAuth(e) {
+      e.preventDefault();
+      const input = document.getElementById('authPassInput').value;
+      const errMsg = document.getElementById('authErrMsg');
+      errMsg.style.display = 'none';
+
+      const hash = await computeSha256(input);
+      if (hash === TARGET_AUTH_HASH) {
+        sessionStorage.setItem(SESSION_STORAGE_KEY, hash);
+        document.cookie = "SENTIS_SECURE_TOKEN=" + hash + "; path=/; max-age=604800; SameSite=Strict";
+        document.getElementById('authGatewayModal').style.display = 'none';
+      } else {
+        errMsg.style.display = 'block';
+      }
+    }
+
+    // 获取当前指定的文档 Key
+    function getRequestedDocKey() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      if (id && documentStore[id]) {
+        return id;
+      }
+      return 'doc01';
+    }
+
+    // 渲染文档
+    function renderDocument(docKey) {
+      const doc = documentStore[docKey];
+      if (!doc) return;
+
+      // 切换 select
+      const selectBox = document.getElementById('docSelectBox');
+      if (selectBox) selectBox.value = docKey;
+
+      // 更新导航标头与网页标题
+      document.getElementById('navDocId').innerText = doc.id;
+      document.getElementById('navDocTitle').innerText = doc.title;
+      document.title = `${doc.title} | 株式会社センティス (SENTIS) 成果物`;
+
+      // 注入本文
+      document.getElementById('docRenderArea').innerHTML = doc.content;
+
+      // 更新前后导航按钮
+      const currentIndex = docOrder.indexOf(docKey);
+      const btnPrev = document.getElementById('btnPrevDoc');
+      const btnNext = document.getElementById('btnNextDoc');
+
+      if (currentIndex > 0) {
+        const prevKey = docOrder[currentIndex - 1];
+        btnPrev.style.visibility = 'visible';
+        btnPrev.href = `./document.html?id=${prevKey}`;
+        btnPrev.onclick = (e) => { e.preventDefault(); switchDoc(prevKey); };
+      } else {
+        btnPrev.style.visibility = 'hidden';
+      }
+
+      if (currentIndex < docOrder.length - 1) {
+        const nextKey = docOrder[currentIndex + 1];
+        btnNext.style.visibility = 'visible';
+        btnNext.href = `./document.html?id=${nextKey}`;
+        btnNext.onclick = (e) => { e.preventDefault(); switchDoc(nextKey); };
+      } else {
+        btnNext.style.visibility = 'hidden';
+      }
+
+      // 回滚到顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchDoc(docKey) {
+      const url = new URL(window.location);
+      url.searchParams.set('id', docKey);
+      window.history.pushState({}, '', url);
+      renderDocument(docKey);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!checkDocAuth()) {
+        document.getElementById('authGatewayModal').style.display = 'flex';
+      }
+      const initialKey = getRequestedDocKey();
+      renderDocument(initialKey);
+    });
+
+    window.addEventListener('popstate', () => {
+      renderDocument(getRequestedDocKey());
+    });
+  </script>
+</body>
+</html>
