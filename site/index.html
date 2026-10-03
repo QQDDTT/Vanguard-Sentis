@@ -273,132 +273,102 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
-      transition: background 0.15s ease;
-    }
-
-    .btn-office-action:hover {
-      background: #ece1ce;
-      border-color: #b09e85;
-    }
-
-    /* ==========================================================================
-       3. 核心ワークスペース：Sidebar (自動隠蔽) + Body (紙質執務台)
-       ========================================================================== */
-    .office-workspace {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* --------------------------------------------------------------------------
-       Sidebar (左側サイドバー)：省スペース自動隠蔽・基本モジュール区分のみ列挙
+      gap    /* --------------------------------------------------------------------------
+       Sidebar (左側サイドバー)：完全自動隠蔽・マニラフォルダー風インデックス
        -------------------------------------------------------------------------- */
-    .office-sidebar-dock {
-      width: 52px;
-      background: #202327;
-      border-right: 1px solid #383d44;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 12px 0;
-      flex-shrink: 0;
-      z-index: 90;
-      box-shadow: 3px 0 12px rgba(0,0,0,0.25);
-      position: relative;
-    }
-
-    .sidebar-trigger-handle {
-      width: 36px;
-      height: 36px;
-      border-radius: 4px;
-      background: #2b3036;
-      border: 1px solid #484f59;
-      color: #d1d5db;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin-bottom: 16px;
-      transition: all 0.2s ease;
-      font-size: 16px;
-    }
-
-    .sidebar-trigger-handle:hover {
-      background: #394049;
-      color: #ffffff;
-      border-color: #636b77;
-    }
-
-    /* 側縁の小型タブ（ドックインデックス） */
-    .mini-module-tab {
-      width: 38px;
-      height: 48px;
-      border-radius: 3px;
-      background: #292d33;
-      border: 1px solid #3c424a;
-      margin-bottom: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #9ba3af;
-      cursor: pointer;
-      font-size: 10px;
-      font-family: var(--font-serif);
-      transition: all 0.15s ease;
-      position: relative;
-    }
-
-    .mini-module-tab:hover, .mini-module-tab.active {
+    /* 1. 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 */
+    .binder-index-handle {
+      position: fixed;
+      top: 90px;
+      left: 0;
+      width: 32px;
+      padding: 14px 6px 12px 6px;
       background: var(--manila-folder);
-      color: #3c342b;
-      border-color: #baa78e;
-      font-weight: bold;
-      transform: translateX(2px);
+      border: 1px solid var(--manila-border);
+      border-left: none;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
     }
 
-    .mini-module-tab.active::before {
-      content: "";
-      position: absolute;
-      left: -4px;
-      width: 3px;
-      height: 24px;
-      background: var(--ink-red-hanko);
-      border-radius: 2px;
+    .binder-index-handle:hover {
+      width: 38px;
+      background: #f0e3cc;
+      box-shadow: 3px 4px 14px rgba(0, 0, 0, 0.32);
     }
 
-    /* ホバーまたは固定で滑り出すドロワー（自動隠蔽） */
+    .binder-index-handle .handle-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .binder-index-handle .handle-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #3f362a;
+    }
+
+    /* 2. 背景の半透明和紙遮光幕（ドロワー展開時） */
+    .drawer-backdrop {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 34px;
+      background: rgba(18, 20, 24, 0.45);
+      backdrop-filter: blur(1.5px);
+      z-index: 130;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease;
+    }
+
+    .drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 3. 本体の引き出しドロワー（自動隠蔽） */
     .office-sidebar-drawer {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 52px;
-      width: 260px;
+      position: fixed;
+      top: 56px;
+      bottom: 34px;
+      left: 0;
+      width: 270px;
+      max-width: 85vw;
       background: #fbf8f2;
       border-right: 2px solid #504436;
-      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.35);
-      z-index: 95;
+      box-shadow: 8px 0 28px rgba(0, 0, 0, 0.4);
+      z-index: 140;
       display: flex;
       flex-direction: column;
-      transform: translateX(-110%);
-      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.25, 1);
-      overflow: hidden;
+      transform: translateX(-100%); /* 完全に画面外へ隠蔽、漏れゼロ */
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
-    /* ドックへのホバー、またはドロワー自身のホバー/ピン留めで展開 */
-    .office-sidebar-dock:hover + .office-sidebar-drawer,
-    .office-sidebar-drawer:hover,
+    /* 開放クラスまたは固定展開 */
+    .office-sidebar-drawer.open,
     .office-sidebar-drawer.pinned {
       transform: translateX(0);
     }
 
     .drawer-header {
-      padding: 16px;
+      padding: 16px 18px;
       background: var(--manila-folder);
-      border-bottom: 1px solid #cfbe9f;
+      border-bottom: 2px solid #cfbe9f;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -412,17 +382,30 @@
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
+      gap: 8px;
+    }
+
+    .drawer-header-actions {
+      display: flex;
+      align-items: center;
       gap: 6px;
     }
 
-    .drawer-pin-btn {
-      background: transparent;
+    .drawer-pin-btn, .drawer-close-btn {
+      background: #fbf7ee;
       border: 1px solid #baa88a;
       border-radius: 3px;
       color: #554a3c;
       font-size: 11px;
-      padding: 2px 6px;
+      padding: 3px 7px;
       cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .drawer-pin-btn:hover, .drawer-close-btn:hover {
+      background: #4a3e2f;
+      color: #fdfaf5;
+      border-color: #4a3e2f;
     }
 
     .drawer-pin-btn.active {
@@ -433,11 +416,11 @@
     /* サイドバーメニューリスト：会社の基礎業務区分のみを列挙 */
     .module-nav-list {
       list-style: none;
-      padding: 12px 10px;
+      padding: 14px 12px;
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       flex: 1;
     }
 
@@ -445,9 +428,9 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 4px;
-      border: 1px solid transparent;
+      border: 1px solid #e5d8c3;
       color: #3b3f46;
       cursor: pointer;
       font-family: var(--font-serif);
@@ -455,11 +438,12 @@
       font-weight: 600;
       transition: all 0.15s ease;
       background: #faf6ee;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
     .module-nav-item:hover {
-      background: #f1e7d6;
-      border-color: #d1c0a5;
+      background: #f0e4cf;
+      border-color: #c9b494;
       color: #1a1e24;
       transform: translateX(3px);
     }
@@ -467,7 +451,7 @@
     .module-nav-item.active {
       background: #fffdf9;
       border: 1.5px solid #a69174;
-      box-shadow: 0 2px 6px rgba(90, 70, 50, 0.12);
+      box-shadow: 0 2px 6px rgba(90, 70, 50, 0.14);
       color: #111417;
       font-weight: 700;
     }
@@ -493,12 +477,12 @@
     }
 
     .drawer-footer-note {
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-top: 1px dashed #d5c8b5;
       font-size: 11px;
       color: #7b7163;
       background: #f6efe2;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     /* --------------------------------------------------------------------------
@@ -965,6 +949,32 @@
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* 狭幅画面・モバイル端末対応 (Responsive Optimization) */
+    @media (max-width: 768px) {
+      .office-header {
+        padding: 0 10px;
+      }
+      .brand-sub, .header-center-mark, .user-details {
+        display: none !important;
+      }
+      .office-body-workbench {
+        padding: 14px 10px 36px;
+      }
+      .dossier-paper-sheet {
+        padding: 24px 16px 24px 28px;
+        min-height: auto;
+      }
+      .paper-sticky-note {
+        display: none !important;
+      }
+      .office-sidebar-drawer {
+        width: 84vw;
+      }
+      .binder-index-handle {
+        top: 72px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1018,44 +1028,26 @@
          ====================================================================== -->
     <div class="office-workspace">
 
-      <!-- 左側ドック（ミニマムインデックス） -->
-      <aside class="office-sidebar-dock" id="sidebar-dock">
-        <div class="sidebar-trigger-handle" id="dock-toggle-btn" title="目次ナビゲーションの展開・固定切替">
-          ☰
-        </div>
+      <!-- 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 -->
+      <div class="binder-index-handle" id="binder-index-handle" title="クリックまたはホバーで業務区分目録を展開">
+        <span class="handle-icon">🗂️</span>
+        <span class="handle-text">業務目録</span>
+      </div>
 
-        <!-- 基礎モジュール区分のみの貼辺インデックス -->
-        <div class="mini-module-tab active" data-target="mod-consult" title="区分1：商談・反響受付台帳">
-          <span>商談</span>
-        </div>
-        <div class="mini-module-tab" data-target="mod-property" title="区分2：物件情報・登記台帳">
-          <span>物件</span>
-        </div>
-        <div class="mini-module-tab" data-target="mod-contract" title="区分3：売買契約・重説審査">
-          <span>契約</span>
-        </div>
-        <div class="mini-module-tab" data-target="mod-mortgage" title="区分4：住宅ローン審査連携">
-          <span>融資</span>
-        </div>
-        <div class="mini-module-tab" data-target="mod-closing" title="区分5：残金決済・引渡清算">
-          <span>決済</span>
-        </div>
-        <div class="mini-module-tab" data-target="mod-ledger" title="区分6：法定帳票・公印管理">
-          <span>帳票</span>
-        </div>
-      </aside>
+      <!-- 半透明和紙遮光幕（ドロワー展開時） -->
+      <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
-      <!-- 自動隠蔽ドロワー (Sidebar Drawer) -->
-      <!-- 会社の基礎モジュール区分のみを整然と列挙（執務空間の最大化） -->
+      <!-- 自動隠蔽ドロワー (Sidebar Drawer) : 会社の基礎モジュール区分のみを整然と列挙 -->
       <nav class="office-sidebar-drawer" id="sidebar-drawer">
         <div class="drawer-header">
           <div class="drawer-title">
             <img src="./assets/logo/sentis-emblem-32.png" alt="SENTIS" style="width:20px; height:20px; vertical-align:middle; margin-right:4px;" />
             会社基礎業務区分
           </div>
-          <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">
-            📌 固定
-          </button>
+          <div class="drawer-header-actions">
+            <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-close-btn" id="drawer-close-btn" title="閉じる">✕</button>
+          </div>
         </div>
 
         <ul class="module-nav-list">
@@ -1087,7 +1079,7 @@
 
         <div class="drawer-footer-note">
           <strong>※ 執務ナビゲーション規範</strong><br>
-          本サイドバーは会社の基礎業務分類の切替専用です。マウスを離すと自動収納され、執務領域の広さを維持します。
+          本サイドバーは会社の基礎業務分類の切替専用です。選択後は自動収納され、執務領域の広さを維持します。
         </div>
       </nav>
 
@@ -1553,15 +1545,78 @@
        Vanilla JS : サイドバー隠蔽連動、タブ切り替え、朱肉押印マイクロアニメーション
        ====================================================================== -->
   <script>
-    // 1. モジュール切り替えロジック
-    const miniTabs = document.querySelectorAll('.mini-module-tab');
+    // 1. モジュール切り替えとサイドバー制御ロジック
     const drawerNavItems = document.querySelectorAll('.module-nav-item');
     const modulePanes = document.querySelectorAll('.module-pane');
     const sidebarDrawer = document.getElementById('sidebar-drawer');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const binderIndexHandle = document.getElementById('binder-index-handle');
     const drawerPinBtn = document.getElementById('drawer-pin-btn');
-    const dockToggleBtn = document.getElementById('dock-toggle-btn');
+    const drawerCloseBtn = document.getElementById('drawer-close-btn');
 
     let isDrawerPinned = false;
+
+    function openDrawer() {
+      sidebarDrawer.classList.add('open');
+      drawerBackdrop.classList.add('active');
+    }
+
+    function closeDrawer() {
+      if (!isDrawerPinned) {
+        sidebarDrawer.classList.remove('open');
+        drawerBackdrop.classList.remove('active');
+      }
+    }
+
+    // ハンドルのホバー及びクリックで展開
+    binderIndexHandle.addEventListener('mouseenter', openDrawer);
+    binderIndexHandle.addEventListener('click', () => {
+      if (sidebarDrawer.classList.contains('open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    // ドロワーからマウスが離れたら自動収納（未ピン留め時）
+    sidebarDrawer.addEventListener('mouseleave', () => {
+      closeDrawer();
+    });
+
+    // 遮光幕クリックで閉じる
+    drawerBackdrop.addEventListener('click', () => {
+      isDrawerPinned = false;
+      updateDrawerPinState();
+      closeDrawer();
+    });
+
+    // ✕ 閉じるボタン
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', () => {
+        isDrawerPinned = false;
+        updateDrawerPinState();
+        closeDrawer();
+      });
+    }
+
+    // 📌 ピン留めトグル
+    drawerPinBtn.addEventListener('click', () => {
+      isDrawerPinned = !isDrawerPinned;
+      updateDrawerPinState();
+    });
+
+    function updateDrawerPinState() {
+      if (isDrawerPinned) {
+        sidebarDrawer.classList.add('pinned');
+        sidebarDrawer.classList.add('open');
+        drawerPinBtn.classList.add('active');
+        drawerPinBtn.innerHTML = '📌 固定中';
+      } else {
+        sidebarDrawer.classList.remove('pinned');
+        drawerPinBtn.classList.remove('active');
+        drawerPinBtn.innerHTML = '📌 固定';
+      }
+    }
 
     function switchModule(targetId) {
       // メインコンテンツ切り替え
@@ -1570,15 +1625,6 @@
           pane.classList.add('active');
         } else {
           pane.classList.remove('active');
-        }
-      });
-
-      // Mini Tab アクティブ状態
-      miniTabs.forEach(tab => {
-        if (tab.dataset.target === targetId) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
         }
       });
 
@@ -1592,45 +1638,14 @@
       });
 
       // 未ピン留めの場合は自動でドロワーを隠蔽
-      if (!isDrawerPinned) {
-        sidebarDrawer.classList.remove('pinned');
-      }
+      closeDrawer();
     }
-
-    miniTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        switchModule(tab.dataset.target);
-      });
-    });
 
     drawerNavItems.forEach(item => {
       item.addEventListener('click', () => {
         switchModule(item.dataset.target);
       });
     });
-
-    // ドロワー展開・固定ピン留め切替
-    dockToggleBtn.addEventListener('click', () => {
-      isDrawerPinned = !isDrawerPinned;
-      updateDrawerPinState();
-    });
-
-    drawerPinBtn.addEventListener('click', () => {
-      isDrawerPinned = !isDrawerPinned;
-      updateDrawerPinState();
-    });
-
-    function updateDrawerPinState() {
-      if (isDrawerPinned) {
-        sidebarDrawer.classList.add('pinned');
-        drawerPinBtn.classList.add('active');
-        drawerPinBtn.innerHTML = '📌 固定中';
-      } else {
-        sidebarDrawer.classList.remove('pinned');
-        drawerPinBtn.classList.remove('active');
-        drawerPinBtn.innerHTML = '📌 固定';
-      }
-    }
 
     // 2. 朱肉押印インタラクション（印鑑プレスアニメーション）
     function stampAction(buttonElem, stampText) {
@@ -1690,5 +1705,6 @@
   </script>
 </body>
 </html>
+
 
 
