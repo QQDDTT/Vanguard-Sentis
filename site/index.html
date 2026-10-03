@@ -1664,10 +1664,21 @@
       return hashHex;
     }
 
-    // 检查会话认证状态
+    // 检查会话认证状态 (支持跨标签页持久化同步)
     function checkCurrentSession() {
-      const savedAuth = sessionStorage.getItem(SESSION_STORAGE_KEY);
-      if (savedAuth === TARGET_AUTH_HASH) {
+      // 本地离线环境无阻碍放行
+      if (window.location.protocol === 'file:') {
+        unlockPortal();
+        return;
+      }
+      const savedSession = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      const savedLocal = localStorage.getItem(SESSION_STORAGE_KEY);
+      const hasCookie = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
+
+      if (savedSession === TARGET_AUTH_HASH || savedLocal === TARGET_AUTH_HASH || hasCookie) {
+        // 双向同步确保当前标签与后续新开标签畅通无阻
+        sessionStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
+        localStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
         unlockPortal();
       } else {
         lockPortal();
@@ -1690,7 +1701,7 @@
       }
     }
 
-    // 登录验证执行
+    // 登录验证执行 (同时写入 session、local 与 SameSite=Lax Cookie)
     async function handleGatewayLogin(event) {
       event.preventDefault();
       const enteredPassword = gatewayPasswordInput.value;
@@ -1701,7 +1712,10 @@
 
       if (computedHash === TARGET_AUTH_HASH) {
         sessionStorage.setItem(SESSION_STORAGE_KEY, computedHash);
-        document.cookie = "SENTIS_SECURE_TOKEN=" + computedHash + "; path=/; max-age=604800; SameSite=Strict";
+        localStorage.setItem(SESSION_STORAGE_KEY, computedHash);
+        try {
+          document.cookie = "SENTIS_SECURE_TOKEN=" + computedHash + "; path=/; max-age=604800; SameSite=Lax";
+        } catch (e) {}
         unlockPortal();
       } else {
         gatewayErrorMsg.style.display = 'block';
@@ -1710,14 +1724,34 @@
       }
     }
 
-    // 登出/重新上锁
+    // 登出/重新上锁 (彻底清理所有存储凭证)
     function handleLogout() {
       sessionStorage.removeItem(SESSION_STORAGE_KEY);
-      document.cookie = "SENTIS_SECURE_TOKEN=; path=/; max-age=0";
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+      try {
+        document.cookie = "SENTIS_SECURE_TOKEN=; path=/; max-age=0";
+      } catch (e) {}
       lockPortal();
     }
 
-    window.addEventListener('DOMContentLoaded', checkCurrentSession);
+    window.addEventListener('DOMContentLoaded', () => {
+      checkCurrentSession();
+
+      // 卡片全域可点击跳转增强：点击卡片空白区或标题直接触发独立新网页打开
+      document.querySelectorAll('.deliverable-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          // 若点击的是预览按钮、独立新开按钮或链接本身，则不重复触发
+          if (e.target.closest('.btn-card-quick-preview') || e.target.closest('a') || e.target.closest('button')) {
+            return;
+          }
+          const primaryLaunchBtn = card.querySelector('.btn-card-launch');
+          if (primaryLaunchBtn && primaryLaunchBtn.href) {
+            window.open(primaryLaunchBtn.href, '_blank', 'noopener,noreferrer');
+          }
+        });
+      });
+    });
 
     // ======================================================================
     // 成果物ポータル機能（タブ切り替え・インラインドキュメント表示）
