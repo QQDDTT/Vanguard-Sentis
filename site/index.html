@@ -12,10 +12,9 @@
        1. 執務室・紙質ステーショナリー デザインシステム (Paper Office Design System)
        ========================================================================== */
     :root {
-      /* デスク環境・レザーマット (Office Desk & Pad) */
-      --desk-wood: #262422;
-      --desk-mat: #323539;
-      --desk-mat-border: #44474d;
+      /* デスク環境・レザー調マット (Office Desk & Pad) */
+      --desk-base: #24272c;
+      --desk-gradient: radial-gradient(circle at 50% 15%, #383c44 0%, #26292e 60%, #1a1c20 100%);
 
       /* 和紙・帳票テクスチャトーン (Parchment & Paper Tones) */
       --paper-cream: #fbf9f4;
@@ -24,40 +23,39 @@
       --paper-dark: #ebe3d5;
       --paper-edge: #d8cebe;
       --paper-grid: rgba(60, 50, 40, 0.04);
-      --manila-folder: #e9dbc2;
-      --manila-border: #c8b598;
+      --manila-folder: #e8dbc1;
+      --manila-border: #c4b192;
+      --manila-hover: #f1e6d0;
       
-      /* 墨・朱肉・筆記具カラー (Traditional Ink & Hanko Seal) */
+      /* 伝統墨・朱肉・筆記具カラー (Traditional Ink & Hanko Seal) */
       --ink-black: #1a1e24;
       --ink-dark: #2c3038;
       --ink-muted: #5a616d;
       --ink-light: #89909c;
       --ink-line: #ded7ca;
       --ink-red-hanko: #b82c2c;     /* 伝統朱肉の紅 */
-      --ink-red-hanko-soft: rgba(184, 44, 44, 0.08);
       --ink-green-approved: #246a48; /* 検査合格・適法印 */
       --ink-blue-pen: #1c4b82;      /* 万年筆サインブルー */
       --seal-amber: #b46b14;        /* 審査中・保留印 */
 
-      /* 明朝体・公文見出し (Japanese Editorial & Serif Typography) */
+      /* 明朝体・公文書見出し (Japanese Editorial & Serif Typography) */
       --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Toppan Bunkyu Mincho", "Noto Serif JP", "Songti SC", "Georgia", serif;
       --font-sans: "Hiragino Sans", "Yu Gothic", "Meiryo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-stamp: "Hiragino Mincho ProN", "Yu Mincho", "STSong", serif;
 
       /* 陰影階層 (Paper Elevation Shadows) */
-      --shadow-paper: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.12);
-      --shadow-float: 0 12px 36px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.15);
-      --shadow-inset-paper: inset 0 0 12px rgba(180, 160, 130, 0.12);
+      --shadow-paper: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.14);
+      --shadow-drawer: 8px 0 28px rgba(0, 0, 0, 0.4);
     }
 
-    /* 基本レイアウトルール：ページ全体のスクロールバーを厳禁 */
+    /* 視口与基础布局铁律：整页绝对禁止滚动条 */
     html, body {
       margin: 0;
       padding: 0;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background-color: var(--desk-wood);
+      background-color: var(--desk-base);
       color: var(--ink-dark);
       font-family: var(--font-sans);
       font-size: 13.5px;
@@ -71,19 +69,19 @@
       outline: none;
     }
 
-    /* 執務室ビューポート (全景コンテナ) */
+    /* 执务室主视口容器 */
     .office-viewport {
       display: flex;
       flex-direction: column;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 20%, #3e4249 0%, #292c31 60%, #1e2024 100%);
+      background: var(--desk-gradient);
       position: relative;
     }
 
     /* ==========================================================================
-       2. Header (上部ヘッダー) : 社名レターヘッド、店舗情報、日付、宅建士ログイン
+       2. Header (上部ヘッダー) : 社名、公文書日付、専任宅建士ログイン
        ========================================================================== */
     .office-header {
       height: 56px;
@@ -100,7 +98,6 @@
       position: relative;
     }
 
-    /* ヘッダー下部の罫線装飾 */
     .office-header::after {
       content: "";
       position: absolute;
@@ -115,23 +112,14 @@
     .header-branding {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
-    .brand-emblem {
-      width: 34px;
-      height: 34px;
-      border: 2px solid #3c342b;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-size: 18px;
-      font-weight: 900;
-      color: #3c342b;
-      background: #f2e9db;
-      box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
     }
 
     .brand-titles {
@@ -206,7 +194,7 @@
       gap: 4px;
     }
 
-    /* ヘッダー右側：ユーザーログイン情報（通常業務席） */
+    /* ヘッダー右側：ユーザーログイン情報 */
     .header-user-section {
       display: flex;
       align-items: center;
@@ -243,7 +231,7 @@
       align-items: center;
       justify-content: center;
       background: #fffdfa;
-      box-shadow: 0 1px 2px rgba(184,44,44,0.15);
+      box-shadow: 0 1px 2px rgba(184, 44, 44, 0.15);
     }
 
     .user-details {
@@ -273,13 +261,33 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap    /* --------------------------------------------------------------------------
+      gap: 5px;
+      transition: background 0.15s ease;
+    }
+
+    .btn-office-action:hover {
+      background: #ece1ce;
+      border-color: #b09e85;
+    }
+
+    /* ==========================================================================
+       3. 核心ワークスペース：Sidebar (自動隠蔽) + Body (紙質執務台)
+       ========================================================================== */
+    .office-workspace {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --------------------------------------------------------------------------
        Sidebar (左側サイドバー)：完全自動隠蔽・マニラフォルダー風インデックス
        -------------------------------------------------------------------------- */
     /* 1. 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 */
     .binder-index-handle {
       position: fixed;
-      top: 90px;
+      top: 86px;
       left: 0;
       width: 32px;
       padding: 14px 6px 12px 6px;
@@ -300,7 +308,7 @@
 
     .binder-index-handle:hover {
       width: 38px;
-      background: #f0e3cc;
+      background: var(--manila-hover);
       box-shadow: 3px 4px 14px rgba(0, 0, 0, 0.32);
     }
 
@@ -349,7 +357,7 @@
       max-width: 85vw;
       background: #fbf8f2;
       border-right: 2px solid #504436;
-      box-shadow: 8px 0 28px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-drawer);
       z-index: 140;
       display: flex;
       flex-direction: column;
@@ -438,7 +446,7 @@
       font-weight: 600;
       transition: all 0.15s ease;
       background: #faf6ee;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
 
     .module-nav-item:hover {
@@ -573,7 +581,7 @@
       border-radius: 50%;
       background: #272a2e;
       border: 2px solid #bba891;
-      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.7);
+      box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
     .binder-hole.top { top: 90px; }
     .binder-hole.center { top: 50%; margin-top: -6px; }
@@ -587,13 +595,14 @@
       width: 180px;
       background: #fbf3a7;
       border: 1px solid #ded37e;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       padding: 10px 12px;
       font-size: 11px;
       line-height: 1.45;
       color: #574d1a;
       transform: rotate(2deg);
       border-bottom-right-radius: 8px;
+      z-index: 5;
     }
 
     .paperclip-graphic {
@@ -605,7 +614,7 @@
       border: 2.5px solid #8e95a0;
       border-radius: 8px;
       border-bottom: none;
-      box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
     }
 
     /* 帳票表頭見出し */
@@ -691,7 +700,7 @@
       background: #ffffff;
       border: 1px solid #d5cbba;
       border-radius: 2px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
       overflow-x: auto;
     }
 
@@ -854,7 +863,7 @@
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
-      box-shadow: 0 1px 3px rgba(184,44,44,0.15);
+      box-shadow: 0 1px 3px rgba(184, 44, 44, 0.15);
     }
 
     .interactive-stamp-btn:hover {
@@ -864,7 +873,7 @@
     }
 
     /* ==========================================================================
-       4. Footer (下部フッター) : 稼働ステータス、法令準拠、通達テロップ
+       4. Footer (下部フッター) : 稼働監視、コンプライアンス、通達テロップ
        ========================================================================== */
     .office-footer {
       height: 34px;
@@ -987,7 +996,7 @@
     <header class="office-header">
       <!-- 会社ロゴと部署 -->
       <div class="header-branding">
-        <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" style="width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));" />
+        <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
         <div class="brand-titles">
           <div class="brand-main">
             株式会社センティス
@@ -1269,7 +1278,6 @@
               </div>
             </div>
 
-            <!-- 風控項目リスト -->
             <div class="paper-card" style="margin-bottom:20px;">
               <div class="paper-card-header">
                 <span class="paper-card-title">📜 契約締結前 重点コンプライアンス点検簿</span>
@@ -1300,7 +1308,6 @@
               </ul>
             </div>
 
-            <!-- 署名捺印欄 -->
             <div class="sign-section-box">
               <div class="sign-titles">
                 <strong>宅地建物取引業者・専任宅地建物取引士 契印欄</strong><br>
@@ -1516,7 +1523,6 @@
          3. Footer (下部フッター) : 稼働監視、コンプライアンス、通達テロップ
          ====================================================================== -->
     <footer class="office-footer">
-      <!-- 稼働ステータス表示 -->
       <div class="footer-status-pills">
         <span><span class="status-dot-active"></span>事務監査システム：正常稼働中</span>
         <span>｜</span>
@@ -1525,13 +1531,11 @@
         <span>宅地建物取引業法第49条 帳簿法定備置準拠</span>
       </div>
 
-      <!-- リアルタイム通達テロップ -->
       <div class="footer-ticker">
         <span class="ticker-icon">🔔 通達：</span>
         <span id="ticker-text">【10/03】板橋区物件C 融資特約期日(10/24)まであと21日。三井住友銀行の審査回答受領後、直ちに買主様へ連絡のこと。</span>
       </div>
 
-      <!-- 業務補助ツール -->
       <div class="footer-tools">
         <a class="btn-footer-link" onclick="window.print()">🖨️ A4帳票印刷</a>
         <span>｜</span>
@@ -1650,12 +1654,10 @@
     // 2. 朱肉押印インタラクション（印鑑プレスアニメーション）
     function stampAction(buttonElem, stampText) {
       const parent = buttonElem.parentElement;
-      
       const stamp = document.createElement('div');
       stamp.className = 'hanko-stamp';
       stamp.style.animation = 'stampPress 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
       stamp.innerHTML = `<span>${stampText}</span><span style="font-size:7px;">センティス</span>`;
-      
       parent.replaceChild(stamp, buttonElem);
     }
 
@@ -1689,7 +1691,7 @@
       }
     }, 6000);
 
-    // 4. デスクライト調光フィルター切替 (Desk Light Filter)
+    // 4. デスクライト調光フィルター切替
     let isWarmLight = false;
     function toggleDeskLight() {
       isWarmLight = !isWarmLight;
@@ -1705,6 +1707,4 @@
   </script>
 </body>
 </html>
-
-
 
