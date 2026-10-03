@@ -34,9 +34,8 @@
         // 跨标签页凭证有效，自动补齐当前会话
         sessionStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
         localStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
-      } else {
-        // 未認証アクセスを直ちに阻断し、執務室玄関のログインゲートウェイへ転送
-        window.location.replace('./login.html');
+        // 未認証アクセスを直ちに阻断し、管理システム執務室玄関のログインゲートウェイへ転送
+        window.location.replace('./crm-login.html');
       }
     })();
   </script>
@@ -1578,7 +1577,7 @@
         <button type="button" class="btn-office-action btn-menu-drawer" id="mobile-menu-btn" title="業務区分目録を展開">
           <span>☰</span>
         </button>
-        <a href="./index.html" class="brand-logo-link" title="詳細設計査閲ポータルへ戻る">
+        <a href="./crm-home.html" class="brand-logo-link" title="執務室メインハブへ戻る">
           <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
         </a>
         <div class="brand-titles">
@@ -1607,7 +1606,7 @@
 
       <!-- ユーザーログイン情報（通常業務席） -->
       <div class="header-user-section">
-        <a href="./index.html" onclick="if(window.opener && window.history.length <= 2){window.close(); return false;}" class="btn-office-action btn-portal-back" title="詳細設計査閲ポータル主画面へ戻る">
+        <a href="./crm-home.html" onclick="if(window.opener && window.history.length <= 2){window.close(); return false;}" class="btn-office-action btn-portal-back" title="執務室メインハブへ戻る">
           <span>←</span>
         </a>
 
