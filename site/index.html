@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENTIS Realty Core - 房产中介业务运营与风控控制台</title>
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #101626;
+      --bg-surface-elevated: #182238;
+      --bg-card: #141c2e;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.4);
+      --accent: #6366f1;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --status-success: #10b981;
+      --status-warning: #f59e0b;
+      --status-danger: #ef4444;
+      --status-info: #06b6d4;
+      --status-purple: #a855f7;
+      --radius: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* 顶部导航控制台 */
+    header.top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.top-header::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent-gradient);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: #fff;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-text p {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* 模式切换 Tabs */
+    .view-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      gap: 6px;
+    }
+
+    .tab-btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--bg-surface-elevated);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-accent);
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 9999px;
+      color: #c7d2fe;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* 经营与交易概览 KPI */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-num {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #fff;
+      font-feature-settings: "tnum";
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--status-success);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 布局主栅格：左侧业务看板 + 右侧智能助手 */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2.3fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1080px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-header h2::before {
+      content: "";
+      width: 4px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* 泳道看板 Kanban */
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    @media (max-width: 800px) {
+      .kanban-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kanban-col {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      min-width: 220px;
+    }
+
+    .col-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .col-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .col-count {
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+    }
+
+    .deal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .deal-card:hover, .deal-card.active {
+      border-color: var(--border-accent);
+      background: var(--bg-surface-elevated);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .deal-card.active {
+      border-left: 3px solid var(--accent);
+    }
+
+    .deal-tag {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .deal-tag.vip {
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+    }
+
+    .deal-name {
+      font-size: 0.925rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .deal-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--status-success);
+      margin-bottom: 8px;
+    }
+
+    .deal-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* 动态 Checklist 面板 */
+    .checklist-container {
+      margin-top: 12px;
+    }
+
+    .checklist-group {
+      margin-bottom: 18px;
+    }
+
+    .checklist-title {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .check-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .check-item input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .check-text {
+      flex: 1;
+    }
+
+    .check-badge {
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--status-danger);
+      margin-left: 6px;
+    }
+
+    .check-badge.warn {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--status-warning);
+    }
+
+    /* 倒排时间线 */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+      margin-top: 16px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-node {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -20px;
+      top: 3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-dot.alert {
+      border-color: var(--status-danger);
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .timeline-time {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .timeline-content {
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    /* 财务结算小工具 */
+    .calc-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .calc-input {
+      flex: 1;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .calc-result-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .result-item:last-child {
+      margin-bottom: 0;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-weight: 700;
+      color: var(--status-success);
+    }
+
+    /* =================== 模式二: 工程进度视图样式 =================== */
+    .progress-view {
+      display: none;
+    }
+
+    .milestone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .milestone-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      position: relative;
+    }
+
+    .milestone-card.active-ms {
+      border-color: var(--status-warning);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .milestone-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .milestone-badge.done { background: rgba(16, 185, 129, 0.2); color: var(--status-success); }
+    .milestone-badge.current { background: rgba(245, 158, 11, 0.2); color: var(--status-warning); }
+    .milestone-badge.todo { background: rgba(255, 255, 255, 0.08); color: var(--text-dim); }
+
+    .milestone-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .milestone-dates {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .milestone-deliverable {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .wip-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    .wip-table th, .wip-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wip-table th {
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 600;
+    }
+
+    footer.site-footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 顶部状态栏 -->
+    <header class="top-header">
+      <div class="brand-section">
+        <div class="logo-badge">S</div>
+        <div class="brand-text">
+          <h1>株式会社 SENTIS • Realty Core 控制台</h1>
+          <p>
+            <span>代表取締役: 阿部 翔平</span>
+            <span>|</span>
+            <span>東京都千代田区神田須田町 2-3-12</span>
+            <span>|</span>
+            <span>工程状态: 详细设计阶段 (Design Phase)</span>
+          </p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="tag-badge" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">
+          ● 研发进行中: M2 业务引擎详细设计
+        </span>
+      </div>
+    </header>
+
+    <!-- 视图切换 Tabs -->
+    <div class="view-tabs">
+      <button class="tab-btn active" id="tab-deals-btn" onclick="switchView('deals')">🏢 交易全生命周期看板</button>
+      <button class="tab-btn" id="tab-progress-btn" onclick="switchView('progress')">📊 案件工程进度与里程碑 (M1~M5)</button>
+    </div>
+
+    <!-- ==================== 视图 1: 业务交易全景视图 ==================== -->
+    <div id="view-deals">
+      <!-- 经营与交易概览 KPI -->
+      <section class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-title">第 1 期在办案值总额</div>
+          <div class="kpi-num">¥ 40,800 万</div>
+          <div class="kpi-sub">↑ 预估佣金总收入: ¥ 1,353 万 (目标完成率: 19%)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">本月待决算交房</div>
+          <div class="kpi-num">1 宗</div>
+          <div class="kpi-sub" style="color: var(--status-warning);">⏳ 距西新宿公寓决算仅剩 8 天</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">关键风控 Checklist 达成率</div>
+          <div class="kpi-num" id="kpi-rate">86%</div>
+          <div class="kpi-sub">✓ 境外公证书、管理费振替待收件</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">团队人效比 (全职2名)</div>
+          <div class="kpi-num">¥ 2.04 亿/人</div>
+          <div class="kpi-sub">目标年人效: ¥ 3,575 万円营收/人</div>
+        </div>
+      </section>
+
+      <!-- 主展示区 -->
+      <div class="main-grid">
+        <!-- 左列：案件生命周期 Kanban 泳道 -->
+        <div class="left-col">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>案件交易全生命周期看板 (Kanban)</h2>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">点击案件卡片，实时联动右侧智能资料库与倒排预警</span>
+            </div>
+
+            <div class="kanban-board">
+              <!-- 阶段 1: 签约契约时 -->
+              <div class="kanban-col">
+                <div class="col-header">
+                  <span class="col-title">① 契约签订</span>
+                  <span class="col-count">1</span>
+                </div>
+                <!-- 案件卡片 3 (高额海外单) -->
+                <div class="deal-card" onclick="selectDeal(3)" id="card-3">
+                  <span class="deal-tag vip">海外华人富裕层 • 2.8亿高额单</span>
+                  <div class="deal-name">港区麻布台豪华塔楼</div>
+                  <div class="deal-price">¥ 28,000 万円</div>
+                  <div class="deal-meta">
+                    <span>买主: 陈总(海外全款)</span>
+                    <span>渠道: 小红书私域</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 阶段 2: 资金/房贷本审查 -->
+              <div class="kanban-col">
+                <div class="col-header">
+                  <span class="col-title">② 房贷本审查</span>
+                  <span class="col-count">1</span>
+                </div>
+                <!-- 案件卡片 1 -->
+                <div class="deal-card" onclick="selectDeal(1)" id="card-1">
+                  <span class="deal-tag">新筑一户建 • 本土贷款</span>
+                  <div class="deal-name">世田谷区桜新町一户建</div>
+                  <div class="deal-price">¥ 7,980 万円</div>
+                  <div class="deal-meta">
+                    <span>买主: 孙先生(在日)</span>
+                    <span>担当: 阿部</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 阶段 3: 金消借贷契约 -->
+              <div class="kanban-col">
+                <div class="col-header">
+                  <span class="col-title">③ 金融借贷契约</span>
+                  <span class="col-count">0</span>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-dim); text-align: center; margin-top: 30px;">暂无进行中 (海外全款跳过此阶段)</p>
+              </div>
+
+              <!-- 阶段 4: 决算与交房 -->
+              <div class="kanban-col">
+                <div class="col-header">
+                  <span class="col-title">④ 决算与交房</span>
+                  <span class="col-count">1</span>
+                </div>
+                <!-- 案件卡片 2 (默认激活) -->
+                <div class="deal-card active" onclick="selectDeal(2)" id="card-2">
+                  <span class="deal-tag" style="background: rgba(99, 102, 241, 0.2); color: #a5b4fc;">公寓物件 • 决算倒计时</span>
+                  <div class="deal-name">新宿区西新宿高级公寓 1201</div>
+                  <div class="deal-price">¥ 4,820 万円</div>
+                  <div class="deal-meta">
+                    <span style="color: var(--status-warning);">决算日: 10/11</span>
+                    <span>担当: 阿部</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 当前选中案件的智能 Checklist -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 id="checklist-heading">智能资料与任务 Checklist（新宿公寓 1201）</h2>
+              <span class="tag-badge" id="deal-type-badge">公寓物件 • 法人卖主</span>
+            </div>
+
+            <div class="checklist-container" id="checklist-content">
+              <!-- 动态渲染内容 -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 右列：倒排时间线预警与财务工具 -->
+        <div class="right-col">
+          <!-- 倒排时间线 -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2>决算反向倒排风控预警 (Reverse Timeline)</h2>
+            </div>
+            <div class="timeline" id="timeline-box">
+              <!-- 动态时间线 -->
+            </div>
+          </div>
+
+          <!-- 财务与中介费、印纸计算器 -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2>高额不动产中介费与印纸智能计算器</h2>
+            </div>
+            <div class="calc-row">
+              <input type="number" id="deal-amt-input" class="calc-input" placeholder="输入成交总额 (万円)" value="4820" oninput="calculateFee()">
+            </div>
+            <div class="calc-result-box">
+              <div class="result-item">
+                <span>标准佣金上限 (3%+6万+税):</span>
+                <span id="res-fee">¥ 1,656,600</span>
+              </div>
+              <div class="result-item">
+                <span>买卖契约书印纸税额:</span>
+                <span id="res-contract-stamp">¥ 10,000 (特例减免)</span>
+              </div>
+              <div class="result-item">
+                <span>公司领收书贴附印纸:</span>
+                <span id="res-receipt-stamp">¥ 400 (2张200円)</span>
+              </div>
+              <div class="result-item">
+                <span>超3%佣金合规形式:</span>
+                <span id="res-extra-desc" style="color: var(--status-info);">需制作《支払約定書》</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 视图 2: 工程进度与里程碑视图 ==================== -->
+    <div id="view-progress" class="progress-view">
+      <!-- 里程碑总览卡片 -->
+      <div class="milestone-grid">
+        <div class="milestone-card">
+          <span class="milestone-badge done">✔ 已完成</span>
+          <div class="milestone-title">M1: 需求与概念验证</div>
+          <div class="milestone-dates">09/28 - 10/03</div>
+          <div class="milestone-deliverable">
+            梳理买卖契约、贷款决算实战流程；确立高额房产+海外客户定位与高保真原型。
+          </div>
+        </div>
+
+        <div class="milestone-card active-ms">
+          <span class="milestone-badge current">⚡ 当前进行中</span>
+          <div class="milestone-title">M2: 业务引擎详细设计</div>
+          <div class="milestone-dates">10/04 - 10/18 (本阶段)</div>
+          <div class="milestone-deliverable">
+            细化动态 Checklist 规则矩阵、决算倒排告警阈值算法、双轨买家核验机制。
+          </div>
+        </div>
+
+        <div class="milestone-card">
+          <span class="milestone-badge todo">⏳ 待启动</span>
+          <div class="milestone-title">M3: 纯静态系统工程研发</div>
+          <div class="milestone-dates">10/19 - 11/04</div>
+          <div class="milestone-deliverable">
+            Vanilla 状态流转引擎、三方支付明细打印排版引擎、本地持久化存储。
+          </div>
+        </div>
+
+        <div class="milestone-card">
+          <span class="milestone-badge todo">⏳ 待启动</span>
+          <div class="milestone-title">M4: 真实案例集成验证</div>
+          <div class="milestone-dates">11/05 - 11/16</div>
+          <div class="milestone-deliverable">
+            一户建、公寓、麻布台高额单全流程跑通；阿部翔平代表现场易用性评审。
+          </div>
+        </div>
+
+        <div class="milestone-card">
+          <span class="milestone-badge todo">⏳ 待启动</span>
+          <div class="milestone-title">M5: 业务试运行与上线</div>
+          <div class="milestone-dates">11/17 - 11/30</div>
+          <div class="milestone-deliverable">
+            正式接管第 1 期在办真实业务，建立 2 人小团队日常高效数字化操作 SOP。
+          </div>
+        </div>
+      </div>
+
+      <!-- 当前 M2 详细设计任务执行状态 -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2>当前冲刺任务分解 (Sprint Tasks • M2 详细设计)</h2>
+          <span class="tag-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--status-success); border-color: rgba(16, 185, 129, 0.3);">
+            详细设计完成度: 60%
+          </span>
+        </div>
+
+        <table class="wip-table">
+          <thead>
+            <tr>
+              <th>工作包模块</th>
+              <th>具体任务项</th>
+              <th>责任方</th>
+              <th>交付物标准</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>商业与战略对齐</strong></td>
+              <td>结合《創業計画書》融合海外华人定位与三年财务目标</td>
+              <td>架构组</td>
+              <td>01_overview.md 升级完成</td>
+              <td><span style="color: var(--status-success);">✔ 100% 已交付</span></td>
+            </tr>
+            <tr>
+              <td><strong>全链路业务 SOP</strong></td>
+              <td>提炼签约、贷款、金消、决算四大阶段实操风控点</td>
+              <td>架构组</td>
+              <td>02_business_workflow.md</td>
+              <td><span style="color: var(--status-success);">✔ 100% 已交付</span></td>
+            </tr>
+            <tr>
+              <td><strong>动态 Checklist 引擎</strong></td>
+              <td>构建一户建/公寓/法人/个人/海外公证书智能判定表</td>
+              <td>架构组</td>
+              <td>03_system_requirements.md</td>
+              <td><span style="color: var(--status-warning);">⚡ 80% 正在完善</span></td>
+            </tr>
+            <tr>
+              <td><strong>决算倒排日历算法</strong></td>
+              <td>D-14(验房), D-10(管理用纸), D-2(三合一PDF)等级告警</td>
+              <td>架构组</td>
+              <td>03_system_requirements.md</td>
+              <td><span style="color: var(--status-warning);">⚡ 70% 正在完善</span></td>
+            </tr>
+            <tr>
+              <td><strong>高额资产印纸计算器</strong></td>
+              <td>2~10 亿日元印纸税额阶梯、超3%佣金支付约定书逻辑</td>
+              <td>架构组</td>
+              <td>计算器算法模块</td>
+              <td><span style="color: var(--status-success);">✔ 100% 已设计</span></td>
+            </tr>
+            <tr>
+              <td><strong>工程排期与甘特图</strong></td>
+              <td>制定 M1~M5 全周期里程碑与风控矩阵</td>
+              <td>架构组</td>
+              <td>04_project_schedule.md</td>
+              <td><span style="color: var(--status-success);">✔ 100% 已发布</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 底部版权说明 -->
+    <footer class="site-footer">
+      <span>株式会社 SENTIS • 不动产提案に、確かな指針を。</span>
+      <span>Vanguard 平台化产物规范驱动 • 零后端依赖纯静态控制台</span>
+    </footer>
+  </div>
+
+  <script>
+    // 视图切换控制
+    function switchView(viewName) {
+      const dealsView = document.getElementById('view-deals');
+      const progressView = document.getElementById('view-progress');
+      const dealsBtn = document.getElementById('tab-deals-btn');
+      const progressBtn = document.getElementById('tab-progress-btn');
+
+      if (viewName === 'deals') {
+        dealsView.style.display = 'block';
+        progressView.style.display = 'none';
+        dealsBtn.classList.add('active');
+        progressBtn.classList.remove('active');
+      } else {
+        dealsView.style.display = 'none';
+        progressView.style.display = 'block';
+        dealsBtn.classList.remove('active');
+        progressBtn.classList.add('active');
+      }
+    }
+
+    // 案件数据源定义
+    const dealsData = {
+      1: {
+        id: "deal-01",
+        title: "世田谷区桜新町一户建",
+        type: "新筑一户建 • 个人卖主 • 日本本土房贷",
+        price: 7980,
+        stage: "本审查推进中",
+        timeline: [
+          { time: "本审查获批当日", text: "第一时间通报买主与卖方中介，敲定交房日与金消契约", alert: false },
+          { time: "交房前 14 天", text: "【强制】预约安排现场验房（新筑一户建必备）", alert: true },
+          { time: "金消契约前", text: "买主迁入新地址，开具新住民票（严禁个人番号）与新印鉴证明", alert: false },
+          { time: "决算前 2 天", text: "三方支付明细合并为指定 PDF 发送银行送审", alert: false }
+        ],
+        checklist: [
+          { group: "契约与本审查必备项 (公司侧)", items: [
+            { text: "重要事项说明书（个人物件准备 4 份，含朗读本）", done: true, tag: "4份" },
+            { text: "最新登記事項証明書（ATBB 调取最新藤本）", done: true },
+            { text: "确认卖方中介公章是否可外带或提前发 PDF", done: true },
+            { text: "卖方《设备表》与《物件状况报告书》各打印 2 份", done: true }
+          ]},
+          { group: "新筑一户建专属核验项 (客户侧)", items: [
+            { text: "买主提供住民票（注意：个人番号不可显示，其余全要）", done: true, tag: "无番号" },
+            { text: "实印与手付金（转账或现金提前与卖方确认）", done: true },
+            { text: "核实新筑一户建正式地番与交付门牌", done: false, warn: true }
+          ]}
+        ]
+      },
+      2: {
+        id: "deal-02",
+        title: "新宿区西新宿高级公寓 1201",
+        type: "二手高级公寓 • 法人物件 • 决算倒计时",
+        price: 4820,
+        stage: "决算准备中",
+        timeline: [
+          { time: "决算前 10 天 (即日)", text: "致电管理会社寄送《区分所有者变更届》及《管理费振替纸》", alert: true },
+          { time: "决算前 7 天", text: "向卖家索取《固定资产税评价证明书》原件备交司法书士", alert: false },
+          { time: "决算前 2 天", text: "制作合规 PDF: 客户名+1011+的决算资料.pdf 送审银行", alert: true },
+          { time: "决算前 1 天", text: "准备买卖双方领收书，各贴 400 円印纸并加盖公章", alert: false },
+          { time: "决算日当天", text: "银行窗口残代金转账，移交钥匙与物业材料完成决算", alert: false }
+        ],
+        checklist: [
+          { group: "公寓管理会社交接（最易延误点）", items: [
+            { text: "索取《区分所有者变更届》（邮寄周期预留，需备信封贴票）", done: false, tag: "高风险" },
+            { text: "索取《管理费+修缮费振替用纸》（决算前必须到手）", done: false, tag: "高风险" }
+          ]},
+          { group: "司法书士与财务清算", items: [
+            { text: "向卖家索取《评价证明书》原件（公寓过户必备）", done: true },
+            { text: "制作三张支付明细：残代金、中介费、司法书士报酬", done: true },
+            { text: "生成指定命名格式 PDF 并通知内部负责人", done: false, warn: true },
+            { text: "领收书 2 张盖章并贴附印纸（超过100万贴400円）", done: false }
+          ]},
+          { group: "重说与契约归档", items: [
+            { text: "重要事项说明书（法人物件备 3 份）", done: true, tag: "3份" },
+            { text: "支付约定书（超过3%佣金部分以业务委托签署）", done: true }
+          ]}
+        ]
+      },
+      3: {
+        id: "deal-03",
+        title: "港区麻布台豪华塔楼",
+        type: "高额不动产 • 海外华人非居住者 • 境外全款电汇",
+        price: 28000,
+        stage: "签约准备中",
+        timeline: [
+          { time: "契约前 3 天", text: "核对买主境外有效护照复印件与线上 IT 重说视讯环境", alert: false },
+          { time: "契约签订日", text: "线上视讯朗读重说，海外客户签字公证本回邮锁定", alert: true },
+          { time: "决算前 10 天", text: "向客户开具外汇请求书，核实大额境外送金银行流水证明", alert: true },
+          { time: "决算前 3 天", text: "司法书士确认境外公证声明书（替代印鉴证明）原件送达", alert: false },
+          { time: "决算日当天", text: "国际电汇残代金到账核验，司法书士完成所有权移转登记", alert: false }
+        ],
+        checklist: [
+          { group: "海外非居住者专属合规证件 (核心)", items: [
+            { text: "客户有效护照清晰彩色扫描件（核验签发地与有效期限）", done: true, tag: "护照" },
+            { text: "当地公证处出具的《声明书/宣誓书》（替代日本印鉴证明）", done: false, warn: true, tag: "公证书" },
+            { text: "境外送金合规凭据（符合反洗钱 AML 审查准备）", done: true }
+          ]},
+          { group: "高额资产（2.8亿）印纸与重说制本", items: [
+            { text: "买卖契约书印纸税额：¥60,000（2~3亿区间税率）", done: true, tag: "6万円" },
+            { text: "重要事项说明书（线上 IT 重说录制与双语对应）", done: true },
+            { text: "大额中介费（法定上限约 ¥930 万）外币或日元结算方案锁定", done: true }
+          ]},
+          { group: "司法书士与产权委托", items: [
+            { text: "签署涉外不动产所有权移转登记委任状", done: false, warn: true },
+            { text: "司法书士核验买主境外真实身份与授权委托意愿", done: true }
+          ]}
+        ]
+      }
+    };
+
+    function selectDeal(id) {
+      document.querySelectorAll('.deal-card').forEach(el => el.classList.remove('active'));
+      const activeCard = document.getElementById(`card-${id}`);
+      if (activeCard) activeCard.classList.add('active');
+
+      const data = dealsData[id];
+      document.getElementById('checklist-heading').innerText = `智能资料与任务 Checklist（${data.title}）`;
+      document.getElementById('deal-type-badge').innerText = data.type;
+
+      // 渲染 Checklist
+      const container = document.getElementById('checklist-content');
+      container.innerHTML = '';
+
+      let totalTasks = 0;
+      let completedTasks = 0;
+
+      data.checklist.forEach((group, gIdx) => {
+        const groupEl = document.createElement('div');
+        groupEl.className = 'checklist-group';
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'checklist-title';
+        titleEl.innerText = group.group;
+        groupEl.appendChild(titleEl);
+
+        group.items.forEach((item, iIdx) => {
+          totalTasks++;
+          if (item.done) completedTasks++;
+
+          const itemEl = document.createElement('label');
+          itemEl.className = 'check-item';
+
+          const chk = document.createElement('input');
+          chk.type = 'checkbox';
+          chk.checked = item.done;
+          chk.onchange = (e) => {
+            item.done = e.target.checked;
+            updateRates();
+          };
+
+          const textEl = document.createElement('div');
+          textEl.className = 'check-text';
+          textEl.innerText = item.text;
+
+          if (item.tag) {
+            const badge = document.createElement('span');
+            badge.className = 'check-badge';
+            badge.innerText = item.tag;
+            textEl.appendChild(badge);
+          }
+          if (item.warn) {
+            const badge = document.createElement('span');
+            badge.className = 'check-badge warn';
+            badge.innerText = '待完成';
+            textEl.appendChild(badge);
+          }
+
+          itemEl.appendChild(chk);
+          itemEl.appendChild(textEl);
+          groupEl.appendChild(itemEl);
+        });
+
+        container.appendChild(groupEl);
+      });
+
+      // 渲染 Timeline
+      const timelineBox = document.getElementById('timeline-box');
+      timelineBox.innerHTML = '';
+      data.timeline.forEach(t => {
+        const node = document.createElement('div');
+        node.className = 'timeline-node';
+
+        const dot = document.createElement('div');
+        dot.className = `timeline-dot ${t.alert ? 'alert' : ''}`;
+
+        const time = document.createElement('div');
+        time.className = 'timeline-time';
+        time.innerText = t.time;
+
+        const content = document.createElement('div');
+        content.className = 'timeline-content';
+        content.innerText = t.text;
+
+        node.appendChild(dot);
+        node.appendChild(time);
+        node.appendChild(content);
+        timelineBox.appendChild(node);
+      });
+
+      // 同步计算器金额
+      document.getElementById('deal-amt-input').value = data.price;
+      calculateFee();
+      updateRates();
+    }
+
+    function updateRates() {
+      // 动态计算完成率
+      const checkboxes = document.querySelectorAll('#checklist-content input[type="checkbox"]');
+      const total = checkboxes.length;
+      const checked = Array.from(checkboxes).filter(c => c.checked).length;
+      const rate = total > 0 ? Math.round((checked / total) * 100) : 0;
+      document.getElementById('kpi-rate').innerText = rate + '%';
+    }
+
+    function calculateFee() {
+      const amtWan = parseFloat(document.getElementById('deal-amt-input').value) || 0;
+      const amtYen = amtWan * 10000;
+
+      // 日本法定中介费: (成交价 * 3% + 60,000) * 1.1
+      let fee = 0;
+      if (amtYen > 4000000) {
+        fee = Math.floor((amtYen * 0.03 + 60000) * 1.1);
+      } else {
+        fee = Math.floor(amtYen * 0.05 * 1.1);
+      }
+      document.getElementById('res-fee').innerText = '¥ ' + fee.toLocaleString('ja-JP');
+
+      // 契约书印纸梯度
+      let contractStamp = '¥ 10,000 (减免特例)';
+      if (amtWan <= 1000) contractStamp = '¥ 5,000';
+      else if (amtWan <= 5000) contractStamp = '¥ 10,000';
+      else if (amtWan <= 10000) contractStamp = '¥ 30,000';
+      else if (amtWan <= 50000) contractStamp = '¥ 60,000';
+      else contractStamp = '¥ 160,000';
+      document.getElementById('res-contract-stamp').innerText = contractStamp;
+
+      // 领收书印纸 (100万阶梯)
+      if (amtWan < 100) {
+        document.getElementById('res-receipt-stamp').innerText = '¥ 200 (单张)';
+      } else {
+        document.getElementById('res-receipt-stamp').innerText = '¥ 400 (两张200円)';
+      }
+
+      // 超3%佣金
+      if (amtWan >= 20000) {
+        document.getElementById('res-extra-desc').innerText = '标的高达亿级，强化 AML 留档';
+      } else {
+        document.getElementById('res-extra-desc').innerText = '超3%部分需签《支払約定書》';
+      }
+    }
+
+    // 默认初始化选中案件 2
+    selectDeal(2);
+  </script>
+</body>
+</html>

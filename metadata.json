@@ -1,0 +1,26 @@
+{
+  "$schema": "../../docs/templates/case_metadata_schema.json",
+  "id": "sentis-crm-system",
+  "title": "Sentis 房产中介内部综合业务管理系统规划",
+  "category": "产品规划",
+  "status": "in_progress",
+  "author": "Vanguard 平台架构组",
+  "created_at": "2026-10-03",
+  "updated_at": "2026-10-03",
+  "summary": "基于株式会社 SENTIS（代表：阿部翔平）商业定位与《創業計画書》《売買契約の流れ》核心资料，规划集「小红书/私域海外集客、高额不动产（2~10億円）跨国交易风控、全流程智能Checklist与决算倒排」于一体的高人效内部业务管理系统。当前处于核心业务引擎详细设计阶段。",
+  "tags": [
+    "不动产中介",
+    "Sentis",
+    "海外华人富裕层",
+    "高额不动产",
+    "小红书获客",
+    "日本房产买卖",
+    "业务流程自动化",
+    "极简人效系统",
+    "工程进度表"
+  ],
+  "deliverables": {
+    "site_entry": "site/index.html",
+    "docs_entry": "docs/04_project_schedule.md"
+  }
+}
