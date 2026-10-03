@@ -96,10 +96,163 @@
 
 ---
 
-## 3. 产物交付规划：纯静态可交互展示原型系统
+## 4. 核心数据模型设计 (Entity-Relationship Data Model)
 
-遵循 Vanguard 纯静态交付方针，本系统的原型产物将实现：
-- 完美呈现 Sentis 企业级深色高质感控制台界面。
-- 可实时切换【新宿区西新宿公寓（在日贷款买家）】、【世田谷区桜新町一户建（新房验房）】以及【港区麻布台高额资产（海外富裕层 2.8 亿全款单）】三大典型业务案例。
-- 动态联动展现各自专属的智能 Checklist、倒排时间线与财务税额试算。
-- 本地浏览器双击直达，零环境配置。
+系统遵循不动产交易生命周期与法定账簿追溯要求，设计解耦、强关联的 7 大核心实体模型：
+
+```mermaid
+erDiagram
+    LEAD_CONSULT ||--o{ CONTRACT_TX : "发起/签约"
+    PROPERTY_MASTER ||--o{ CONTRACT_TX : "标的标定"
+    CONTRACT_TX ||--o| MORTGAGE_CASE : "挂接房贷"
+    CONTRACT_TX ||--|| SETTLEMENT_RECORD : "清算交割"
+    CONTRACT_TX ||--|| STATUTORY_LEDGER_49 : "第49条归档"
+    LEAD_CONSULT ||--o{ EKYC_AML_AUDIT : "合规筛查"
+
+    LEAD_CONSULT {
+        string lead_id PK "线索/客户全局唯一识别码"
+        string client_name "客户姓名（展示脱敏）"
+        string resident_type "DOMESTIC(在日居住) / OVERSEAS(海外非居住)"
+        string nationality "国籍 / 居住地"
+        string source_channel "小红书 / 门户 / 转介"
+        string kyc_status "PENDING / VERIFIED / REJECTED"
+        datetime created_at "建档时间"
+    }
+
+    PROPERTY_MASTER {
+        string property_id PK "物件唯一编号"
+        string property_type "MANSION(公寓) / DETACHED(一户建) / LAND(土地)"
+        string address "不动产法定坐落（地番/家屋番号）"
+        string seller_type "CORPORATE(法人) / INDIVIDUAL(个人)"
+        decimal price "卖方希望售价(円)"
+        string registry_status "登記事項証明書確認済 / 照合中"
+        string hazard_risk "水防法該当 / 浸水想定外"
+    }
+
+    CONTRACT_TX {
+        string contract_id PK "契约案件流水号"
+        string lead_id FK "关联买受人"
+        string property_id FK "关联标的物件"
+        decimal deal_price "最终签约买卖代金(円)"
+        decimal hand_money "手付金(定金)金额(円)"
+        decimal brokerage_fee "法定仲介手续费(円)"
+        date contract_date "签约日"
+        date loan_special_deadline "融资特约解除到期日"
+        date settlement_date "预定残金决算引渡日"
+        string takken_officer_id "专任宅建士编号"
+        string article_35_status "DRAFT / EXPLAINED / SEALED"
+        string article_37_status "DRAFT / SIGNED / SEALED"
+    }
+
+    MORTGAGE_CASE {
+        string mortgage_id PK "房贷档案编号"
+        string contract_id FK "关联买卖契约"
+        string bank_code "金融机构代号（三菱/三井/瑞穗等）"
+        decimal loan_applied_amount "申贷金额(円)"
+        string pre_approval_status "PASS / REJECT / WAITING"
+        string main_approval_status "PASS / REJECT / CONDITIONAL"
+        date kinsho_sign_date "金钱消费借贷合同签署日"
+    }
+
+    SETTLEMENT_RECORD {
+        string settlement_id PK "决算单号"
+        string contract_id FK "关联买卖契约"
+        decimal remaining_balance "残代金总额(円)"
+        decimal tax_adjustment "固定资产税/都市计划税精算额(円)"
+        decimal scrivener_fee "司法书士登记报酬与免许税(円)"
+        string fee_pdf_path "三方支付明细PDF存储凭证"
+        date executed_at "决算执行完成时间"
+    }
+
+    STATUTORY_LEDGER_49 {
+        string ledger_id PK "法定账簿唯一编码"
+        string contract_id FK "关联买卖契约"
+        date ledger_created_date "账簿调印日"
+        string takken_signed_seal "专任宅建士电子印鉴哈希"
+        datetime lock_timestamp "法定不可篡改锁定时间戳"
+        date retention_expiry "法定保存失效日(交易日起7年)"
+    }
+
+    EKYC_AML_AUDIT {
+        string audit_id PK "合规审计追溯编号"
+        string lead_id FK "关联客户线索"
+        string id_document_hash "护照/公证书扫描件SHA256哈希"
+        string sanction_screen_result "CLEAR / HIT / MANUAL_REVIEW"
+        string swift_tx_ref "境外电汇SWIFT参考号"
+        string beneficial_owner_info "法人实质支配者穿透记录"
+        datetime screened_at "筛查执行时间"
+    }
+```
+
+### 4.2 核心数据字典与脱敏保护规格
+
+| 字段名称 | 物理字段名 | 数据类型 | 允许空值 | 业务定义与约束 | PII 脱敏保护规则 |
+| :--- | :--- | :--- | :---: | :--- | :--- |
+| **客户姓名** | `client_name` | `VARCHAR(100)` | 否 | 买卖当事人真实法定全名 | 前端默认展示脱敏格式：`能勢 **` 或 `Abe **` |
+| **联络电话** | `phone_number` | `VARCHAR(30)` | 是 | 当事人常用联系电话 | 中间 4 位掩码处理：`090-****-1234` |
+| **身份证件号** | `id_number` | `VARCHAR(50)` | 否 | 护照号/在留卡号（绝不收集个人番号 MyNumber） | 仅显示后 4 位：`E****7890`，原本哈希加密存储 |
+| **物件地址** | `address` | `VARCHAR(255)` | 否 | 法务局登记簿坐落及门牌号 | 样板阶段采用虚构地番：`東京都板橋区本町 99-99` |
+| **成交代金** | `deal_price` | `NUMERIC(14,2)`| 否 | 契约实际成交总价（单位：円） | 金额阶梯权限控制，仅限专属担当与宅建士查看 |
+| **印鉴哈希** | `takken_signed_seal`| `CHAR(64)` | 否 | 专任宅建士记名押印操作生成的 SHA-256 指纹 | 写入后底层设为只读，作为第49条账簿审计追溯源 |
+
+---
+
+## 5. RBAC 4级角色权限矩阵 (Role-Based Access Control)
+
+为落实《宅地建物取引业法》法定职责与合规隔离，系统确立四级权限模型：
+
+| 业务功能模块 / 实体操作 | R1: 专任宅地建物取引士 (Takken Officer) | R2: 仲介业务担当 (Sales Representative) | R3: 协同外部司法书士 (Judicial Scrivener) | R4: 内部合规与审计员 (Compliance Auditor) |
+| :--- | :---: | :---: | :---: | :---: |
+| **商谈反响与客户建档** | 查看 / 维护 | 增删改查 (全权) | 无访问权 | 查看 / 审计 |
+| **第35条重要事项说明编制** | **终审确认 / 记名押印** | 起草 / 填报资料 | 查看 (权利登记部分) | 规范点检 |
+| **第37条买卖契约书审查** | **法务终审 / 记名押印** | 起草 / 协商特约 | 查看 (确权交割条款) | 合规抽查 |
+| **住宅贷款审查进度推进** | 审核解除期限 | 填报银行批复进度 | 查看 (融资条件) | 监控逾期风险 |
+| **三方支付结算明细整合** | 终审放行 | 编制并提交审核 | **录入登记税报酬明细** | 财务复核 |
+| **残金决算与产权移转交割** | 出席现场 / 见证 | 现场协调 / 领收书 | **登记申请 / 原本受领** | 归档见证 |
+| **宅建业法第49条法定账簿** | **调印 / 归档锁定** | 查看归档凭据 | 无访问权 | **7年留存审计** |
+| **犯收法 eKYC / AML 日志** | 终审确认 | 收集证件 / 提报 | 查验印鉴证明书 | **反洗钱穿透排查** |
+
+> **权限互斥与风控约束（SoD 原则）**：
+> 1. 仲介业务担当（R2）**严禁越权执行**第35条重要事项说明书的最终记名盖章与第49条账簿调印；
+> 2. 外部司法书士（R3）仅限通过安全临时受限链接访问与产权登记、抵当权设定直接相关的字段，绝对隔离商业佣金约定书与内部客户线索池；
+> 3. 法定账簿一旦由专任宅建士（R1）调印锁定，系统底层触发只读状态，任何角色（包括系统管理员）均不可篡改。
+
+---
+
+## 6. 技术架构分层与落地规约 (Zero Server Prototype vs Production Architecture)
+
+为彻底解决“静态展示站”与“基干系统复杂能力”之间的理解冲突，系统明确划分两大生命周期阶段架构：
+
+```text
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│                                   VANGUARD 架构分层规约                                 │
+├──────────────────────────────────────────────────────────────────────────────────────────┤
+│ 【阶段 A: 现状交付 · Zero Server Runtime Prototype (当前査閲様板)】                       │
+│  • 架构形态: 纯静态前端 Vanilla Web (HTML5 / CSS3 / ES6 Modules)                         │
+│  • 运行环境: 宿主浏览器内存 + LocalStorage / SessionStorage + SameSite=Lax 安全 Cookie    │
+│  • 承载使命: 业务动线高保真交互走查、 Checklist 逻辑验证、高额税金与佣金前端即时联动     │
+│  • 部署基础设施: GitHub Pages 纯静态托管 + 独立域名 (CNAME)，零云端服务器运维成本         │
+│  • 关键性质: 交互原型（Interactive Specification），绝非已上线商用的后端微服务集群       │
+├──────────────────────────────────────────────────────────────────────────────────────────┤
+│ 【阶段 B: 演进目标 · Production Target Architecture (将来本番実装規約)】                 │
+│  • 表现层 (Presentation): 响应式企业工作台 (React/Vue/WebComponent + Vanguard Design)   │
+│  • 业务逻辑层 (Business Logic): 容器化无状态 API 网关、SOP 流程状态机、AML 自动化筛查引擎  │
+│  • 数据持久层 (Data Layer): PostgreSQL (Row-Level Security 租户隔离) + S3 对象存储 (WORM) │
+│  • 法律保障层 (Legal & HSM): 电子签署时间戳证书、专任宅建士数字证书、ATBB/REINS 数据网关 │
+│  • 审计监控层 (Audit & Ops): 不可变操作审计追溯日志（法定保存 7 年）、Prometheus 链路告警  │
+└──────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 7. 信息安全、合规审计与个人信息保护法 (APPI) 脱敏规程
+
+### 7.1 个人信息保护（APPI）与合成仿真数据（Synthetic Data）强制声明
+- **仿真数据性质**：本原型系统与各规格说明文档中所包含的所有具体不动产物件（如“東京都板橋区本町中古マンション”）、当事人姓名（如“能勢 秀樹”）、联络方式、许可证号、成交价格与银行账户信息，**均为依据业务流程验证需求编纂的架空合成数据（Synthetic Test Data）**。
+- **杜绝商业泄密与社工攻击**：系统展示样板严格遵循数据脱敏规范，未接入任何真实客户个人隐私或正在进行的未公开商业机密，杜绝通过页面逆向刺探客户隐私与社工攻击的可能性。
+
+### 7.2 生产系统落地安全规范（Security Baseline）
+1. **静态验证期零攻击面**：原型运行于静态托管环境，无数据库注入（SQLi）、服务端远程代码执行（RCE）或常驻进程渗透路径。
+2. **凭证与权限沙箱**：控制台采用 PBKDF2/SHA-256 散列校验，会话仅存储于会话存储空间，登出即刻物理销毁。
+3. **敏感凭证防外泄**：契约书面扫描件在生产系统归档时，必须在传输层（TLS 1.3）与静态存储层（AES-256）双重加密，并实施字段级动态脱敏。
+

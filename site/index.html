@@ -1378,13 +1378,13 @@
             <h3 class="card-title">02. 不動産売買標準業務フロー設計書 (SOP)</h3>
             <p class="card-desc">
               ①相談買付 ➔ ②物件・法令調査 ➔ ③重説35条 ➔ ④契約締結 ➔ ⑤ローン・金消 ➔ ⑥司法書士照合・残金決済 ➔ ⑦登記移転引渡の全7段階SOP。
-              国内住宅ローン仲介実務を基軸とし、非居住者向け越境送金分岐にも対応する実務手順書。
+              国内住宅ローン仲介実務を基軸とし、犯罪収益移転防止法（犯収法eKYC）、外為法事前排查、受款AML審査、非居住者源泉税管理を完備。
             </p>
             <div class="card-tags">
               <span class="card-tag">全7段階標準実務</span>
-              <span class="card-tag">役所・登記・重説調査</span>
-              <span class="card-tag">住宅ローン・金消実務</span>
-              <span class="card-tag">司法書士・残金決済引渡</span>
+              <span class="card-tag">犯収法eKYC・本人確認</span>
+              <span class="card-tag">外為法事前排查・AML</span>
+              <span class="card-tag">住宅ローン・司法書士連携</span>
             </div>
           </div>
 
@@ -1412,14 +1412,14 @@
             </div>
             <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
             <p class="card-desc">
-              Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
-              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び各種精算明細・法定書類チェックロジック。
+              Sentis Realty Core の5大基幹モジュール、7大エンティティERデータモデル、RBAC 4級ロール権限マトリクス、
+              動的スマートChecklist判定エンジン、Zero Server Prototype と本番実装規約の階層分離、及び個人情報保護法（APPI）脱敏仕様。
             </p>
             <div class="card-tags">
-              <span class="card-tag">純静的フロントエンド</span>
-              <span class="card-tag">動的Checklist判定</span>
-              <span class="card-tag">逆算タイムライン</span>
-              <span class="card-tag">精算明細照合設計</span>
+              <span class="card-tag">ERデータモデル設計</span>
+              <span class="card-tag">RBAC 4級権限マトリクス</span>
+              <span class="card-tag">アーキテクチャ階層分離</span>
+              <span class="card-tag">APPI脱敏・監査ログ規程</span>
             </div>
           </div>
 
@@ -1517,11 +1517,11 @@
             </div>
             <h3 class="card-title">SENTIS AI 宅建事務補佐官（対話型アシスタント・プロトタイプ）</h3>
             <p class="card-desc">
-              右端の活頁インデックスから滑出するAI事務補佐官の概念検証プロトタイプ。
-              将来の構想機能として「重要事項説明書レビュー支援」「ハザード説明チェック支援」「住宅ローンスケジュール管理支援」の対話UI導線を提示。
+              右端の活頁インデックスから滑出するAI事務補佐官の【UI/UX 概念実証シミュレーション（Mock）】。
+              将来の構想機能として「重要事項説明書レビュー支援」「ハザード説明チェック支援」「住宅ローンスケジュール管理支援」の画面導線・対話体験を提示。
             </p>
             <div class="card-tags">
-              <span class="card-tag">予定機能コンセプト</span>
+              <span class="card-tag">UI/UX 概念実証Mock</span>
               <span class="card-tag">重要事項説明書レビュー支援</span>
               <span class="card-tag">ハザード説明チェック支援</span>
               <span class="card-tag">住宅ローンスケジュール管理支援</span>
@@ -1611,8 +1611,9 @@
           <div class="footer-copy">
             © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
           </div>
-          <div class="footer-disclaimer">
-            本成果物群は詳細設計査閲（Design Review v0.9）段階における合意形成およびプロトタイプ検証用資料として編纂されています。
+          <div class="footer-disclaimer" style="margin-top: 6px; font-size: 11px; color: #64748b; line-height: 1.5;">
+            <strong>【個人情報保護（APPI）及び架空データ注記】</strong> 本ポータル及びプロトタイプに掲載された取引案件情報（物件名、所在、当事者氏名、契約金額等）は、システム要件・業務動線検証を目的とした架空のシミュレーション（脱敏）データです。実在の個人・法人・物件とは一切関係ありません。<br>
+            <strong>【プロトタイプ仕様明記】</strong> 本画面群は GitHub Pages 静的ホスティング規格に準拠した UI/UX 概念実証（Zero Server Runtime Prototype）モデルです。フロントエンドでの動的Checklist判定やAIアシスタントは画面動作シミュレーションであり、本番稼働時にマイクロサービス及び法規DBとの連携を予定しています。
           </div>
         </div>
 

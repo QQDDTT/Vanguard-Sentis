@@ -32,7 +32,7 @@ const documentStore = {
         <h2>1. 商業背景と株式会社センティス（SENTIS）のポジショニング</h2>
         <p>株式会社 SENTIS は令和8年（2026年）5月に設立された、日本国内優良不動産売買仲介（実需・投資・住宅ローン実務）を主軸とし、海外投資家向け越境コンサルティングにも対応する精鋭不動産プロフェッショナルファームです。</p>
         <ul>
-          <li><strong>代表取締役：</strong>阿部 翔平（防衛省 航空自衛隊 作戦情報隊 第二収集隊 歴任、株式会社リノベスト 法人営業責任者として大規模取引・優良物件仲介を多数成約）。</li>
+          <li><strong>代表取締役：</strong>阿部 翔平（大手不動産流通企業 法人営業責任者として大規模取引・優良物件仲介を多数成約、専任宅地建物取引士資格保有）。</li>
           <li><strong>所在地：</strong>東京都千代田区神田須田町 2-3-12 12KANDA 705。</li>
           <li><strong>事業領域：</strong>宅地建物取引業（国内売買仲介）、資産運用サポート、海外投資家向け不動産コンサルティング。</li>
           <li><strong>ブランドスローガン：</strong>「不動産提案に確かな指針を。」（羅針盤とS字シンボル）。</li>
@@ -169,6 +169,51 @@ const documentStore = {
 [D-01日] 銀行ブース予約確認、着金電信確認書のスタンバイ
 [D-当日] 銀行ブースにて着金確認、領収書交付、鍵および評価証明書原本引渡
         </div>
+
+        <h2>4. 国際取引・越境資金決済におけるコンプライアンス管理規程（犯収法・外為法・AML/eKYC）</h2>
+        <p>海外非居住買主が介在する取引においては、日本金融規制および外為法令の厳格遵守が必須であり、以下の法定手順を業務SOPに組み込みます：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>法令・規制枠組み</th>
+              <th>義務要件・法定手続</th>
+              <th>実務アクション・システム統制</th>
+              <th>保存・履行期限</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>犯罪収益移転防止法<br>（特定事業者義務）</strong></td>
+              <td>厳格な本人特定事項確認（KYC/eKYC）、法人実質的支配者（25%超）の特定</td>
+              <td>パスポート原本高精細PDF照合、公証人宣誓書（アポスティーユ付）徴収、取引目的の書面確認</td>
+              <td>取引終了日より<strong>法定7年間保存</strong></td>
+            </tr>
+            <tr>
+              <td><strong>外為法 第55条の3<br>（対内直接投資等）</strong></td>
+              <td>非居住者による本邦不動産取得の事後報告義務（投資用・賃貸用・法人取得等）</td>
+              <td>日本銀行経由・財務大臣宛て「本邦にある不動産の取得に関する報告書」提出要否判定（居住自用除外の該当性審査）</td>
+              <td>取得日より<strong>20日以内</strong>に提出</td>
+            </tr>
+            <tr>
+              <td><strong>国際制裁・PEPs審査<br>（OFAC・外務省告示）</strong></td>
+              <td>テロ資金凍結対象者・外国重要公職者（PEPs）の取引前スクリーニング</td>
+              <td>制裁リストデータベース照合、外国PEPs該当時の資産形成経緯および資金出所特別確認（EDD）</td>
+              <td>契約締結前の必須チェック</td>
+            </tr>
+            <tr>
+              <td><strong>銀行受款AML審査<br>（マネロン防止）</strong></td>
+              <td>送金人名義と買主名義の完全一致（第三者送金排除）、資金清算バッファ確保</td>
+              <td>海外電信送金（SWIFT MT103）事前確認、国内受款銀行における外為照合猶予として決済期日に30日以上のバッファ設定</td>
+              <td>契約書決済条項への織り込み</td>
+            </tr>
+            <tr>
+              <td><strong>非居住者源泉所得税<br>（所得税法212条）</strong></td>
+              <td>非居住者売主からの購入時における10.21%源泉徴収および税務署納付義務</td>
+              <td>買主（源泉徴収義務者）への控除指導、税理士連携による納付書の事前作成と控除後代金決済</td>
+              <td>支払月の<strong>翌月10日</strong>まで</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     `
   },
@@ -285,8 +330,155 @@ const documentStore = {
               <td>海外非居住富裕層</td>
               <td>パスポート認証、公証役場宣誓書、AML海外送金着金確認票</td>
             </tr>
+        <h2>4. 核心データモデル設計 (Entity-Relationship Data Model)</h2>
+        <p>不動産取引ライフサイクル及び宅建業法第49条法定帳簿の追溯要件に基づき、7大コアエンティティを設計：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>エンティティ名</th>
+              <th>主キー (PK) / 外部キー (FK)</th>
+              <th>主要属性・格納項目</th>
+              <th>マスキング・個人情報保護 (APPI)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>LEAD_CONSULT<br>（顧客・反響台帳）</strong></td>
+              <td>PK: lead_id</td>
+              <td>氏名、国籍、居住区分（国内/海外）、反響経路（小紅書/ポータル）、KYC状態</td>
+              <td>氏名・電話番号・メールアドレス表示時に中間伏せ字</td>
+            </tr>
+            <tr>
+              <td><strong>PROPERTY_MASTER<br>（物件・権利台帳）</strong></td>
+              <td>PK: property_id</td>
+              <td>物件種別（区分/戸建/土地）、公法制限、管理費・修繕積立金、水防法該当フラグ</td>
+              <td>検証用ダミー地番を採用（東京都板橋区本町等）</td>
+            </tr>
+            <tr>
+              <td><strong>CONTRACT_TX<br>（売買契約・重説台帳）</strong></td>
+              <td>PK: contract_id<br>FK: lead_id, property_id</td>
+              <td>売買代金、手付金額、仲介手数料、重説実施日、融資特約期日、引渡決済日</td>
+              <td>専任宅建士・担当者以外に対する代金閲覧制限</td>
+            </tr>
+            <tr>
+              <td><strong>MORTGAGE_CASE<br>（住宅融資台帳）</strong></td>
+              <td>PK: mortgage_id<br>FK: contract_id</td>
+              <td>金融機関コード、事前審査結果、本審査結果、金消契約日、融資実行予定日</td>
+              <td>金融機関審査番号・口座情報の暗号化保持</td>
+            </tr>
+            <tr>
+              <td><strong>SETTLEMENT_RECORD<br>（残金決済清算台帳）</strong></td>
+              <td>PK: settlement_id<br>FK: contract_id</td>
+              <td>残代金、固都税精算金、司法書士登記報酬、三方支払明細書PDF保管ハッシュ</td>
+              <td>銀行送信用確定PDFの改ざん防止ハッシュ付与</td>
+            </tr>
+            <tr>
+              <td><strong>STATUTORY_LEDGER_49<br>（宅建業法第49条法定帳簿）</strong></td>
+              <td>PK: ledger_id<br>FK: contract_id</td>
+              <td>帳簿調印日時、専任宅建士電子印鑑ハッシュ、法定ロック日時、保存失効日</td>
+              <td>調印後完全読取専用（Immutable WORM）、<strong>7年間保存</strong></td>
+            </tr>
+            <tr>
+              <td><strong>EKYC_AML_AUDIT<br>（犯収法・反社監査ログ）</strong></td>
+              <td>PK: audit_id<br>FK: lead_id</td>
+              <td>パスポート公証書ハッシュ、制裁リスト照合結果、SWIFT着金電文番号、実質支配者情報</td>
+              <td>犯収法特定事業者記録として暗号化、監査役のみ全権照合</td>
+            </tr>
           </tbody>
         </table>
+
+        <h2>5. RBAC 4級ロール権限マトリクス (Role-Based Access Control)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>業務機能モジュール / 台帳権限</th>
+              <th>R1: 専任宅建士</th>
+              <th>R2: 仲介営業担当</th>
+              <th>R3: 外部司法書士</th>
+              <th>R4: 内部監査役</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>顧客反響・案件作成</td>
+              <td>閲覧・監理</td>
+              <td><strong>全権（作成・更新）</strong></td>
+              <td>アクセス権なし</td>
+              <td>閲覧・監査</td>
+            </tr>
+            <tr>
+              <td>第35条重要事項説明書 審査</td>
+              <td><strong>最終承認・記名押印</strong></td>
+              <td>原案作成・情報収集</td>
+              <td>権利・登記部分の閲覧</td>
+              <td>合規点検</td>
+            </tr>
+            <tr>
+              <td>第37条契約書・特約審査</td>
+              <td><strong>最終承認・記名押印</strong></td>
+              <td>起草・特約協議</td>
+              <td>決済・引渡条項の閲覧</td>
+              <td>合規点検</td>
+            </tr>
+            <tr>
+              <td>住宅ローン審査進捗管理</td>
+              <td>期日承認</td>
+              <td>ステータス更新</td>
+              <td>閲覧（抵当権設定用）</td>
+              <td>リスク監視</td>
+            </tr>
+            <tr>
+              <td>三方清算支払明細書</td>
+              <td>最終承認</td>
+              <td>作成・提出</td>
+              <td><strong>登記税・報酬額入力</strong></td>
+              <td>財務精算確認</td>
+            </tr>
+            <tr>
+              <td>残金決済・引渡立会</td>
+              <td>立会確認</td>
+              <td>現場進行・領収証交付</td>
+              <td><strong>登記申請原本受領</strong></td>
+              <td>完了監査</td>
+            </tr>
+            <tr>
+              <td>宅建業法第49条法定帳簿</td>
+              <td><strong>調印・帳簿ロック</strong></td>
+              <td>閲覧のみ</td>
+              <td>アクセス権なし</td>
+              <td><strong>7年保存監査</strong></td>
+            </tr>
+            <tr>
+              <td>犯収法 eKYC / AML監査</td>
+              <td>最終確認</td>
+              <td>証憑収集・提出</td>
+              <td>印鑑証明照合</td>
+              <td><strong>反社・制裁スクリーニング</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>6. 技術基盤と稼働アーキテクチャの階層分離規約</h2>
+        <div class="doc-code-preview">
+【フェーズ A: 現行成果物 · Zero Server Runtime Prototype (Design Review v0.9)】
+・アーキテクチャ: 純粋 Vanilla Web (HTML5 / CSS3 / ES6)
+・稼働層: ブラウザ内ローカルメモリ + SessionStorage / LocalStorage + SameSite=Lax Cookie
+・目的: 業務動線の高保真ウォークスルー、動的Checklist判定ロジック検証、費用試算UI即時検証
+・ホスティング: GitHub Pages 静的配信 + 独自ドメイン (CNAME)、常駐バックエンド維持費ゼロ
+・性質明記: 【UI/UX 概念実証プロトタイプ（Interactive Prototype）】であり、商用本番バックエンドではありません。
+
+【フェーズ B: 本番実装目標 · Target Production Architecture (将来実装規約)】
+・フロントエンド: Vanguard Design Tokens 準拠のレスポンシブ業務コンソール
+・API/ビジネスロジック: ステートレス RESTful API マイクロサービス、SOP ワークフロー状態機
+・データストア: PostgreSQL (RLS 行レベルセキュリティ) + S3 (WORM 追記不能保全)
+・法規連携: 専任宅建士デジタル証明書連携、不動産流通標準データ (ATBB/REINS) ゲートウェイ
+・監査追跡: 不変性監査ログパイプライン（法定 7 年保管保証）
+        </div>
+
+        <h2>7. 個人情報保護（APPI）及び架空シミュレーションデータ方針</h2>
+        <p><strong>【合成ダミーデータの使用】</strong><br>
+        本システムプロトタイプ及び付属するすべての仕様書に記載されている物件情報（例：東京都板橋区本町マンション等）、当事者氏名（例：能勢 秀樹等）、連絡先、取引金額は、業務要件及び画面動線の検証を目的として編纂された<strong>架空の合成データ（Synthetic Simulation Data）</strong>です。</p>
+        <p>本静的成果物は実在の顧客個人情報（PII）や実際の機密取引データを一切保持・送信しておらず、情報漏洩及びソーシャルエンジニアリング攻撃のリスクを構造的に排除しています。</p>
       </div>
     `
   },
