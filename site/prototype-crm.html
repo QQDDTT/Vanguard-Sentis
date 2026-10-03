@@ -25,21 +25,7 @@
         return;
       }
 
-      var TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
-      var savedSession = sessionStorage.getItem("SENTIS_GATEWAY_AUTH_STATE");
-      var savedLocal = localStorage.getItem("SENTIS_GATEWAY_AUTH_STATE");
-      var hasCookieAuth = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
-
-      if (savedSession === TARGET_AUTH_HASH || savedLocal === TARGET_AUTH_HASH || hasCookieAuth) {
-        // 跨标签页凭证有效，自动补齐当前会话
-        sessionStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
-        localStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
-      } else {
-        // 未認証アクセスを直ちに阻断し、管理システム執務室玄関のログインゲートウェイへ転送
-        window.location.replace('./crm-login.html');
-      }
-
-      // 初始化读取并应用主题，防止首屏白屏/黑屏闪烁
+      // 原型素材展示模式：目标系统的登录页面仅为产品交互素材，不强制拦截内部页面的直接访问
       try {
         var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "dark";
         document.documentElement.setAttribute("data-theme", initialTheme);

@@ -559,22 +559,15 @@
       }, 1300);
     }
 
-    // 密码输入开门逻辑
+    // 密码输入开门逻辑（作为产品展示原型，免除阻碍，提供无门槛开门交互体验）
     async function handleDoorUnlock(event) {
       if (event) event.preventDefault();
       const entered = doorPassword.value;
-      if (!entered) return;
-
       authError.style.display = 'none';
-      const hash = await computeSha256(entered);
-
-      if (hash === TARGET_AUTH_HASH) {
-        grantAccessAndOpenDoor();
-      } else {
-        authError.style.display = 'block';
-        doorPassword.select();
-        doorPassword.focus();
+      if (!entered || entered.trim() === '') {
+        doorPassword.value = "SentisPass";
       }
+      grantAccessAndOpenDoor();
     }
 
     // 模拟 IC 卡快速感应触碰开门
