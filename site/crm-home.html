@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>株式会社センティス (SENTIS Realty) - 内部基幹システム 執務室VRメインハブ</title>
+  <title>鏍紡浼氱ぞ銈汇兂銉嗐偅銈?(SENTIS Realty) - 鍐呴儴鍩哄构銈枫偣銉嗐儬 鍩峰嫏瀹R銉°偆銉炽儚銉?/title>
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
 
   <!-- ======================================================================
-       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
-       第二防壁：セッション認証確認（未認証時は執務室玄関 crm-login.html へ自動転送）
-       ====================================================================== -->
+       绗竴闃插锛欸itHub Pages 鐩存帴銈偗銈汇偣闃绘柇銉绘瑕忋儔銉°偆銉冲挤鍒惰虎閫併偣銈儶銉椼儓
+       绗簩闃插锛氥偦銉冦偡銉с兂淇濇寔锛堝師鍨嬬礌鏉愬睍绀恒儮銉笺儔銉诲厤闃绘柇锛?       ====================================================================== -->
   <script>
     (function() {
       var currentHost = window.location.hostname;
       if (window.location.protocol === 'file:' || !currentHost) {
-        return; // 本地双击离线浏览放行
+        return; // 鏈湴鍙屽嚮绂荤嚎娴忚鏀捐
       }
       var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
       if (!authorizedHosts.includes(currentHost)) {
@@ -24,7 +23,6 @@
         return;
       }
 
-      // 原型素材展示模式：目标系统的登录页面仅为产品交互素材，不强制拦截内部页面的直接访问
       try {
         var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "dark";
         document.documentElement.setAttribute("data-theme", initialTheme);
@@ -470,7 +468,13 @@
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+      transition: background-position 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+    }
+
+    [data-theme="light"] .office-canvas {
+      background-image: url('./assets/office/office_hub_day.jpg');
     }
 
     /* 真实微暖阴影与全景暗角 */
@@ -479,15 +483,287 @@
       inset: 0;
       background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(18, 14, 11, 0.35) 75%, rgba(10, 8, 6, 0.75) 100%);
       pointer-events: none;
+      z-index: 5;
     }
 
     /* ==========================================================================
-       3. Interactive Hotspots (第一人称正面视角下的精准业务热区)
+       3. VR Layered Composite Stage & Elements (独立剥离素材图层拼接与鼠标互动体系)
        ========================================================================== */
-    .hotspot-node {
+    .vr-composite-stage {
       position: absolute;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      z-index: 10;
+    }
+
+    /* 独立复合构件基类 */
+    .vr-elem {
+      position: absolute;
+      pointer-events: auto;
+      cursor: pointer;
+      transform-origin: center center;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+      will-change: transform, filter;
+    }
+
+    .elem-plate {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .elem-visual {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      display: none;
+      pointer-events: none;
+      user-select: none;
+      transition: opacity 0.3s ease;
+    }
+
+    /* 日夜景切换显示对应的独立剥离切图素材 */
+    .elem-visual.night-visual { display: block; }
+    .elem-visual.day-visual { display: none; }
+    [data-theme="light"] .elem-visual.night-visual { display: none; }
+    [data-theme="light"] .elem-visual.day-visual { display: block; }
+
+    /* --- 构件 A: 業務推進行程白板 (Left Wall) --- */
+    .elem-whiteboard {
+      left: 1.308%;
+      top: 22.135%;
+      width: 21.075%;
+      height: 61.198%;
+      z-index: 12;
+    }
+    .elem-whiteboard:hover {
+      transform: translateZ(24px) scale(1.025);
+      filter: drop-shadow(0 8px 24px rgba(52, 211, 153, 0.75));
+    }
+    .elem-whiteboard .beacon-anchor {
+      position: absolute;
+      top: 36%;
+      left: 78%;
+      z-index: 25;
+    }
+    .elem-glass-sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+      background-size: 200% 200%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .elem-whiteboard:hover .elem-glass-sheen {
+      opacity: 1;
+      animation: sheenSlide 1.5s ease-out;
+    }
+    @keyframes sheenSlide {
+      0% { background-position: -150% -150%; }
+      100% { background-position: 150% 150%; }
+    }
+
+    /* --- 构件 B: 办公桌台面基座 (Center Desk Surface) --- */
+    .elem-desk {
+      left: 13.808%;
+      top: 72.916%;
+      width: 71.947%;
+      height: 27.083%;
+      z-index: 10;
+      pointer-events: none; /* 键盘鼠标装饰，不阻挡其它点击 */
+    }
+
+    /* --- 构件 C: 基幹執務PC双屏电脑台账 (Center Desk) --- */
+    .elem-pc {
+      left: 32.703%;
+      top: 52.734%;
+      width: 35.247%;
+      height: 29.948%;
+      z-index: 15;
+    }
+    .elem-pc:hover {
+      transform: translateY(-8px) translateZ(35px) scale(1.035);
+      filter: drop-shadow(0 12px 32px rgba(56, 189, 248, 0.88));
+    }
+    .elem-pc .beacon-anchor {
+      position: absolute;
+      top: 68%;
+      left: 54%;
+      z-index: 25;
+    }
+    .pc-ambient-glow {
+      position: absolute;
+      inset: -8px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.3) 0%, transparent 72%);
+      opacity: 0.35;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .elem-pc:hover .pc-ambient-glow {
+      opacity: 1;
+    }
+    .pc-screen-scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.85), transparent);
+      box-shadow: 0 0 12px #38bdf8;
+      opacity: 0.35;
+      animation: scanlineLoop 3.2s infinite linear;
+      pointer-events: none;
+    }
+    @keyframes scanlineLoop {
+      0% { top: 0%; opacity: 0; }
+      20% { opacity: 0.85; }
+      80% { opacity: 0.85; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .pc-live-indicator {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      background: rgba(10, 16, 26, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #38bdf8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      opacity: 0.85;
+      transition: all 0.3s ease;
+    }
+    .pc-live-indicator .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: liveDotPulse 1.8s infinite ease-in-out;
+    }
+    @keyframes liveDotPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+    .power-on-flash {
+      animation: powerFlash 0.3s ease-out;
+    }
+    @keyframes powerFlash {
+      0% { filter: brightness(1) drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
+      50% { filter: brightness(1.6) drop-shadow(0 0 45px rgba(56, 189, 248, 1)); }
+      100% { filter: brightness(1); }
+    }
+
+    /* --- 构件 D: 专任宅建士朱肉印章台 (Desk Left) --- */
+    .elem-seal {
+      left: 26.5%;
+      top: 78.8%;
+      width: 12.7%;
+      height: 13.7%;
       z-index: 20;
+    }
+    [data-theme="light"] .elem-seal {
+      left: 34.157%;
+      top: 81.38%;
+      width: 9.08%;
+      height: 11.06%;
+    }
+    .elem-seal:hover {
+      transform: translateY(-6px) translateZ(30px) scale(1.07);
+      filter: drop-shadow(0 8px 24px rgba(239, 68, 68, 0.85));
+    }
+    .elem-seal .beacon-anchor {
+      position: absolute;
+      top: 30%;
+      left: 48%;
+      z-index: 25;
+    }
+    .seal-glow-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.35) 0%, transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .elem-seal:hover .seal-glow-ring {
+      opacity: 1;
+    }
+
+    /* --- 构件 E: 法定账簿・重要公文书架 (Right Wall) --- */
+    .elem-bookshelf {
+      left: 78.125%;
+      top: 9.114%;
+      width: 21.875%;
+      height: 90.885%;
+      z-index: 12;
+    }
+    .elem-bookshelf:hover {
+      transform: perspective(900px) rotateY(-2.5deg) translateZ(20px) scale(1.02);
+      filter: drop-shadow(-10px 8px 28px rgba(251, 191, 36, 0.7));
+    }
+    .elem-bookshelf .beacon-anchor {
+      position: absolute;
+      top: 48%;
+      left: 12%;
+      z-index: 25;
+    }
+    .shelf-gold-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 20%, rgba(212, 175, 55, 0.22) 50%, transparent 80%);
+      background-size: 100% 200%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .elem-bookshelf:hover .shelf-gold-shimmer {
+      opacity: 1;
+      animation: shelfShimmer 2s infinite ease-in-out;
+    }
+    @keyframes shelfShimmer {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 0% 100%; }
+    }
+
+    /* --- 构件 F: 施锭退室门 (Left Edge Corner) --- */
+    .elem-door {
+      left: 0.72%;
+      top: 59.89%;
+      width: 12.35%;
+      height: 24.74%;
+      z-index: 8;
+    }
+    .elem-door:hover {
+      transform: scale(1.03);
+      filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.75));
+    }
+    .elem-door .beacon-anchor {
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      z-index: 25;
+    }
+
+    /* ==========================================================================
+       4. Beacon Anchors & Floating Cards (标牌指示与悬浮卡片体系)
+       ========================================================================== */
+    .beacon-anchor {
+      transform: translate(-50%, -50%);
       cursor: pointer;
     }
 
@@ -519,17 +795,17 @@
     }
 
     /* 依物件分类的光效颜色 */
-    .hotspot-node.category-crm .beacon-core { background: #38bdf8; }
-    .hotspot-node.category-crm .beacon-pulse-ring { border-color: #38bdf8; }
+    .category-crm .beacon-core { background: #38bdf8; }
+    .category-crm .beacon-pulse-ring { border-color: #38bdf8; }
 
-    .hotspot-node.category-sop .beacon-core { background: #34d399; }
-    .hotspot-node.category-sop .beacon-pulse-ring { border-color: #34d399; }
+    .category-sop .beacon-core { background: #34d399; }
+    .category-sop .beacon-pulse-ring { border-color: #34d399; }
 
-    .hotspot-node.category-doc .beacon-core { background: #fbbf24; }
-    .hotspot-node.category-doc .beacon-pulse-ring { border-color: #fbbf24; }
+    .category-doc .beacon-core { background: #fbbf24; }
+    .category-doc .beacon-pulse-ring { border-color: #fbbf24; }
 
-    .hotspot-node.category-seal .beacon-core { background: #ef4444; }
-    .hotspot-node.category-seal .beacon-pulse-ring { border-color: #ef4444; }
+    .category-seal .beacon-core { background: #ef4444; }
+    .category-seal .beacon-pulse-ring { border-color: #ef4444; }
 
     /* 悬浮在热区旁边的常驻名牌标签 */
     .hotspot-label-pill {
@@ -552,24 +828,22 @@
       pointer-events: none;
     }
 
-    .hotspot-node:hover .beacon-core {
+    .vr-elem:hover .beacon-core {
       transform: scale(1.25);
       box-shadow: 0 0 24px rgba(212, 175, 55, 0.9);
     }
 
-    .hotspot-node:hover .hotspot-label-pill {
+    .vr-elem:hover .hotspot-label-pill {
       background: rgba(45, 37, 30, 0.98);
       border-color: var(--brass-gold);
       color: var(--brass-bright);
       transform: translateY(-50%) translateX(4px);
     }
 
-    /* ==========================================================================
-       4. Floating Hover Tooltip (悬浮富交互卡片提示)
-       ========================================================================== */
+    /* 悬浮富交互卡片提示 */
     .hotspot-tooltip-card {
       position: absolute;
-      bottom: 42px;
+      bottom: calc(100% + 12px);
       left: 50%;
       transform: translateX(-50%) translateY(10px);
       width: 320px;
@@ -582,36 +856,31 @@
       opacity: 0;
       pointer-events: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 30;
+      z-index: 40;
       overflow: hidden;
     }
 
-    .hotspot-node:hover .hotspot-tooltip-card,
-    .hotspot-node.active .hotspot-tooltip-card {
+    .vr-elem:hover .hotspot-tooltip-card {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
       pointer-events: auto;
     }
 
-    /* 左右边缘贴边对齐防止溢出屏幕 */
-    .hotspot-node.align-left .hotspot-tooltip-card {
+    /* 贴边防溢出 */
+    .align-left .hotspot-tooltip-card {
       left: 0;
       transform: translateY(10px);
     }
-    .hotspot-node.align-left:hover .hotspot-tooltip-card,
-    .hotspot-node.align-left.active .hotspot-tooltip-card {
-      opacity: 1;
+    .align-left:hover .hotspot-tooltip-card {
       transform: translateY(0);
     }
 
-    .hotspot-node.align-right .hotspot-tooltip-card {
+    .align-right .hotspot-tooltip-card {
       left: auto;
       right: 0;
       transform: translateY(10px);
     }
-    .hotspot-node.align-right:hover .hotspot-tooltip-card,
-    .hotspot-node.align-right.active .hotspot-tooltip-card {
-      opacity: 1;
+    .align-right:hover .hotspot-tooltip-card {
       transform: translateY(0);
     }
 
@@ -1067,128 +1336,177 @@
   </header>
 
   <!-- ======================================================================
-       2. VR Office Interior Canvas & Interactive Hotspots (正面第一人称视点)
+       2. VR Office Interior Canvas & Interactive Composite Stage (正面第一人称视点)
        ====================================================================== -->
   <main class="office-viewport" id="officeViewport">
     
-    <!-- PC 端第一人称全景画布 (无人物，纯净正面工位视角) -->
+    <!-- PC 端第一人称全景画布 (复合图层拼接与鼠标互动舞台) -->
     <div class="office-canvas" id="officeCanvas">
       <div class="office-ambient-overlay"></div>
 
-      <!-- 1. 白板 (Left Wall) -->
-      <div class="hotspot-node category-sop align-left" id="spotWhiteboard" onclick="openSopModal()">
-        <div class="beacon-core">
-          <div class="beacon-pulse-ring"></div>
-        </div>
-        <div class="hotspot-label-pill">業務推進行程白板</div>
-        
-        <!-- 悬浮文字与预览卡片 -->
-        <div class="hotspot-tooltip-card">
-          <img src="./assets/office/whiteboard_sop.jpg" alt="SOP白板" class="tooltip-media-thumb">
-          <div class="tooltip-content-body">
-            <div class="tooltip-badge-row">
-              <span class="tooltip-tag">不動産売買実務規範</span>
-              <span class="tooltip-status">標準6大工程策定済</span>
+      <!-- 独立复合图层交互舞台 -->
+      <div class="vr-composite-stage" id="vrStage">
+
+        <!-- 1. 白板 (Left Wall Whiteboard) -->
+        <div class="vr-elem elem-whiteboard category-sop align-left" id="elemWhiteboard" onclick="openSopModal()" title="業務推進行程白板">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_whiteboard_day.png" class="elem-visual day-visual" alt="業務推進行程白板">
+            <img src="./assets/office/elements/elem_whiteboard_night.png" class="elem-visual night-visual" alt="業務推進行程白板">
+            <div class="elem-glass-sheen"></div>
+          </div>
+          
+          <div class="beacon-anchor">
+            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
+            <div class="hotspot-label-pill">業務推進行程白板</div>
+          </div>
+
+          <!-- 悬浮卡片 -->
+          <div class="hotspot-tooltip-card">
+            <img src="./assets/office/whiteboard_sop.jpg" alt="SOP白板" class="tooltip-media-thumb">
+            <div class="tooltip-content-body">
+              <div class="tooltip-badge-row">
+                <span class="tooltip-tag">不動産売買実務規範</span>
+                <span class="tooltip-status">標準6大工程策定済</span>
+              </div>
+              <div class="tooltip-title">不動産売買仲介 業務推進行程</div>
+              <div class="tooltip-desc">
+                顧客集客から物件調査・役所照会、重要事項説明(35条)、売買契約(37条)、住宅ローン金消、残金決済引渡に至る一貫実務標準。
+              </div>
+              <div class="tooltip-action-prompt">実務工程規範を展開</div>
             </div>
-            <div class="tooltip-title">不動産売買仲介 業務推進行程</div>
-            <div class="tooltip-desc">
-              顧客集客から物件調査・役所照会、重要事項説明(35条)、売買契約(37条)、住宅ローン金消、残金決済引渡に至る一貫実務標準。
-            </div>
-            <div class="tooltip-action-prompt">実務工程規範を展開</div>
           </div>
         </div>
-      </div>
 
-      <!-- 2. 办公桌电脑 Workstation PC (Center Desk Direct POV) -->
-      <div class="hotspot-node category-crm" id="spotWorkstation" onclick="window.location.href='./prototype-crm.html'">
-        <div class="beacon-core">
-          <div class="beacon-pulse-ring"></div>
-        </div>
-        <div class="hotspot-label-pill">基幹執務PC台帳</div>
-
-        <!-- 悬浮文字与预览卡片 -->
-        <div class="hotspot-tooltip-card">
-          <img src="./assets/office/desk_workstation.jpg" alt="CRM執務デスク" class="tooltip-media-thumb">
-          <div class="tooltip-content-body">
-            <div class="tooltip-badge-row">
-              <span class="tooltip-tag">売買基幹業務統合管理</span>
-              <span class="tooltip-status">社内稼働中 · オンライン</span>
-            </div>
-            <div class="tooltip-title">不動産売買業務統合台帳</div>
-            <div class="tooltip-desc">
-              買付証明受領案件、重要事項調査進捗、物件登記データベース、売買契約・残金決済台帳の一元即時照会。
-            </div>
-            <div class="tooltip-action-prompt">売買実務台帳を開く</div>
+        <!-- 2. 办公桌基座台面 (Center Desk Surface) -->
+        <div class="vr-elem elem-desk" id="elemDesk">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_desk_day.png" class="elem-visual day-visual" alt="執務机台座">
+            <img src="./assets/office/elements/elem_desk_night.png" class="elem-visual night-visual" alt="執務机台座">
           </div>
         </div>
-      </div>
 
-      <!-- 3. 文件柜公文架 Cabinet (Right Wall) -->
-      <div class="hotspot-node category-doc align-right" id="spotCabinet" onclick="openArchiveModal()">
-        <div class="beacon-core">
-          <div class="beacon-pulse-ring"></div>
-        </div>
-        <div class="hotspot-label-pill">法定帳簿・重要公文書架</div>
+        <!-- 3. 基幹執務PC双屏电脑台账 (Center Desk) -->
+        <div class="vr-elem elem-pc category-crm" id="elemPC" onclick="handlePCClick(event)" title="売買実務台帳">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_dual_pc_day.png" class="elem-visual day-visual" alt="基幹執務PC台帳">
+            <img src="./assets/office/elements/elem_dual_pc_night.png" class="elem-visual night-visual" alt="基幹執務PC台帳">
+            <div class="pc-ambient-glow"></div>
+            <div class="pc-screen-scanline"></div>
+            <div class="pc-live-indicator">
+              <span class="live-dot"></span>
+              <span class="live-text">LIVE · 東京中央</span>
+            </div>
+          </div>
 
-        <!-- 悬浮文字与预览卡片 -->
-        <div class="hotspot-tooltip-card">
-          <img src="./assets/office/binder_shelves.jpg" alt="公文書バインダー棚" class="tooltip-media-thumb">
-          <div class="tooltip-content-body">
-            <div class="tooltip-badge-row">
-              <span class="tooltip-tag">宅建業法第49条 法定帳簿</span>
-              <span class="tooltip-status">原本5年間保管規程</span>
+          <div class="beacon-anchor">
+            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
+            <div class="hotspot-label-pill">基幹執務PC台帳</div>
+          </div>
+
+          <!-- 悬浮卡片 -->
+          <div class="hotspot-tooltip-card">
+            <img src="./assets/office/desk_workstation.jpg" alt="CRM執務デスク" class="tooltip-media-thumb">
+            <div class="tooltip-content-body">
+              <div class="tooltip-badge-row">
+                <span class="tooltip-tag">売買基幹業務統合管理</span>
+                <span class="tooltip-status">社内稼働中 · オンライン</span>
+              </div>
+              <div class="tooltip-title">不動産売買業務統合台帳</div>
+              <div class="tooltip-desc">
+                買付証明受領案件、重要事項調査進捗、物件登記データベース、売買契約・残金決済台帳の一元即時照会。
+              </div>
+              <div class="tooltip-action-prompt">売買実務台帳を開く</div>
             </div>
-            <div class="tooltip-title">重要取引公文書・法令様式書架</div>
-            <div class="tooltip-desc">
-              宅地建物取引業法第35条重要事項説明書原本、第37条売買契約書、登記全部事項証明書、公図・地積測量図、固定資産税評価証明書及びハザードマップ保管バインダー。
-            </div>
-            <div class="tooltip-action-prompt">法定帳簿書架を展開</div>
           </div>
         </div>
-      </div>
 
-      <!-- 4. 专任宅建士朱肉印章台 (Front Left Desk) -->
-      <div class="hotspot-node category-seal" id="spotSealDesk" onclick="openSealModal()">
-        <div class="beacon-core">
-          <div class="beacon-pulse-ring"></div>
-        </div>
-        <div class="hotspot-label-pill">専任宅建士印章台</div>
+        <!-- 4. 专任宅建士朱肉印章台 (Front Left Desk) -->
+        <div class="vr-elem elem-seal category-seal" id="elemSeal" onclick="openSealModal()" title="専任宅建士印章台">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_seal_day.png" class="elem-visual day-visual" alt="専任宅建士印章台">
+            <img src="./assets/office/elements/elem_seal_night.png" class="elem-visual night-visual" alt="専任宅建士印章台">
+            <div class="seal-glow-ring"></div>
+          </div>
 
-        <!-- 悬浮文字与卡片 -->
-        <div class="hotspot-tooltip-card">
-          <div class="tooltip-content-body">
-            <div class="tooltip-badge-row">
-              <span class="tooltip-tag">宅地建物取引業法遵守</span>
-              <span class="tooltip-status">専任取引士常駐</span>
+          <div class="beacon-anchor">
+            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
+            <div class="hotspot-label-pill">専任宅建士印章台</div>
+          </div>
+
+          <!-- 悬浮卡片 -->
+          <div class="hotspot-tooltip-card">
+            <div class="tooltip-content-body">
+              <div class="tooltip-badge-row">
+                <span class="tooltip-tag">宅地建物取引業法遵守</span>
+                <span class="tooltip-status">専任取引士常駐</span>
+              </div>
+              <div class="tooltip-title">専任宅建士・公印審査基準</div>
+              <div class="tooltip-desc">
+                宅建業法第35条・第37条書面への専任取引士記名押印、重要事項説明の適法性監査、手付金保全措置の適法確認。
+              </div>
+              <div class="tooltip-action-prompt">法令審査マニュアルを確認</div>
             </div>
-            <div class="tooltip-title">専任宅建士・公印審査基準</div>
-            <div class="tooltip-desc">
-              宅建業法第35条・第37条書面への専任取引士記名押印、重要事項説明の適法性監査、手付金保全措置の適法確認。
-            </div>
-            <div class="tooltip-action-prompt">法令審査マニュアルを確認</div>
           </div>
         </div>
-      </div>
 
-      <!-- 5. 执务大门 Exit Door (Left Edge Corner) -->
-      <div class="hotspot-node category-doc align-left" id="spotExitDoor" onclick="handleLogout()">
-        <div class="beacon-core">
-          <div class="beacon-pulse-ring"></div>
-        </div>
-        <div class="hotspot-label-pill">執務室施錠退室</div>
+        <!-- 5. 法定账簿・重要公文书架 (Right Wall) -->
+        <div class="vr-elem elem-bookshelf category-doc align-right" id="elemBookshelf" onclick="openArchiveModal()" title="法定帳簿・重要公文書架">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_bookshelf_day.png" class="elem-visual day-visual" alt="法定帳簿・重要公文書架">
+            <img src="./assets/office/elements/elem_bookshelf_night.png" class="elem-visual night-visual" alt="法定帳簿・重要公文書架">
+            <div class="shelf-gold-shimmer"></div>
+          </div>
 
-        <!-- 悬浮文字 -->
-        <div class="hotspot-tooltip-card">
-          <div class="tooltip-content-body">
-            <div class="tooltip-title">執務室セキュア退室</div>
-            <div class="tooltip-desc">
-              現在の執務セッションを終了し、執務室玄関ドアへ戻ります。
+          <div class="beacon-anchor">
+            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
+            <div class="hotspot-label-pill">法定帳簿・重要公文書架</div>
+          </div>
+
+          <!-- 悬浮卡片 -->
+          <div class="hotspot-tooltip-card">
+            <img src="./assets/office/binder_shelves.jpg" alt="公文書バインダー棚" class="tooltip-media-thumb">
+            <div class="tooltip-content-body">
+              <div class="tooltip-badge-row">
+                <span class="tooltip-tag">宅建業法第49条 法定帳簿</span>
+                <span class="tooltip-status">原本5年間保管規程</span>
+              </div>
+              <div class="tooltip-title">重要取引公文書・法令様式書架</div>
+              <div class="tooltip-desc">
+                宅地建物取引業法第35条重要事項説明書原本、第37条売買契約書、登記全部事項証明書、公図・地積測量図、固定資産税評価証明書及びハザードマップ保管バインダー。
+              </div>
+              <div class="tooltip-action-prompt">法定帳簿書架を展開</div>
             </div>
-            <div class="tooltip-action-prompt">施錠して退室する</div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <!-- 6. 执务大门 Exit Door (Left Edge Corner) -->
+        <div class="vr-elem elem-door category-doc align-left" id="elemDoor" onclick="handleLogout()" title="執務室施錠退室">
+          <div class="elem-plate">
+            <img src="./assets/office/elements/elem_door_day.png" class="elem-visual day-visual" alt="執務室施錠退室">
+            <img src="./assets/office/elements/elem_door_night.png" class="elem-visual night-visual" alt="執務室施錠退室">
+          </div>
+
+          <div class="beacon-anchor">
+            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
+            <div class="hotspot-label-pill">執務室施錠退室</div>
+          </div>
+
+          <!-- 悬浮卡片 -->
+          <div class="hotspot-tooltip-card">
+            <div class="tooltip-content-body">
+              <div class="tooltip-title">執務室セキュア退室</div>
+              <div class="tooltip-desc">
+                現在の執務セッションを終了し、執務室玄関ドアへ戻ります。
+              </div>
+              <div class="tooltip-action-prompt">施錠して退室する</div>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /.vr-composite-stage -->
+    </div> <!-- /.office-canvas -->
+  </main>
+
 
     <!-- 移动端工位卡片画卷模式 (Mobile Responsive Dossier Stream) -->
     <div class="mobile-dossier-stream" id="dossierStream">
@@ -1444,6 +1762,81 @@
        Vanilla JS: 空間インタラクション制御
        ====================================================================== -->
   <script>
+
+    // ======================================================================
+    // 3D 空间鼠标互动与多层景深视差物理引擎 (VR Parallax Engine)
+    // ======================================================================
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let isParallaxActive = false;
+
+    const baseCanvas = document.getElementById('officeCanvas');
+    const elemWhiteboard = document.getElementById('elemWhiteboard');
+    const elemPC = document.getElementById('elemPC');
+    const elemDesk = document.getElementById('elemDesk');
+    const elemBookshelf = document.getElementById('elemBookshelf');
+    const elemSeal = document.getElementById('elemSeal');
+    const elemDoor = document.getElementById('elemDoor');
+
+    window.addEventListener('mousemove', (e) => {
+      if (window.innerWidth <= 860) return;
+      isParallaxActive = true;
+      const halfW = window.innerWidth / 2;
+      const halfH = window.innerHeight / 2;
+      targetX = (e.clientX - halfW) / halfW;
+      targetY = (e.clientY - halfH) / halfH;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+    });
+
+    function updateParallax() {
+      if (isParallaxActive && window.innerWidth > 860) {
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
+        if (baseCanvas) {
+          baseCanvas.style.backgroundPosition = "calc(50% + " + (-currentX * 12) + "px) calc(50% + " + (-currentY * 8) + "px)";
+        }
+
+        if (elemWhiteboard && !elemWhiteboard.matches(':hover')) {
+          elemWhiteboard.style.transform = "translate3d(" + (currentX * 9) + "px, " + (currentY * 5) + "px, 0)";
+        }
+        if (elemBookshelf && !elemBookshelf.matches(':hover')) {
+          elemBookshelf.style.transform = "translate3d(" + (currentX * 7) + "px, " + (currentY * 4) + "px, 0)";
+        }
+        if (elemDesk) {
+          elemDesk.style.transform = "translate3d(" + (currentX * 11) + "px, " + (currentY * 7) + "px, 0)";
+        }
+        if (elemPC && !elemPC.matches(':hover')) {
+          elemPC.style.transform = "translate3d(" + (currentX * 15) + "px, " + (currentY * 9) + "px, 0)";
+        }
+        if (elemSeal && !elemSeal.matches(':hover')) {
+          elemSeal.style.transform = "translate3d(" + (currentX * 18) + "px, " + (currentY * 11) + "px, 0)";
+        }
+        if (elemDoor && !elemDoor.matches(':hover')) {
+          elemDoor.style.transform = "translate3d(" + (currentX * 5) + "px, " + (currentY * 3) + "px, 0)";
+        }
+      }
+      requestAnimationFrame(updateParallax);
+    }
+    requestAnimationFrame(updateParallax);
+
+    function handlePCClick(e) {
+      if (e) e.stopPropagation();
+      if (elemPC) {
+        elemPC.classList.add('power-on-flash');
+        setTimeout(() => {
+          window.location.href = './prototype-crm.html';
+        }, 220);
+      } else {
+        window.location.href = './prototype-crm.html';
+      }
+    }
+
+
     const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
     const officeViewport = document.getElementById('officeViewport');
     const hudClock = document.getElementById('hudClock');
