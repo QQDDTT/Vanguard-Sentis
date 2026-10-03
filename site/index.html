@@ -7,6 +7,20 @@
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- ======================================================================
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       ====================================================================== -->
+  <script>
+    (function() {
+      var currentHost = window.location.hostname;
+      var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
+      if (!authorizedHosts.includes(currentHost)) {
+        // github.io などの直接アクセスまたは非正規ホストからのアクセスを即座にブロック・正規暗号化ドメインへ転送
+        window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
+      }
+    })();
+  </script>
   
   <style>
     /* ==========================================================================
@@ -18,7 +32,7 @@
       --vg-bg-subtle: #f8fafc;
       --vg-bg-muted: #f1f5f9;
       --vg-bg-card: #ffffff;
-      --vg-bg-glass: rgba(255, 255, 255, 0.88);
+      --vg-bg-glass: rgba(255, 255, 255, 0.92);
 
       /* 高对比度墨黑与灰阶排版 */
       --vg-text-primary: #090d16;
@@ -29,7 +43,7 @@
       /* 极细科技感边框 */
       --vg-border-light: #e2e8f0;
       --vg-border-subtle: rgba(226, 232, 240, 0.85);
-      --vg-border-focus: #3b82f6;
+      --vg-border-focus: #2563eb;
 
       /* Vanguard 科技重点色 (Electric Cobalt & Precision Cyan) */
       --vg-accent-blue: #2563eb;
@@ -37,6 +51,7 @@
       --vg-accent-cyan: #06b6d4;
       --vg-accent-emerald: #059669;
       --vg-accent-amber: #d97706;
+      --vg-accent-red: #dc2626;
 
       /* 阴影层次体系 */
       --vg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -82,6 +97,238 @@
       background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.06) 0%, rgba(79, 70, 229, 0.03) 40%, transparent 70%);
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* ==========================================================================
+       0. Security Gateway Modal (セキュアゲートウェイ・関係者認証画面)
+       ========================================================================== */
+    .security-gateway-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .security-gateway-overlay.unlocked {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gateway-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 40px 36px;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: gatewayPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes gatewayPop {
+      from { transform: scale(0.94) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .gateway-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #6366f1, #38bdf8);
+    }
+
+    .gateway-emblem-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .gateway-vanguard-icon {
+      width: 42px;
+      height: 42px;
+      background: #090d16;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(9, 13, 22, 0.2);
+    }
+
+    .gateway-sentis-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .gateway-sentis-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .gateway-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-family: var(--vg-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .gateway-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--vg-text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .gateway-subtitle {
+      font-size: 13px;
+      color: var(--vg-text-secondary);
+      line-height: 1.55;
+      margin-bottom: 26px;
+    }
+
+    .gateway-form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .gateway-input-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--vg-text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .gateway-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .gateway-input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--vg-text-tertiary);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .gateway-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 40px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--vg-text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .gateway-input:focus {
+      background: #ffffff;
+      border-color: var(--vg-accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      outline: none;
+    }
+
+    .gateway-btn-submit {
+      width: 100%;
+      height: 44px;
+      background: #090d16;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(9, 13, 22, 0.15);
+    }
+
+    .gateway-btn-submit:hover {
+      background: var(--vg-accent-blue);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .gateway-error-msg {
+      display: none;
+      margin-top: 14px;
+      padding: 8px 12px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #b91c1c;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .gateway-footer-note {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--vg-text-tertiary);
+      line-height: 1.5;
+    }
+
+    /* 认证通过后的主内容容器 */
+    .portal-main-wrapper {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portal-main-wrapper.visible {
+      opacity: 1;
     }
 
     /* ==========================================================================
@@ -166,7 +413,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
     .release-status-badge {
@@ -216,6 +463,26 @@
       background: #f8fafc;
       border-color: #cbd5e1;
       color: var(--vg-text-primary);
+    }
+
+    .btn-logout {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #be123c;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
     }
 
     /* ==========================================================================
@@ -869,382 +1136,508 @@
 </head>
 <body>
 
-  <!-- 顶部科技微光 -->
-  <div class="top-ambient-glow"></div>
-
   <!-- ======================================================================
-       1. Global Header (全域ヘッダー)
+       0. Security Gateway (セキュア関係者認証ゲートウェイ)
        ====================================================================== -->
-  <header class="header-nav">
-    <div class="header-container">
-      <a href="./index.html" class="header-branding">
-        <div class="vanguard-badge-symbol">V</div>
-        <div class="header-titles">
-          <span class="brand-platform">VANGUARD PLATFORM</span>
-          <span class="brand-project">
-            成果物総覧ポータル
-            <span class="sentis-tag">株式会社センティス (SENTIS)</span>
-          </span>
+  <div class="security-gateway-overlay" id="securityGatewayOverlay">
+    <div class="gateway-card">
+      <div class="gateway-emblem-wrap">
+        <div class="gateway-vanguard-icon">V</div>
+        <div class="gateway-sentis-icon">
+          <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS" />
         </div>
-      </a>
+      </div>
 
-      <div class="header-right">
-        <div class="release-status-badge">
-          <span class="pulse-dot"></span>
-          <span>受渡完了 · Release v1.2</span>
+      <div class="gateway-badge">
+        <span>🔒 CONFIDENTIAL DELIVERABLES</span>
+      </div>
+
+      <h2 class="gateway-title">関係者限定アクセス認証</h2>
+      <p class="gateway-subtitle">
+        株式会社センティス (SENTIS) 内部基幹システム策定成果物及び高保真プロトタイプ閲覧のための認証キーを入力してください。
+      </p>
+
+      <form id="gatewayAuthForm" onsubmit="handleGatewayLogin(event)">
+        <div class="gateway-form-group">
+          <label class="gateway-input-label" for="gatewayPassword">認証セキュリティキー (Access Password)</label>
+          <div class="gateway-input-box">
+            <span class="gateway-input-icon">🔑</span>
+            <input type="password" id="gatewayPassword" class="gateway-input" placeholder="アクセスパスワードを入力..." autocomplete="current-password" autofocus required />
+          </div>
         </div>
-        <button class="btn-header-action" onclick="window.print()">
-          <span>🖨️</span> 納品目録印刷
+
+        <button type="submit" class="gateway-btn-submit" id="btnGatewaySubmit">
+          <span>アクセス認証を実行</span> ➔
         </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- ======================================================================
-       2. Hero Header Section (展示導入看板)
-       ====================================================================== -->
-  <section class="hero-section">
-    <div class="hero-eyebrow">
-      <span>DELIVERABLES DIRECTORY</span>
-      <span>•</span>
-      <span>SENTIS REALTY CORE TRANSFORMATION</span>
-    </div>
-
-    <h1 class="hero-title">
-      株式会社センティス 次世代不動産売買業務基幹システム<br>
-      <span class="accent-highlight">要件定義・業務SOP及び統合執務プロトタイプ成果物総覧</span>
-    </h1>
-
-    <p class="hero-description">
-      本ポータルは、株式会社センティス（SENTIS）の創業計画書及び不動産売買・住宅ローン審査実務規程に基づき、
-      Vanguard プラットフォームが策定・設計したすべての公式成果物（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様へ一覧展示するための統合ディレクトリです。
-    </p>
-
-    <!-- 交付 KPI 看板 -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
-        <div class="metric-label">画面プロトタイプ</div>
-        <div class="metric-sub">6大台帳執務デスク ＋ AI事務代理チャット</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-value">04 <span style="font-size:16px; font-weight:normal; color:#64748b;">篇</span></div>
-        <div class="metric-label">公式策定仕様書</div>
-        <div class="metric-sub">概要課題・SOPフロー・システム要件・推進日程</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-value">100%</div>
-        <div class="metric-label">宅建業法整合モデル</div>
-        <div class="metric-sub">第35条重説・第37条書面・49条帳簿保全</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-value">2~10 <span style="font-size:16px; font-weight:normal; color:#64748b;">億円</span></div>
-        <div class="metric-label">海外富裕層案件対応</div>
-        <div class="metric-sub">小紅書送客・非居住者全額電送金分岐SOP</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       3. Deliverables Filter & Catalog Grid (成果物一覧)
-       ====================================================================== -->
-  <main class="catalog-section">
-    <div class="filter-bar">
-      <div class="tab-pills">
-        <button class="tab-pill active" data-filter="all">すべて表示 (7)</button>
-        <button class="tab-pill" data-filter="prototype">💻 画面样板 (2)</button>
-        <button class="tab-pill" data-filter="document">📄 策定仕様書 (4)</button>
-        <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
-      </div>
-
-      <div class="catalog-count-note">
-        VANGUARD VERIFIED ARTIFACTS · ZERO SERVER RUNTIME
-      </div>
-    </div>
-
-    <div class="deliverables-grid" id="deliverables-container">
-
-      <!-- DEL-01: 画面样板 (Interactive Prototype) -->
-      <article class="deliverable-card" data-category="prototype">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-prototype">PROTOTYPE / LIVE APP</span>
-            <span class="card-code">DEL-01</span>
-          </div>
-          <h3 class="card-title">不動産売買台帳・統合執務ワークベンチ</h3>
-          <p class="card-desc">
-            宅建士・営業担当者の日常執務を完全再現した高保真インタラクティブ画面様板。
-            商談反響、物件登記、売買契約・重説審査、住宅ローン、残金決済、法定帳簿の6大台帳を完全統合し、
-            紙質執務室トーン、マニラフォルダ風自動隠蔽サイドバー、及び朱肉押印アニメーションを完備。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">HTML5 / Vanilla CSS</span>
-            <span class="card-tag">和紙・執務室美学</span>
-            <span class="card-tag">自動隠蔽インデックス</span>
-            <span class="card-tag">朱肉押印実務</span>
-          </div>
+        <div class="gateway-error-msg" id="gatewayErrorMsg">
+          ⚠️ 認証キーが一致しません。担当アーキテクトまたは専任宅建士へご確認ください。
         </div>
+      </form>
 
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 稼働中 (Online)
-          </div>
-          <a href="./prototype-crm.html" target="_blank" class="btn-card-launch">
-            <span>画面样板を開く</span> ➔
-          </a>
-        </div>
-      </article>
-
-      <!-- DEL-02: AI Agent Prototype -->
-      <article class="deliverable-card" data-category="prototype">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-prototype">PROTOTYPE / AI AGENT</span>
-            <span class="card-code">DEL-02</span>
-          </div>
-          <h3 class="card-title">SENTIS AI 宅建事務補佐官・代理対話エージェント</h3>
-          <p class="card-desc">
-            右端の活頁インデックスから滑出するAI事務補佐官チャット。
-            宅建業法第35条重要事項説明書の記載漏れ自動スクリーニング、水防法・土砂災害ハザード条項の最新書式出力、
-            及び住宅ローン特約解除期日の自動アラート機能を提供。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">AI Agent 対話</span>
-            <span class="card-tag">右側スライドドロワー</span>
-            <span class="card-tag">重説35条点検</span>
-            <span class="card-tag">ピン留め常駐対応</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 稼働中 (Online)
-          </div>
-          <a href="./prototype-crm.html?drawer=ai" target="_blank" class="btn-card-launch">
-            <span>AI代理を体験</span> ➔
-          </a>
-        </div>
-      </article>
-
-      <!-- DEL-03: 文档 01 -->
-      <article class="deliverable-card" data-category="document">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-doc">SPECIFICATION / DOC</span>
-            <span class="card-code">DEL-03</span>
-          </div>
-          <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
-          <p class="card-desc">
-            代表阿部翔平氏の防衛省航空自衛隊情報隊及びリノベスト8年の実績を基軸とした事業戦略。
-            第1期2名体制で売上7,150万円、第3期5名で3億円を目指す高人效モデルの要請と、
-            2~10億円の高額取引に伴う「ミスゼロ・手戻りゼロ」を実現するシステム基本構想。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">創業計画書整合</span>
-            <span class="card-tag">5大競争優位性</span>
-            <span class="card-tag">人均創収3,575万円</span>
-            <span class="card-tag">CI/VI規格</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 策定完了
-          </div>
-          <button class="btn-card-view-doc" onclick="openDocModal('doc01')">
-            <span>📖</span> 概要書を読む
-          </button>
-        </div>
-      </article>
-
-      <!-- DEL-04: 文档 02 -->
-      <article class="deliverable-card" data-category="document">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-workflow">SOP / WORKFLOW</span>
-            <span class="card-code">DEL-04</span>
-          </div>
-          <h3 class="card-title">02. 不動産売買標準業務フロー設計書</h3>
-          <p class="card-desc">
-            前置集客・相談 ➔ 契約締結 ➔ 資金決済準備 ➔ 金融機関金消契約 ➔ 残金決済引渡の全5段階SOP。
-            日本国内在住買主（住宅ローン）と海外非居住富裕層（国際電信送金・公証認証）の二重分岐処理マトリクスを策定。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">売買契約の流れ</span>
-            <span class="card-tag">住宅ローン実務SOP</span>
-            <span class="card-tag">海外送金全額分岐</span>
-            <span class="card-tag">Mermaid全景図</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 策定完了
-          </div>
-          <button class="btn-card-view-doc" onclick="openDocModal('doc02')">
-            <span>📖</span> SOP仕様を読む
-          </button>
-        </div>
-      </article>
-
-      <!-- DEL-05: 文档 03 -->
-      <article class="deliverable-card" data-category="document">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-doc">ARCHITECTURE / DOC</span>
-            <span class="card-code">DEL-05</span>
-          </div>
-          <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
-          <p class="card-desc">
-            Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
-            決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び高額仲介手数料・印紙税自動試算ロジック。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">純静的フロントエンド</span>
-            <span class="card-tag">動的Checklist判定</span>
-            <span class="card-tag">逆算タイムライン</span>
-            <span class="card-tag">印紙税階梯照合</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 策定完了
-          </div>
-          <button class="btn-card-view-doc" onclick="openDocModal('doc03')">
-            <span>📖</span> 要件定義を読む
-          </button>
-        </div>
-      </article>
-
-      <!-- DEL-06: 文档 04 -->
-      <article class="deliverable-card" data-category="document">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-doc">ROADMAP / DOC</span>
-            <span class="card-code">DEL-06</span>
-          </div>
-          <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
-          <p class="card-desc">
-            フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
-            週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">4段階ロードマップ</span>
-            <span class="card-tag">週次マイルストーン</span>
-            <span class="card-tag">受入検査基準</span>
-            <span class="card-tag">緊急切戻し規程</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 策定完了
-          </div>
-          <button class="btn-card-view-doc" onclick="openDocModal('doc04')">
-            <span>📖</span> 計画日程を読む
-          </button>
-        </div>
-      </article>
-
-      <!-- DEL-07: 品牌资产包 (Assets) -->
-      <article class="deliverable-card" data-category="assets">
-        <div>
-          <div class="card-top-meta">
-            <span class="card-category-badge badge-assets">ASSET KIT / VI</span>
-            <span class="card-code">DEL-07</span>
-          </div>
-          <h3 class="card-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h3>
-          <p class="card-desc">
-            「羅針盤（Compass）とSカーブ」を象徴とするSENTIS企業ロゴ・エンブレム全規格素材。
-            512px高解像度印刷用から、256px、64px、32px、Apple Touch Icon、及びWindows ICOまで透過PNGにて完備。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">512×512 透明PNG</span>
-            <span class="card-tag">Favicon ICO</span>
-            <span class="card-tag">Apple Touch Icon</span>
-            <span class="card-tag">800px 横幅レターヘッド</span>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <div class="card-status-info">
-            <span>●</span> 配備済
-          </div>
-          <button class="btn-card-view-doc" onclick="openDocModal('docAssets')">
-            <span>📁</span> 素材一覧を表示
-          </button>
-        </div>
-      </article>
-
-    </div>
-  </main>
-
-  <!-- ======================================================================
-       4. Document Modal Viewer (成果物ドキュメント即時インライン閲覧窓)
-       ====================================================================== -->
-  <div class="doc-modal-overlay" id="docModalOverlay">
-    <div class="doc-modal-container">
-      <div class="modal-header">
-        <div class="modal-header-titles">
-          <span class="modal-doc-id" id="modalDocId">DEL-00</span>
-          <span class="modal-doc-title" id="modalDocTitle">仕様書タイトル</span>
-        </div>
-        <div class="modal-header-actions">
-          <button class="btn-modal-close" onclick="closeDocModal()" title="閉じる (Esc)">✕</button>
-        </div>
-      </div>
-      <div class="modal-body-scroller" id="modalDocBody">
-        <!-- ドキュメントコンテンツがここに動的注入されます -->
+      <div class="gateway-footer-note">
+        <strong>【情報セキュリティ規範】</strong><br>
+        本成果物群は宅地建物取引業法第49条及び社外秘規程に基づき保護されています。
       </div>
     </div>
   </div>
 
   <!-- ======================================================================
-       5. Global Footer (受渡確認印鑑・著作権フッター)
+       認証済ポータル本体 (Portal Main View)
        ====================================================================== -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-left">
-        <div style="font-weight: 700; color: #090d16; font-size: 13.5px; margin-bottom: 2px;">
-          VANGUARD PLATFORM · ARCHITECTURE & STRATEGY STUDIO
+  <div class="portal-main-wrapper" id="portalMainWrapper">
+
+    <!-- 顶部科技微光 -->
+    <div class="top-ambient-glow"></div>
+
+    <!-- 1. Global Header (全域ヘッダー) -->
+    <header class="header-nav">
+      <div class="header-container">
+        <a href="./index.html" class="header-branding">
+          <div class="vanguard-badge-symbol">V</div>
+          <div class="header-titles">
+            <span class="brand-platform">VANGUARD PLATFORM</span>
+            <span class="brand-project">
+              成果物総覧ポータル
+              <span class="sentis-tag">株式会社センティス (SENTIS)</span>
+            </span>
+          </div>
+        </a>
+
+        <div class="header-right">
+          <div class="release-status-badge">
+            <span class="pulse-dot"></span>
+            <span>受渡完了 · Release v1.2</span>
+          </div>
+          <button class="btn-header-action" onclick="window.print()">
+            <span>🖨️</span> 納品目録印刷
+          </button>
+          <button class="btn-logout" onclick="handleLogout()" title="セッションを破棄して再施錠">
+            <span>⏻</span> 施錠 / 退出
+          </button>
         </div>
-        <div class="footer-copy">
-          © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
+      </div>
+    </header>
+
+    <!-- 2. Hero Header Section (展示導入看板) -->
+    <section class="hero-section">
+      <div class="hero-eyebrow">
+        <span>DELIVERABLES DIRECTORY</span>
+        <span>•</span>
+        <span>SENTIS REALTY CORE TRANSFORMATION</span>
+      </div>
+
+      <h1 class="hero-title">
+        株式会社センティス 次世代不動産売買業務基幹システム<br>
+        <span class="accent-highlight">要件定義・業務SOP及び統合執務プロトタイプ成果物総覧</span>
+      </h1>
+
+      <p class="hero-description">
+        本ポータルは、株式会社センティス（SENTIS）の創業計画書及び不動産売買・住宅ローン審査実務規程に基づき、
+        Vanguard プラットフォームが策定・設計したすべての公式成果物（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様へ一覧展示するための統合ディレクトリです。
+      </p>
+
+      <!-- 交付 KPI 看板 -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
+          <div class="metric-label">画面プロトタイプ</div>
+          <div class="metric-sub">6大台帳執務デスク ＋ AI事務代理チャット</div>
         </div>
-        <div class="footer-disclaimer">
-          本成果物群は GitHub Pages 静的ホスティング規程及び純粋 Vanilla Web 規格に準拠して編纂されています。
+
+        <div class="metric-card">
+          <div class="metric-value">04 <span style="font-size:16px; font-weight:normal; color:#64748b;">篇</span></div>
+          <div class="metric-label">公式策定仕様書</div>
+          <div class="metric-sub">概要課題・SOPフロー・システム要件・推進日程</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">宅建業法整合モデル</div>
+          <div class="metric-sub">第35条重説・第37条書面・49条帳簿保全</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-value">2~10 <span style="font-size:16px; font-weight:normal; color:#64748b;">億円</span></div>
+          <div class="metric-label">海外富裕層案件対応</div>
+          <div class="metric-sub">小紅書送客・非居住者全額電送金分岐SOP</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Deliverables Filter & Catalog Grid (成果物一覧) -->
+    <main class="catalog-section">
+      <div class="filter-bar">
+        <div class="tab-pills">
+          <button class="tab-pill active" data-filter="all">すべて表示 (7)</button>
+          <button class="tab-pill" data-filter="prototype">💻 画面样板 (2)</button>
+          <button class="tab-pill" data-filter="document">📄 策定仕様書 (4)</button>
+          <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
+        </div>
+
+        <div class="catalog-count-note">
+          VANGUARD VERIFIED ARTIFACTS · ZERO SERVER RUNTIME
         </div>
       </div>
 
-      <div class="footer-signature-bar">
-        <div class="signature-seal-block">
-          <div class="seal-circle-stamp">VG</div>
+      <div class="deliverables-grid" id="deliverables-container">
+
+        <!-- DEL-01: 画面样板 (Interactive Prototype) -->
+        <article class="deliverable-card" data-category="prototype">
           <div>
-            <div style="font-weight:700; color:#090d16;">Vanguard 策定受渡</div>
-            <div style="font-size:10px; color:#64748b;">2026-10-03 正式承認</div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-prototype">PROTOTYPE / LIVE APP</span>
+              <span class="card-code">DEL-01</span>
+            </div>
+            <h3 class="card-title">不動産売買台帳・統合執務ワークベンチ</h3>
+            <p class="card-desc">
+              宅建士・営業担当者の日常執務を完全再現した高保真インタラクティブ画面様板。
+              商談反響、物件登記、売買契約・重説審査、住宅ローン、残金決済、法定帳簿の6大台帳を完全統合し、
+              紙質執務室トーン、マニラフォルダ風自動隠蔽サイドバー、及び朱肉押印アニメーションを完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">HTML5 / Vanilla CSS</span>
+              <span class="card-tag">和紙・執務室美学</span>
+              <span class="card-tag">自動隠蔽インデックス</span>
+              <span class="card-tag">朱肉押印実務</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 稼働中 (Online)
+            </div>
+            <a href="./prototype-crm.html" class="btn-card-launch">
+              <span>画面样板を開く</span> ➔
+            </a>
+          </div>
+        </article>
+
+        <!-- DEL-02: AI Agent Prototype -->
+        <article class="deliverable-card" data-category="prototype">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-prototype">PROTOTYPE / AI AGENT</span>
+              <span class="card-code">DEL-02</span>
+            </div>
+            <h3 class="card-title">SENTIS AI 宅建事務補佐官・代理対話エージェント</h3>
+            <p class="card-desc">
+              右端の活頁インデックスから滑出するAI事務補佐官チャット。
+              宅建業法第35条重要事項説明書の記載漏れ自動スクリーニング、水防法・土砂災害ハザード条項の最新書式出力、
+              及び住宅ローン特約解除期日の自動アラート機能を提供。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">AI Agent 対話</span>
+              <span class="card-tag">右側スライドドロワー</span>
+              <span class="card-tag">重説35条点検</span>
+              <span class="card-tag">ピン留め常駐対応</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 稼働中 (Online)
+            </div>
+            <a href="./prototype-crm.html?drawer=ai" class="btn-card-launch">
+              <span>AI代理を体験</span> ➔
+            </a>
+          </div>
+        </article>
+
+        <!-- DEL-03: 文档 01 -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">SPECIFICATION / DOC</span>
+              <span class="card-code">DEL-03</span>
+            </div>
+            <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
+            <p class="card-desc">
+              代表阿部翔平氏の防衛省航空自衛隊情報隊及びリノベスト8年の実績を基軸とした事業戦略。
+              第1期2名体制で売上7,150万円、第3期5名で3億円を目指す高人效モデルの要請と、
+              2~10億円の高額取引に伴う「ミスゼロ・手戻りゼロ」を実現するシステム基本構想。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">創業計画書整合</span>
+              <span class="card-tag">5大競争優位性</span>
+              <span class="card-tag">人均創収3,575万円</span>
+              <span class="card-tag">CI/VI規格</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 策定完了
+            </div>
+            <button class="btn-card-view-doc" onclick="openDocModal('doc01')">
+              <span>📖</span> 概要書を読む
+            </button>
+          </div>
+        </article>
+
+        <!-- DEL-04: 文档 02 -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-workflow">SOP / WORKFLOW</span>
+              <span class="card-code">DEL-04</span>
+            </div>
+            <h3 class="card-title">02. 不動産売買標準業務フロー設計書</h3>
+            <p class="card-desc">
+              前置集客・相談 ➔ 契約締結 ➔ 資金決済準備 ➔ 金融機関金消契約 ➔ 残金決済引渡の全5段階SOP。
+              日本国内在住買主（住宅ローン）と海外非居住富裕層（国際電信送金・公証認証）の二重分岐処理マトリクスを策定。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">売買契約の流れ</span>
+              <span class="card-tag">住宅ローン実務SOP</span>
+              <span class="card-tag">海外送金全額分岐</span>
+              <span class="card-tag">Mermaid全景図</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 策定完了
+            </div>
+            <button class="btn-card-view-doc" onclick="openDocModal('doc02')">
+              <span>📖</span> SOP仕様を読む
+            </button>
+          </div>
+        </article>
+
+        <!-- DEL-05: 文档 03 -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">ARCHITECTURE / DOC</span>
+              <span class="card-code">DEL-05</span>
+            </div>
+            <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
+            <p class="card-desc">
+              Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
+              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び高額仲介手数料・印紙税自動試算ロジック。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">純静的フロントエンド</span>
+              <span class="card-tag">動的Checklist判定</span>
+              <span class="card-tag">逆算タイムライン</span>
+              <span class="card-tag">印紙税階梯照合</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 策定完了
+            </div>
+            <button class="btn-card-view-doc" onclick="openDocModal('doc03')">
+              <span>📖</span> 要件定義を読む
+            </button>
+          </div>
+        </article>
+
+        <!-- DEL-06: 文档 04 -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">ROADMAP / DOC</span>
+              <span class="card-code">DEL-06</span>
+            </div>
+            <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
+            <p class="card-desc">
+              フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
+              週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">4段階ロードマップ</span>
+              <span class="card-tag">週次マイルストーン</span>
+              <span class="card-tag">受入検査基準</span>
+              <span class="card-tag">緊急切戻し規程</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 策定完了
+            </div>
+            <button class="btn-card-view-doc" onclick="openDocModal('doc04')">
+              <span>📖</span> 計画日程を読む
+            </button>
+          </div>
+        </article>
+
+        <!-- DEL-07: 品牌资产包 (Assets) -->
+        <article class="deliverable-card" data-category="assets">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-assets">ASSET KIT / VI</span>
+              <span class="card-code">DEL-07</span>
+            </div>
+            <h3 class="card-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h3>
+            <p class="card-desc">
+              「羅針盤（Compass）とSカーブ」を象徴とするSENTIS企業ロゴ・エンブレム全規格素材。
+              512px高解像度印刷用から、256px、64px、32px、Apple Touch Icon、及びWindows ICOまで透過PNGにて完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">512×512 透明PNG</span>
+              <span class="card-tag">Favicon ICO</span>
+              <span class="card-tag">Apple Touch Icon</span>
+              <span class="card-tag">800px 横幅レターヘッド</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info">
+              <span>●</span> 配備済
+            </div>
+            <button class="btn-card-view-doc" onclick="openDocModal('docAssets')">
+              <span>📁</span> 素材一覧を表示
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- 4. Document Modal Viewer (成果物ドキュメント即時インライン閲覧窓) -->
+    <div class="doc-modal-overlay" id="docModalOverlay">
+      <div class="doc-modal-container">
+        <div class="modal-header">
+          <div class="modal-header-titles">
+            <span class="modal-doc-id" id="modalDocId">DEL-00</span>
+            <span class="modal-doc-title" id="modalDocTitle">仕様書タイトル</span>
+          </div>
+          <div class="modal-header-actions">
+            <button class="btn-modal-close" onclick="closeDocModal()" title="閉じる (Esc)">✕</button>
           </div>
         </div>
-
-        <div class="signature-seal-block">
-          <div class="seal-circle-stamp" style="border-color:#059669; color:#059669;">OK</div>
-          <div>
-            <div style="font-weight:700; color:#090d16;">SENTIS 検収受領</div>
-            <div style="font-size:10px; color:#64748b;">専任宅地建物取引士確認済</div>
-          </div>
+        <div class="modal-body-scroller" id="modalDocBody">
+          <!-- ドキュメントコンテンツがここに動的注入されます -->
         </div>
       </div>
     </div>
-  </footer>
+
+    <!-- 5. Global Footer (受渡確認印鑑・著作権フッター) -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <div style="font-weight: 700; color: #090d16; font-size: 13.5px; margin-bottom: 2px;">
+            VANGUARD PLATFORM · ARCHITECTURE & STRATEGY STUDIO
+          </div>
+          <div class="footer-copy">
+            © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
+          </div>
+          <div class="footer-disclaimer">
+            本成果物群は GitHub Pages 静的ホスティング規程及び純粋 Vanilla Web 規格に準拠して編纂されています。
+          </div>
+        </div>
+
+        <div class="footer-signature-bar">
+          <div class="signature-seal-block">
+            <div class="seal-circle-stamp">VG</div>
+            <div>
+              <div style="font-weight:700; color:#090d16;">Vanguard 策定受渡</div>
+              <div style="font-size:10px; color:#64748b;">2026-10-03 正式承認</div>
+            </div>
+          </div>
+
+          <div class="signature-seal-block">
+            <div class="seal-circle-stamp" style="border-color:#059669; color:#059669;">OK</div>
+            <div>
+              <div style="font-weight:700; color:#090d16;">SENTIS 検収受領</div>
+              <div style="font-size:10px; color:#64748b;">専任宅地建物取引士確認済</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div> <!-- /.portal-main-wrapper -->
 
   <!-- ======================================================================
-       Vanilla JS : フィルタリング & ドキュメント即時インラインリーダー
+       Vanilla JS : セキュリティ認証ゲートウェイ ＆ 成果物ポータル制御
        ====================================================================== -->
   <script>
-    // 1. タブフィルタリングロジック
+    // 目标密码 SHA-256 散列值 (echo -n "SentisPass" | sha256)
+    // 8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de
+    const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
+    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
+
+    const securityGatewayOverlay = document.getElementById('securityGatewayOverlay');
+    const portalMainWrapper = document.getElementById('portalMainWrapper');
+    const gatewayPasswordInput = document.getElementById('gatewayPassword');
+    const gatewayErrorMsg = document.getElementById('gatewayErrorMsg');
+
+    // SHA-256 计算工具函数
+    async function computeSha256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    // 检查会话认证状态
+    function checkCurrentSession() {
+      const savedAuth = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (savedAuth === TARGET_AUTH_HASH) {
+        unlockPortal();
+      } else {
+        lockPortal();
+      }
+    }
+
+    function unlockPortal() {
+      securityGatewayOverlay.classList.add('unlocked');
+      portalMainWrapper.classList.add('visible');
+      document.body.style.overflow = '';
+    }
+
+    function lockPortal() {
+      securityGatewayOverlay.classList.remove('unlocked');
+      portalMainWrapper.classList.remove('visible');
+      document.body.style.overflow = 'hidden';
+      if (gatewayPasswordInput) {
+        gatewayPasswordInput.value = '';
+        setTimeout(() => gatewayPasswordInput.focus(), 200);
+      }
+    }
+
+    // 登录验证执行
+    async function handleGatewayLogin(event) {
+      event.preventDefault();
+      const enteredPassword = gatewayPasswordInput.value;
+      if (!enteredPassword) return;
+
+      gatewayErrorMsg.style.display = 'none';
+      const computedHash = await computeSha256(enteredPassword);
+
+      if (computedHash === TARGET_AUTH_HASH) {
+        // 认证成功
+        sessionStorage.setItem(SESSION_STORAGE_KEY, computedHash);
+        // 设置跨页面同步使用的 Cookie
+        document.cookie = "SENTIS_SECURE_TOKEN=" + computedHash + "; path=/; max-age=604800; SameSite=Strict";
+        unlockPortal();
+      } else {
+        // 密码错误
+        gatewayErrorMsg.style.display = 'block';
+        gatewayPasswordInput.select();
+        gatewayPasswordInput.focus();
+      }
+    }
+
+    // 登出/重新上锁
+    function handleLogout() {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      document.cookie = "SENTIS_SECURE_TOKEN=; path=/; max-age=0";
+      lockPortal();
+    }
+
+    // 初始化运行检查
+    window.addEventListener('DOMContentLoaded', checkCurrentSession);
+
+    // ======================================================================
+    // 成果物ポータル機能（タブ切り替え・インラインドキュメント表示）
+    // ======================================================================
     const tabPills = document.querySelectorAll('.tab-pill');
     const deliverableCards = document.querySelectorAll('.deliverable-card');
 
@@ -1264,7 +1657,7 @@
       });
     });
 
-    // 2. ドキュメントデータ辞書（即時閲覧用）
+    // ドキュメントデータ辞書
     const documentStore = {
       doc01: {
         id: "DEL-03",
@@ -1551,7 +1944,7 @@
       }
     };
 
-    // 3. ドキュメントモーダル表示・非表示ロジック
+    // ドキュメントモーダル表示・非表示ロジック
     const docModalOverlay = document.getElementById('docModalOverlay');
     const modalDocId = document.getElementById('modalDocId');
     const modalDocTitle = document.getElementById('modalDocTitle');

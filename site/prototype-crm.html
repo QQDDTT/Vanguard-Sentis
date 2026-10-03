@@ -7,6 +7,31 @@
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- ======================================================================
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       第二防壁：セッション認証確認（未認証時は即座にゲートウェイへリダイレクト）
+       ====================================================================== -->
+  <script>
+    (function() {
+      var currentHost = window.location.hostname;
+      var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
+      if (!authorizedHosts.includes(currentHost)) {
+        window.location.replace('https://vanguard-sentis.evotensor.dev/prototype-crm.html');
+        return;
+      }
+
+      var TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
+      var savedAuth = sessionStorage.getItem("SENTIS_GATEWAY_AUTH_STATE");
+      var hasCookieAuth = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
+
+      if (savedAuth !== TARGET_AUTH_HASH && !hasCookieAuth) {
+        // 未認証アクセスを直ちに阻断し、主ポータルのログインゲートウェイへ転送
+        window.location.replace('./index.html');
+      }
+    })();
+  </script>
+
   <style>
     /* ==========================================================================
        1. 執務室・紙質ステーショナリー デザインシステム (Paper Office Design System)
