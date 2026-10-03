@@ -1,0 +1,2228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>株式会社センティス (SENTIS Realty) - 不動産売買業務統合台帳システム</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+  <style>
+    /* ==========================================================================
+       1. 執務室・紙質ステーショナリー デザインシステム (Paper Office Design System)
+       ========================================================================== */
+    :root {
+      /* デスク環境・レザー調マット (Office Desk & Pad) */
+      --desk-base: #24272c;
+      --desk-gradient: radial-gradient(circle at 50% 15%, #383c44 0%, #26292e 60%, #1a1c20 100%);
+
+      /* 和紙・帳票テクスチャトーン (Parchment & Paper Tones) */
+      --paper-cream: #fbf9f4;
+      --paper-pure: #ffffff;
+      --paper-warm: #f5efe6;
+      --paper-dark: #ebe3d5;
+      --paper-edge: #d8cebe;
+      --paper-grid: rgba(60, 50, 40, 0.04);
+      --manila-folder: #e8dbc1;
+      --manila-border: #c4b192;
+      --manila-hover: #f1e6d0;
+      
+      /* 伝統墨・朱肉・筆記具カラー (Traditional Ink & Hanko Seal) */
+      --ink-black: #1a1e24;
+      --ink-dark: #2c3038;
+      --ink-muted: #5a616d;
+      --ink-light: #89909c;
+      --ink-line: #ded7ca;
+      --ink-red-hanko: #b82c2c;     /* 伝統朱肉の紅 */
+      --ink-green-approved: #246a48; /* 検査合格・適法印 */
+      --ink-blue-pen: #1c4b82;      /* 万年筆サインブルー */
+      --seal-amber: #b46b14;        /* 審査中・保留印 */
+
+      /* 明朝体・公文書見出し (Japanese Editorial & Serif Typography) */
+      --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Toppan Bunkyu Mincho", "Noto Serif JP", "Songti SC", "Georgia", serif;
+      --font-sans: "Hiragino Sans", "Yu Gothic", "Meiryo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-stamp: "Hiragino Mincho ProN", "Yu Mincho", "STSong", serif;
+
+      /* 陰影階層 (Paper Elevation Shadows) */
+      --shadow-paper: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.14);
+      --shadow-drawer: 8px 0 28px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 視口与基础布局铁律：整页绝对禁止滚动条 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--desk-base);
+      color: var(--ink-dark);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    * {
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    /* 执务室主视口容器 */
+    .office-viewport {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--desk-gradient);
+      position: relative;
+    }
+
+    /* ==========================================================================
+       2. Header (上部ヘッダー) : 社名、公文書日付、専任宅建士ログイン
+       ========================================================================== */
+    .office-header {
+      height: 56px;
+      min-height: 56px;
+      flex-shrink: 0;
+      background: #fdfaf5;
+      border-bottom: 2px solid #3c342b;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+      position: relative;
+    }
+
+    .office-header::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #b82c2c, #b82c2c 12px, transparent 12px, transparent 16px);
+      opacity: 0.6;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-main {
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #1a1e24;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .branch-pill {
+      background: #eee6d8;
+      color: #4a3e2f;
+      border: 1px solid #d4c5ae;
+      border-radius: 2px;
+      padding: 1px 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--ink-muted);
+      letter-spacing: 0.6px;
+      font-family: var(--font-serif);
+    }
+
+    /* ヘッダー中央：公文書日付・宅建業免許番号 */
+    .header-center-mark {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-serif);
+      color: #4a443a;
+      font-size: 12.5px;
+    }
+
+    .official-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .date-badge {
+      display: inline-block;
+      border: 1px solid #c9bca9;
+      background: #faf6ee;
+      padding: 2px 8px;
+      border-radius: 2px;
+      color: var(--ink-dark);
+      font-weight: 600;
+    }
+
+    .license-badge {
+      border: 1px dashed var(--ink-red-hanko);
+      color: var(--ink-red-hanko);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(184, 44, 44, 0.04);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ヘッダー右側：ユーザーログイン情報 */
+    .header-user-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 10px;
+      background: #f4ece0;
+      border: 1px solid #dcd1be;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .user-profile-badge:hover {
+      background: #eae0d0;
+      border-color: #baa78e;
+    }
+
+    .user-stamp-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink-red-hanko);
+      color: var(--ink-red-hanko);
+      font-family: var(--font-stamp);
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fffdfa;
+      box-shadow: 0 1px 2px rgba(184, 44, 44, 0.15);
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .user-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ink-black);
+    }
+
+    .user-role {
+      font-size: 10px;
+      color: var(--ink-muted);
+    }
+
+    .btn-office-action {
+      background: #f8f3ea;
+      border: 1px solid #cfc2ad;
+      color: #3f392f;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s ease;
+    }
+
+    .btn-office-action:hover {
+      background: #ece1ce;
+      border-color: #b09e85;
+    }
+
+    /* ==========================================================================
+       3. 核心ワークスペース：Sidebar (自動隠蔽) + Body (紙質執務台)
+       ========================================================================== */
+    .office-workspace {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --------------------------------------------------------------------------
+       Sidebar (左側サイドバー)：完全自動隠蔽・マニラフォルダー風インデックス
+       -------------------------------------------------------------------------- */
+    /* 1. 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 */
+    .binder-index-handle {
+      position: fixed;
+      top: 86px;
+      left: 0;
+      width: 32px;
+      padding: 14px 6px 12px 6px;
+      background: var(--manila-folder);
+      border: 1px solid var(--manila-border);
+      border-left: none;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .binder-index-handle:hover {
+      width: 38px;
+      background: var(--manila-hover);
+      box-shadow: 3px 4px 14px rgba(0, 0, 0, 0.32);
+    }
+
+    .binder-index-handle .handle-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .binder-index-handle .handle-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #3f362a;
+    }
+
+    /* 2. 背景の半透明和紙遮光幕（ドロワー展開時） */
+    .drawer-backdrop {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 34px;
+      background: rgba(18, 20, 24, 0.45);
+      backdrop-filter: blur(1.5px);
+      z-index: 130;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease;
+    }
+
+    .drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 3. 本体の引き出しドロワー（自動隠蔽） */
+    .office-sidebar-drawer {
+      position: fixed;
+      top: 56px;
+      bottom: 34px;
+      left: 0;
+      width: 270px;
+      max-width: 85vw;
+      background: #fbf8f2;
+      border-right: 2px solid #504436;
+      box-shadow: var(--shadow-drawer);
+      z-index: 140;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%); /* 完全に画面外へ隠蔽、漏れゼロ */
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* 開放クラスまたは固定展開 */
+    .office-sidebar-drawer.open,
+    .office-sidebar-drawer.pinned {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 16px 18px;
+      background: var(--manila-folder);
+      border-bottom: 2px solid #cfbe9f;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-title {
+      font-family: var(--font-serif);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #3d352b;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .drawer-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drawer-pin-btn, .drawer-close-btn {
+      background: #fbf7ee;
+      border: 1px solid #baa88a;
+      border-radius: 3px;
+      color: #554a3c;
+      font-size: 11px;
+      padding: 3px 7px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .drawer-pin-btn:hover, .drawer-close-btn:hover {
+      background: #4a3e2f;
+      color: #fdfaf5;
+      border-color: #4a3e2f;
+    }
+
+    .drawer-pin-btn.active {
+      background: #4a3e2f;
+      color: #fdfaf5;
+    }
+
+    /* サイドバーメニューリスト：会社の基礎業務区分のみを列挙 */
+    .module-nav-list {
+      list-style: none;
+      padding: 14px 12px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .module-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 4px;
+      border: 1px solid #e5d8c3;
+      color: #3b3f46;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      background: #faf6ee;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .module-nav-item:hover {
+      background: #f0e4cf;
+      border-color: #c9b494;
+      color: #1a1e24;
+      transform: translateX(3px);
+    }
+
+    .module-nav-item.active {
+      background: #fffdf9;
+      border: 1.5px solid #a69174;
+      box-shadow: 0 2px 6px rgba(90, 70, 50, 0.14);
+      color: #111417;
+      font-weight: 700;
+    }
+
+    .module-idx {
+      width: 22px;
+      height: 22px;
+      border: 1px solid #b6a48b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #6d5b45;
+      background: #f5eedf;
+      flex-shrink: 0;
+    }
+
+    .module-nav-item.active .module-idx {
+      background: var(--ink-red-hanko);
+      color: #ffffff;
+      border-color: var(--ink-red-hanko);
+    }
+
+    .drawer-footer-note {
+      padding: 14px 18px;
+      border-top: 1px dashed #d5c8b5;
+      font-size: 11px;
+      color: #7b7163;
+      background: #f6efe2;
+      line-height: 1.5;
+    }
+
+    /* --------------------------------------------------------------------------
+       Right Sidebar (右側サイドバー)：AI Agent 事務代理チャット・自動隠蔽
+       -------------------------------------------------------------------------- */
+    /* 1. 右側 貼辺活頁タグ（AIエージェント・ハンドル） */
+    .ai-agent-handle {
+      position: fixed;
+      top: 86px;
+      right: 0;
+      width: 32px;
+      padding: 14px 6px 12px 6px;
+      background: #e1ebe5; /* 淡青緑和紙タグ */
+      border: 1px solid #acc1b7;
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+      box-shadow: -2px 3px 10px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .ai-agent-handle:hover {
+      width: 38px;
+      background: #d4e5dc;
+      box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .ai-agent-handle .handle-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .ai-agent-handle .handle-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #1a4231;
+    }
+
+    /* 2. 右側 AIエージェント引き出しドロワー */
+    .ai-agent-drawer {
+      position: fixed;
+      top: 56px;
+      bottom: 34px;
+      right: 0;
+      width: 350px;
+      max-width: 90vw;
+      background: #fbf9f5;
+      border-left: 2px solid #504436;
+      box-shadow: -8px 0 28px rgba(0, 0, 0, 0.38);
+      z-index: 140;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%); /* 完全に画面外へ隠蔽 */
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .ai-agent-drawer.open,
+    .ai-agent-drawer.pinned {
+      transform: translateX(0);
+    }
+
+    .ai-drawer-header {
+      padding: 14px 16px;
+      background: #eef5f1;
+      border-bottom: 2px solid #c8dcd2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-drawer-title {
+      font-family: var(--font-serif);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1a4231;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: #246a48;
+      font-weight: bold;
+      background: #e4f3eb;
+      border: 1px solid #b8dfcb;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .ai-chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-color: #faf7f1;
+      background-image: 
+        linear-gradient(rgba(60, 50, 40, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(60, 50, 40, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .chat-bubble {
+      max-width: 90%;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .chat-bubble.agent {
+      align-self: flex-start;
+      background: #ffffff;
+      border: 1px solid #dcd3c3;
+      border-left: 3px solid #246a48;
+      color: #262a30;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: #f3ece0;
+      border: 1px solid #d4c5ae;
+      border-right: 3px solid #8e7a63;
+      color: #22262c;
+    }
+
+    .chat-meta {
+      font-size: 9.5px;
+      color: #8c8273;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .quick-action-btn {
+      background: #fdfbf7;
+      border: 1px dashed #baa88f;
+      border-radius: 3px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+      color: #3b3328;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-action-btn:hover {
+      background: #f4e9d7;
+      border-color: #8f795c;
+      color: #111;
+      transform: translateX(2px);
+    }
+
+    .ai-chat-input-bar {
+      padding: 10px 14px;
+      background: #f4ecdf;
+      border-top: 1px solid #d8cab5;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ai-input-text {
+      flex: 1;
+      height: 36px;
+      background: #ffffff;
+      border: 1px solid #cfbeaa;
+      border-radius: 3px;
+      padding: 0 10px;
+      font-size: 12.5px;
+      color: #1f242c;
+      font-family: inherit;
+    }
+
+    .ai-input-text:focus {
+      border-color: #246a48;
+      box-shadow: 0 0 0 2px rgba(36, 106, 72, 0.15);
+    }
+
+    .ai-send-btn {
+      height: 36px;
+      padding: 0 12px;
+      background: #246a48;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s ease;
+    }
+
+    .ai-send-btn:hover {
+      background: #1b5338;
+    }
+
+    /* --------------------------------------------------------------------------
+       Body (主執務エリア) : 紙質テクスチャ・バインダー帳票・オーバーフロー時スクロール
+       -------------------------------------------------------------------------- */
+    .office-body-workbench {
+      flex: 1;
+      height: 100%;
+      overflow-y: auto;   /* 内部コンテンツが溢れた場合のみ縦スクロールを許可 */
+      overflow-x: hidden;
+      padding: 24px 36px 48px;
+      background: radial-gradient(circle at 50% 10%, #3a3e45 0%, #2b2e33 60%, #1f2125 100%);
+      display: flex;
+      justify-content: center;
+      box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    /* 和風紙質スクロールバー */
+    .office-body-workbench::-webkit-scrollbar {
+      width: 8px;
+    }
+    .office-body-workbench::-webkit-scrollbar-track {
+      background: rgba(30, 32, 36, 0.7);
+    }
+    .office-body-workbench::-webkit-scrollbar-thumb {
+      background: #5a5f69;
+      border-radius: 4px;
+      border: 2px solid #2b2e33;
+    }
+    .office-body-workbench::-webkit-scrollbar-thumb:hover {
+      background: #7d8492;
+    }
+
+    /* バインダー活頁用紙シート (A4 Paper Sheet Container) */
+    .dossier-paper-sheet {
+      width: 100%;
+      max-width: 1080px;
+      background-color: var(--paper-cream);
+      background-image: 
+        linear-gradient(var(--paper-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border: 1px solid var(--paper-edge);
+      border-radius: 4px;
+      box-shadow: var(--shadow-paper), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+      position: relative;
+      padding: 40px 48px;
+      min-height: 820px;
+      color: var(--ink-dark);
+      margin-bottom: 24px;
+    }
+
+    /* 活頁公文書の背景防偽透かし (Watermark Emblem) */
+    .dossier-paper-sheet::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 440px;
+      height: 440px;
+      background-image: url('./assets/logo/sentis-emblem-512.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.038;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 2穴バインダー孔と綴じ代マージン */
+    .dossier-paper-sheet::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 28px;
+      width: 1px;
+      background: repeating-linear-gradient(180deg, #d3c4af, #d3c4af 6px, transparent 6px, transparent 12px);
+      opacity: 0.7;
+    }
+
+    .binder-hole {
+      position: absolute;
+      left: 12px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #272a2e;
+      border: 2px solid #bba891;
+      box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+    .binder-hole.top { top: 90px; }
+    .binder-hole.center { top: 50%; margin-top: -6px; }
+    .binder-hole.bottom { bottom: 90px; }
+
+    /* 付箋・ゼムクリップの擬物ディテール */
+    .paper-sticky-note {
+      position: absolute;
+      top: -10px;
+      right: 48px;
+      width: 180px;
+      background: #fbf3a7;
+      border: 1px solid #ded37e;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      padding: 10px 12px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #574d1a;
+      transform: rotate(2deg);
+      border-bottom-right-radius: 8px;
+      z-index: 5;
+    }
+
+    .paperclip-graphic {
+      position: absolute;
+      top: -14px;
+      left: 24px;
+      width: 12px;
+      height: 32px;
+      border: 2.5px solid #8e95a0;
+      border-radius: 8px;
+      border-bottom: none;
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 帳票表頭見出し */
+    .paper-header-block {
+      border-bottom: 2px solid #2f2b26;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .paper-title-area h2 {
+      font-family: var(--font-serif);
+      font-size: 23px;
+      font-weight: 700;
+      color: #1a1e24;
+      margin: 0 0 6px 0;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .paper-title-desc {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      font-family: var(--font-serif);
+      margin: 0;
+    }
+
+    .dossier-code-meta {
+      text-align: right;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      color: #555e6b;
+      line-height: 1.5;
+    }
+
+    /* 印鑑・角印・丸印スタンプ (Hankō) */
+    .hanko-stamp {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--ink-red-hanko);
+      color: var(--ink-red-hanko);
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      font-family: var(--font-stamp);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.1;
+      padding: 4px;
+      letter-spacing: 1px;
+      transform: rotate(-7deg);
+      background: radial-gradient(circle, rgba(184, 44, 44, 0.05) 0%, transparent 80%);
+      box-shadow: 0 0 0 1px rgba(184, 44, 44, 0.2);
+      user-select: none;
+      position: relative;
+    }
+
+    .hanko-stamp.square {
+      border-radius: 4px;
+      width: auto;
+      height: auto;
+      padding: 3px 8px;
+      transform: rotate(3deg);
+      font-size: 11.5px;
+    }
+
+    .hanko-stamp.green {
+      border-color: var(--ink-green-approved);
+      color: var(--ink-green-approved);
+      background: radial-gradient(circle, rgba(36, 106, 72, 0.06) 0%, transparent 80%);
+      box-shadow: 0 0 0 1px rgba(36, 106, 72, 0.2);
+    }
+
+    /* 不動産業務台帳テーブル (Official Ledger Table) */
+    .ledger-table-wrap {
+      margin: 20px 0;
+      background: #ffffff;
+      border: 1px solid #d5cbba;
+      border-radius: 2px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+    }
+
+    .ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+
+    .ledger-table th {
+      background: #f5eedf;
+      border-bottom: 2px solid #3c342b;
+      border-right: 1px solid #dfd6c6;
+      color: #383025;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      padding: 10px 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .ledger-table td {
+      border-bottom: 1px solid #ebe2d3;
+      border-right: 1px solid #f1ebd0;
+      padding: 9px 12px;
+      color: #272d36;
+    }
+
+    .ledger-table tr:nth-child(even) td {
+      background: #fdfbf7;
+    }
+
+    .ledger-table tr:hover td {
+      background: #f6efe2;
+    }
+
+    /* カード型公文ブロック (Section Dossier Cards) */
+    .section-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .paper-card {
+      background: #ffffff;
+      border: 1px solid #ddcca9;
+      border-radius: 3px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 6px rgba(60, 50, 30, 0.06);
+      position: relative;
+    }
+
+    .paper-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #d9ccb6;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .paper-card-title {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      font-weight: 700;
+      color: #2b251e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 監査・適合チェックリスト (Checklist) */
+    .audit-step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audit-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #faf7f0;
+      border: 1px solid #e7dcce;
+      border-radius: 3px;
+    }
+
+    .step-check-mark {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #246a48;
+      background: #eef7f2;
+      color: #246a48;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 11px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .step-info {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 13px;
+      color: #1f242c;
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 11.5px;
+      color: #636b76;
+    }
+
+    /* 署名・契印・社印欄 (Signature & Seal Box) */
+    .sign-section-box {
+      margin-top: 28px;
+      padding: 18px 24px;
+      border: 1px dashed #baa48a;
+      background: #fbf7ee;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sign-titles {
+      font-family: var(--font-serif);
+      font-size: 12.5px;
+      color: #4b4133;
+      line-height: 1.55;
+    }
+
+    .sign-seals {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .interactive-stamp-btn {
+      background: #fff;
+      border: 1.5px solid var(--ink-red-hanko);
+      color: var(--ink-red-hanko);
+      padding: 6px 14px;
+      font-family: var(--font-stamp);
+      font-size: 13px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(184, 44, 44, 0.15);
+    }
+
+    .interactive-stamp-btn:hover {
+      background: var(--ink-red-hanko);
+      color: #fff;
+      transform: scale(1.03);
+    }
+
+    /* ==========================================================================
+       4. Footer (下部フッター) : 稼働監視、コンプライアンス、通達テロップ
+       ========================================================================== */
+    .office-footer {
+      height: 34px;
+      min-height: 34px;
+      flex-shrink: 0;
+      background: #1c1f23;
+      border-top: 1px solid #363b44;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 11px;
+      color: #8c939e;
+      z-index: 100;
+    }
+
+    .footer-status-pills {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-dot-active {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      margin-right: 5px;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+    }
+
+    /* リアルタイム業務テロップ */
+    .footer-ticker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #d1d5db;
+      background: #282c33;
+      padding: 3px 12px;
+      border-radius: 3px;
+      border: 1px solid #3e4450;
+      max-width: 580px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-icon {
+      color: #f59e0b;
+      font-weight: bold;
+    }
+
+    .footer-tools {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-footer-link {
+      color: #9ca3af;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-footer-link:hover {
+      color: #f3f4f6;
+    }
+
+    /* 切り替え用ペイン */
+    .module-pane {
+      display: none;
+    }
+    .module-pane.active {
+      display: block;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 狭幅画面・モバイル端末対応 (Responsive Optimization) */
+    @media (max-width: 768px) {
+      .office-header {
+        padding: 0 10px;
+      }
+      .brand-sub, .header-center-mark, .user-details {
+        display: none !important;
+      }
+      .office-body-workbench {
+        padding: 14px 10px 36px;
+      }
+      .dossier-paper-sheet {
+        padding: 24px 16px 24px 28px;
+        min-height: auto;
+      }
+      .paper-sticky-note {
+        display: none !important;
+      }
+      .office-sidebar-drawer {
+        width: 84vw;
+      }
+      .binder-index-handle {
+        top: 72px;
+      }
+      .ai-agent-drawer {
+        width: 88vw;
+      }
+      .ai-agent-handle {
+        top: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="office-viewport">
+
+    <!-- ======================================================================
+         1. Header (上部ヘッダー) : 社名、営業所、公文書日付、専任宅建士情報
+         ====================================================================== -->
+    <header class="office-header">
+      <!-- 会社ロゴと部署 -->
+      <div class="header-branding">
+        <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
+        <div class="brand-titles">
+          <div class="brand-main">
+            株式会社センティス
+            <span class="branch-pill">東京中央営業本部 · 第1仲介課</span>
+          </div>
+          <span class="brand-sub">SENTIS REALTY CO., LTD. · 不動産提案に確かな指針を。</span>
+        </div>
+      </div>
+
+      <!-- 中央公印と法令認証情報 -->
+      <div class="header-center-mark">
+        <div class="official-date">
+          公文書日付：
+          <span class="date-badge" id="current-office-date">令和八年 十月三日 (土) 友引</span>
+        </div>
+        <div class="license-badge">
+          宅地建物取引業者 東京都知事 (1) 第109823号
+        </div>
+      </div>
+
+      <!-- ユーザーログイン情報（通常業務席） -->
+      <div class="header-user-section">
+        <a href="./index.html" class="btn-office-action" style="text-decoration:none; color:#184332; font-weight:700; border-color:#99b8a8; background:#edf6f1;" title="成果物一覧・設計ドキュメント主ポータルへ戻る">
+          <span>←</span> 成果物一覧ポータル
+        </a>
+        <div class="user-profile-badge" title="専任宅地建物取引士 登録証照会">
+          <div class="user-stamp-avatar">能勢</div>
+          <div class="user-details">
+            <span class="user-name">能勢 秀樹 <span style="font-size:10px; font-weight:normal; color:#855018;">(課長)</span></span>
+            <span class="user-role">専任宅地建物取引士 (東京 第092318号)</span>
+          </div>
+        </div>
+        <button class="btn-office-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')">
+          <span>⏻</span> 離席 / 席切替
+        </button>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         2. Workspace (執務エリア) : Sidebar (自動隠蔽) + Body (主紙質ワークベンチ)
+         ====================================================================== -->
+    <div class="office-workspace">
+
+      <!-- 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 -->
+      <div class="binder-index-handle" id="binder-index-handle" title="クリックまたはホバーで業務区分目録を展開">
+        <span class="handle-icon">🗂️</span>
+        <span class="handle-text">業務目録</span>
+      </div>
+
+      <!-- 半透明和紙遮光幕（ドロワー展開時） -->
+      <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+      <!-- 自動隠蔽ドロワー (Sidebar Drawer) : 会社の基礎モジュール区分のみを整然と列挙 -->
+      <nav class="office-sidebar-drawer" id="sidebar-drawer">
+        <div class="drawer-header">
+          <div class="drawer-title">
+            <img src="./assets/logo/sentis-emblem-32.png" alt="SENTIS" style="width:20px; height:20px; vertical-align:middle; margin-right:4px;" />
+            会社基礎業務区分
+          </div>
+          <div class="drawer-header-actions">
+            <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-close-btn" id="drawer-close-btn" title="閉じる">✕</button>
+          </div>
+        </div>
+
+        <ul class="module-nav-list">
+          <li class="module-nav-item active" data-target="mod-consult">
+            <span class="module-idx">1</span>
+            <span>商談・反響受付台帳</span>
+          </li>
+          <li class="module-nav-item" data-target="mod-property">
+            <span class="module-idx">2</span>
+            <span>物件台帳・登記原簿</span>
+          </li>
+          <li class="module-nav-item" data-target="mod-contract">
+            <span class="module-idx">3</span>
+            <span>売買契約・重説審査</span>
+          </li>
+          <li class="module-nav-item" data-target="mod-mortgage">
+            <span class="module-idx">4</span>
+            <span>住宅ローン金融連携</span>
+          </li>
+          <li class="module-nav-item" data-target="mod-closing">
+            <span class="module-idx">5</span>
+            <span>残金決済・引渡清算</span>
+          </li>
+          <li class="module-nav-item" data-target="mod-ledger">
+            <span class="module-idx">6</span>
+            <span>法定帳票・公印管理</span>
+          </li>
+        </ul>
+
+        <div class="drawer-footer-note">
+          <strong>※ 執務ナビゲーション規範</strong><br>
+          本サイドバーは会社の基礎業務分類の切替専用です。選択後は自動収納され、執務領域の広さを維持します。
+        </div>
+      </nav>
+
+      <!-- Body (主執務エリア) : 紙質バインダー帳票、溢れた場合のみ縦スクロール許可 -->
+      <main class="office-body-workbench">
+
+        <div class="dossier-paper-sheet">
+          <!-- 2穴バインダー孔擬物 -->
+          <div class="binder-hole top"></div>
+          <div class="binder-hole center"></div>
+          <div class="binder-hole bottom"></div>
+
+          <!-- 右上角の付箋メモとゼムクリップ -->
+          <div class="paper-sticky-note">
+            <div class="paperclip-graphic"></div>
+            <strong>【担当引継メモ】</strong><br>
+            板橋区物件C（鈴木様）SMBC本審査結果、本日午後着信予定。重説交付受領書原本は第3ファイリングへ格納済。
+          </div>
+
+          <!-- ==============================================================
+               モジュール 1：商談・反響受付台帳
+               ============================================================== -->
+          <section id="mod-consult" class="module-pane active">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>01</span> 商談・反響受付台帳
+                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">当番確認済</span>
+                </h2>
+                <p class="paper-title-desc">ポータル反響（SUUMO / HOME'S）、電話受電、初回来店ヒアリング及び媒介委託記録台帳</p>
+              </div>
+              <div class="dossier-code-meta">
+                文書番号: ST-CNS-202610-008<br>
+                法定保存: 5年間 (宅建業法第49条)
+              </div>
+            </div>
+
+            <div class="section-cards-grid">
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">📞 本日受電・接客進行状況</span>
+                  <span class="hanko-stamp green" style="width:40px; height:40px; font-size:9px;">完結</span>
+                </div>
+                <p style="font-size:12px; color:#555;">累計受電記録：<strong>14 件</strong> ｜ 現地内覧手配：<strong>5 組</strong> ｜ 買付証明受領：<strong>2 件</strong></p>
+                <div style="margin-top:10px; font-size:12px; background:#faf6ee; padding:8px 10px; border-left:3px solid #8e7a63;">
+                  <strong>最新案件：</strong>新宿区中古戸建（加藤様 / ご予算 7,500万円）、担当小林が公図・登記事項調査着手。
+                </div>
+              </div>
+
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">📌 媒介契約 締結待機案件</span>
+                  <span style="color:#b82c2c; font-weight:bold; font-size:12px;">押印待機 2件</span>
+                </div>
+                <p style="font-size:12px; color:#555;">売主様専任媒介依頼（専任宅建士による調査義務履行確認中）：</p>
+                <ul style="padding-left:18px; font-size:12px; color:#444; margin-top:6px;">
+                  <li>練馬区関町北 マンション（専任媒介契約書・レインズ登録原稿作成中）</li>
+                  <li>世田谷区松原 土地（一般媒介契約書・境界確認図写し受領済）</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 台帳テーブル -->
+            <div class="ledger-table-wrap">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>受付番号</th>
+                    <th>受付日時</th>
+                    <th>依頼主氏名</th>
+                    <th>希望物件種別 / 予算</th>
+                    <th>担当宅建士</th>
+                    <th>商談ステータス</th>
+                    <th>公印照合</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ST-2026-091</td>
+                    <td>10/03 10:15</td>
+                    <td>鈴木 隆一 様</td>
+                    <td>板橋区中丸町 戸建 / 5,200万円</td>
+                    <td>能勢 秀樹</td>
+                    <td><span style="color:#246a48; font-weight:bold;">買付証明書 提出済</span></td>
+                    <td><span class="hanko-stamp" style="width:34px; height:34px; font-size:9px;">能勢</span></td>
+                  </tr>
+                  <tr>
+                    <td>ST-2026-090</td>
+                    <td>10/03 09:30</td>
+                    <td>渡辺 健太 様</td>
+                    <td>中野区区分マンション / 3,800万円</td>
+                    <td>佐々木 健</td>
+                    <td>現地ご案内・融資事前打診</td>
+                    <td><span style="color:#999; font-size:11px;">未押印</span></td>
+                  </tr>
+                  <tr>
+                    <td>ST-2026-089</td>
+                    <td>10/02 16:40</td>
+                    <td>合同会社アクト 様</td>
+                    <td>杉並区 1棟アパート / 1億2,000万円</td>
+                    <td>能勢 秀樹</td>
+                    <td>資金証明書確認・現地精査完了</td>
+                    <td><span class="hanko-stamp" style="width:34px; height:34px; font-size:9px;">能勢</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ==============================================================
+               モジュール 2：物件台帳・登記原簿
+               ============================================================== -->
+          <section id="mod-property" class="module-pane">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>02</span> 物件台帳・登記簿・法規調査原簿
+                  <span class="hanko-stamp green square" style="font-size:11px; padding:2px 6px;">公図照合済</span>
+                </h2>
+                <p class="paper-title-desc">法務局全部事項証明書、地積測量図、役所都市計画道路・建築確認台帳記載事項照会</p>
+              </div>
+              <div class="dossier-code-meta">
+                所轄法務局: 東京法務局 板橋出張所<br>
+                更新日時: 令和8年10月03日 登記オンライン照会
+              </div>
+            </div>
+
+            <div class="section-cards-grid">
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">🏡 板橋区中丸町 中古一戸建 (案件C)</span>
+                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px;">査定</span>
+                </div>
+                <div style="font-size:12px; line-height:1.65; color:#444;">
+                  <strong>所在地：</strong>東京都板橋区中丸町14番2号<br>
+                  <strong>土地権利：</strong>所有権（地目：宅地 / 112.40㎡）<br>
+                  <strong>建物構造：</strong>木造スレート葺2階建（延床：98.20㎡ / 平成29年築）<br>
+                  <strong>法令制限：</strong>第1種中高層住居専用地域（建蔽率60% / 容積率200%）<br>
+                  <strong>道路接道：</strong>南側公道 幅員4.8mに間口8.2m接道（セットバック不要）<br>
+                  <strong>査定評価額：</strong>5,180万円 ～ 5,350万円
+                </div>
+              </div>
+
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">🏢 練馬区豊玉北 区分収益マンション</span>
+                  <span class="hanko-stamp green" style="width:36px; height:36px; font-size:9px;">適法</span>
+                </div>
+                <div style="font-size:12px; line-height:1.65; color:#444;">
+                  <strong>所在地：</strong>東京都練馬区豊玉北5丁目18番6号<br>
+                  <strong>専有面積：</strong>45.60㎡（壁芯） / バルコニー：6.20㎡<br>
+                  <strong>権利態様：</strong>敷地権（所有権割合 4560/380000）<br>
+                  <strong>修繕積立金：</strong>8,900円/月 ｜ 管理費：6,400円/月<br>
+                  <strong>現況運用：</strong>賃貸中（オーナーチェンジ / 実質利回り 4.8%）
+                </div>
+              </div>
+            </div>
+
+            <div class="sign-section-box">
+              <div class="sign-titles">
+                <strong>法務局登記事項証明書 精査証明（令和8年10月度 調査員）</strong><br>
+                甲区所有権確認・乙区抵当権設定状況精査、差押等の嘱託なきことを証明す。
+              </div>
+              <div class="sign-seals">
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '調査済')">
+                  🖋️ 押印查収 (登記簿照合)
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==============================================================
+               モジュール 3：売買契約・重説審査
+               ============================================================== -->
+          <section id="mod-contract" class="module-pane">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>03</span> 売買契約書・重要事項説明書（宅建業法第35条・37条）
+                  <span class="hanko-stamp" style="width:48px; height:48px; font-size:10px;">宅建士印</span>
+                </h2>
+                <p class="paper-title-desc">法定重説交付・宅建士記名押印、手付金保全措置、瑕疵担保・契約不適合責任条項審査</p>
+              </div>
+              <div class="dossier-code-meta">
+                法定根拠: 宅地建物取引業法第35条・第37条<br>
+                交付要件: 契約締結前書面交付完了
+              </div>
+            </div>
+
+            <div class="paper-card" style="margin-bottom:20px;">
+              <div class="paper-card-header">
+                <span class="paper-card-title">📜 契約締結前 重点コンプライアンス点検簿</span>
+                <span style="font-size:12px; color:#246a48; font-weight:bold;">点検適合 5/5</span>
+              </div>
+              <ul class="audit-step-list">
+                <li class="audit-step-item">
+                  <span class="step-check-mark">✓</span>
+                  <div class="step-info">
+                    <div class="step-title">重要事項説明書の専任宅建士記名押印並びに説明受諾</div>
+                    <div class="step-desc">土砂災害警戒区域・水防法ハザードマップ・石綿調査記録の有無を口頭説明。専任宅建士 能勢秀樹による取引士証提示確認済。</div>
+                  </div>
+                </li>
+                <li class="audit-step-item">
+                  <span class="step-check-mark">✓</span>
+                  <div class="step-info">
+                    <div class="step-title">手付解除期日及び住宅ローン特約期日の設定整合性</div>
+                    <div class="step-desc">手付解除期日は契約締結日より14日間（令和8年10月17日迄）；融資利用特約解除期日は令和8年10月24日迄に設定。</div>
+                  </div>
+                </li>
+                <li class="audit-step-item">
+                  <span class="step-check-mark">✓</span>
+                  <div class="step-info">
+                    <div class="step-title">印紙税貼付及び契約割印の検認</div>
+                    <div class="step-desc">売買代金5,200万円（課税文書印紙税額：10,000円 / 売主買主双方合意の上貼付及び消印を確認）。</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sign-section-box">
+              <div class="sign-titles">
+                <strong>宅地建物取引業者・専任宅地建物取引士 契印欄</strong><br>
+                本書面の記載事項は適法正当にして虚偽なきことを証し、社印並びに取引士職印を捺印す。
+              </div>
+              <div class="sign-seals">
+                <div class="hanko-stamp">
+                  <span>センティス</span>
+                  <span style="font-size:8px;">之印</span>
+                </div>
+                <div class="hanko-stamp" id="main-agent-stamp">
+                  <span>能勢</span>
+                  <span style="font-size:8px;">取引士</span>
+                </div>
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '契印済')">
+                  🔴 契印捺印 (重説・契約書締結)
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==============================================================
+               モジュール 4：住宅ローン金融連携
+               ============================================================== -->
+          <section id="mod-mortgage" class="module-pane">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>04</span> 住宅ローン審査・金融機関連携台帳
+                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">本審査中</span>
+                </h2>
+                <p class="paper-title-desc">事前審査打診、本審査書類徴求、金銭消費貸借契約（金消）日程調整及び抵当権設定事前確認</p>
+              </div>
+              <div class="dossier-code-meta">
+                連携行: 三井住友銀行 / 三菱UFJ銀行 / みずほ銀行<br>
+                融資特約期日: 令和8年10月24日
+              </div>
+            </div>
+
+            <div class="section-cards-grid">
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">🏦 三井住友銀行 (SMBC) 本審査進捗</span>
+                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px; border-color:#d97706; color:#d97706;">審査中</span>
+                </div>
+                <p style="font-size:12px; color:#444; line-height:1.65;">
+                  <strong>借入申込人：</strong>鈴木 隆一 様<br>
+                  <strong>借入希望額：</strong>4,800万円（固定変動選択型 / 変動金利 年0.375%）<br>
+                  <strong>本審査書類提出：</strong>令和8年9月28日（池袋ローン営業部）<br>
+                  <strong>結果回答目処：</strong>本日（10月3日 16:00電話口頭連絡予定）
+                </p>
+              </div>
+
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">📝 銀行提出原本 備忘点検目録</span>
+                  <span style="color:#246a48; font-weight:bold; font-size:12px;">完納受領済</span>
+                </div>
+                <ul style="font-size:12px; color:#444; padding-left:18px; line-height:1.65;">
+                  <li>住民票謄本（世帯全員記載・マイナンバー非記載） [済]</li>
+                  <li>源泉徴収票原本並びに納税証明書（直近3年分） [済]</li>
+                  <li>売買契約書写し・重要事項説明書写し（取引士印有） [済]</li>
+                  <li>建築確認済証・検査済証写し（役所照合済） [済]</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="sign-section-box">
+              <div class="sign-titles">
+                <strong>融資利用特約条項（契約書第13条）期日管理</strong><br>
+                期日までに金融機関の承認が得られぬ場合、手付金を全額無利息返還の上白紙解除手続へ。
+              </div>
+              <div class="sign-seals">
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '承認受領')">
+                  🖋️ 融資承認通知 受取押印
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==============================================================
+               モジュール 5：残金決済・引渡清算
+               ============================================================== -->
+          <section id="mod-closing" class="module-pane">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>05</span> 残金決済・所有権移転・引渡清算書
+                  <span class="hanko-stamp green" style="width:48px; height:48px; font-size:10px;">期日確定</span>
+                </h2>
+                <p class="paper-title-desc">残代金授受、固定資産税・都市計画税日割精算、司法書士登記申請及び鍵受領完了書面</p>
+              </div>
+              <div class="dossier-code-meta">
+                執行金融機関: 三井住友銀行 池袋支店 応接室<br>
+                決済予定日: 令和8年11月10日 (大安)
+              </div>
+            </div>
+
+            <div class="paper-card">
+              <div class="paper-card-header">
+                <span class="paper-card-title">🧮 公租公課（固定資産税・都市計画税）日割清算書</span>
+                <span style="font-size:12px; color:#555;">清算起算日: 1月1日基準</span>
+              </div>
+              <div class="ledger-table-wrap" style="margin: 10px 0;">
+                <table class="ledger-table">
+                  <thead>
+                    <tr>
+                      <th>清算項目</th>
+                      <th>年間賦課税額</th>
+                      <th>買主負担日数 (11/10〜12/31)</th>
+                      <th>日割清算金（税込）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>固定資産税</td>
+                      <td>128,400 円</td>
+                      <td>52 日間</td>
+                      <td>18,292 円</td>
+                    </tr>
+                    <tr>
+                      <td>都市計画税</td>
+                      <td>24,600 円</td>
+                      <td>52 日間</td>
+                      <td>3,504 円</td>
+                    </tr>
+                    <tr style="font-weight:bold; background:#faf3e3;">
+                      <td colspan="3">公租公課日割清算金 合計授受額</td>
+                      <td>21,796 円</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="sign-section-box">
+              <div class="sign-titles">
+                <strong>引渡完了確認証 兼 仲介手数料清算領収証</strong><br>
+                司法書士 登記申請受託書原本受領、所有権移転登記申請の嘱託完了を証明す。
+              </div>
+              <div class="sign-seals">
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '決済完了')">
+                  🔴 決済執行印 (領収証発行)
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==============================================================
+               モジュール 6：法定帳票・公印管理
+               ============================================================== -->
+          <section id="mod-ledger" class="module-pane">
+            <div class="paper-header-block">
+              <div class="paper-title-area">
+                <h2>
+                  <span>06</span> 法定帳簿・会社公印・経営実績管理簿
+                  <span class="hanko-stamp" style="width:48px; height:48px; font-size:10px;">総務管理</span>
+                </h2>
+                <p class="paper-title-desc">宅地建物取引業法第49条の規定による帳簿、公印押印管理台帳、媒介報酬手数料集計表</p>
+              </div>
+              <div class="dossier-code-meta">
+                法定備置義務: 各事業年度末閉鎖後5年間<br>
+                様式準拠: 宅地建物取引業法施行規則 別記様式第十八号
+              </div>
+            </div>
+
+            <div class="section-cards-grid">
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">📑 会社公印・職印 押印記録（当月度）</span>
+                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px;">監査済</span>
+                </div>
+                <ul style="font-size:12px; color:#444; line-height:1.85; padding-left:18px;">
+                  <li>会社代表印（実印）：3件（媒介委託及び金消立会契約）</li>
+                  <li>会社角印（社印）：24件（請求書・領収証・受領確認書）</li>
+                  <li>専任宅建士職印：18件（重要事項説明書・37条書面交付原本）</li>
+                </ul>
+              </div>
+
+              <div class="paper-card">
+                <div class="paper-card-header">
+                  <span class="paper-card-title">📈 媒介仲介報酬 営業取扱累計</span>
+                  <span style="font-size:12px; color:#246a48; font-weight:bold;">予算達成率 112%</span>
+                </div>
+                <p style="font-size:12px; color:#444; line-height:1.65;">
+                  当期成約件数：<strong>11 件</strong><br>
+                  売買仲介取扱高総計：<strong>4億9,200万円</strong><br>
+                  当期手数料粗利益額：<strong>1,771万円</strong> (国土交通省告示 報酬上限額遵守)
+                </p>
+              </div>
+            </div>
+
+            <div class="sign-section-box">
+              <div class="sign-titles">
+                <strong>第1期 事業年度 帳簿点検監査証明</strong><br>
+                宅地建物取引業者帳簿記載事項（法第49条）に欠落なきことを確認査定す。
+              </div>
+              <div class="sign-seals">
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '監査済')">
+                  🖋️ 総務監査印 押印
+                </button>
+              </div>
+            </div>
+          </section>
+
+        </div> <!-- /.dossier-paper-sheet -->
+
+      </main> <!-- /.office-body-workbench -->
+
+      <!-- 右側 貼辺活頁タグ（AIエージェント・事務補佐官ハンドル）: 常時は画面右端に極小常駐 -->
+      <div class="ai-agent-handle" id="ai-agent-handle" title="クリックまたはホバーでAI宅建事務補佐官チャットを展開">
+        <span class="handle-icon">🤖</span>
+        <span class="handle-text">事務代理</span>
+      </div>
+
+      <!-- 右側 自動隠蔽ドロワー (AI Agent Sidebar Drawer) : 宅建事務・契約審査補佐官チャット -->
+      <aside class="ai-agent-drawer" id="ai-agent-drawer">
+        <!-- ドロワーヘッダー -->
+        <div class="ai-drawer-header">
+          <div class="ai-drawer-title">
+            <span style="font-size:16px;">🤖</span>
+            <span>SENTIS AI 宅建事務補佐官</span>
+            <span class="ai-status-indicator">● 待機中</span>
+          </div>
+          <div class="drawer-header-actions">
+            <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-close-btn" id="ai-drawer-close-btn" title="閉じる">✕</button>
+          </div>
+        </div>
+
+        <!-- チャット本文スクロール領域 -->
+        <div class="ai-chat-body" id="ai-chat-body">
+          <!-- AI 挨拶・案内バブル -->
+          <div class="chat-bubble agent">
+            <div class="chat-meta">
+              <span>🤖 専属宅建AI (Sentis Legal Engine)</span>
+              <span>10:42</span>
+            </div>
+            能勢課長、執務お疲れ様です。宅建業法第35条の重要事項説明、第37条契約書面、または銀行融資特約の期日管理や条項ドラフトの作成・点検を即時支援いたします。ご指示をどうぞ。
+          </div>
+
+          <!-- ユーザー質問履歴サンプル -->
+          <div class="chat-bubble user">
+            <div class="chat-meta" style="justify-content: flex-end;">
+              <span>能勢 秀樹 (宅建士)</span>
+              <span>10:45</span>
+            </div>
+            板橋区物件Cの買主（鈴木様）に関して、住宅ローン特約条項で売主側が留意すべき解除条項の記載ポイントを教えてくれ。
+          </div>
+
+          <!-- AI 回答サンプル -->
+          <div class="chat-bubble agent">
+            <div class="chat-meta">
+              <span>🤖 専属宅建AI</span>
+              <span>10:45</span>
+            </div>
+            <strong>【融資利用特約の重要確認事項】</strong><br>
+            1. <strong>解除期日</strong>：融資承認予定日（10/24）と解除権行使期限を同日または直後に明確設定。<br>
+            2. <strong>義務規定</strong>：買主の故意の不承認（虚偽申告・書類不提出）は特約適用外とし、違約解約扱いとなる旨を明記。<br>
+            3. <strong>金融機関指定</strong>：三井住友銀行を指定し、事前承認金額（4,850万円）を明記。<br>
+            ※ ドラフト条項は『モジュール3: 売買契約・重説審査』の特約欄に自動転記可能です。
+          </div>
+
+          <!-- 執務支援クイックアクション提案 -->
+          <div class="ai-quick-actions">
+            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション</div>
+            <button class="quick-action-btn" data-prompt="板橋区物件Cの重要事項説明書（第35条）記載漏れチェックを実行して">
+              <span>📝 重説第35条 記載漏れ自動点検</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="本日の住宅ローン本審査ステータスと未着手案件をリストアップして">
+              <span>🏦 住宅ローン本審査の進捗アラート確認</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="反響受付台帳の最新案件（大田区）の初回ヒアリング確認票を作成して">
+              <span>📋 初回来店顧客ヒアリング項目の作成</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="土砂災害警戒区域およびハザードマップ説明義務条項の最新書式を出力して">
+              <span>🗺️ 水防法・土砂災害ハザード条項の出力</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 底部入力フォーム -->
+        <div class="ai-chat-input-bar">
+          <input type="text" class="ai-input-text" id="ai-input-text" placeholder="事務代理への指示を入力 (Enterで送信)..." />
+          <button class="ai-send-btn" id="ai-send-btn">送信</button>
+        </div>
+      </aside>
+
+    </div> <!-- /.office-workspace -->
+
+    <!-- ======================================================================
+         3. Footer (下部フッター) : 稼働監視、コンプライアンス、通達テロップ
+         ====================================================================== -->
+    <footer class="office-footer">
+      <div class="footer-status-pills">
+        <span><span class="status-dot-active"></span>事務監査システム：正常稼働中</span>
+        <span>｜</span>
+        <span>全公文書 暗号化通信保全</span>
+        <span>｜</span>
+        <span>宅地建物取引業法第49条 帳簿法定備置準拠</span>
+      </div>
+
+      <div class="footer-ticker">
+        <span class="ticker-icon">🔔 通達：</span>
+        <span id="ticker-text">【10/03】板橋区物件C 融資特約期日(10/24)まであと21日。三井住友銀行の審査回答受領後、直ちに買主様へ連絡のこと。</span>
+      </div>
+
+      <div class="footer-tools">
+        <a class="btn-footer-link" onclick="window.print()">🖨️ A4帳票印刷</a>
+        <span>｜</span>
+        <a class="btn-footer-link" onclick="toggleDeskLight()">💡 デスクライト調光</a>
+      </div>
+    </footer>
+
+  </div> <!-- /.office-viewport -->
+
+  <!-- ======================================================================
+       Vanilla JS : サイドバー隠蔽連動、タブ切り替え、朱肉押印マイクロアニメーション
+       ====================================================================== -->
+  <script>
+    // 1. モジュール切り替えとサイドバー制御ロジック
+    const drawerNavItems = document.querySelectorAll('.module-nav-item');
+    const modulePanes = document.querySelectorAll('.module-pane');
+    const sidebarDrawer = document.getElementById('sidebar-drawer');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const binderIndexHandle = document.getElementById('binder-index-handle');
+    const drawerPinBtn = document.getElementById('drawer-pin-btn');
+    const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+    let isDrawerPinned = false;
+
+    function openDrawer() {
+      sidebarDrawer.classList.add('open');
+      drawerBackdrop.classList.add('active');
+    }
+
+    function closeDrawer() {
+      if (!isDrawerPinned) {
+        sidebarDrawer.classList.remove('open');
+        if (!aiAgentDrawer || !aiAgentDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
+      }
+    }
+
+    // ハンドルのホバー及びクリックで展開
+    binderIndexHandle.addEventListener('mouseenter', openDrawer);
+    binderIndexHandle.addEventListener('click', () => {
+      if (sidebarDrawer.classList.contains('open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    // ドロワーからマウスが離れたら自動収納（未ピン留め時）
+    sidebarDrawer.addEventListener('mouseleave', () => {
+      closeDrawer();
+    });
+
+    // 遮光幕クリックで両側ドロワーを閉じる
+    drawerBackdrop.addEventListener('click', () => {
+      isDrawerPinned = false;
+      updateDrawerPinState();
+      closeDrawer();
+
+      if (aiAgentDrawer) {
+        isAiDrawerPinned = false;
+        updateAiDrawerPinState();
+        aiAgentDrawer.classList.remove('open');
+      }
+      drawerBackdrop.classList.remove('active');
+    });
+
+    // ✕ 閉じるボタン
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', () => {
+        isDrawerPinned = false;
+        updateDrawerPinState();
+        closeDrawer();
+      });
+    }
+
+    // 📌 ピン留めトグル
+    drawerPinBtn.addEventListener('click', () => {
+      isDrawerPinned = !isDrawerPinned;
+      updateDrawerPinState();
+    });
+
+    function updateDrawerPinState() {
+      if (isDrawerPinned) {
+        sidebarDrawer.classList.add('pinned');
+        sidebarDrawer.classList.add('open');
+        drawerPinBtn.classList.add('active');
+        drawerPinBtn.innerHTML = '📌 固定中';
+      } else {
+        sidebarDrawer.classList.remove('pinned');
+        drawerPinBtn.classList.remove('active');
+        drawerPinBtn.innerHTML = '📌 固定';
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       AI Agent (右側サイドバー) : 自動隠蔽・対話ロジック
+       -------------------------------------------------------------------------- */
+    const aiAgentHandle = document.getElementById('ai-agent-handle');
+    const aiAgentDrawer = document.getElementById('ai-agent-drawer');
+    const aiDrawerPinBtn = document.getElementById('ai-drawer-pin-btn');
+    const aiDrawerCloseBtn = document.getElementById('ai-drawer-close-btn');
+    const aiChatBody = document.getElementById('ai-chat-body');
+    const aiInputText = document.getElementById('ai-input-text');
+    const aiSendBtn = document.getElementById('ai-send-btn');
+    const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+
+    let isAiDrawerPinned = false;
+
+    function openAiDrawer() {
+      if (aiAgentDrawer) {
+        aiAgentDrawer.classList.add('open');
+        drawerBackdrop.classList.add('active');
+      }
+    }
+
+    function closeAiDrawer() {
+      if (!isAiDrawerPinned && aiAgentDrawer) {
+        aiAgentDrawer.classList.remove('open');
+        if (!sidebarDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
+      }
+    }
+
+    if (aiAgentHandle) {
+      aiAgentHandle.addEventListener('mouseenter', openAiDrawer);
+      aiAgentHandle.addEventListener('click', () => {
+        if (aiAgentDrawer.classList.contains('open')) {
+          closeAiDrawer();
+        } else {
+          openAiDrawer();
+        }
+      });
+    }
+
+    if (aiAgentDrawer) {
+      aiAgentDrawer.addEventListener('mouseleave', () => {
+        closeAiDrawer();
+      });
+    }
+
+    if (aiDrawerCloseBtn) {
+      aiDrawerCloseBtn.addEventListener('click', () => {
+        isAiDrawerPinned = false;
+        updateAiDrawerPinState();
+        if (aiAgentDrawer) aiAgentDrawer.classList.remove('open');
+        if (!sidebarDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
+      });
+    }
+
+    if (aiDrawerPinBtn) {
+      aiDrawerPinBtn.addEventListener('click', () => {
+        isAiDrawerPinned = !isAiDrawerPinned;
+        updateAiDrawerPinState();
+      });
+    }
+
+    function updateAiDrawerPinState() {
+      if (!aiAgentDrawer || !aiDrawerPinBtn) return;
+      if (isAiDrawerPinned) {
+        aiAgentDrawer.classList.add('pinned');
+        aiAgentDrawer.classList.add('open');
+        aiDrawerPinBtn.classList.add('active');
+        aiDrawerPinBtn.innerHTML = '📌 固定中';
+      } else {
+        aiAgentDrawer.classList.remove('pinned');
+        aiDrawerPinBtn.classList.remove('active');
+        aiDrawerPinBtn.innerHTML = '📌 固定';
+      }
+    }
+
+    // AI チャット送受信処理
+    function appendChatMessage(sender, text) {
+      if (!aiChatBody) return;
+      const now = new Date();
+      const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+
+      if (sender === 'user') {
+        bubble.innerHTML = `
+          <div class="chat-meta" style="justify-content: flex-end;">
+            <span>能勢 秀樹 (宅建士)</span>
+            <span>${timeStr}</span>
+          </div>
+          <div>${text}</div>
+        `;
+      } else {
+        bubble.innerHTML = `
+          <div class="chat-meta">
+            <span>🤖 専属宅建AI (Sentis Legal Engine)</span>
+            <span>${timeStr}</span>
+          </div>
+          <div>${text}</div>
+        `;
+      }
+
+      aiChatBody.appendChild(bubble);
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+    }
+
+    function handleAiQuery(queryText) {
+      if (!queryText || !queryText.trim()) return;
+      appendChatMessage('user', queryText.trim());
+
+      // 事務補佐官の応答生成シミュレーション
+      setTimeout(() => {
+        let reply = "";
+        const lower = queryText.toLowerCase();
+
+        if (queryText.includes("重説") || queryText.includes("35条") || queryText.includes("記載漏れ")) {
+          reply = `<strong>【重要事項説明書（第35条）自動点検レポート】</strong><br>
+          ・対象物件：板橋区常盤台三丁目 一戸建<br>
+          ・未記入検出：私道負担に関する事項（第35条第1項第3号）の持分比率が空欄です。<br>
+          ・水防法ハザードマップ：高潮浸水想定区域外、洪水浸水区域内（0.5m未満）の最新図面添付が確認されました。<br>
+          ➔ モジュール3『売買契約・重説審査』の補正申請ドラフトを生成しました。`;
+        } else if (queryText.includes("ローン") || queryText.includes("融資") || queryText.includes("審査")) {
+          reply = `<strong>【住宅ローン融資進捗アラート】</strong><br>
+          ・三井住友銀行（板橋区物件C / 鈴木様）：事前審査承認済、本審査結果受領待ち（本日着信予定）。<br>
+          ・みずほ銀行（新宿区マンション / 佐藤様）：追加所得証明書提出要請あり。担当者より本日連絡が必要です。<br>
+          ➔ 融資特約期日管理台帳と金融機関ポータルを自動更新しました。`;
+        } else if (queryText.includes("ヒアリング") || queryText.includes("反響") || queryText.includes("来店")) {
+          reply = `<strong>【初回来店ヒアリング確認票（大田区売却案件）】</strong><br>
+          ・顧客種別：相続による空家売却査定依頼<br>
+          ・重点確認事項：①登記簿上の被相続人名義と遺産分割協議書の有無、②解体更地引渡しまたは現況渡しの希望、③境界標の確認状況。<br>
+          ➔ 商談受付台帳（モジュール1）にヒアリング票雛形を紐付けました。`;
+        } else if (queryText.includes("ハザード") || queryText.includes("水防") || queryText.includes("土砂")) {
+          reply = `<strong>【水防法・土砂災害警戒区域 説明義務書式】</strong><br>
+          令和8年最新公布書式に基づき、所在地市区町村のハザードマップ最新改訂版（令和8年4月公表版）の指定状況を記載。<br>
+          ・土砂災害警戒区域（イエロー）：該当なし<br>
+          ・土砂災害特別警戒区域（レッド）：該当なし<br>
+          ・浸水想定水深：0.5m〜1.0m（第2次浸水区域）<br>
+          重要事項説明書別紙として印刷可能です。`;
+        } else {
+          reply = `<strong>【事務補佐官 照会完了】</strong><br>
+          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法規則を参照いたしました。<br>
+          関連する契約書面ドラフト及び審査ログを作成し、担当部署トレイに回覧登録しました。必要に応じて各モジュール台帳をご確認ください。`;
+        }
+
+        appendChatMessage('agent', reply);
+      }, 500);
+    }
+
+    if (aiSendBtn && aiInputText) {
+      aiSendBtn.addEventListener('click', () => {
+        const text = aiInputText.value;
+        if (text.trim()) {
+          handleAiQuery(text);
+          aiInputText.value = '';
+        }
+      });
+
+      aiInputText.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const text = aiInputText.value;
+          if (text.trim()) {
+            handleAiQuery(text);
+            aiInputText.value = '';
+          }
+        }
+      });
+    }
+
+    // クイックアクションのクリック連動
+    if (quickActionBtns) {
+      quickActionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const prompt = btn.dataset.prompt;
+          if (prompt) {
+            handleAiQuery(prompt);
+          }
+        });
+      });
+    }
+
+    function switchModule(targetId) {
+      // メインコンテンツ切り替え
+      modulePanes.forEach(pane => {
+        if (pane.id === targetId) {
+          pane.classList.add('active');
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+
+      // Drawer アイテムアクティブ状態
+      drawerNavItems.forEach(item => {
+        if (item.dataset.target === targetId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // 未ピン留めの場合は自動でドロワーを隠蔽
+      closeDrawer();
+    }
+
+    drawerNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        switchModule(item.dataset.target);
+      });
+    });
+
+    // 2. 朱肉押印インタラクション（印鑑プレスアニメーション）
+    function stampAction(buttonElem, stampText) {
+      const parent = buttonElem.parentElement;
+      const stamp = document.createElement('div');
+      stamp.className = 'hanko-stamp';
+      stamp.style.animation = 'stampPress 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      stamp.innerHTML = `<span>${stampText}</span><span style="font-size:7px;">センティス</span>`;
+      parent.replaceChild(stamp, buttonElem);
+    }
+
+    // 押印アニメーションCSSの動的挿入
+    const styleEl = document.createElement('style');
+    styleEl.innerHTML = `
+      @keyframes stampPress {
+        0% { transform: scale(2.2) rotate(15deg); opacity: 0; }
+        60% { transform: scale(0.9) rotate(-10deg); opacity: 0.9; }
+        100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(styleEl);
+
+    // 3. 通達テロップの定期ローテーション
+    const tickerItems = [
+      "【10/03】板橋区物件C 融資特約期日(10/24)まであと21日。三井住友銀行の審査回答受領後、直ちに買主様へ連絡のこと。",
+      "【10/03】練馬区マンション 媒介契約更新時期が到来。担当者は所有者様へ更新意向の書面発送を完了せよ。",
+      "【法令通知】10月期 宅地建物取引業法改正に伴う IT重説（重要事項説明オンライン実施）遵守事項の社内回覧をご確認ください。"
+    ];
+    let tickerIndex = 0;
+    setInterval(() => {
+      tickerIndex = (tickerIndex + 1) % tickerItems.length;
+      const tickerTextEl = document.getElementById('ticker-text');
+      if (tickerTextEl) {
+        tickerTextEl.style.opacity = '0';
+        setTimeout(() => {
+          tickerTextEl.innerText = tickerItems[tickerIndex];
+          tickerTextEl.style.opacity = '1';
+        }, 300);
+      }
+    }, 6000);
+
+    // 4. デスクライト調光フィルター切替
+    let isWarmLight = false;
+    function toggleDeskLight() {
+      isWarmLight = !isWarmLight;
+      const sheet = document.querySelector('.dossier-paper-sheet');
+      if (sheet) {
+        if (isWarmLight) {
+          sheet.style.filter = 'sepia(0.15) brightness(0.98)';
+        } else {
+          sheet.style.filter = 'none';
+        }
+      }
+    }
+
+    // 5. URLパラメータ連動（例: ?drawer=ai でAI補佐官ドロワーを即時展開）
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('drawer') === 'ai') {
+        setTimeout(() => {
+          openAiDrawer();
+        }, 350);
+      }
+    });
+  </script>
+</body>
+</html>
+
