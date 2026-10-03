@@ -294,23 +294,26 @@
       background: #f8f3ea;
       border: 1px solid #cfc2ad;
       color: #3f392f;
-      padding: 5px 10px;
+      width: 28px;
+      height: 28px;
+      padding: 0;
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
       transition: all 0.15s ease;
       text-decoration: none;
-      white-space: nowrap;
-      line-height: 1.2;
+      line-height: 1;
+      flex-shrink: 0;
     }
 
     .btn-office-action:hover {
       background: #ede3d2;
       border-color: #b09e85;
+      transform: translateY(-1px);
     }
 
     .btn-portal-back {
@@ -410,44 +413,35 @@
     /* 1. 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 */
     .binder-index-handle {
       position: fixed;
-      top: 86px;
+      top: 50%;
+      transform: translateY(-50%);
       left: 0;
-      width: 32px;
-      padding: 14px 6px 12px 6px;
+      width: 28px;
+      height: 38px;
+      padding: 0;
       background: var(--manila-folder);
       border: 1px solid var(--manila-border);
       border-left: none;
       border-radius: 0 6px 6px 0;
-      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.22);
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.22);
       cursor: pointer;
       z-index: 120;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
     }
 
     .binder-index-handle:hover {
-      width: 38px;
+      width: 34px;
       background: var(--manila-hover);
-      box-shadow: 3px 4px 14px rgba(0, 0, 0, 0.32);
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.32);
     }
 
     .binder-index-handle .handle-icon {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1;
-    }
-
-    .binder-index-handle .handle-text {
-      writing-mode: vertical-rl;
-      text-orientation: upright;
-      font-family: var(--font-serif);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #3f362a;
     }
 
     /* 2. 背景の半透明和紙遮光幕（ドロワー展開時） */
@@ -527,21 +521,30 @@
       border: 1px solid #baa88a;
       border-radius: 3px;
       color: #554a3c;
-      font-size: 11px;
-      padding: 3px 7px;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      font-size: 12px;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.15s ease;
+      line-height: 1;
     }
 
     .drawer-pin-btn:hover, .drawer-close-btn:hover {
       background: #4a3e2f;
       color: #fdfaf5;
       border-color: #4a3e2f;
+      transform: translateY(-1px);
     }
 
     .drawer-pin-btn.active {
       background: #4a3e2f;
       color: #fdfaf5;
+      border-color: #4a3e2f;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     /* サイドバーメニューリスト：会社の基礎業務区分のみを列挙 */
@@ -622,44 +625,35 @@
     /* 1. 右側 貼辺活頁タグ（AIエージェント・ハンドル） */
     .ai-agent-handle {
       position: fixed;
-      top: 86px;
+      top: 50%;
+      transform: translateY(-50%);
       right: 0;
-      width: 32px;
-      padding: 14px 6px 12px 6px;
+      width: 28px;
+      height: 38px;
+      padding: 0;
       background: #e1ebe5; /* 淡青緑和紙タグ */
       border: 1px solid #acc1b7;
       border-right: none;
       border-radius: 6px 0 0 6px;
-      box-shadow: -2px 3px 10px rgba(0, 0, 0, 0.22);
+      box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.22);
       cursor: pointer;
       z-index: 120;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
     }
 
     .ai-agent-handle:hover {
-      width: 38px;
+      width: 34px;
       background: #d4e5dc;
-      box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.3);
+      box-shadow: -3px 3px 12px rgba(0, 0, 0, 0.3);
     }
 
     .ai-agent-handle .handle-icon {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1;
-    }
-
-    .ai-agent-handle .handle-text {
-      writing-mode: vertical-rl;
-      text-orientation: upright;
-      font-family: var(--font-serif);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #1a4231;
     }
 
     /* 2. 右側 AIエージェント引き出しドロワー */
@@ -1042,16 +1036,19 @@
 
     /* 不動産業務台帳テーブル (Official Ledger Table) */
     .ledger-table-wrap {
-      margin: 20px 0;
+      margin: 18px 0;
       background: #ffffff;
       border: 1px solid #d5cbba;
-      border-radius: 2px;
+      border-radius: 3px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
     }
 
     .ledger-table {
       width: 100%;
+      min-width: 680px; /* 移动端防挤压保护，确保完整列宽可横向滑动浏览 */
       border-collapse: collapse;
       font-size: 12.5px;
       text-align: left;
@@ -1275,20 +1272,32 @@
     .footer-tools {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 8px;
     }
 
     .btn-footer-link {
-      color: #9ca3af;
+      color: #cbd5e1;
+      background: #282c33;
+      border: 1px solid #3e4450;
+      border-radius: 3px;
+      width: 26px;
+      height: 24px;
+      padding: 0;
+      font-size: 13px;
       cursor: pointer;
-      text-decoration: none;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1;
     }
 
     .btn-footer-link:hover {
-      color: #f3f4f6;
+      background: #3c424d;
+      border-color: #64748b;
+      color: #ffffff;
+      transform: translateY(-1px);
     }
 
     /* 切り替え用ペイン */
@@ -1305,7 +1314,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 狭幅画面・レスポンシブ階層制御 (Responsive Multi-tier Optimization) */
+    /* ==========================================================================
+       狭幅画面・レスポンシブ階層制御 (Responsive Multi-tier Optimization)
+       ========================================================================== */
     @media (max-width: 1380px) {
       .brand-sub {
         display: none !important;
@@ -1328,40 +1339,189 @@
       .user-role {
         display: none !important;
       }
-      .btn-portal-back .btn-text {
-        display: none !important;
-      }
     }
 
     @media (max-width: 768px) {
+      /* 1. Header 緊湊布局 */
       .office-header {
-        padding: 0 10px;
-        gap: 8px;
+        padding: 0 8px;
+        height: 48px;
+        min-height: 48px;
+        gap: 6px;
       }
-      .user-details, .btn-away-action .btn-text {
+      .brand-titles {
+        gap: 0;
+      }
+      .company-name {
+        font-size: 13px;
+      }
+      .brand-logo-img {
+        width: 26px;
+        height: 26px;
+      }
+      .user-details {
         display: none !important;
       }
+      .user-profile-badge {
+        padding: 2px 4px;
+        background: transparent;
+        border: none;
+      }
+      .user-stamp-avatar {
+        width: 24px;
+        height: 24px;
+        font-size: 9.5px;
+      }
+      .header-user-section {
+        gap: 6px;
+      }
+
+      /* 2. ドロワーと遮光幕の位置補正 */
+      .drawer-backdrop {
+        top: 48px;
+        bottom: 30px;
+      }
+      .office-sidebar-drawer, .ai-agent-drawer {
+        top: 48px;
+        bottom: 30px;
+        width: 86vw;
+        max-width: 320px;
+      }
+
+      /* 3. 執務台・用紙シート */
       .office-body-workbench {
-        padding: 14px 10px 36px;
+        padding: 8px 6px 24px;
       }
       .dossier-paper-sheet {
-        padding: 24px 16px 24px 28px;
+        padding: 16px 12px;
         min-height: auto;
+        border-radius: 3px;
+        background-size: 16px 16px;
+      }
+      .dossier-paper-sheet::before {
+        display: none !important; /* 活頁孔の破線ガイド非表示 */
+      }
+      .binder-hole {
+        display: none !important; /* 2穴パンチ孔非表示（紙面最大活用） */
       }
       .paper-sticky-note {
-        display: none !important;
+        display: none !important; /* スマホ閲覧時はタイトル重なり防止のため付箋非表示 */
       }
-      .office-sidebar-drawer {
-        width: 84vw;
+      .dossier-paper-sheet::after {
+        width: 220px;
+        height: 220px;
+        opacity: 0.025;
       }
+
+      /* 4. 公文書ヘッダー・タイトル部 */
+      .paper-header-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+        border-bottom: 1.5px solid #2f2b26;
+      }
+      .paper-title-area h2 {
+        font-size: 16.5px;
+        flex-wrap: wrap;
+        gap: 6px;
+        line-height: 1.35;
+      }
+      .paper-title-area h2 span:first-child {
+        font-size: 15px;
+      }
+      .paper-title-desc {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .dossier-code-meta {
+        text-align: left;
+        font-size: 10px;
+        width: 100%;
+        border-top: 1px dashed #ded4c3;
+        padding-top: 6px;
+      }
+
+      /* 5. カードグリッド */
+      .section-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 14px 0;
+      }
+      .paper-card {
+        padding: 12px 10px;
+      }
+      .paper-card-title {
+        font-size: 13px;
+      }
+
+      /* 6. 表格在小屏具备横向滚动条，防止单元格被挤压变形 */
+      .ledger-table-wrap {
+        margin: 10px 0;
+        border-radius: 2px;
+      }
+      .ledger-table th, .ledger-table td {
+        padding: 8px 10px;
+        font-size: 11.5px;
+        white-space: nowrap;
+      }
+
+      /* 7. 捺印・署名エリア */
+      .sign-section-box {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px 10px;
+      }
+      .sign-titles {
+        font-size: 11.5px;
+      }
+      .sign-seals {
+        justify-content: flex-end;
+      }
+      .interactive-stamp-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 12px;
+      }
+
+      /* 8. ハンドル極小化・視界妨害ゼロ */
       .binder-index-handle {
-        top: 72px;
-      }
-      .ai-agent-drawer {
-        width: 88vw;
+        width: 24px;
+        height: 32px;
+        opacity: 0.85;
       }
       .ai-agent-handle {
-        top: 72px;
+        width: 24px;
+        height: 32px;
+        opacity: 0.85;
+      }
+
+      /* 9. フッター下部 */
+      .office-footer {
+        height: 30px;
+        min-height: 30px;
+        padding: 0 8px;
+        gap: 6px;
+      }
+      .footer-status-pills {
+        display: none !important;
+      }
+      .footer-ticker {
+        flex: 1;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        max-width: calc(100% - 68px);
+      }
+      .footer-tools {
+        gap: 4px;
+      }
+      .btn-footer-link {
+        width: 24px;
+        height: 22px;
+        font-size: 12px;
       }
     }
   </style>
@@ -1407,7 +1567,6 @@
       <div class="header-user-section">
         <a href="./index.html" onclick="if(window.opener && window.history.length <= 2){window.close(); return false;}" class="btn-office-action btn-portal-back" title="詳細設計査閲ポータル主画面へ戻る">
           <span>←</span>
-          <span class="btn-text">査閲ポータル</span>
         </a>
 
         <div class="user-profile-badge" title="専任宅地建物取引士 登録証照会">
@@ -1423,7 +1582,6 @@
 
         <button class="btn-office-action btn-away-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')" title="離席または担当席切替">
           <span>⏻</span>
-          <span class="btn-text">離席</span>
         </button>
       </div>
     </header>
@@ -1434,9 +1592,8 @@
     <div class="office-workspace">
 
       <!-- 貼辺活頁タグ（インデックス・ハンドル）: 常時は画面左端に極小常駐 -->
-      <div class="binder-index-handle" id="binder-index-handle" title="クリックまたはホバーで業務区分目録を展開">
+      <div class="binder-index-handle" id="binder-index-handle" title="業務区分目録を展開">
         <span class="handle-icon">🗂️</span>
-        <span class="handle-text">業務目録</span>
       </div>
 
       <!-- 半透明和紙遮光幕（ドロワー展開時） -->
@@ -1450,7 +1607,7 @@
             会社基礎業務区分
           </div>
           <div class="drawer-header-actions">
-            <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-pin-btn" id="drawer-pin-btn" title="ドロワー固定/解除">📌</button>
             <button class="drawer-close-btn" id="drawer-close-btn" title="閉じる">✕</button>
           </div>
         </div>
@@ -1650,7 +1807,7 @@
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '調査済')">
-                  🖋️ 押印查収 (登記簿照合)
+                  押印查収 (登記簿照合)
                 </button>
               </div>
             </div>
@@ -1719,7 +1876,7 @@
                   <span style="font-size:8px;">取引士</span>
                 </div>
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '契印済')">
-                  🔴 契印捺印 (重説・契約書締結)
+                  契印捺印 (重説・契約書締結)
                 </button>
               </div>
             </div>
@@ -1778,7 +1935,7 @@
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '承認受領')">
-                  🖋️ 融資承認通知 受取押印
+                  融資承認通知 受取押印
                 </button>
               </div>
             </div>
@@ -1846,7 +2003,7 @@
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '決済完了')">
-                  🔴 決済執行印 (領収証発行)
+                  決済執行印 (領収証発行)
                 </button>
               </div>
             </div>
@@ -1903,7 +2060,7 @@
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '監査済')">
-                  🖋️ 総務監査印 押印
+                  総務監査印 押印
                 </button>
               </div>
             </div>
@@ -1914,9 +2071,8 @@
       </main> <!-- /.office-body-workbench -->
 
       <!-- 右側 貼辺活頁タグ（AIエージェント・事務補佐官ハンドル）: 常時は画面右端に極小常駐 -->
-      <div class="ai-agent-handle" id="ai-agent-handle" title="クリックまたはホバーでAI宅建事務補佐官チャットを展開">
+      <div class="ai-agent-handle" id="ai-agent-handle" title="AI宅建事務補佐官チャットを展開">
         <span class="handle-icon">🤖</span>
-        <span class="handle-text">事務代理</span>
       </div>
 
       <!-- 右側 自動隠蔽ドロワー (AI Agent Sidebar Drawer) : 宅建事務・契約審査補佐官チャット -->
@@ -1929,7 +2085,7 @@
             <span class="ai-status-indicator" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">● 検証用</span>
           </div>
           <div class="drawer-header-actions">
-            <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌</button>
             <button class="drawer-close-btn" id="ai-drawer-close-btn" title="閉じる">✕</button>
           </div>
         </div>
@@ -1977,20 +2133,16 @@
           <div class="ai-quick-actions">
             <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション（予定機能コンセプト）</div>
             <button class="quick-action-btn" data-prompt="板橋区物件Cの重要事項説明書（第35条）記載漏れチェックを実行して">
-              <span>📝 重要事項説明書レビュー支援</span>
-              <span>➔</span>
+              <span>重要事項説明書レビュー支援</span>
             </button>
             <button class="quick-action-btn" data-prompt="本日の住宅ローン本審査ステータスと未着手案件をリストアップして">
-              <span>🏦 住宅ローンスケジュール管理支援</span>
-              <span>➔</span>
+              <span>住宅ローンスケジュール管理支援</span>
             </button>
             <button class="quick-action-btn" data-prompt="反響受付台帳の最新案件（大田区）の初回ヒアリング確認票を作成して">
-              <span>📋 初回来店顧客ヒアリング作成支援</span>
-              <span>➔</span>
+              <span>初回来店顧客ヒアリング作成支援</span>
             </button>
             <button class="quick-action-btn" data-prompt="土砂災害警戒区域およびハザードマップ説明義務条項の最新書式を出力して">
-              <span>🗺️ ハザード説明チェック支援</span>
-              <span>➔</span>
+              <span>ハザード説明チェック支援</span>
             </button>
           </div>
         </div>
@@ -2022,9 +2174,8 @@
       </div>
 
       <div class="footer-tools">
-        <a class="btn-footer-link" onclick="window.print()">🖨️ A4帳票印刷</a>
-        <span>｜</span>
-        <a class="btn-footer-link" onclick="toggleDeskLight()">💡 デスクライト調光</a>
+        <a class="btn-footer-link" onclick="window.print()" title="A4帳票印刷">🖨️</a>
+        <a class="btn-footer-link" onclick="toggleDeskLight()" title="デスクライト調光">💡</a>
       </div>
     </footer>
 
@@ -2108,11 +2259,13 @@
         sidebarDrawer.classList.add('pinned');
         sidebarDrawer.classList.add('open');
         drawerPinBtn.classList.add('active');
-        drawerPinBtn.innerHTML = '📌 固定中';
+        drawerPinBtn.innerHTML = '📌';
+        drawerPinBtn.title = '固定解除';
       } else {
         sidebarDrawer.classList.remove('pinned');
         drawerPinBtn.classList.remove('active');
-        drawerPinBtn.innerHTML = '📌 固定';
+        drawerPinBtn.innerHTML = '📌';
+        drawerPinBtn.title = 'ドロワー固定';
       }
     }
 
@@ -2187,11 +2340,13 @@
         aiAgentDrawer.classList.add('pinned');
         aiAgentDrawer.classList.add('open');
         aiDrawerPinBtn.classList.add('active');
-        aiDrawerPinBtn.innerHTML = '📌 固定中';
+        aiDrawerPinBtn.innerHTML = '📌';
+        aiDrawerPinBtn.title = '固定解除';
       } else {
         aiAgentDrawer.classList.remove('pinned');
         aiDrawerPinBtn.classList.remove('active');
-        aiDrawerPinBtn.innerHTML = '📌 固定';
+        aiDrawerPinBtn.innerHTML = '📌';
+        aiDrawerPinBtn.title = 'ドロワー固定';
       }
     }
 
