@@ -1051,10 +1051,10 @@
 
     <!-- 中部业务直达导航 (规则约束：若有文字，禁止包含符号) -->
     <nav class="hud-shortcuts-group">
-      <a href="./prototype-crm.html" class="btn-hud-link">執務PC台帳</a>
-      <button type="button" class="btn-hud-link" onclick="openSopModal()">業務SOP白板</button>
-      <a href="./document.html" class="btn-hud-link">公文書棚</a>
-      <a href="./index.html" class="btn-hud-link btn-hud-portal">成果物ポータル</a>
+      <a href="./prototype-crm.html" class="btn-hud-link">売買実務台帳</a>
+      <button type="button" class="btn-hud-link" onclick="openSopModal()">仲介実務SOP</button>
+      <button type="button" class="btn-hud-link" onclick="openArchiveModal()">法定帳簿書架</button>
+      <a href="./index.html" class="btn-hud-link btn-hud-portal">全社業務総覧</a>
     </nav>
 
     <!-- 右侧状态与模式切换 -->
@@ -1087,14 +1087,14 @@
           <img src="./assets/office/whiteboard_sop.jpg" alt="SOP白板" class="tooltip-media-thumb">
           <div class="tooltip-content-body">
             <div class="tooltip-badge-row">
-              <span class="tooltip-tag">SOP標準業務フロー</span>
-              <span class="tooltip-status">全6大工程策定済</span>
+              <span class="tooltip-tag">不動産売買実務規範</span>
+              <span class="tooltip-status">標準6大工程策定済</span>
             </div>
-            <div class="tooltip-title">不動産売買6大工程白板</div>
+            <div class="tooltip-title">不動産売買仲介 業務推進行程</div>
             <div class="tooltip-desc">
-              集客・物件調査から重要事項説明(35条)・売買契約(37条)・金消・残金決済引渡に至る標準実務規範。
+              顧客集客から物件調査・役所照会、重要事項説明(35条)、売買契約(37条)、住宅ローン金消、残金決済引渡に至る一貫実務標準。
             </div>
-            <div class="tooltip-action-prompt">詳細SOP仕様書を展開</div>
+            <div class="tooltip-action-prompt">実務工程規範を展開</div>
           </div>
         </div>
       </div>
@@ -1111,38 +1111,38 @@
           <img src="./assets/office/desk_workstation.jpg" alt="CRM執務デスク" class="tooltip-media-thumb">
           <div class="tooltip-content-body">
             <div class="tooltip-badge-row">
-              <span class="tooltip-tag">業務基幹システム</span>
-              <span class="tooltip-status">プロトタイプ稼働中</span>
+              <span class="tooltip-tag">売買基幹業務統合管理</span>
+              <span class="tooltip-status">社内稼働中 · オンライン</span>
             </div>
-            <div class="tooltip-title">不動産売買統合台帳 (CRM)</div>
+            <div class="tooltip-title">不動産売買業務統合台帳</div>
             <div class="tooltip-desc">
-              顧客カルテ、重要事項調査進捗、物件データベース、契約・残金決済台帳をリアルタイム統合管理。
+              買付証明受領案件、重要事項調査進捗、物件登記データベース、売買契約・残金決済台帳の一元即時照会。
             </div>
-            <div class="tooltip-action-prompt">台帳システム画面を起動</div>
+            <div class="tooltip-action-prompt">売買実務台帳を開く</div>
           </div>
         </div>
       </div>
 
       <!-- 3. 文件柜公文架 Cabinet (Right Wall) -->
-      <div class="hotspot-node category-doc align-right" id="spotCabinet" onclick="window.location.href='./document.html'">
+      <div class="hotspot-node category-doc align-right" id="spotCabinet" onclick="openArchiveModal()">
         <div class="beacon-core">
           <div class="beacon-pulse-ring"></div>
         </div>
-        <div class="hotspot-label-pill">重要公文書・仕様書棚</div>
+        <div class="hotspot-label-pill">法定帳簿・重要公文書架</div>
 
         <!-- 悬浮文字与预览卡片 -->
         <div class="hotspot-tooltip-card">
-          <img src="./assets/office/binder_shelves.jpg" alt="仕様書ファイル棚" class="tooltip-media-thumb">
+          <img src="./assets/office/binder_shelves.jpg" alt="公文書バインダー棚" class="tooltip-media-thumb">
           <div class="tooltip-content-body">
             <div class="tooltip-badge-row">
-              <span class="tooltip-tag">公式策定ドキュメント</span>
-              <span class="tooltip-status">全4部完備</span>
+              <span class="tooltip-tag">宅建業法第49条 法定帳簿</span>
+              <span class="tooltip-status">原本5年間保管規程</span>
             </div>
-            <div class="tooltip-title">成果物仕様書アーカイブ</div>
+            <div class="tooltip-title">重要取引公文書・法令様式書架</div>
             <div class="tooltip-desc">
-              01 業務課題定義書、02 業務機能一覧、03 画面要件、04 非機能要件書およびCI/VIブランド資産包。
+              宅地建物取引業法第35条重要事項説明書原本、第37条売買契約書、登記全部事項証明書、公図・地積測量図、固定資産税評価証明書及びハザードマップ保管バインダー。
             </div>
-            <div class="tooltip-action-prompt">仕様書リーダーを開く</div>
+            <div class="tooltip-action-prompt">法定帳簿書架を展開</div>
           </div>
         </div>
       </div>
@@ -1158,12 +1158,12 @@
         <div class="hotspot-tooltip-card">
           <div class="tooltip-content-body">
             <div class="tooltip-badge-row">
-              <span class="tooltip-tag">コンプライアンス審査</span>
-              <span class="tooltip-status">法定適正確認</span>
+              <span class="tooltip-tag">宅地建物取引業法遵守</span>
+              <span class="tooltip-status">専任取引士常駐</span>
             </div>
             <div class="tooltip-title">専任宅建士・公印審査基準</div>
             <div class="tooltip-desc">
-              宅建業法第35条・第37条書面への専任取引士記名押印、重要事項説明の適法性監査、反社排除プロトコル。
+              宅建業法第35条・第37条書面への専任取引士記名押印、重要事項説明の適法性監査、手付金保全措置の適法確認。
             </div>
             <div class="tooltip-action-prompt">法令審査マニュアルを確認</div>
           </div>
@@ -1223,32 +1223,20 @@
         </div>
       </article>
 
-      <!-- 卡片 3: 公文档案柜 -->
+      <!-- 卡片 3: 法定账簿公文档案柜 -->
       <article class="dossier-card">
         <img src="./assets/office/binder_shelves.jpg" alt="公文書棚" class="dossier-card-thumb">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">公式策定ドキュメント</span>
-          <h3 class="dossier-card-title">重要公文書・仕様書アーカイブ</h3>
+          <span class="dossier-tag-pill">法定帳簿・公文書管理</span>
+          <h3 class="dossier-card-title">法定帳簿・重要取引公文書架</h3>
           <p class="dossier-card-desc">
-            01 業務課題定義書、02 業務機能一覧、03 画面要件、04 非機能要件書およびCI/VIブランド資産。
+            宅建業法第49条法定帳簿、35条重要事項説明書原本、37条売買契約書、法務局公図・測量図および役所調査台帳。
           </p>
-          <a href="./document.html" class="btn-dossier-action">仕様書リーダー起動</a>
+          <button type="button" class="btn-dossier-action" onclick="openArchiveModal()">公文書架を展開</button>
         </div>
       </article>
 
-      <!-- 卡片 4: 成果物总览门户 -->
-      <article class="dossier-card">
-        <div class="dossier-card-body">
-          <span class="dossier-tag-pill">Vanguard プラットフォーム</span>
-          <h3 class="dossier-card-title">成果物総覧ポータルへ戻る</h3>
-          <p class="dossier-card-desc">
-            策定評議会の案件全体マイルストーン、設計ドキュメント群および全成果物総覧を閲覧。
-          </p>
-          <a href="./index.html" class="btn-dossier-action">成果物ポータルを開く</a>
-        </div>
-      </article>
-
-      <!-- 卡片 5: 宅建士法令审查 -->
+      <!-- 卡片 4: 宅建士法令审查 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
           <span class="dossier-tag-pill">法令遵守統制</span>
@@ -1257,6 +1245,18 @@
             法定35条・37条書面の専任宅地建物取引士記名押印規程、適法性審査チェックリスト。
           </p>
           <button type="button" class="btn-dossier-action" onclick="openSealModal()">法令審査基準表示</button>
+        </div>
+      </article>
+
+      <!-- 卡片 5: 全社业务总览门户 -->
+      <article class="dossier-card">
+        <div class="dossier-card-body">
+          <span class="dossier-tag-pill">全社統括ポータル</span>
+          <h3 class="dossier-card-title">株式会社センティス 全社総覧看板</h3>
+          <p class="dossier-card-desc">
+            会社組織概要、経営理念、不動産取引業免許情報、全社実績および公式コーポレートポータルへ移動。
+          </p>
+          <a href="./index.html" class="btn-dossier-action">全社ポータルを開く</a>
         </div>
       </article>
     </div>
@@ -1316,7 +1316,7 @@
         </div>
       </div>
       <div class="drawer-footer">
-        <a href="./document.html?id=doc02" class="btn-drawer-primary">詳細業務機能一覧を見る</a>
+        <a href="./prototype-crm.html" class="btn-drawer-primary">売買実務台帳で案件を進行</a>
         <button type="button" class="btn-drawer-secondary" onclick="closeSopModal()">閉じる</button>
       </div>
     </div>
@@ -1356,8 +1356,86 @@
         </div>
       </div>
       <div class="drawer-footer">
-        <a href="./document.html?id=doc01" class="btn-drawer-primary">プロジェクト概要定義書を見る</a>
+        <button type="button" class="btn-drawer-primary" onclick="closeSealModal(); openArchiveModal();">法定帳簿・保管公文書架を確認</button>
         <button type="button" class="btn-drawer-secondary" onclick="closeSealModal()">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       5. Modals: 法定帳簿・重要取引公文書架ダイアログ (Archive Shelf Modal)
+       ====================================================================== -->
+  <div class="drawer-overlay" id="archiveModalOverlay" onclick="handleOverlayClick(event, 'archiveModalOverlay')">
+    <div class="drawer-dialog" role="dialog" aria-modal="true" style="max-width: 920px;">
+      <div class="drawer-header">
+        <div class="drawer-header-title-group">
+          <span class="drawer-badge">STATUTORY BOOKS & OFFICIAL LEGAL ARCHIVES</span>
+          <h3 class="drawer-header-title">宅地建物取引業法 法定帳簿 ＆ 取引公文書保管庫</h3>
+        </div>
+        <button type="button" class="btn-dialog-close" onclick="closeArchiveModal()">閉じる</button>
+      </div>
+      <div class="drawer-body">
+        <p>株式会社センティスにおける宅地建物取引業法第49条（帳簿の備付け）および取引公文書の厳格保管・原本管理体系です。電子契約および書面原本を統合保管し、都庁立入検査・税務監査・専任取引士審査に対応しています。</p>
+        
+        <div class="sop-flow-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <!-- 書架 01 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">STATUTORY 01 · 法定必備帳簿</div>
+            <div class="sop-step-name">宅建業法第49条 取引台帳</div>
+            <div class="sop-step-detail">
+              取引年月日、物件所在、売買金額、売主・買主商号氏名、仲介報酬受領額を取引の都度遅滞なく記帳。各事業年度末閉鎖後5年間原本保管。
+            </div>
+          </div>
+
+          <!-- 書架 02 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">STATUTORY 02 · 重要説明原本</div>
+            <div class="sop-step-name">第35条 重要事項説明書 保管庫</div>
+            <div class="sop-step-detail">
+              専任宅建士記名原本およびIT重説録画記録。インフラ整備状況、都市計画制限、土砂・洪水ハザードマップ判定、金銭貸借特約の完全保管。
+            </div>
+          </div>
+
+          <!-- 書架 03 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">STATUTORY 03 · 契約書面原本</div>
+            <div class="sop-step-name">第37条 売買契約書 原本管理庫</div>
+            <div class="sop-step-detail">
+              売主買主記名押印済契約原本、手付金受受領収証、印紙税納付確認書、瑕疵担保・契約不適合責任免責特約および融資利用特約解除期日管理票。
+            </div>
+          </div>
+
+          <!-- 書架 04 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">OFFICIAL 04 · 法務局公的証明</div>
+            <div class="sop-step-name">登記原簿・公図・地積測量図</div>
+            <div class="sop-step-detail">
+              法務局発行の登記全部事項証明書（甲区所有権・乙区抵当権）、法14条地図（公図）、地積測量図、建物図面・各階平面図の原本電子アーカイブ。
+            </div>
+          </div>
+
+          <!-- 書架 05 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">OFFICIAL 05 · 行政照会台帳</div>
+            <div class="sop-step-name">役所調査記録・道路台帳</div>
+            <div class="sop-step-detail">
+              建築基準法第42条道路判定記録、都市計画図（用途地域・建ぺい率・容積率）、埋蔵文化財包蔵地照会、自治体浸水・内水ハザードマップ原本。
+            </div>
+          </div>
+
+          <!-- 書架 06 -->
+          <div class="sop-step-card">
+            <div class="sop-step-num">COMPLIANCE 06 · 法令遵守確認</div>
+            <div class="sop-step-name">犯罪収益移転防止・本人確認台帳</div>
+            <div class="sop-step-detail">
+              取引相手方の公的身分証写し、法人取引時の履歴事項全部証明書および実質的支配者申告書、反社会的勢力排除宣誓書の適法管理。
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <a href="./prototype-crm.html" class="btn-drawer-primary">売買実務台帳へ連動照会</a>
+        <button type="button" class="btn-drawer-secondary" onclick="closeArchiveModal()">閉じる</button>
       </div>
     </div>
   </div>
@@ -1371,6 +1449,7 @@
     const hudClock = document.getElementById('hudClock');
     const sopModalOverlay = document.getElementById('sopModalOverlay');
     const sealModalOverlay = document.getElementById('sealModalOverlay');
+    const archiveModalOverlay = document.getElementById('archiveModalOverlay');
     const btnModeToggle = document.getElementById('btnModeToggle');
 
     // 实时更新东京时间
@@ -1421,18 +1500,26 @@
 
     // SOP 模态框打开与关闭
     function openSopModal() {
-      sopModalOverlay.classList.add('active');
+      if (sopModalOverlay) sopModalOverlay.classList.add('active');
     }
     function closeSopModal() {
-      sopModalOverlay.classList.remove('active');
+      if (sopModalOverlay) sopModalOverlay.classList.remove('active');
     }
 
     // 宅建士模态框打开与关闭
     function openSealModal() {
-      sealModalOverlay.classList.add('active');
+      if (sealModalOverlay) sealModalOverlay.classList.add('active');
     }
     function closeSealModal() {
-      sealModalOverlay.classList.remove('active');
+      if (sealModalOverlay) sealModalOverlay.classList.remove('active');
+    }
+
+    // 法定账簿公文档案柜模态框打开与关闭
+    function openArchiveModal() {
+      if (archiveModalOverlay) archiveModalOverlay.classList.add('active');
+    }
+    function closeArchiveModal() {
+      if (archiveModalOverlay) archiveModalOverlay.classList.remove('active');
     }
 
     // 遮罩点击关闭
@@ -1447,6 +1534,7 @@
       if (e.key === 'Escape') {
         closeSopModal();
         closeSealModal();
+        closeArchiveModal();
       }
     });
 

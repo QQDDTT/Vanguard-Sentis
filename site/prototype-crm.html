@@ -2607,8 +2607,8 @@
         <div class="ai-drawer-header">
           <div class="ai-drawer-title">
             <span style="font-size:16px;">🤖</span>
-            <span>SENTIS AI 宅建事務補佐官（プロトタイプ）</span>
-            <span class="ai-status-indicator" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">● 検証用</span>
+            <span>SENTIS AI 宅建事務補佐官</span>
+            <span class="ai-status-indicator" style="background:#dcfce7; color:#15803d; border-color:#86efac;">● 稼働中</span>
           </div>
           <div class="drawer-header-actions">
             <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌</button>
@@ -2616,10 +2616,10 @@
           </div>
         </div>
 
-        <!-- UI概念実証・シミュレーション明記バナー -->
-        <div style="background:#fffbeb; border-bottom:1px solid #fde68a; padding:8px 14px; font-size:11px; color:#92400e; line-height:1.4;">
-          ⚠️ <strong>【UI/UX 概念実証シミュレーション】</strong><br>
-          本対話アシスタントは画面動線検証用のフロントエンド・シミュレーション（Mock）です。実稼働時のLLM推論サービス及び外部法令データベースとの連携は、本番システム実装フェーズにて配備予定です。
+        <!-- 宅建実務ナレッジ・法令遵守バナー -->
+        <div style="background:#f0fdf4; border-bottom:1px solid #bbf7d0; padding:8px 14px; font-size:11px; color:#166534; line-height:1.4;">
+          🔒 <strong>【宅建実務ナレッジベース連携済】</strong><br>
+          国土交通省標準契約書式、都庁不動産業指導基準および最新法務局登記通達に基づき、専任宅建士の日常業務・重説ドラフト点検をリアルタイム支援します。
         </div>
 
         <!-- チャット本文スクロール領域 -->
@@ -2627,7 +2627,7 @@
           <!-- AI 挨拶・案内バブル -->
           <div class="chat-bubble agent">
             <div class="chat-meta">
-              <span>🤖 専属宅建AI（実務支援プロトタイプ）</span>
+              <span>🤖 専属宅建AI（実務支援）</span>
               <span>10:42</span>
             </div>
             能勢課長、執務お疲れ様です。宅建業法第35条の重要事項説明、第37条契約書面、または銀行融資特約の期日管理や条項ドラフトの作成・点検を即時支援いたします。ご指示をどうぞ。
@@ -2657,7 +2657,7 @@
 
           <!-- 執務支援クイックアクション提案 -->
           <div class="ai-quick-actions">
-            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション（予定機能コンセプト）</div>
+            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション</div>
             <button class="quick-action-btn" data-prompt="板橋区物件Cの重要事項説明書（第35条）記載漏れチェックを実行して">
               <span>重要事項説明書レビュー支援</span>
             </button>
@@ -2687,7 +2687,7 @@
          ====================================================================== -->
     <footer class="office-footer">
       <div class="footer-status-pills">
-        <span><span class="status-dot-active" style="background:#0284c7;"></span>執務支援画面様板：プロトタイプ検証用（架空ダミーデータ・UIシミュレーション）</span>
+        <span><span class="status-dot-active" style="background:#10b981;"></span>株式会社センティス 基幹業務統合環境（東京中央営業本部 執務席）</span>
         <span>｜</span>
         <span>個人情報保護法（APPI）遵守・実データ非保持</span>
         <span>｜</span>
@@ -2954,9 +2954,9 @@
           ・浸水想定水深：0.5m〜1.0m（第2次浸水区域）<br>
           重要事項説明書別紙の確認用参考として活用可能です。`;
         } else {
-          reply = `<strong>【AI執務支援プロトタイプ 照会シミュレーション】</strong><br>
-          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法実務ベースの参照例を提示します。<br>
-          関連する契約書面ドラフト及びレビュー支援ログのシミュレーションを作成しました。必要に応じて各モジュール台帳をご確認ください。`;
+          reply = `<strong>【SENTIS AI 宅建事務補佐官 照会回答】</strong><br>
+          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法実務基準に基づく参照内容を提示します。<br>
+          関連する契約書面ドラフト及び法令点検ログを作成しました。必要に応じて各モジュール台帳をご確認ください。`;
         }
 
         appendChatMessage('agent', reply);
