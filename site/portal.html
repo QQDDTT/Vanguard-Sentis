@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanguard × 株式会社センティス (SENTIS) - 内部基幹システム策定 成果物総覧ポータル</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- ======================================================================
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       ====================================================================== -->
+  <script>
+    (function() {
+      var currentHost = window.location.hostname;
+      if (window.location.protocol === 'file:' || !currentHost) {
+        return; // 本地双击离线浏览放行
+      }
+      var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
+      if (!authorizedHosts.includes(currentHost)) {
+        window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
+      }
+    })();
+  </script>
+  
+  <style>
+    /* ==========================================================================
+       Vanguard Design System - Pure Minimalist White (白を基調とした極簡・先進テック様式)
+       ========================================================================== */
+    :root {
+      /* 纯净白与银灰阶层次 */
+      --vg-bg-canvas: #ffffff;
+      --vg-bg-subtle: #f8fafc;
+      --vg-bg-muted: #f1f5f9;
+      --vg-bg-card: #ffffff;
+      --vg-bg-glass: rgba(255, 255, 255, 0.92);
+
+      /* 高对比度墨黑与灰阶排版 */
+      --vg-text-primary: #090d16;
+      --vg-text-secondary: #334155;
+      --vg-text-muted: #64748b;
+      --vg-text-tertiary: #94a3b8;
+
+      /* 极细科技感边框 */
+      --vg-border-light: #e2e8f0;
+      --vg-border-subtle: rgba(226, 232, 240, 0.85);
+      --vg-border-focus: #2563eb;
+
+      /* Vanguard 科技重点色 (Electric Cobalt & Precision Cyan) */
+      --vg-accent-blue: #2563eb;
+      --vg-accent-indigo: #4f46e5;
+      --vg-accent-cyan: #06b6d4;
+      --vg-accent-emerald: #059669;
+      --vg-accent-amber: #d97706;
+      --vg-accent-red: #dc2626;
+
+      /* 阴影层次体系 */
+      --vg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --vg-shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+      --vg-shadow-lg: 0 16px 36px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+      --vg-shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+      /* 字体排印 */
+      --vg-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      --vg-font-mono: "SF Mono", "Fira Code", "Roboto Mono", Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--vg-bg-canvas);
+      background-image: 
+        radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--vg-text-primary);
+      font-family: var(--vg-font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-ambient-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1200px;
+      height: 380px;
+      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.06) 0%, rgba(79, 70, 229, 0.03) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ==========================================================================
+       0. Security Gateway Modal (セキュアゲートウェイ・関係者認証画面)
+       ========================================================================== */
+    .security-gateway-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .security-gateway-overlay.unlocked {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gateway-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 40px 36px;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: gatewayPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes gatewayPop {
+      from { transform: scale(0.94) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .gateway-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #6366f1, #38bdf8);
+    }
+
+    .gateway-emblem-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .gateway-vanguard-icon {
+      width: 42px;
+      height: 42px;
+      background: #090d16;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(9, 13, 22, 0.2);
+    }
+
+    .gateway-sentis-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .gateway-sentis-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .gateway-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-family: var(--vg-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .gateway-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--vg-text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .gateway-subtitle {
+      font-size: 13px;
+      color: var(--vg-text-secondary);
+      line-height: 1.55;
+      margin-bottom: 26px;
+    }
+
+    .gateway-form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .gateway-input-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--vg-text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .gateway-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .gateway-input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--vg-text-tertiary);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .gateway-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 40px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--vg-text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .gateway-input:focus {
+      background: #ffffff;
+      border-color: var(--vg-accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      outline: none;
+    }
+
+    .gateway-btn-submit {
+      width: 100%;
+      height: 44px;
+      background: #090d16;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(9, 13, 22, 0.15);
+    }
+
+    .gateway-btn-submit:hover {
+      background: var(--vg-accent-blue);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .gateway-error-msg {
+      display: none;
+      margin-top: 14px;
+      padding: 8px 12px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #b91c1c;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .gateway-footer-note {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--vg-text-tertiary);
+      line-height: 1.5;
+    }
+
+    /* 认证通过后的主内容容器 */
+    .portal-main-wrapper {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .portal-main-wrapper.visible {
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       1. Global Header (全域ヘッダー)
+       ========================================================================== */
+    .header-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--vg-bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--vg-border-subtle);
+    }
+
+    .header-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .vanguard-badge-symbol {
+      width: 32px;
+      height: 32px;
+      background: #090d16;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 2px 8px rgba(9, 13, 22, 0.25);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-platform {
+      font-size: 11px;
+      font-family: var(--vg-font-mono);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--vg-accent-blue);
+      text-transform: uppercase;
+    }
+
+    .brand-project {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--vg-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .brand-project-full {
+      display: inline;
+      white-space: nowrap;
+    }
+
+    .brand-project-mobile {
+      display: none;
+      white-space: nowrap;
+    }
+
+    .sentis-tag {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .release-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #1d4ed8;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-text-full {
+      display: inline;
+      white-space: nowrap;
+    }
+
+    .badge-text-short {
+      display: none;
+      white-space: nowrap;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2563eb;
+      display: inline-block;
+      flex-shrink: 0;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .btn-header-action {
+      background: #ffffff;
+      border: 1px solid var(--vg-border-light);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--vg-text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-header-action:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: var(--vg-text-primary);
+    }
+
+    .btn-logout {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #be123c;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-logout:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
+    }
+
+    /* ==========================================================================
+       2. Hero Header Section (展示導入看板)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px 36px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-family: var(--vg-font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #475569;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.8px;
+      color: var(--vg-text-primary);
+      margin-bottom: 16px;
+      word-break: auto-phrase;
+      overflow-wrap: break-word;
+    }
+
+    .desktop-break {
+      display: inline;
+    }
+
+    .hero-title span.accent-highlight {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #4f46e5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      color: var(--vg-text-secondary);
+      max-width: 820px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* KPI 指標ダッシュボード (Metrics Bar) */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .metric-card {
+      background: var(--vg-bg-card);
+      border: 1px solid var(--vg-border-subtle);
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: var(--vg-shadow-sm);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--vg-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #38bdf8);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .metric-card:hover::before {
+      opacity: 1;
+    }
+
+    .metric-value {
+      font-family: var(--vg-font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--vg-text-primary);
+      line-height: 1.1;
+      margin-bottom: 6px;
+      letter-spacing: -1px;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--vg-text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--vg-text-muted);
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       3. Deliverables Filter & Catalog Grid (成果物一覧)
+       ========================================================================== */
+    .catalog-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 20px 24px 80px;
+      flex: 1;
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--vg-border-light);
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .tab-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--vg-bg-subtle);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--vg-border-light);
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-pill {
+      background: transparent;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--vg-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .tab-pill:hover {
+      color: var(--vg-text-primary);
+    }
+
+    .tab-pill.active {
+      background: #ffffff;
+      color: var(--vg-accent-blue);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+    }
+
+    .catalog-count-note {
+      font-family: var(--vg-font-mono);
+      font-size: 12px;
+      color: var(--vg-text-muted);
+      flex-shrink: 0;
+    }
+
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .deliverable-card {
+      background: var(--vg-bg-card);
+      border: 1px solid var(--vg-border-subtle);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: var(--vg-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      min-width: 0;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .deliverable-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--vg-shadow-hover);
+      transform: translateY(-3px);
+    }
+
+    .card-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: var(--vg-font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .badge-prototype {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-doc {
+      background: #faf5ff;
+      color: #7e22ce;
+      border: 1px solid #e9d5ff;
+    }
+
+    .badge-workflow {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-assets {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .card-code {
+      font-family: var(--vg-font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--vg-text-tertiary);
+    }
+
+    .card-title {
+      font-size: 17.5px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--vg-text-primary);
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--vg-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .card-tag {
+      background: var(--vg-bg-subtle);
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .card-footer {
+      border-top: 1px solid var(--vg-border-light);
+      padding-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-status-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #059669;
+      font-weight: 600;
+    }
+
+    .btn-card-launch {
+      background: #090d16;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-card-launch:hover {
+      background: #2563eb;
+      transform: translateX(2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-card-view-doc {
+      background: #ffffff;
+      color: var(--vg-text-primary);
+      border: 1px solid var(--vg-border-light);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-card-view-doc:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    .card-actions-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-card-quick-preview {
+      background: #ffffff;
+      color: var(--vg-text-secondary);
+      border: 1px solid var(--vg-border-light);
+      padding: 7px 11px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-card-quick-preview:hover {
+      background: #f1f5f9;
+      color: #090d16;
+      border-color: #cbd5e1;
+    }
+
+    .btn-modal-action-newtab {
+      background: #ffffff;
+      color: var(--vg-text-primary);
+      border: 1px solid var(--vg-border-strong);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-modal-action-newtab:hover {
+      background: #090d16;
+      color: #ffffff;
+      border-color: #090d16;
+    }
+
+    .external-icon {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       4. Document Modal Viewer (成果物ドキュメント即時インライン閲覧窓)
+       ========================================================================== */
+    .doc-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(9, 13, 22, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .doc-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .doc-modal-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 960px;
+      height: 90vh;
+      border-radius: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.96);
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .doc-modal-overlay.active .doc-modal-container {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--vg-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+    }
+
+    .modal-header-titles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-doc-id {
+      font-family: var(--vg-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .modal-doc-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--vg-text-primary);
+    }
+
+    .modal-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--vg-border-light);
+      background: #ffffff;
+      color: var(--vg-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-modal-close:hover {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #b91c1c;
+    }
+
+    .modal-body-scroller {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 48px;
+      background: #ffffff;
+      color: #1e293b;
+      font-size: 14.5px;
+      line-height: 1.75;
+    }
+
+    .doc-content h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--vg-border-light);
+      color: #090d16;
+    }
+
+    .doc-content h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-content h2::before {
+      content: "";
+      width: 4px;
+      height: 18px;
+      background: var(--vg-accent-blue);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .doc-content h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    .doc-content p {
+      margin-bottom: 14px;
+    }
+
+    .doc-content ul, .doc-content ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    .doc-content li {
+      margin-bottom: 6px;
+    }
+
+    .doc-content blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--vg-accent-blue);
+      padding: 12px 18px;
+      margin: 18px 0;
+      border-radius: 0 6px 6px 0;
+      color: #475569;
+      font-size: 13.5px;
+    }
+
+    .doc-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    .doc-content th, .doc-content td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .doc-content th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .doc-content tr:hover td {
+      background: #fbfcfe;
+    }
+
+    .doc-content pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-family: var(--vg-font-mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    /* ==========================================================================
+       5. Global Footer (受渡確認印鑑・著作権フッター)
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--vg-border-light);
+      background: #ffffff;
+      padding: 40px 24px;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-copy {
+      font-size: 12.5px;
+      color: var(--vg-text-muted);
+    }
+
+    .footer-disclaimer {
+      font-size: 11px;
+      color: var(--vg-text-tertiary);
+    }
+
+    .footer-signature-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .signature-seal-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      background: var(--vg-bg-subtle);
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--vg-text-secondary);
+    }
+
+    .seal-circle-stamp {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid #2563eb;
+      color: #2563eb;
+      font-family: var(--vg-font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       6. Responsive Multi-Tier Breakpoints (レスポンシブ・マルチデバイス最適化)
+       ========================================================================== */
+
+    /* 1. ノートPC・中画面 (<= 1120px) */
+    @media (max-width: 1120px) {
+      .header-container {
+        padding: 0 16px;
+        gap: 12px;
+      }
+      .sentis-tag {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+      .badge-text-full {
+        display: none;
+      }
+      .badge-text-short {
+        display: inline;
+      }
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .deliverables-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      }
+    }
+
+    /* 2. タブレット・狭幅PC (<= 860px) */
+    @media (max-width: 860px) {
+      .header-container {
+        height: 58px;
+      }
+      .sentis-tag {
+        display: none !important;
+      }
+      .brand-project {
+        font-size: 13.5px;
+      }
+      .btn-header-action .btn-text {
+        display: none;
+      }
+      .btn-header-action {
+        padding: 6px 10px;
+      }
+      .hero-title {
+        font-size: 26px;
+        line-height: 1.32;
+      }
+      .hero-description {
+        font-size: 14.5px;
+      }
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .modal-body-scroller {
+        padding: 24px 20px;
+      }
+      .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .footer-signature-bar {
+        flex-wrap: wrap;
+        width: 100%;
+      }
+    }
+
+    /* 3. スマートフォン標準 (<= 640px) */
+    @media (max-width: 640px) {
+      body {
+        font-size: 13px;
+      }
+
+      /* ヘッダー極簡最適化 */
+      .header-container {
+        height: 52px;
+        padding: 0 12px;
+        gap: 8px;
+      }
+      .header-branding {
+        gap: 8px;
+        min-width: 0;
+      }
+      .vanguard-badge-symbol {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+        border-radius: 6px;
+      }
+      .brand-platform {
+        display: none !important;
+      }
+      .brand-project {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .brand-project-full {
+        display: none !important;
+      }
+      .brand-project-mobile {
+        display: inline !important;
+      }
+      .btn-header-action {
+        display: none !important;
+      }
+      .header-right {
+        gap: 6px;
+      }
+      .release-status-badge {
+        padding: 3px 8px;
+        font-size: 10.5px;
+        border-radius: 12px;
+      }
+      .pulse-dot {
+        width: 5px;
+        height: 5px;
+      }
+      .btn-logout {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+      .btn-logout .btn-text {
+        font-size: 10.5px;
+      }
+
+      /* ヒーロー看板 */
+      .hero-section {
+        padding: 20px 14px 16px;
+      }
+      .hero-eyebrow {
+        font-size: 9.5px;
+        padding: 3px 8px;
+        margin-bottom: 12px;
+        letter-spacing: 0.4px;
+        max-width: 100%;
+        line-height: 1.4;
+        text-align: center;
+      }
+      .hero-title {
+        font-size: 20px;
+        line-height: 1.35;
+        letter-spacing: -0.4px;
+        margin-bottom: 10px;
+      }
+      .desktop-break {
+        display: none;
+      }
+      .hero-description {
+        font-size: 12.5px;
+        line-height: 1.6;
+        margin-bottom: 18px;
+      }
+
+      /* 指標KPIグリッド（2x2タイルレイアウトで高さを節約） */
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .metric-card {
+        padding: 10px 10px;
+        border-radius: 8px;
+      }
+      .metric-value {
+        font-size: 17px;
+        margin-bottom: 2px;
+        letter-spacing: -0.5px;
+      }
+      .metric-value span {
+        font-size: 11px !important;
+      }
+      .metric-label {
+        font-size: 11px;
+        margin-bottom: 2px;
+      }
+      .metric-sub {
+        font-size: 9.5px;
+        line-height: 1.3;
+      }
+
+      /* 成果物カタログ & 水平スクロールタブ */
+      .catalog-section {
+        padding: 12px 14px 60px;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding-bottom: 10px;
+        margin-bottom: 16px;
+      }
+      .tab-pills {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 3px;
+        gap: 4px;
+        border-radius: 8px;
+        display: flex;
+        width: 100%;
+      }
+      .tab-pills::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 5px 11px;
+        font-size: 11.5px;
+      }
+      .catalog-count-note {
+        text-align: right;
+        font-size: 9.5px;
+        letter-spacing: 0.2px;
+      }
+
+      /* 成果物カード一覧（1カラム縦並び） */
+      .deliverables-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .deliverable-card {
+        padding: 18px 16px;
+        border-radius: 12px;
+      }
+      .card-top-meta {
+        margin-bottom: 12px;
+      }
+      .card-title {
+        font-size: 15.5px;
+        margin-bottom: 8px;
+        line-height: 1.35;
+      }
+      .card-desc {
+        font-size: 12px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+      }
+      .card-tags {
+        gap: 5px;
+        margin-bottom: 14px;
+      }
+      .card-tag {
+        font-size: 9.5px;
+        padding: 2px 6px;
+      }
+      .card-footer {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 10px;
+      }
+      .card-status-info {
+        font-size: 11px;
+      }
+      .btn-card-launch {
+        padding: 6px 12px;
+        font-size: 11.5px;
+      }
+
+      /* 文書モーダル・全画面ポップアップ */
+      .doc-modal-overlay {
+        padding: 0;
+      }
+      .doc-modal-container {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+      }
+      .modal-header {
+        padding: 12px 14px;
+      }
+      .modal-doc-title {
+        font-size: 13.5px;
+      }
+      .modal-body-scroller {
+        padding: 18px 14px;
+        font-size: 13px;
+      }
+      .doc-content h1 {
+        font-size: 18px;
+      }
+      .doc-content h2 {
+        font-size: 15px;
+      }
+      .doc-content table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 11.5px;
+      }
+      .doc-content th, .doc-content td {
+        padding: 7px 9px;
+      }
+      .doc-content pre {
+        padding: 12px;
+        font-size: 11px;
+      }
+
+      /* ゲートウェイモーダル */
+      .security-gateway-overlay {
+        padding: 16px;
+      }
+      .gateway-card {
+        padding: 28px 18px;
+        border-radius: 14px;
+      }
+      .gateway-title {
+        font-size: 18px;
+      }
+      .gateway-subtitle {
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+      .gateway-input {
+        height: 40px;
+        font-size: 13px;
+      }
+      .gateway-btn-submit {
+        height: 40px;
+        font-size: 13px;
+      }
+
+      /* フッター */
+      .site-footer {
+        padding: 24px 14px;
+      }
+      .footer-container {
+        padding: 0;
+        gap: 16px;
+      }
+      .footer-left {
+        font-size: 12px;
+      }
+      .footer-disclaimer {
+        font-size: 10px;
+      }
+      .signature-seal-block {
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+    }
+
+    /* 4. 極小画面スマートフォン (<= 360px) */
+    @media (max-width: 360px) {
+      .header-container {
+        padding: 0 8px;
+      }
+      .brand-project-text {
+        max-width: 80px;
+        font-size: 11px;
+      }
+      .hero-title {
+        font-size: 17.5px;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       0. Security Gateway (セキュア関係者認証ゲートウェイ)
+       ====================================================================== -->
+  <div class="security-gateway-overlay" id="securityGatewayOverlay">
+    <div class="gateway-card">
+      <div class="gateway-emblem-wrap">
+        <div class="gateway-vanguard-icon">V</div>
+        <div class="gateway-sentis-icon">
+          <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS" />
+        </div>
+      </div>
+
+      <div class="gateway-badge">
+        <span>🔒 CONFIDENTIAL DELIVERABLES</span>
+      </div>
+
+      <h2 class="gateway-title">関係者限定アクセス認証</h2>
+      <p class="gateway-subtitle">
+        株式会社センティス (SENTIS) 内部基幹システム策定成果物及び高保真プロトタイプ閲覧のための認証キーを入力してください。
+      </p>
+
+      <form id="gatewayAuthForm" onsubmit="handleGatewayLogin(event)">
+        <div class="gateway-form-group">
+          <label class="gateway-input-label" for="gatewayPassword">認証セキュリティキー (Access Password)</label>
+          <div class="gateway-input-box">
+            <span class="gateway-input-icon">🔑</span>
+            <input type="password" id="gatewayPassword" class="gateway-input" placeholder="アクセスパスワードを入力..." autocomplete="current-password" autofocus required />
+          </div>
+        </div>
+
+        <button type="submit" class="gateway-btn-submit" id="btnGatewaySubmit">
+          <span>アクセス認証を実行</span> ➔
+        </button>
+
+        <div class="gateway-error-msg" id="gatewayErrorMsg">
+          ⚠️ 認証キーが一致しません。担当アーキテクトまたは専任宅建士へご確認ください。
+        </div>
+      </form>
+
+      <div class="gateway-footer-note">
+        <strong>【情報セキュリティ規範】</strong><br>
+        本成果物群は宅地建物取引業法第49条及び社外秘規程に基づき保護されています。
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       認証済ポータル本体 (Portal Main View)
+       ====================================================================== -->
+  <div class="portal-main-wrapper" id="portalMainWrapper">
+
+    <!-- 顶部科技微光 -->
+    <div class="top-ambient-glow"></div>
+
+    <!-- 1. Global Header (全域ヘッダー) -->
+    <header class="header-nav">
+      <div class="header-container">
+        <a href="./index.html" class="header-branding">
+          <div class="vanguard-badge-symbol">V</div>
+          <div class="header-titles">
+            <span class="brand-platform">VANGUARD PLATFORM</span>
+            <span class="brand-project">
+              <span class="brand-project-full">詳細設計査閲ポータル</span>
+              <span class="brand-project-mobile">SENTIS 査閲ポータル</span>
+              <span class="sentis-tag">株式会社センティス (SENTIS)</span>
+            </span>
+          </div>
+        </a>
+
+        <div class="header-right">
+          <div class="release-status-badge">
+            <span class="pulse-dot"></span>
+            <span class="badge-text-full">査閲受付中 · Design Review v0.9</span>
+            <span class="badge-text-short">Review v0.9</span>
+          </div>
+          <button class="btn-header-action" onclick="window.print()" title="査閲目録を印刷">
+            <span>🖨️</span> <span class="btn-text">印刷</span>
+          </button>
+          <button class="btn-logout" onclick="handleLogout()" title="セッションを破棄して再施錠">
+            <span>⏻</span> <span class="btn-text">退出</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Hero Header Section (展示導入看板) -->
+    <section class="hero-section">
+      <div class="hero-eyebrow">
+        <span>DESIGN REVIEW DIRECTORY</span>
+        <span>•</span>
+        <span>SENTIS REALTY CORE ARCHITECTURE</span>
+      </div>
+
+      <h1 class="hero-title">
+        株式会社センティス 次世代不動産売買業務基幹システム<br class="desktop-break">
+        <span class="accent-highlight">要件定義・業務SOP及び統合執務プロトタイプ 詳細設計査閲ポータル</span>
+      </h1>
+
+      <p class="hero-description">
+        本ポータルは、株式会社センティス（SENTIS）の創業計画書及び不動産売買・住宅ローン審査実務規程に基づき、
+        Vanguard プラットフォームが策定した詳細設計仕様（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様と共に確認・合意形成するための査閲ディレクトリ（Design Review Phase）です。
+      </p>
+
+      <!-- 交付 KPI 看板（脱敏后：无任何具体金额数字） -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
+          <div class="metric-label">画面プロトタイプ</div>
+          <div class="metric-sub">6大台帳執務デスク ＋ AI事務補佐（検証画面）</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-value">04 <span style="font-size:16px; font-weight:normal; color:#64748b;">篇</span></div>
+          <div class="metric-label">公式策定仕様書</div>
+          <div class="metric-sub">概要課題・SOPフロー・システム要件・推進日程</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-value">実務準拠</div>
+          <div class="metric-label">宅建業法対応設計</div>
+          <div class="metric-sub">第35条重説・第37条書面・49条帳簿の実務ベースモデル</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-value">国内基軸 <span style="font-size:15px; font-weight:normal; color:#64748b;">＋越境拡張</span></div>
+          <div class="metric-label">売買実務・融資決済全包摂</div>
+          <div class="metric-sub">国内住宅ローン仲介実務を主軸に、非居住者越境送金分岐にも拡張対応</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Deliverables Filter & Catalog Grid (成果物一覧) -->
+    <main class="catalog-section">
+      <div class="filter-bar">
+        <div class="tab-pills">
+          <button class="tab-pill active" data-filter="all">すべて表示 (7)</button>
+          <button class="tab-pill" data-filter="document">📄 業務設計仕様書 (4)</button>
+          <button class="tab-pill" data-filter="prototype">💻 画面様板プロトタイプ (2)</button>
+          <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
+        </div>
+
+        <div class="catalog-count-note">
+          VANGUARD VERIFIED ARTIFACTS · ZERO SERVER RUNTIME
+        </div>
+      </div>
+
+      <div class="deliverables-grid" id="deliverables-container">
+
+        <!-- ==================================================================
+             CATEGORY 1: BUSINESS DESIGN & SPECIFICATIONS (業務設計・仕様策定書群)
+             ================================================================== -->
+
+        <!-- DEL-03: 文档 01 (业务概况与课题定义) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">BUSINESS DESIGN / SPEC-01</span>
+              <span class="card-code">DEL-03</span>
+            </div>
+            <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
+            <p class="card-desc">
+              少人数精鋭体制における仲介業務高人効モデルの確立と、取引リスク・手戻りゼロを担保する業務設計書。
+              国内優良実需・投資物件仲介を中核とする事業戦略、5大競争優位性、及びシステム基本理念を定義。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">高人効モデル設計</span>
+              <span class="card-tag">国内実需・投資仲介</span>
+              <span class="card-tag">5大競争優位性</span>
+              <span class="card-tag">システム基本構想</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>概要書を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-04: 文档 02 (SOP业务流) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-workflow">BUSINESS DESIGN / SOP-02</span>
+              <span class="card-code">DEL-04</span>
+            </div>
+            <h3 class="card-title">02. 不動産売買標準業務フロー設計書 (SOP)</h3>
+            <p class="card-desc">
+              ①相談買付 ➔ ②物件・法令調査 ➔ ③重説35条 ➔ ④契約締結 ➔ ⑤ローン・金消 ➔ ⑥司法書士照合・残金決済 ➔ ⑦登記移転引渡の全7段階SOP。
+              国内住宅ローン仲介実務を基軸とし、犯罪収益移転防止法（犯収法eKYC）、外為法事前排查、受款AML審査、非居住者源泉税管理を完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">全7段階標準実務</span>
+              <span class="card-tag">犯収法eKYC・本人確認</span>
+              <span class="card-tag">外為法事前排查・AML</span>
+              <span class="card-tag">住宅ローン・司法書士連携</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>SOP仕様を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-05: 文档 03 (要件定义与架构) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">SYSTEM ARCHITECTURE / REQ-03</span>
+              <span class="card-code">DEL-05</span>
+            </div>
+            <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
+            <p class="card-desc">
+              Sentis Realty Core の5大基幹モジュール、7大エンティティERデータモデル、RBAC 4級ロール権限マトリクス、
+              動的スマートChecklist判定エンジン、Zero Server Prototype と本番実装規約の階層分離、及び個人情報保護法（APPI）脱敏仕様。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">ERデータモデル設計</span>
+              <span class="card-tag">RBAC 4級権限マトリクス</span>
+              <span class="card-tag">アーキテクチャ階層分離</span>
+              <span class="card-tag">APPI脱敏・監査ログ規程</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>要件定義を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DEL-06: 文档 04 (推进日程与计划) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">PROJECT ROADMAP / PLN-04</span>
+              <span class="card-code">DEL-06</span>
+            </div>
+            <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
+            <p class="card-desc">
+              フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
+              週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">4段階ロードマップ</span>
+              <span class="card-tag">週次マイルストーン</span>
+              <span class="card-tag">受入検査基準</span>
+              <span class="card-tag">緊急切戻し規程</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #d97706;">
+              <span>●</span> Review Ready (査閲待)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>計画日程を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             CATEGORY 2: INTERACTIVE PROTOTYPES (画面様板プロトタイプ群)
+             ================================================================== -->
+
+        <!-- DEL-01: 画面样板 (Interactive Prototype) -->
+        <article class="deliverable-card" data-category="prototype">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-prototype">INTERACTIVE PROTOTYPE</span>
+              <span class="card-code">DEL-01</span>
+            </div>
+            <h3 class="card-title">不動産売買台帳・統合執務ワークベンチ</h3>
+            <p class="card-desc">
+              宅建士・営業担当者の日常執務を完全再現した高保真インタラクティブ画面様板。
+              商談反響、物件登記、売買契約・重説審査、住宅ローン、残金決済、法定帳簿の6大台帳を完全統合し、
+              紙質執務室トーン、マニラフォルダ風自動隠蔽サイドバー、及び朱肉押印アニメーションを完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">HTML5 / Vanilla CSS</span>
+              <span class="card-tag">和紙・執務室美学</span>
+              <span class="card-tag">自動隠蔽インデックス</span>
+              <span class="card-tag">朱肉押印実務</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #0284c7;">
+              <span>●</span> Prototype Active (検証用)
+            </div>
+            <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+              <span>画面样板を開く</span> <span class="external-icon">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- DEL-02: AI Agent Prototype (Concept) -->
+        <article class="deliverable-card" data-category="prototype">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-prototype">CONCEPT / AI PROTOTYPE</span>
+              <span class="card-code">DEL-02</span>
+            </div>
+            <h3 class="card-title">SENTIS AI 宅建事務補佐官（対話型アシスタント・プロトタイプ）</h3>
+            <p class="card-desc">
+              右端の活頁インデックスから滑出するAI事務補佐官の【UI/UX 概念実証シミュレーション（Mock）】。
+              将来の構想機能として「重要事項説明書レビュー支援」「ハザード説明チェック支援」「住宅ローンスケジュール管理支援」の画面導線・対話体験を提示。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">UI/UX 概念実証Mock</span>
+              <span class="card-tag">重要事項説明書レビュー支援</span>
+              <span class="card-tag">ハザード説明チェック支援</span>
+              <span class="card-tag">住宅ローンスケジュール管理支援</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #0284c7;">
+              <span>●</span> Prototype Active (検証用)
+            </div>
+            <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+              <span>AI支援UIを体験</span> <span class="external-icon">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             CATEGORY 3: BRAND ASSET KIT (公式ブランドCI/VI資産)
+             ================================================================== -->
+
+        <!-- DEL-07: 品牌资产包 (Assets) -->
+        <article class="deliverable-card" data-category="assets">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-assets">BRAND ASSET / VI-01</span>
+              <span class="card-code">DEL-07</span>
+            </div>
+            <h3 class="card-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h3>
+            <p class="card-desc">
+              「羅針盤（Compass）とSカーブ」を象徴とするSENTIS企業ロゴ・エンブレム全規格素材。
+              512px高解像度印刷用から、256px、64px、32px、Apple Touch Icon、及びWindows ICOまで透過PNGにて完備。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">512×512 透明PNG</span>
+              <span class="card-tag">Favicon ICO</span>
+              <span class="card-tag">Apple Touch Icon</span>
+              <span class="card-tag">800px 横幅レターヘッド</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #059669;">
+              <span>●</span> Design Delivered (配備済)
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="この画面で簡易プレビュー">
+                <span>🔍</span>
+              </button>
+              <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
+                <span>素材一覧を開く</span> <span class="external-icon">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- 4. Document Modal Viewer (成果物ドキュメント即時インライン閲覧窓) -->
+    <div class="doc-modal-overlay" id="docModalOverlay">
+      <div class="doc-modal-container">
+        <div class="modal-header">
+          <div class="modal-header-titles">
+            <span class="modal-doc-id" id="modalDocId">DEL-00</span>
+            <span class="modal-doc-title" id="modalDocTitle">仕様書タイトル</span>
+          </div>
+          <div class="modal-header-actions">
+            <a id="btnModalOpenTab" href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-modal-action-newtab" title="新しいタブで全画面表示">
+              <span>↗</span> 別タブで開く
+            </a>
+            <button class="btn-modal-close" onclick="closeDocModal()" title="閉じる (Esc)">✕</button>
+          </div>
+        </div>
+        <div class="modal-body-scroller" id="modalDocBody">
+          <!-- ドキュメントコンテンツがここに動的注入されます -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Global Footer (受渡確認印鑑・著作権フッター) -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <div style="font-weight: 700; color: #090d16; font-size: 13.5px; margin-bottom: 2px;">
+            VANGUARD PLATFORM · ARCHITECTURE & STRATEGY STUDIO
+          </div>
+          <div class="footer-copy">
+            © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
+          </div>
+          <div class="footer-disclaimer" style="margin-top: 6px; font-size: 11px; color: #64748b; line-height: 1.5;">
+            <strong>【個人情報保護（APPI）及び架空データ注記】</strong> 本ポータル及びプロトタイプに掲載された取引案件情報（物件名、所在、当事者氏名、契約金額等）は、システム要件・業務動線検証を目的とした架空のシミュレーション（脱敏）データです。実在の個人・法人・物件とは一切関係ありません。<br>
+            <strong>【プロトタイプ仕様明記】</strong> 本画面群は GitHub Pages 静的ホスティング規格に準拠した UI/UX 概念実証（Zero Server Runtime Prototype）モデルです。フロントエンドでの動的Checklist判定やAIアシスタントは画面動作シミュレーションであり、本番稼働時にマイクロサービス及び法規DBとの連携を予定しています。
+          </div>
+        </div>
+
+        <div class="footer-signature-bar">
+          <div class="signature-seal-block">
+            <div class="seal-circle-stamp">VG</div>
+            <div>
+              <div style="font-weight:700; color:#090d16;">Vanguard 設計提出</div>
+              <div style="font-size:10px; color:#64748b;">2026-10-03 Review v0.9</div>
+            </div>
+          </div>
+
+          <div class="signature-seal-block">
+            <div class="seal-circle-stamp" style="border-color:#d97706; color:#d97706;">REV</div>
+            <div>
+              <div style="font-weight:700; color:#090d16;">SENTIS 査閲確認</div>
+              <div style="font-size:10px; color:#64748b;">Internal Review (照合中)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div> <!-- /.portal-main-wrapper -->
+
+  <!-- 成果物仕様書データストア（DEL-03〜DEL-07） -->
+  <script src="./js/docs-data.js"></script>
+
+  <!-- ======================================================================
+       Vanilla JS : セキュリティ認証ゲートウェイ ＆ 成果物ポータル制御
+       ====================================================================== -->
+  <script>
+    // 目标密码 SHA-256 散列值 (echo -n "SentisPass" | sha256)
+    // 8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de
+    const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
+    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
+
+    const securityGatewayOverlay = document.getElementById('securityGatewayOverlay');
+    const portalMainWrapper = document.getElementById('portalMainWrapper');
+    const gatewayPasswordInput = document.getElementById('gatewayPassword');
+    const gatewayErrorMsg = document.getElementById('gatewayErrorMsg');
+
+    // SHA-256 计算工具函数
+    async function computeSha256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    // 检查会话认证状态 (支持跨标签页持久化同步)
+    function checkCurrentSession() {
+      // 本地离线环境无阻碍放行
+      if (window.location.protocol === 'file:') {
+        unlockPortal();
+        return;
+      }
+      const savedSession = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      const savedLocal = localStorage.getItem(SESSION_STORAGE_KEY);
+      const hasCookie = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
+
+      if (savedSession === TARGET_AUTH_HASH || savedLocal === TARGET_AUTH_HASH || hasCookie) {
+        // 双向同步确保当前标签与后续新开标签畅通无阻
+        sessionStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
+        localStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
+        unlockPortal();
+      } else {
+        lockPortal();
+      }
+    }
+
+    function unlockPortal() {
+      securityGatewayOverlay.classList.add('unlocked');
+      portalMainWrapper.classList.add('visible');
+      document.body.style.overflow = '';
+    }
+
+    function lockPortal() {
+      securityGatewayOverlay.classList.remove('unlocked');
+      portalMainWrapper.classList.remove('visible');
+      document.body.style.overflow = 'hidden';
+      if (gatewayPasswordInput) {
+        gatewayPasswordInput.value = '';
+        setTimeout(() => gatewayPasswordInput.focus(), 200);
+      }
+    }
+
+    // 登录验证执行 (同时写入 session、local 与 SameSite=Lax Cookie)
+    async function handleGatewayLogin(event) {
+      event.preventDefault();
+      const enteredPassword = gatewayPasswordInput.value;
+      if (!enteredPassword) return;
+
+      gatewayErrorMsg.style.display = 'none';
+      const computedHash = await computeSha256(enteredPassword);
+
+      if (computedHash === TARGET_AUTH_HASH) {
+        sessionStorage.setItem(SESSION_STORAGE_KEY, computedHash);
+        localStorage.setItem(SESSION_STORAGE_KEY, computedHash);
+        try {
+          document.cookie = "SENTIS_SECURE_TOKEN=" + computedHash + "; path=/; max-age=604800; SameSite=Lax";
+        } catch (e) {}
+        unlockPortal();
+      } else {
+        gatewayErrorMsg.style.display = 'block';
+        gatewayPasswordInput.select();
+        gatewayPasswordInput.focus();
+      }
+    }
+
+    // 登出/重新上锁 (彻底清理所有存储凭证)
+    function handleLogout() {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+      try {
+        document.cookie = "SENTIS_SECURE_TOKEN=; path=/; max-age=0";
+      } catch (e) {}
+      window.location.href = './login.html';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkCurrentSession();
+
+      // 卡片全域可点击跳转增强：点击卡片空白区或标题直接触发独立新网页打开
+      document.querySelectorAll('.deliverable-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          // 若点击的是预览按钮、独立新开按钮或链接本身，则不重复触发
+          if (e.target.closest('.btn-card-quick-preview') || e.target.closest('a') || e.target.closest('button')) {
+            return;
+          }
+          const primaryLaunchBtn = card.querySelector('.btn-card-launch');
+          if (primaryLaunchBtn && primaryLaunchBtn.href) {
+            window.open(primaryLaunchBtn.href, '_blank', 'noopener,noreferrer');
+          }
+        });
+      });
+    });
+
+    // ======================================================================
+    // 成果物ポータル機能（タブ切り替え・インラインドキュメント表示）
+    // ======================================================================
+    const tabPills = document.querySelectorAll('.tab-pill');
+    const deliverableCards = document.querySelectorAll('.deliverable-card');
+
+    tabPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        tabPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const filter = pill.dataset.filter;
+        deliverableCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // documentStore is loaded globally from ./js/docs-data.js
+
+    // ドキュメントモーダル表示・非表示ロジック
+    const docModalOverlay = document.getElementById('docModalOverlay');
+    const modalDocId = document.getElementById('modalDocId');
+    const modalDocTitle = document.getElementById('modalDocTitle');
+    const modalDocBody = document.getElementById('modalDocBody');
+
+    function openDocModal(docKey) {
+      const doc = documentStore[docKey];
+      if (!doc) return;
+
+      modalDocId.innerText = doc.id;
+      modalDocTitle.innerText = doc.title;
+      modalDocBody.innerHTML = doc.content;
+
+      const btnModalOpenTab = document.getElementById('btnModalOpenTab');
+      if (btnModalOpenTab) {
+        btnModalOpenTab.href = `./document.html?id=${docKey}`;
+      }
+
+      docModalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDocModal() {
+      docModalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    docModalOverlay.addEventListener('click', (e) => {
+      if (e.target === docModalOverlay) {
+        closeDocModal();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && docModalOverlay.classList.contains('active')) {
+        closeDocModal();
+      }
+    });
+  </script>
+</body>
+</html>

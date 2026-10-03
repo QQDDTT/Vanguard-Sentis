@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>株式会社センティス (SENTIS Realty) - 本社執務室 認証ゲートウェイ</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- ======================================================================
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       ====================================================================== -->
+  <script>
+    (function() {
+      var currentHost = window.location.hostname;
+      if (window.location.protocol === 'file:' || !currentHost) {
+        return; // 本地双击离线浏览放行
+      }
+      var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
+      if (!authorizedHosts.includes(currentHost)) {
+        window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
+      }
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       SENTIS VR Office Entrance - Luxury Japanese Walnut & Brass Design System
+       ========================================================================== */
+    :root {
+      --door-bg: #14110e;
+      --wood-dark: #1d1815;
+      --wood-frame: #2c241e;
+      --brass-gold: #d4af37;
+      --brass-light: #f3e5ab;
+      --brass-dark: #997a15;
+      --amber-glow: rgba(212, 175, 55, 0.4);
+      --led-red: #ef4444;
+      --led-green: #10b981;
+      --led-green-glow: rgba(16, 185, 129, 0.6);
+      
+      --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Toppan Bunkyu Mincho", "Noto Serif JP", serif;
+      --font-sans: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Roboto Mono", Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--door-bg);
+      font-family: var(--font-sans);
+      color: #f1ede6;
+      user-select: none;
+    }
+
+    /* 3D 视角透视大容器 */
+    .door-scene {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      perspective: 1400px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d0a08;
+    }
+
+    /* 门后内景暖光溢出层 (开门时显现) */
+    .interior-light-leak {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(245, 230, 200, 0.95) 0%, rgba(212, 175, 55, 0.5) 45%, rgba(20, 16, 12, 0.9) 100%);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* 大门外景写实背景层 (3D 开启门扇) */
+    .door-portal-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+    }
+
+    .door-background {
+      position: absolute;
+      inset: 0;
+      background-image: url('./assets/office/office_door.jpg');
+      background-size: cover;
+      background-position: center center;
+      filter: brightness(0.92) contrast(1.05);
+      transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .door-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.1) 0%, rgba(10, 8, 6, 0.75) 80%, rgba(5, 4, 3, 0.92) 100%);
+      pointer-events: none;
+    }
+
+    /* 顶部黄铜玄关招牌 (Brass Lintel Nameplate) */
+    .brass-lintel-plate {
+      position: absolute;
+      top: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, rgba(44, 36, 30, 0.85) 0%, rgba(25, 20, 16, 0.9) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 245, 210, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .plate-emblem {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .plate-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plate-title-jp {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--brass-light);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    .plate-sub-en {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+      color: rgba(243, 229, 171, 0.75);
+      text-transform: uppercase;
+    }
+
+    /* 智能门禁控制面板 (Smart Keypad & Lock Interface) */
+    .smart-lock-terminal {
+      position: relative;
+      z-index: 15;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 20px;
+      background: rgba(20, 17, 14, 0.88);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 12px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 40px rgba(212, 175, 55, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+      animation: terminalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes terminalFadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* 终端指示器顶栏 */
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 22px;
+    }
+
+    .terminal-led-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .led-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--led-red);
+      box-shadow: 0 0 8px var(--led-red);
+      transition: all 0.4s ease;
+    }
+
+    .led-dot.unlocked {
+      background: var(--led-green);
+      box-shadow: 0 0 12px var(--led-green-glow);
+    }
+
+    .led-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #f87171;
+      text-transform: uppercase;
+      transition: color 0.4s ease;
+    }
+
+    .led-text.unlocked {
+      color: #34d399;
+    }
+
+    .terminal-system-id {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(212, 175, 55, 0.65);
+      letter-spacing: 0.5px;
+    }
+
+    /* 执务室铭牌说明 */
+    .terminal-intro {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .terminal-intro h1 {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .terminal-intro p {
+      font-size: 12.5px;
+      color: rgba(240, 235, 225, 0.72);
+      line-height: 1.5;
+    }
+
+    /* 密码表单组件 */
+    .terminal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .input-field-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .field-label {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--brass-light);
+      text-transform: uppercase;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .pass-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px;
+      background: rgba(12, 10, 8, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .pass-input:focus {
+      border-color: var(--brass-gold);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+      background: rgba(18, 15, 12, 0.95);
+    }
+
+    .pass-input::placeholder {
+      color: rgba(200, 190, 180, 0.35);
+      font-size: 12.5px;
+    }
+
+    /* 操作按钮组 (遵循严格规范：纯文字按钮，不含符号) */
+    .action-buttons-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn-enter-room {
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(135deg, #d4af37 0%, #aa841e 100%);
+      color: #14110e;
+      border: 1px solid #f3e5ab;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-enter-room:hover {
+      background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-enter-room:active {
+      transform: translateY(1px);
+    }
+
+    .btn-ic-card-touch {
+      width: 100%;
+      height: 42px;
+      background: rgba(36, 30, 24, 0.7);
+      color: var(--brass-light);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ic-card-touch:hover {
+      background: rgba(48, 40, 32, 0.9);
+      border-color: var(--brass-gold);
+      color: #ffffff;
+    }
+
+    /* 错误提示 */
+    .auth-error-notice {
+      display: none;
+      padding: 8px 12px;
+      background: rgba(185, 28, 28, 0.25);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 4px;
+      font-size: 12px;
+      color: #fca5a5;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* 底部地址标识 */
+    .terminal-footer-info {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 10.5px;
+      color: rgba(220, 210, 200, 0.45);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* 开门动效触发态 (Door Opening Sequence) */
+    .door-scene.opening .door-portal-wrap {
+      transform: scale(1.18);
+      opacity: 0.15;
+    }
+
+    .door-scene.opening .door-background {
+      filter: brightness(2) contrast(0.8) blur(4px);
+    }
+
+    .door-scene.opening .interior-light-leak {
+      opacity: 1;
+    }
+
+    .door-scene.opening .smart-lock-terminal {
+      opacity: 0;
+      transform: scale(0.92) translateY(-20px);
+      pointer-events: none;
+    }
+
+    .door-scene.opening .brass-lintel-plate {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+
+    /* 移动端轻量级响应式适配 */
+    @media (max-width: 600px) {
+      .brass-lintel-plate {
+        top: 20px;
+        padding: 8px 16px;
+        gap: 12px;
+      }
+      .plate-title-jp {
+        font-size: 13.5px;
+        letter-spacing: 1px;
+      }
+      .smart-lock-terminal {
+        margin: 0 16px;
+        padding: 24px 20px;
+      }
+      .terminal-intro h1 {
+        font-size: 18px;
+      }
+      .terminal-intro p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="door-scene" id="doorScene">
+    <!-- 开门金光溢出层 -->
+    <div class="interior-light-leak" id="lightLeak"></div>
+
+    <!-- 门面背景与透视层 -->
+    <div class="door-portal-wrap" id="doorWrap">
+      <div class="door-background"></div>
+      <div class="door-vignette"></div>
+    </div>
+
+    <!-- 顶部黄铜门牌 -->
+    <header class="brass-lintel-plate" id="lintelPlate">
+      <img src="./assets/logo/sentis-emblem-128.png" alt="SENTIS" class="plate-emblem">
+      <div class="plate-text-group">
+        <span class="plate-title-jp">株式会社センティス</span>
+        <span class="plate-sub-en">HEADQUARTERS SUITE 705</span>
+      </div>
+    </header>
+
+    <!-- 智能门禁控制面板 -->
+    <main class="smart-lock-terminal" id="smartTerminal">
+      <div class="terminal-header">
+        <div class="terminal-led-status">
+          <div class="led-dot" id="ledDot"></div>
+          <span class="led-text" id="ledText">施錠中 · LOCKED</span>
+        </div>
+        <div class="terminal-system-id">SYS-ID: STS-SUITE-705</div>
+      </div>
+
+      <div class="terminal-intro">
+        <h1>本社執務室 入室認証</h1>
+        <p>関係者専用端末につき、暗証番号または社員証カードによる認証が必要です。</p>
+      </div>
+
+      <form class="terminal-form" id="loginForm" onsubmit="handleDoorUnlock(event)">
+        <div class="input-field-wrap">
+          <label class="field-label" for="doorPassword">暗証番号 (PASSCODE)</label>
+          <div class="input-box">
+            <input 
+              type="password" 
+              id="doorPassword" 
+              class="pass-input" 
+              placeholder="暗証番号を入力 (初期値: SentisPass)" 
+              autocomplete="current-password"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="auth-error-notice" id="authError">
+          暗証番号が正しくありません。(初期設定: SentisPass)
+        </div>
+
+        <div class="action-buttons-group">
+          <!-- 严格遵守规则：若有文字，不含任何图标/符号 -->
+          <button type="submit" class="btn-enter-room" id="btnSubmit">入室認証</button>
+          <button type="button" class="btn-ic-card-touch" id="btnIcTouch" onclick="simulateIcCardTouch()">IC社員証ワンタッチ解錠</button>
+        </div>
+      </form>
+
+      <footer class="terminal-footer-info">
+        東京都千代田区神田須田町 2-3-12 12KANDA 705<br>
+        専任宅地建物取引士 常駐業務拠点 · Vanguard Platform
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // 散列目标值 (SentisPass)
+    const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
+    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
+
+    const doorScene = document.getElementById('doorScene');
+    const doorPassword = document.getElementById('doorPassword');
+    const authError = document.getElementById('authError');
+    const ledDot = document.getElementById('ledDot');
+    const ledText = document.getElementById('ledText');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnIcTouch = document.getElementById('btnIcTouch');
+
+    // SHA-256 计算工具
+    async function computeSha256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // 授权并触发开门转场
+    function grantAccessAndOpenDoor() {
+      // 写入凭据
+      sessionStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
+      localStorage.setItem(SESSION_STORAGE_KEY, TARGET_AUTH_HASH);
+      try {
+        document.cookie = "SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH + "; path=/; max-age=604800; SameSite=Lax";
+      } catch (e) {}
+
+      // 更新指示灯为解锁翠绿
+      ledDot.classList.add('unlocked');
+      ledText.classList.add('unlocked');
+      ledText.innerText = "解錠完了 · ACCESS GRANTED";
+      authError.style.display = 'none';
+
+      // 禁用重复操作
+      btnSubmit.disabled = true;
+      btnIcTouch.disabled = true;
+      doorPassword.disabled = true;
+
+      // 触发3D开门推景动效
+      setTimeout(() => {
+        doorScene.classList.add('opening');
+      }, 350);
+
+      // 平滑进入主页 (办公室内景全景中枢)
+      setTimeout(() => {
+        window.location.href = './index.html';
+      }, 1300);
+    }
+
+    // 密码输入开门逻辑
+    async function handleDoorUnlock(event) {
+      if (event) event.preventDefault();
+      const entered = doorPassword.value;
+      if (!entered) return;
+
+      authError.style.display = 'none';
+      const hash = await computeSha256(entered);
+
+      if (hash === TARGET_AUTH_HASH) {
+        grantAccessAndOpenDoor();
+      } else {
+        authError.style.display = 'block';
+        doorPassword.select();
+        doorPassword.focus();
+      }
+    }
+
+    // 模拟 IC 卡快速感应触碰开门
+    function simulateIcCardTouch() {
+      authError.style.display = 'none';
+      doorPassword.value = "SentisPass";
+      grantAccessAndOpenDoor();
+    }
+
+    // 页面载入时若已持有效会话凭据，可自动准备
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedSession = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      const savedLocal = localStorage.getItem(SESSION_STORAGE_KEY);
+      const hasCookie = document.cookie.includes("SENTIS_SECURE_TOKEN=" + TARGET_AUTH_HASH);
+
+      if (savedSession === TARGET_AUTH_HASH || savedLocal === TARGET_AUTH_HASH || hasCookie) {
+        // 已有会话，高亮显示快捷通行
+        btnIcTouch.innerText = "認証済セッションで直接入室";
+      }
+      setTimeout(() => {
+        if (doorPassword) doorPassword.focus();
+      }, 300);
+    });
+  </script>
+</body>
+</html>

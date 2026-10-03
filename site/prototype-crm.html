@@ -35,8 +35,8 @@
         sessionStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
         localStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
       } else {
-        // 未認証アクセスを直ちに阻断し、主ポータルのログインゲートウェイへ転送
-        window.location.replace('./index.html');
+        // 未認証アクセスを直ちに阻断し、執務室玄関のログインゲートウェイへ転送
+        window.location.replace('./login.html');
       }
     })();
   </script>
