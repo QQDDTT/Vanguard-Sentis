@@ -34,9 +34,16 @@
         // 跨标签页凭证有效，自动补齐当前会话
         sessionStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
         localStorage.setItem("SENTIS_GATEWAY_AUTH_STATE", TARGET_AUTH_HASH);
+      } else {
         // 未認証アクセスを直ちに阻断し、管理システム執務室玄関のログインゲートウェイへ転送
         window.location.replace('./crm-login.html');
       }
+
+      // 初始化读取并应用主题，防止首屏白屏/黑屏闪烁
+      try {
+        var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "dark";
+        document.documentElement.setAttribute("data-theme", initialTheme);
+      } catch (e) {}
     })();
   </script>
 
@@ -79,6 +86,492 @@
       /* 陰影階層 (Paper Elevation Shadows) */
       --shadow-paper: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.14);
       --shadow-drawer: 8px 0 28px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ==========================================================================
+       深色夜景執務室スタイル (Dark Executive Walnut Room Theme)
+       ========================================================================== */
+    [data-theme="dark"] {
+      --desk-base: #110e0c;
+      --desk-gradient: radial-gradient(circle at 50% 15%, #2a221c 0%, #171310 60%, #0d0a08 100%);
+
+      /* 暗色羊皮玄纸公文质感 */
+      --paper-cream: #191512;
+      --paper-pure: #15110e;
+      --paper-warm: #201a16;
+      --paper-dark: #120f0d;
+      --paper-edge: rgba(212, 175, 55, 0.28);
+      --paper-grid: rgba(212, 175, 55, 0.04);
+      --manila-folder: #2a221a;
+      --manila-border: rgba(212, 175, 55, 0.35);
+      --manila-hover: #362c22;
+
+      /* 文字与墨水变体 */
+      --ink-black: #f6e6b4;
+      --ink-dark: #f0ebe1;
+      --ink-muted: #a69c8e;
+      --ink-light: #786f62;
+      --ink-line: rgba(212, 175, 55, 0.2);
+      --ink-red-hanko: #ef4444;
+      --ink-green-approved: #10b981;
+      --ink-blue-pen: #38bdf8;
+      --seal-amber: #f59e0b;
+
+      --shadow-paper: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.15);
+      --shadow-drawer: 12px 0 36px rgba(0, 0, 0, 0.75);
+    }
+
+    /* 风格切换按钮统一样式 (无符号纯文字规范) */
+    .btn-theme-toggle {
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      background: #f8f3ea;
+      border: 1px solid #cfc2ad;
+      color: #3f392f;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-theme-toggle:hover {
+      background: #ede3d2;
+      border-color: #b09e85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .btn-theme-toggle {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .btn-theme-toggle:hover {
+      background: rgba(212, 175, 55, 0.28);
+      border-color: #d4af37;
+      color: #ffffff;
+    }
+
+    /* 深色模式：顶栏半透明黑胡桃与金色质感 */
+    [data-theme="dark"] .office-header {
+      background: linear-gradient(180deg, rgba(20, 16, 13, 0.96) 0%, rgba(20, 16, 13, 0.85) 100%);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    [data-theme="dark"] .office-header::after {
+      background: repeating-linear-gradient(90deg, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.6) 8px, transparent 8px, transparent 12px);
+      opacity: 0.6;
+    }
+
+    [data-theme="dark"] .brand-main {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .branch-pill {
+      background: rgba(212, 175, 55, 0.12);
+      color: #f6e6b4;
+      border-color: rgba(212, 175, 55, 0.35);
+    }
+
+    [data-theme="dark"] .brand-sub {
+      color: rgba(212, 175, 55, 0.65);
+    }
+
+    [data-theme="dark"] .official-context-capsule {
+      background: rgba(32, 26, 21, 0.85);
+      border-color: rgba(212, 175, 55, 0.28);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="dark"] .capsule-label {
+      background: rgba(212, 175, 55, 0.18);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .capsule-val {
+      color: #f0ebe1;
+    }
+
+    [data-theme="dark"] .capsule-divider {
+      background: rgba(212, 175, 55, 0.22);
+    }
+
+    [data-theme="dark"] .capsule-hanko {
+      border-color: #ef4444;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.12);
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
+    }
+
+    [data-theme="dark"] .license-item .capsule-val {
+      color: #fca5a5;
+    }
+
+    [data-theme="dark"] .btn-office-action {
+      background: rgba(45, 37, 31, 0.65);
+      border-color: rgba(212, 175, 55, 0.3);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .btn-office-action:hover {
+      background: rgba(70, 58, 48, 0.9);
+      border-color: #d4af37;
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .btn-portal-back {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+
+    [data-theme="dark"] .btn-portal-back:hover {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #10b981;
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .user-profile-badge {
+      background: rgba(36, 29, 24, 0.85);
+      border-color: rgba(212, 175, 55, 0.28);
+    }
+
+    [data-theme="dark"] .user-name {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .user-rank {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .user-role {
+      color: rgba(240, 235, 225, 0.7);
+    }
+
+    [data-theme="dark"] .user-stamp-avatar {
+      background: #1e1915;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* 深色模式：主工作台与玄纸公文张 */
+    [data-theme="dark"] .office-body-workbench {
+      background: radial-gradient(circle at 50% 10%, #221c17 0%, #15110e 60%, #0d0a08 100%);
+      box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    [data-theme="dark"] .office-body-workbench::-webkit-scrollbar-track {
+      background: rgba(17, 14, 12, 0.95);
+    }
+
+    [data-theme="dark"] .office-body-workbench::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.35);
+      border: 2px solid #171310;
+    }
+
+    [data-theme="dark"] .dossier-paper-sheet {
+      background-color: #191512;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.12) inset;
+      color: #f0ebe1;
+    }
+
+    [data-theme="dark"] .dossier-paper-sheet::before {
+      border-right-color: rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="dark"] .dossier-paper-sheet::after {
+      opacity: 0.035;
+      filter: invert(1) brightness(1.2);
+    }
+
+    [data-theme="dark"] .binder-hole {
+      background: #0d0a08;
+      border-color: rgba(212, 175, 55, 0.35);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="dark"] .paper-sticky-note {
+      background: #2b2318;
+      border-color: #d4af37;
+      color: #f6e6b4;
+      box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    [data-theme="dark"] .paper-sticky-note .sticky-title {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .paper-header-block {
+      border-bottom-color: rgba(212, 175, 55, 0.35);
+    }
+
+    [data-theme="dark"] .paper-title-area h2 {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .paper-title-desc {
+      color: rgba(240, 235, 225, 0.7);
+    }
+
+    [data-theme="dark"] .dossier-code-meta {
+      color: rgba(212, 175, 55, 0.75);
+    }
+
+    [data-theme="dark"] .paper-card {
+      background: rgba(28, 23, 19, 0.9);
+      border-color: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      color: #f0ebe1;
+    }
+
+    [data-theme="dark"] .paper-card-header {
+      border-bottom-color: rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="dark"] .paper-card-title {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .paper-card p,
+    [data-theme="dark"] .paper-card div,
+    [data-theme="dark"] .paper-card ul,
+    [data-theme="dark"] .paper-card li {
+      color: #e5ded5 !important;
+    }
+
+    [data-theme="dark"] .paper-card strong {
+      color: #f6e6b4 !important;
+    }
+
+    [data-theme="dark"] .paper-card div[style*="background"] {
+      background: rgba(45, 37, 31, 0.85) !important;
+      border-left-color: #d4af37 !important;
+      color: #f0ebe1 !important;
+    }
+
+    [data-theme="dark"] .dossier-code-meta {
+      color: rgba(212, 175, 55, 0.85) !important;
+    }
+
+    [data-theme="dark"] .ledger-table-wrap {
+      background: #15120f;
+      border-color: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="dark"] .ledger-table th {
+      background: #231c18;
+      color: #f6e6b4;
+      border-bottom-color: rgba(212, 175, 55, 0.32);
+      border-right-color: rgba(212, 175, 55, 0.15);
+    }
+
+    [data-theme="dark"] .ledger-table td {
+      border-bottom-color: rgba(212, 175, 55, 0.12);
+      border-right-color: rgba(212, 175, 55, 0.1);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .ledger-table tr:nth-child(even) td {
+      background: rgba(24, 20, 16, 0.6);
+    }
+
+    [data-theme="dark"] .ledger-table tr:hover td {
+      background: rgba(212, 175, 55, 0.09);
+    }
+
+    [data-theme="dark"] .audit-step-item {
+      background: rgba(36, 29, 24, 0.85);
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="dark"] .step-title {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .step-desc {
+      color: #d1c7bc;
+    }
+
+    [data-theme="dark"] .step-check-mark {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: #10b981;
+      color: #6ee7b7;
+    }
+
+    [data-theme="dark"] .sign-section-box {
+      background: rgba(28, 23, 19, 0.9);
+      border-color: rgba(212, 175, 55, 0.28);
+    }
+
+    [data-theme="dark"] .sign-titles {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .hanko-stamp {
+      border-color: #ef4444;
+      color: #fca5a5;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.18) 0%, transparent 85%);
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.35);
+      text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+    }
+
+    [data-theme="dark"] .hanko-stamp.green {
+      border-color: #10b981;
+      color: #6ee7b7;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 85%);
+      box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35);
+    }
+
+    [data-theme="dark"] .interactive-stamp-btn {
+      background: rgba(45, 37, 31, 0.9);
+      border-color: #ef4444;
+      color: #fca5a5;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+    }
+
+    [data-theme="dark"] .interactive-stamp-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    /* 深色模式：抽屉与小工具 */
+    [data-theme="dark"] .office-sidebar-drawer,
+    [data-theme="dark"] .ai-agent-drawer {
+      background: rgba(22, 18, 15, 0.98);
+      border-color: rgba(212, 175, 55, 0.28);
+      color: #e5ded5;
+      box-shadow: var(--shadow-drawer);
+    }
+
+    [data-theme="dark"] .drawer-header,
+    [data-theme="dark"] .ai-drawer-header {
+      background: #241d18;
+      border-bottom-color: rgba(212, 175, 55, 0.25);
+    }
+
+    [data-theme="dark"] .drawer-title,
+    [data-theme="dark"] .ai-drawer-title {
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .drawer-pin-btn,
+    [data-theme="dark"] .drawer-close-btn {
+      background: rgba(45, 37, 31, 0.8);
+      border-color: rgba(212, 175, 55, 0.3);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .drawer-pin-btn:hover,
+    [data-theme="dark"] .drawer-close-btn:hover {
+      background: rgba(70, 58, 48, 0.95);
+      border-color: #d4af37;
+    }
+
+    [data-theme="dark"] .module-nav-item {
+      background: rgba(30, 24, 20, 0.7);
+      border-color: rgba(212, 175, 55, 0.2);
+      color: #d1c7bc;
+    }
+
+    [data-theme="dark"] .module-nav-item:hover {
+      background: rgba(45, 37, 31, 0.9);
+      border-color: #d4af37;
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .module-nav-item.active {
+      background: rgba(55, 44, 35, 0.95);
+      border-color: #d4af37;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="dark"] .module-idx {
+      background: rgba(45, 37, 31, 0.8);
+      border-color: rgba(212, 175, 55, 0.35);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .drawer-footer-note {
+      background: #1c1713;
+      border-top-color: rgba(212, 175, 55, 0.2);
+      color: #9c9182;
+    }
+
+    [data-theme="dark"] .ai-chat-body {
+      background-color: #171310;
+      background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    }
+
+    [data-theme="dark"] .chat-bubble.agent {
+      background: #221c17;
+      border-color: rgba(212, 175, 55, 0.25);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .chat-bubble.user {
+      background: rgba(212, 175, 55, 0.16);
+      border-color: rgba(212, 175, 55, 0.38);
+      color: #f6e6b4;
+    }
+
+    [data-theme="dark"] .quick-action-btn {
+      background: rgba(36, 29, 24, 0.8);
+      border-color: rgba(212, 175, 55, 0.3);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .quick-action-btn:hover {
+      background: rgba(55, 44, 35, 0.95);
+      border-color: #d4af37;
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .ai-chat-input-bar {
+      background: #201a16;
+      border-top-color: rgba(212, 175, 55, 0.25);
+    }
+
+    [data-theme="dark"] .ai-input-text {
+      background: #15120f;
+      border-color: rgba(212, 175, 55, 0.3);
+      color: #f6e6b4;
+    }
+
+    /* 深色模式：底部状态栏 */
+    [data-theme="dark"] .office-footer {
+      background: rgba(16, 13, 11, 0.96);
+      border-top-color: rgba(212, 175, 55, 0.25);
+    }
+
+    [data-theme="dark"] .footer-ticker {
+      background: rgba(30, 24, 20, 0.85);
+      border-color: rgba(212, 175, 55, 0.25);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .btn-footer-link {
+      background: rgba(45, 37, 31, 0.65);
+      border-color: rgba(212, 175, 55, 0.25);
+      color: #e5ded5;
+    }
+
+    [data-theme="dark"] .btn-footer-link:hover {
+      background: rgba(70, 58, 48, 0.9);
+      border-color: #d4af37;
+      color: #f6e6b4;
     }
 
     /* 視口与基础布局铁律：整页绝对禁止滚动条 */
@@ -1379,6 +1872,10 @@
       .header-user-section {
         gap: 6px;
       }
+      .btn-theme-toggle {
+        padding: 3px 7px;
+        font-size: 10px;
+      }
 
       /* 2. ドロワーと遮光幕の位置補正 */
       .drawer-backdrop {
@@ -1620,6 +2117,8 @@
             <span class="user-role">専任宅建士 (東京 第092318号)</span>
           </div>
         </div>
+
+        <button type="button" class="btn-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()">夜景深色切替</button>
 
         <button class="btn-office-action btn-away-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')" title="離席または担当席切替">
           <span>⏻</span>
@@ -2603,6 +3102,28 @@
         }, 350);
       }
     });
+
+    // 6. スタイルテーマ（深色夜景 ⇋ 和紙明色）双模切替コントローラー
+    const THEME_STORAGE_KEY = 'SENTIS_CRM_THEME';
+
+    function applyStyleTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const btn = document.getElementById('btnThemeToggle');
+      if (btn) {
+        btn.innerText = theme === 'dark' ? '和紙明色切替' : '夜景深色切替';
+      }
+    }
+
+    function toggleStyleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+      applyStyleTheme(nextTheme);
+    }
+
+    // ページロード時に即座にテーマ設定を同期
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+    applyStyleTheme(savedTheme);
   </script>
 </body>
 </html>

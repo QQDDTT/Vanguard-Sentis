@@ -35,6 +35,12 @@
       } else {
         window.location.replace('./crm-login.html');
       }
+
+      // 初始化读取并应用主题，防止首屏白屏/黑屏闪烁
+      try {
+        var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "dark";
+        document.documentElement.setAttribute("data-theme", initialTheme);
+      } catch (e) {}
     })();
   </script>
 
@@ -208,6 +214,7 @@
     }
 
     .btn-hud-mode-toggle,
+    .btn-hud-theme-toggle,
     .btn-hud-logout {
       padding: 7px 12px;
       font-size: 12px;
@@ -216,6 +223,17 @@
       cursor: pointer;
       transition: all 0.2s ease;
       background: transparent;
+    }
+
+    .btn-hud-theme-toggle {
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--brass-bright);
+    }
+
+    .btn-hud-theme-toggle:hover {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--brass-gold);
     }
 
     .btn-hud-mode-toggle {
@@ -236,6 +254,209 @@
       background: rgba(239, 68, 68, 0.2);
       border-color: #ef4444;
       color: #ffffff;
+    }
+
+    /* ==========================================================================
+       明色和紙ステーショナリースタイル (Light Theme)
+       ========================================================================== */
+    [data-theme="light"] {
+      --room-bg: #ece6dc;
+      --walnut-deep: #f5efe6;
+      --walnut-card: rgba(253, 250, 245, 0.96);
+      --walnut-border: rgba(196, 177, 146, 0.5);
+      --brass-bright: #1a1e24;
+      --amber-ambient: rgba(180, 107, 20, 0.25);
+    }
+
+    [data-theme="light"] .office-hud-bar {
+      background: linear-gradient(180deg, rgba(253, 250, 245, 0.97) 0%, rgba(245, 239, 230, 0.93) 100%);
+      border-bottom: 1px solid #d8cebe;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .hud-company-name {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .hud-status-badge {
+      color: #5a616d;
+    }
+
+    [data-theme="light"] .btn-hud-link {
+      background: rgba(235, 227, 213, 0.65);
+      border-color: #c4b192;
+      color: #2c3038;
+    }
+
+    [data-theme="light"] .btn-hud-link:hover {
+      background: #ffffff;
+      border-color: #b82c2c;
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .btn-hud-portal {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.3);
+      color: #1d4ed8;
+    }
+
+    [data-theme="light"] .btn-hud-portal:hover {
+      background: rgba(37, 99, 235, 0.15);
+      color: #1e40af;
+    }
+
+    [data-theme="light"] .hud-clock-display {
+      color: #5a616d;
+    }
+
+    [data-theme="light"] .btn-hud-mode-toggle,
+    [data-theme="light"] .btn-hud-theme-toggle {
+      border: 1px solid #c4b192;
+      color: #2c3038;
+      background: rgba(253, 250, 245, 0.85);
+    }
+
+    [data-theme="light"] .btn-hud-mode-toggle:hover,
+    [data-theme="light"] .btn-hud-theme-toggle:hover {
+      background: #ffffff;
+      border-color: #1a1e24;
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .office-canvas {
+      background-image: url('./assets/office/office_hub_day.jpg');
+    }
+
+    [data-theme="light"] .office-ambient-overlay {
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(235, 227, 213, 0.25) 75%, rgba(200, 190, 175, 0.45) 100%);
+    }
+
+    [data-theme="light"] .hotspot-label-pill {
+      background: rgba(253, 250, 245, 0.96);
+      border: 1px solid #c4b192;
+      color: #1a1e24;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    [data-theme="light"] .hotspot-tooltip-card {
+      background: rgba(253, 250, 245, 0.98);
+      border: 1px solid #c4b192;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(196, 177, 146, 0.3);
+    }
+
+    [data-theme="light"] .tooltip-title {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .tooltip-desc {
+      color: #4b5563;
+    }
+
+    [data-theme="light"] .tooltip-tag {
+      background: rgba(180, 107, 20, 0.12);
+      color: #b46b14;
+    }
+
+    [data-theme="light"] .tooltip-action-prompt {
+      background: #1a1e24;
+      color: #ffffff;
+      border-color: #1a1e24;
+    }
+
+    [data-theme="light"] .tooltip-action-prompt:hover {
+      background: #b82c2c;
+      border-color: #b82c2c;
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .mobile-dossier-stream {
+      background: #f5efe6;
+    }
+
+    [data-theme="light"] .dossier-lead-banner {
+      background: #ffffff;
+      border-color: #d8cebe;
+    }
+
+    [data-theme="light"] .dossier-lead-title {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .dossier-lead-subtitle {
+      color: #5a616d;
+    }
+
+    [data-theme="light"] .dossier-card {
+      background: #ffffff;
+      border-color: #d8cebe;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .dossier-card-title {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .dossier-card-desc {
+      color: #4b5563;
+    }
+
+    [data-theme="light"] .dossier-tag-pill {
+      background: rgba(180, 107, 20, 0.1);
+      border-color: #c4b192;
+      color: #b46b14;
+    }
+
+    [data-theme="light"] .drawer-dialog {
+      background: #fbf9f4;
+      border-color: #c4b192;
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .drawer-header {
+      background: #f5efe6;
+      border-bottom-color: #d8cebe;
+    }
+
+    [data-theme="light"] .drawer-header-title {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .drawer-badge {
+      color: #b46b14;
+    }
+
+    [data-theme="light"] .drawer-body {
+      color: #2c3038;
+    }
+
+    [data-theme="light"] .sop-step-card {
+      background: #ffffff;
+      border-color: #d8cebe;
+    }
+
+    [data-theme="light"] .sop-step-card:hover {
+      border-color: #1a1e24;
+      background: #fdfaf5;
+    }
+
+    [data-theme="light"] .sop-step-name {
+      color: #1a1e24;
+    }
+
+    [data-theme="light"] .sop-step-detail {
+      color: #5a616d;
+    }
+
+    [data-theme="light"] .drawer-footer {
+      background: #f5efe6;
+      border-top-color: #d8cebe;
+    }
+
+    [data-theme="light"] .btn-dialog-close,
+    [data-theme="light"] .btn-drawer-secondary {
+      background: #ffffff;
+      border-color: #d8cebe;
+      color: #1a1e24;
     }
 
     /* ==========================================================================
@@ -851,6 +1072,7 @@
     <!-- 右侧状态与模式切换 -->
     <div class="hud-actions-group">
       <div class="hud-clock-display" id="hudClock">2026/10/04 00:00:00 JST</div>
+      <button type="button" class="btn-hud-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()">和紙明色切替</button>
       <button type="button" class="btn-hud-mode-toggle" id="btnModeToggle" onclick="toggleViewMode()">画巻表示切替</button>
       <button type="button" class="btn-hud-logout" onclick="handleLogout()">施錠退室</button>
     </div>
@@ -1239,6 +1461,28 @@
         closeSealModal();
       }
     });
+
+    // 主题风格双模切换与持久化控制器
+    const THEME_STORAGE_KEY = 'SENTIS_CRM_THEME';
+
+    function applyStyleTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const btn = document.getElementById('btnThemeToggle');
+      if (btn) {
+        btn.innerText = theme === 'dark' ? '和紙明色切替' : '夜景深色切替';
+      }
+    }
+
+    function toggleStyleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+      applyStyleTheme(nextTheme);
+    }
+
+    // 初始化时载入存储的主题
+    const initialSavedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+    applyStyleTheme(initialSavedTheme);
 
     // 登出并安全锁门 (退回管理系统登录门)
     function handleLogout() {
