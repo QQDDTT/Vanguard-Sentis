@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -494,6 +494,229 @@
     }
 
     /* --------------------------------------------------------------------------
+       Right Sidebar (右側サイドバー)：AI Agent 事務代理チャット・自動隠蔽
+       -------------------------------------------------------------------------- */
+    /* 1. 右側 貼辺活頁タグ（AIエージェント・ハンドル） */
+    .ai-agent-handle {
+      position: fixed;
+      top: 86px;
+      right: 0;
+      width: 32px;
+      padding: 14px 6px 12px 6px;
+      background: #e1ebe5; /* 淡青緑和紙タグ */
+      border: 1px solid #acc1b7;
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+      box-shadow: -2px 3px 10px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .ai-agent-handle:hover {
+      width: 38px;
+      background: #d4e5dc;
+      box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .ai-agent-handle .handle-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .ai-agent-handle .handle-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #1a4231;
+    }
+
+    /* 2. 右側 AIエージェント引き出しドロワー */
+    .ai-agent-drawer {
+      position: fixed;
+      top: 56px;
+      bottom: 34px;
+      right: 0;
+      width: 350px;
+      max-width: 90vw;
+      background: #fbf9f5;
+      border-left: 2px solid #504436;
+      box-shadow: -8px 0 28px rgba(0, 0, 0, 0.38);
+      z-index: 140;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%); /* 完全に画面外へ隠蔽 */
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .ai-agent-drawer.open,
+    .ai-agent-drawer.pinned {
+      transform: translateX(0);
+    }
+
+    .ai-drawer-header {
+      padding: 14px 16px;
+      background: #eef5f1;
+      border-bottom: 2px solid #c8dcd2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-drawer-title {
+      font-family: var(--font-serif);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1a4231;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: #246a48;
+      font-weight: bold;
+      background: #e4f3eb;
+      border: 1px solid #b8dfcb;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .ai-chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-color: #faf7f1;
+      background-image: 
+        linear-gradient(rgba(60, 50, 40, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(60, 50, 40, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .chat-bubble {
+      max-width: 90%;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .chat-bubble.agent {
+      align-self: flex-start;
+      background: #ffffff;
+      border: 1px solid #dcd3c3;
+      border-left: 3px solid #246a48;
+      color: #262a30;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: #f3ece0;
+      border: 1px solid #d4c5ae;
+      border-right: 3px solid #8e7a63;
+      color: #22262c;
+    }
+
+    .chat-meta {
+      font-size: 9.5px;
+      color: #8c8273;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .quick-action-btn {
+      background: #fdfbf7;
+      border: 1px dashed #baa88f;
+      border-radius: 3px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+      color: #3b3328;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-action-btn:hover {
+      background: #f4e9d7;
+      border-color: #8f795c;
+      color: #111;
+      transform: translateX(2px);
+    }
+
+    .ai-chat-input-bar {
+      padding: 10px 14px;
+      background: #f4ecdf;
+      border-top: 1px solid #d8cab5;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ai-input-text {
+      flex: 1;
+      height: 36px;
+      background: #ffffff;
+      border: 1px solid #cfbeaa;
+      border-radius: 3px;
+      padding: 0 10px;
+      font-size: 12.5px;
+      color: #1f242c;
+      font-family: inherit;
+    }
+
+    .ai-input-text:focus {
+      border-color: #246a48;
+      box-shadow: 0 0 0 2px rgba(36, 106, 72, 0.15);
+    }
+
+    .ai-send-btn {
+      height: 36px;
+      padding: 0 12px;
+      background: #246a48;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s ease;
+    }
+
+    .ai-send-btn:hover {
+      background: #1b5338;
+    }
+
+    /* --------------------------------------------------------------------------
        Body (主執務エリア) : 紙質テクスチャ・バインダー帳票・オーバーフロー時スクロール
        -------------------------------------------------------------------------- */
     .office-body-workbench {
@@ -981,6 +1204,12 @@
         width: 84vw;
       }
       .binder-index-handle {
+        top: 72px;
+      }
+      .ai-agent-drawer {
+        width: 88vw;
+      }
+      .ai-agent-handle {
         top: 72px;
       }
     }
@@ -1517,6 +1746,89 @@
 
       </main> <!-- /.office-body-workbench -->
 
+      <!-- 右側 貼辺活頁タグ（AIエージェント・事務補佐官ハンドル）: 常時は画面右端に極小常駐 -->
+      <div class="ai-agent-handle" id="ai-agent-handle" title="クリックまたはホバーでAI宅建事務補佐官チャットを展開">
+        <span class="handle-icon">🤖</span>
+        <span class="handle-text">事務代理</span>
+      </div>
+
+      <!-- 右側 自動隠蔽ドロワー (AI Agent Sidebar Drawer) : 宅建事務・契約審査補佐官チャット -->
+      <aside class="ai-agent-drawer" id="ai-agent-drawer">
+        <!-- ドロワーヘッダー -->
+        <div class="ai-drawer-header">
+          <div class="ai-drawer-title">
+            <span style="font-size:16px;">🤖</span>
+            <span>SENTIS AI 宅建事務補佐官</span>
+            <span class="ai-status-indicator">● 待機中</span>
+          </div>
+          <div class="drawer-header-actions">
+            <button class="drawer-pin-btn" id="ai-drawer-pin-btn" title="ドロワー固定/解除">📌 固定</button>
+            <button class="drawer-close-btn" id="ai-drawer-close-btn" title="閉じる">✕</button>
+          </div>
+        </div>
+
+        <!-- チャット本文スクロール領域 -->
+        <div class="ai-chat-body" id="ai-chat-body">
+          <!-- AI 挨拶・案内バブル -->
+          <div class="chat-bubble agent">
+            <div class="chat-meta">
+              <span>🤖 専属宅建AI (Sentis Legal Engine)</span>
+              <span>10:42</span>
+            </div>
+            能勢課長、執務お疲れ様です。宅建業法第35条の重要事項説明、第37条契約書面、または銀行融資特約の期日管理や条項ドラフトの作成・点検を即時支援いたします。ご指示をどうぞ。
+          </div>
+
+          <!-- ユーザー質問履歴サンプル -->
+          <div class="chat-bubble user">
+            <div class="chat-meta" style="justify-content: flex-end;">
+              <span>能勢 秀樹 (宅建士)</span>
+              <span>10:45</span>
+            </div>
+            板橋区物件Cの買主（鈴木様）に関して、住宅ローン特約条項で売主側が留意すべき解除条項の記載ポイントを教えてくれ。
+          </div>
+
+          <!-- AI 回答サンプル -->
+          <div class="chat-bubble agent">
+            <div class="chat-meta">
+              <span>🤖 専属宅建AI</span>
+              <span>10:45</span>
+            </div>
+            <strong>【融資利用特約の重要確認事項】</strong><br>
+            1. <strong>解除期日</strong>：融資承認予定日（10/24）と解除権行使期限を同日または直後に明確設定。<br>
+            2. <strong>義務規定</strong>：買主の故意の不承認（虚偽申告・書類不提出）は特約適用外とし、違約解約扱いとなる旨を明記。<br>
+            3. <strong>金融機関指定</strong>：三井住友銀行を指定し、事前承認金額（4,850万円）を明記。<br>
+            ※ ドラフト条項は『モジュール3: 売買契約・重説審査』の特約欄に自動転記可能です。
+          </div>
+
+          <!-- 執務支援クイックアクション提案 -->
+          <div class="ai-quick-actions">
+            <div style="font-size:10.5px; color:#6b7280; font-weight:600; margin-bottom:2px;">▼ 執務支援クイックアクション</div>
+            <button class="quick-action-btn" data-prompt="板橋区物件Cの重要事項説明書（第35条）記載漏れチェックを実行して">
+              <span>📝 重説第35条 記載漏れ自動点検</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="本日の住宅ローン本審査ステータスと未着手案件をリストアップして">
+              <span>🏦 住宅ローン本審査の進捗アラート確認</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="反響受付台帳の最新案件（大田区）の初回ヒアリング確認票を作成して">
+              <span>📋 初回来店顧客ヒアリング項目の作成</span>
+              <span>➔</span>
+            </button>
+            <button class="quick-action-btn" data-prompt="土砂災害警戒区域およびハザードマップ説明義務条項の最新書式を出力して">
+              <span>🗺️ 水防法・土砂災害ハザード条項の出力</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 底部入力フォーム -->
+        <div class="ai-chat-input-bar">
+          <input type="text" class="ai-input-text" id="ai-input-text" placeholder="事務代理への指示を入力 (Enterで送信)..." />
+          <button class="ai-send-btn" id="ai-send-btn">送信</button>
+        </div>
+      </aside>
+
     </div> <!-- /.office-workspace -->
 
     <!-- ======================================================================
@@ -1568,7 +1880,9 @@
     function closeDrawer() {
       if (!isDrawerPinned) {
         sidebarDrawer.classList.remove('open');
-        drawerBackdrop.classList.remove('active');
+        if (!aiAgentDrawer || !aiAgentDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
       }
     }
 
@@ -1587,11 +1901,18 @@
       closeDrawer();
     });
 
-    // 遮光幕クリックで閉じる
+    // 遮光幕クリックで両側ドロワーを閉じる
     drawerBackdrop.addEventListener('click', () => {
       isDrawerPinned = false;
       updateDrawerPinState();
       closeDrawer();
+
+      if (aiAgentDrawer) {
+        isAiDrawerPinned = false;
+        updateAiDrawerPinState();
+        aiAgentDrawer.classList.remove('open');
+      }
+      drawerBackdrop.classList.remove('active');
     });
 
     // ✕ 閉じるボタン
@@ -1620,6 +1941,190 @@
         drawerPinBtn.classList.remove('active');
         drawerPinBtn.innerHTML = '📌 固定';
       }
+    }
+
+    /* --------------------------------------------------------------------------
+       AI Agent (右側サイドバー) : 自動隠蔽・対話ロジック
+       -------------------------------------------------------------------------- */
+    const aiAgentHandle = document.getElementById('ai-agent-handle');
+    const aiAgentDrawer = document.getElementById('ai-agent-drawer');
+    const aiDrawerPinBtn = document.getElementById('ai-drawer-pin-btn');
+    const aiDrawerCloseBtn = document.getElementById('ai-drawer-close-btn');
+    const aiChatBody = document.getElementById('ai-chat-body');
+    const aiInputText = document.getElementById('ai-input-text');
+    const aiSendBtn = document.getElementById('ai-send-btn');
+    const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+
+    let isAiDrawerPinned = false;
+
+    function openAiDrawer() {
+      if (aiAgentDrawer) {
+        aiAgentDrawer.classList.add('open');
+        drawerBackdrop.classList.add('active');
+      }
+    }
+
+    function closeAiDrawer() {
+      if (!isAiDrawerPinned && aiAgentDrawer) {
+        aiAgentDrawer.classList.remove('open');
+        if (!sidebarDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
+      }
+    }
+
+    if (aiAgentHandle) {
+      aiAgentHandle.addEventListener('mouseenter', openAiDrawer);
+      aiAgentHandle.addEventListener('click', () => {
+        if (aiAgentDrawer.classList.contains('open')) {
+          closeAiDrawer();
+        } else {
+          openAiDrawer();
+        }
+      });
+    }
+
+    if (aiAgentDrawer) {
+      aiAgentDrawer.addEventListener('mouseleave', () => {
+        closeAiDrawer();
+      });
+    }
+
+    if (aiDrawerCloseBtn) {
+      aiDrawerCloseBtn.addEventListener('click', () => {
+        isAiDrawerPinned = false;
+        updateAiDrawerPinState();
+        if (aiAgentDrawer) aiAgentDrawer.classList.remove('open');
+        if (!sidebarDrawer.classList.contains('open')) {
+          drawerBackdrop.classList.remove('active');
+        }
+      });
+    }
+
+    if (aiDrawerPinBtn) {
+      aiDrawerPinBtn.addEventListener('click', () => {
+        isAiDrawerPinned = !isAiDrawerPinned;
+        updateAiDrawerPinState();
+      });
+    }
+
+    function updateAiDrawerPinState() {
+      if (!aiAgentDrawer || !aiDrawerPinBtn) return;
+      if (isAiDrawerPinned) {
+        aiAgentDrawer.classList.add('pinned');
+        aiAgentDrawer.classList.add('open');
+        aiDrawerPinBtn.classList.add('active');
+        aiDrawerPinBtn.innerHTML = '📌 固定中';
+      } else {
+        aiAgentDrawer.classList.remove('pinned');
+        aiDrawerPinBtn.classList.remove('active');
+        aiDrawerPinBtn.innerHTML = '📌 固定';
+      }
+    }
+
+    // AI チャット送受信処理
+    function appendChatMessage(sender, text) {
+      if (!aiChatBody) return;
+      const now = new Date();
+      const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+
+      if (sender === 'user') {
+        bubble.innerHTML = `
+          <div class="chat-meta" style="justify-content: flex-end;">
+            <span>能勢 秀樹 (宅建士)</span>
+            <span>${timeStr}</span>
+          </div>
+          <div>${text}</div>
+        `;
+      } else {
+        bubble.innerHTML = `
+          <div class="chat-meta">
+            <span>🤖 専属宅建AI (Sentis Legal Engine)</span>
+            <span>${timeStr}</span>
+          </div>
+          <div>${text}</div>
+        `;
+      }
+
+      aiChatBody.appendChild(bubble);
+      aiChatBody.scrollTop = aiChatBody.scrollHeight;
+    }
+
+    function handleAiQuery(queryText) {
+      if (!queryText || !queryText.trim()) return;
+      appendChatMessage('user', queryText.trim());
+
+      // 事務補佐官の応答生成シミュレーション
+      setTimeout(() => {
+        let reply = "";
+        const lower = queryText.toLowerCase();
+
+        if (queryText.includes("重説") || queryText.includes("35条") || queryText.includes("記載漏れ")) {
+          reply = `<strong>【重要事項説明書（第35条）自動点検レポート】</strong><br>
+          ・対象物件：板橋区常盤台三丁目 一戸建<br>
+          ・未記入検出：私道負担に関する事項（第35条第1項第3号）の持分比率が空欄です。<br>
+          ・水防法ハザードマップ：高潮浸水想定区域外、洪水浸水区域内（0.5m未満）の最新図面添付が確認されました。<br>
+          ➔ モジュール3『売買契約・重説審査』の補正申請ドラフトを生成しました。`;
+        } else if (queryText.includes("ローン") || queryText.includes("融資") || queryText.includes("審査")) {
+          reply = `<strong>【住宅ローン融資進捗アラート】</strong><br>
+          ・三井住友銀行（板橋区物件C / 鈴木様）：事前審査承認済、本審査結果受領待ち（本日着信予定）。<br>
+          ・みずほ銀行（新宿区マンション / 佐藤様）：追加所得証明書提出要請あり。担当者より本日連絡が必要です。<br>
+          ➔ 融資特約期日管理台帳と金融機関ポータルを自動更新しました。`;
+        } else if (queryText.includes("ヒアリング") || queryText.includes("反響") || queryText.includes("来店")) {
+          reply = `<strong>【初回来店ヒアリング確認票（大田区売却案件）】</strong><br>
+          ・顧客種別：相続による空家売却査定依頼<br>
+          ・重点確認事項：①登記簿上の被相続人名義と遺産分割協議書の有無、②解体更地引渡しまたは現況渡しの希望、③境界標の確認状況。<br>
+          ➔ 商談受付台帳（モジュール1）にヒアリング票雛形を紐付けました。`;
+        } else if (queryText.includes("ハザード") || queryText.includes("水防") || queryText.includes("土砂")) {
+          reply = `<strong>【水防法・土砂災害警戒区域 説明義務書式】</strong><br>
+          令和8年最新公布書式に基づき、所在地市区町村のハザードマップ最新改訂版（令和8年4月公表版）の指定状況を記載。<br>
+          ・土砂災害警戒区域（イエロー）：該当なし<br>
+          ・土砂災害特別警戒区域（レッド）：該当なし<br>
+          ・浸水想定水深：0.5m〜1.0m（第2次浸水区域）<br>
+          重要事項説明書別紙として印刷可能です。`;
+        } else {
+          reply = `<strong>【事務補佐官 照会完了】</strong><br>
+          承知いたしました。「${queryText.trim()}」に関する社内台帳データ及び宅地建物取引業法規則を参照いたしました。<br>
+          関連する契約書面ドラフト及び審査ログを作成し、担当部署トレイに回覧登録しました。必要に応じて各モジュール台帳をご確認ください。`;
+        }
+
+        appendChatMessage('agent', reply);
+      }, 500);
+    }
+
+    if (aiSendBtn && aiInputText) {
+      aiSendBtn.addEventListener('click', () => {
+        const text = aiInputText.value;
+        if (text.trim()) {
+          handleAiQuery(text);
+          aiInputText.value = '';
+        }
+      });
+
+      aiInputText.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const text = aiInputText.value;
+          if (text.trim()) {
+            handleAiQuery(text);
+            aiInputText.value = '';
+          }
+        }
+      });
+    }
+
+    // クイックアクションのクリック連動
+    if (quickActionBtns) {
+      quickActionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const prompt = btn.dataset.prompt;
+          if (prompt) {
+            handleAiQuery(prompt);
+          }
+        });
+      });
     }
 
     function switchModule(targetId) {
