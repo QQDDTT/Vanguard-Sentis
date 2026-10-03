@@ -113,160 +113,253 @@
        2. Header (上部ヘッダー) : 社名、公文書日付、専任宅建士ログイン
        ========================================================================== */
     .office-header {
-      height: 56px;
-      min-height: 56px;
+      height: 60px;
+      min-height: 60px;
       flex-shrink: 0;
       background: #fdfaf5;
-      border-bottom: 2px solid #3c342b;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border-bottom: 2px solid #2e261f;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 24px;
+      padding: 0 20px;
       z-index: 100;
       position: relative;
+      white-space: nowrap;
+      gap: 16px;
     }
 
     .office-header::after {
       content: "";
       position: absolute;
-      bottom: -4px;
+      bottom: -3px;
       left: 0;
       right: 0;
-      height: 2px;
-      background: repeating-linear-gradient(90deg, #b82c2c, #b82c2c 12px, transparent 12px, transparent 16px);
-      opacity: 0.6;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, #b82c2c, #b82c2c 8px, transparent 8px, transparent 12px);
+      opacity: 0.5;
     }
 
+    /* 左側：ブランドと組織 */
     .header-branding {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
     }
 
     .brand-logo-img {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       object-fit: contain;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
+      transition: transform 0.2s ease;
+    }
+
+    .brand-logo-link:hover .brand-logo-img {
+      transform: scale(1.05);
     }
 
     .brand-titles {
       display: flex;
       flex-direction: column;
+      gap: 2px;
     }
 
     .brand-main {
       font-family: var(--font-serif);
-      font-size: 15.5px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 0.8px;
       color: #1a1e24;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      line-height: 1.2;
+    }
+
+    .company-name {
+      white-space: nowrap;
     }
 
     .branch-pill {
-      background: #eee6d8;
-      color: #4a3e2f;
-      border: 1px solid #d4c5ae;
+      background: #eee5d5;
+      color: #524433;
+      border: 1px solid #d4c4ad;
       border-radius: 2px;
-      padding: 1px 8px;
-      font-size: 11px;
+      padding: 1px 7px;
+      font-size: 10.5px;
       font-weight: 600;
+      letter-spacing: 0.3px;
+      font-family: var(--font-sans);
     }
 
     .brand-sub {
       font-size: 10px;
-      color: var(--ink-muted);
-      letter-spacing: 0.6px;
-      font-family: var(--font-serif);
+      color: #7a7062;
+      letter-spacing: 0.4px;
+      font-family: var(--font-mono);
+      line-height: 1;
     }
 
-    /* ヘッダー中央：公文書日付・宅建業免許番号 */
+    /* 中央：一体化公文書日付・宅建法令カプセル */
     .header-center-mark {
       display: flex;
       align-items: center;
-      gap: 16px;
-      font-family: var(--font-serif);
-      color: #4a443a;
-      font-size: 12.5px;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .official-date {
-      display: flex;
+    .official-context-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #f7f2e8;
+      border: 1px solid #dcd1be;
+      border-radius: 4px;
+      padding: 4px 12px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .capsule-item {
+      display: inline-flex;
       align-items: center;
       gap: 6px;
+      font-size: 11.5px;
+      font-family: var(--font-serif);
     }
 
-    .date-badge {
-      display: inline-block;
-      border: 1px solid #c9bca9;
-      background: #faf6ee;
-      padding: 2px 8px;
+    .capsule-label {
+      font-size: 10px;
+      color: #8c7f6e;
+      background: #ece3d3;
+      padding: 1px 5px;
       border-radius: 2px;
-      color: var(--ink-dark);
+      font-weight: 600;
+      font-family: var(--font-sans);
+    }
+
+    .capsule-val {
+      color: #2b251d;
       font-weight: 600;
     }
 
-    .license-badge {
-      border: 1px dashed var(--ink-red-hanko);
-      color: var(--ink-red-hanko);
-      padding: 2px 8px;
-      border-radius: 3px;
-      font-size: 11px;
-      font-weight: 600;
-      background: rgba(184, 44, 44, 0.04);
-      display: flex;
+    .capsule-divider {
+      width: 1px;
+      height: 14px;
+      background: #d8cbbc;
+    }
+
+    .capsule-hanko {
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
+      border: 1px solid var(--ink-red-hanko);
+      color: var(--ink-red-hanko);
+      border-radius: 2px;
+      font-size: 9.5px;
+      font-weight: 700;
+      line-height: 1;
+      font-family: var(--font-stamp);
+      background: rgba(184, 44, 44, 0.05);
     }
 
-    /* ヘッダー右側：ユーザーログイン情報 */
+    .license-item .capsule-val {
+      color: #7a2222;
+      font-size: 11px;
+    }
+
+    /* 右側：操作エリアと専任宅建士状態 */
     .header-user-section {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-office-action {
+      background: #f8f3ea;
+      border: 1px solid #cfc2ad;
+      color: #3f392f;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .btn-office-action:hover {
+      background: #ede3d2;
+      border-color: #b09e85;
+    }
+
+    .btn-portal-back {
+      background: #edf5f1;
+      border-color: #a3c9b5;
+      color: #134e38;
+    }
+
+    .btn-portal-back:hover {
+      background: #e2f0e8;
+      border-color: #83b69a;
+      color: #0d3828;
     }
 
     .user-profile-badge {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 4px 10px;
-      background: #f4ece0;
-      border: 1px solid #dcd1be;
+      background: #f5ede0;
+      border: 1px solid #d9cbba;
       border-radius: 4px;
-      cursor: pointer;
+      cursor: default;
       transition: all 0.2s ease;
-    }
-
-    .user-profile-badge:hover {
-      background: #eae0d0;
-      border-color: #baa78e;
+      white-space: nowrap;
     }
 
     .user-stamp-avatar {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       border: 1.5px solid var(--ink-red-hanko);
       color: var(--ink-red-hanko);
       font-family: var(--font-stamp);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #fffdfa;
       box-shadow: 0 1px 2px rgba(184, 44, 44, 0.15);
+      flex-shrink: 0;
     }
 
     .user-details {
       display: flex;
       flex-direction: column;
-      line-height: 1.25;
+      line-height: 1.2;
+    }
+
+    .user-name-line {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
     }
 
     .user-name {
@@ -275,28 +368,24 @@
       color: var(--ink-black);
     }
 
+    .user-rank {
+      font-size: 9.5px;
+      color: #855018;
+      background: #ece0cd;
+      border: 1px solid #decab0;
+      padding: 0 4px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+
     .user-role {
-      font-size: 10px;
-      color: var(--ink-muted);
+      font-size: 9.5px;
+      color: #70675a;
     }
 
-    .btn-office-action {
-      background: #f8f3ea;
-      border: 1px solid #cfc2ad;
-      color: #3f392f;
-      padding: 5px 10px;
-      border-radius: 3px;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.15s ease;
-    }
-
-    .btn-office-action:hover {
-      background: #ece1ce;
-      border-color: #b09e85;
+    .btn-away-action {
+      padding: 5px 8px;
+      font-size: 11.5px;
     }
 
     /* ==========================================================================
@@ -1211,12 +1300,40 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 狭幅画面・モバイル端末対応 (Responsive Optimization) */
+    /* 狭幅画面・レスポンシブ階層制御 (Responsive Multi-tier Optimization) */
+    @media (max-width: 1380px) {
+      .brand-sub {
+        display: none !important;
+      }
+      .capsule-label {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .header-center-mark {
+        display: none !important;
+      }
+      .branch-pill {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .user-role {
+        display: none !important;
+      }
+      .btn-portal-back .btn-text {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 768px) {
       .office-header {
         padding: 0 10px;
+        gap: 8px;
       }
-      .brand-sub, .header-center-mark, .user-details {
+      .user-details, .btn-away-action .btn-text {
         display: none !important;
       }
       .office-body-workbench {
@@ -1254,41 +1371,54 @@
     <header class="office-header">
       <!-- 会社ロゴと部署 -->
       <div class="header-branding">
-        <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
+        <a href="./index.html" class="brand-logo-link" title="詳細設計査閲ポータルへ戻る">
+          <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
+        </a>
         <div class="brand-titles">
           <div class="brand-main">
-            株式会社センティス
-            <span class="branch-pill">東京中央営業本部 · 第1仲介課</span>
+            <span class="company-name">株式会社センティス</span>
+            <span class="branch-pill">東京中央営業本部</span>
           </div>
-          <span class="brand-sub">SENTIS REALTY CO., LTD. · 不動産提案に確かな指針を。</span>
+          <span class="brand-sub">SENTIS REALTY CORE · 執務環境</span>
         </div>
       </div>
 
-      <!-- 中央公印と法令認証情報 -->
+      <!-- 中央公印と法令認証情報（一体化公文書カプセル） -->
       <div class="header-center-mark">
-        <div class="official-date">
-          公文書日付：
-          <span class="date-badge" id="current-office-date">令和八年 十月三日 (土) 友引</span>
-        </div>
-        <div class="license-badge">
-          宅地建物取引業者 東京都知事 (1) 第109823号
+        <div class="official-context-capsule">
+          <div class="capsule-item date-item">
+            <span class="capsule-label">公文書日付</span>
+            <span class="capsule-val" id="current-office-date">令和八年 十月三日 (土) 友引</span>
+          </div>
+          <div class="capsule-divider"></div>
+          <div class="capsule-item license-item" title="東京都知事 免許登録番号">
+            <span class="capsule-hanko">宅建</span>
+            <span class="capsule-val">都知事 (1) 第109823号</span>
+          </div>
         </div>
       </div>
 
       <!-- ユーザーログイン情報（通常業務席） -->
       <div class="header-user-section">
-        <a href="./index.html" class="btn-office-action" style="text-decoration:none; color:#184332; font-weight:700; border-color:#99b8a8; background:#edf6f1;" title="成果物一覧・設計ドキュメント主ポータルへ戻る">
-          <span>←</span> 成果物一覧ポータル
+        <a href="./index.html" class="btn-office-action btn-portal-back" title="詳細設計査閲ポータル主画面へ戻る">
+          <span>←</span>
+          <span class="btn-text">査閲ポータル</span>
         </a>
+
         <div class="user-profile-badge" title="専任宅地建物取引士 登録証照会">
           <div class="user-stamp-avatar">能勢</div>
           <div class="user-details">
-            <span class="user-name">能勢 秀樹 <span style="font-size:10px; font-weight:normal; color:#855018;">(課長)</span></span>
-            <span class="user-role">専任宅地建物取引士 (東京 第092318号)</span>
+            <div class="user-name-line">
+              <span class="user-name">能勢 秀樹</span>
+              <span class="user-rank">課長</span>
+            </div>
+            <span class="user-role">専任宅建士 (東京 第092318号)</span>
           </div>
         </div>
-        <button class="btn-office-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')">
-          <span>⏻</span> 離席 / 席切替
+
+        <button class="btn-office-action btn-away-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')" title="離席または担当席切替">
+          <span>⏻</span>
+          <span class="btn-text">離席</span>
         </button>
       </div>
     </header>
