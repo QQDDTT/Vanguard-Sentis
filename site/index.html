@@ -16,7 +16,6 @@
       var currentHost = window.location.hostname;
       var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
       if (!authorizedHosts.includes(currentHost)) {
-        // github.io などの直接アクセスまたは非正規ホストからのアクセスを即座にブロック・正規暗号化ドメインへ転送
         window.location.replace('https://vanguard-sentis.evotensor.dev' + window.location.pathname + window.location.search);
       }
     })();
@@ -85,7 +84,6 @@
       flex-direction: column;
     }
 
-    /* 顶部细微科技光晕 */
     .top-ambient-glow {
       position: absolute;
       top: 0;
@@ -612,7 +610,6 @@
       flex: 1;
     }
 
-    /* 成果物フィルタータブ */
     .filter-bar {
       display: flex;
       align-items: center;
@@ -663,14 +660,12 @@
       color: var(--vg-text-muted);
     }
 
-    /* 成果物グリッドレイアウト */
     .deliverables-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 24px;
     }
 
-    /* 成果物カード (Artistic Tech Card) */
     .deliverable-card {
       background: var(--vg-bg-card);
       border: 1px solid var(--vg-border-subtle);
@@ -757,7 +752,6 @@
       flex: 1;
     }
 
-    /* 成果物タグクラウド */
     .card-tags {
       display: flex;
       flex-wrap: wrap;
@@ -775,7 +769,6 @@
       font-weight: 500;
     }
 
-    /* 卡片底栏操作区 */
     .card-footer {
       border-top: 1px solid var(--vg-border-light);
       padding-top: 18px;
@@ -951,7 +944,6 @@
       line-height: 1.75;
     }
 
-    /* 文档排版样式 (Clean Typography) */
     .doc-content h1 {
       font-size: 24px;
       font-weight: 800;
@@ -1116,7 +1108,6 @@
       text-transform: uppercase;
     }
 
-    /* 响应式调整 */
     @media (max-width: 900px) {
       .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1237,7 +1228,7 @@
         Vanguard プラットフォームが策定・設計したすべての公式成果物（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様へ一覧展示するための統合ディレクトリです。
       </p>
 
-      <!-- 交付 KPI 看板 -->
+      <!-- 交付 KPI 看板（脱敏后：无任何具体金额数字） -->
       <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
@@ -1258,9 +1249,9 @@
         </div>
 
         <div class="metric-card">
-          <div class="metric-value">2~10 <span style="font-size:16px; font-weight:normal; color:#64748b;">億円</span></div>
-          <div class="metric-label">海外富裕層案件対応</div>
-          <div class="metric-sub">小紅書送客・非居住者全額電送金分岐SOP</div>
+          <div class="metric-value">Global <span style="font-size:16px; font-weight:normal; color:#64748b;">Cross-Border</span></div>
+          <div class="metric-label">海外富裕層・越境取引対応</div>
+          <div class="metric-sub">小紅書送客・非居住者向け特別決済分岐SOP</div>
         </div>
       </div>
     </section>
@@ -1354,13 +1345,13 @@
             <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
             <p class="card-desc">
               代表阿部翔平氏の防衛省航空自衛隊情報隊及びリノベスト8年の実績を基軸とした事業戦略。
-              第1期2名体制で売上7,150万円、第3期5名で3億円を目指す高人效モデルの要請と、
-              2~10億円の高額取引に伴う「ミスゼロ・手戻りゼロ」を実現するシステム基本構想。
+              少人数精鋭体制から中長期展開を見据えた高人効モデルの確立と、
+              高度かつ厳密な取引実務に伴う「ミスゼロ・手戻りゼロ」を実現するシステム基本構想。
             </p>
             <div class="card-tags">
               <span class="card-tag">創業計画書整合</span>
               <span class="card-tag">5大競争優位性</span>
-              <span class="card-tag">人均創収3,575万円</span>
+              <span class="card-tag">高生産性モデル</span>
               <span class="card-tag">CI/VI規格</span>
             </div>
           </div>
@@ -1415,13 +1406,13 @@
             <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
             <p class="card-desc">
               Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、
-              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び高額仲介手数料・印紙税自動試算ロジック。
+              決算日からの逆算マイルストーン管理（D-14、D-10、D-2）、及び各種精算明細・法定書類チェックロジック。
             </p>
             <div class="card-tags">
               <span class="card-tag">純静的フロントエンド</span>
               <span class="card-tag">動的Checklist判定</span>
               <span class="card-tag">逆算タイムライン</span>
-              <span class="card-tag">印紙税階梯照合</span>
+              <span class="card-tag">精算明細自動照合</span>
             </div>
           </div>
 
@@ -1612,13 +1603,10 @@
       const computedHash = await computeSha256(enteredPassword);
 
       if (computedHash === TARGET_AUTH_HASH) {
-        // 认证成功
         sessionStorage.setItem(SESSION_STORAGE_KEY, computedHash);
-        // 设置跨页面同步使用的 Cookie
         document.cookie = "SENTIS_SECURE_TOKEN=" + computedHash + "; path=/; max-age=604800; SameSite=Strict";
         unlockPortal();
       } else {
-        // 密码错误
         gatewayErrorMsg.style.display = 'block';
         gatewayPasswordInput.select();
         gatewayPasswordInput.focus();
@@ -1632,7 +1620,6 @@
       lockPortal();
     }
 
-    // 初始化运行检查
     window.addEventListener('DOMContentLoaded', checkCurrentSession);
 
     // ======================================================================
@@ -1657,7 +1644,7 @@
       });
     });
 
-    // ドキュメントデータ辞書
+    // ドキュメントデータ辞書（金銭情報完全除去・業務SOP及び品質設計準拠）
     const documentStore = {
       doc01: {
         id: "DEL-03",
@@ -1671,58 +1658,51 @@
             </blockquote>
 
             <h2>1. 商業背景と株式会社センティス（SENTIS）のポジショニング</h2>
-            <p>株式会社 SENTIS は令和8年（2026年）5月に設立された、高額物件・海外富裕層（中華圏・台湾・アジア圏）向け仲介に特化した精鋭不動産プロフェッショナルファームです。</p>
+            <p>株式会社 SENTIS は令和8年（2026年）5月に設立された、海外富裕層（中華圏・台湾・アジア圏）及び国内優良物件仲介に特化した精鋭不動産プロフェッショナルファームです。</p>
             <ul>
-              <li><strong>代表取締役</strong>：阿部 翔平（防衛省 航空自衛隊 作戦情報隊 第二収集隊 歴任、株式会社リノベスト 法人営業責任者として2〜10億円の高額取引を多数成約）。</li>
-              <li><strong>資本金</strong>：5,000,000 円 ｜ <strong>所在地</strong>：東京都千代田区神田須田町 2-3-12 12KANDA 705。</li>
+              <li><strong>代表取締役</strong>：阿部 翔平（防衛省 航空自衛隊 作戦情報隊 第二収集隊 歴任、株式会社リノベスト 法人営業責任者として大規模取引・優良物件仲介を多数成約）。</li>
+              <li><strong>所在地</strong>：東京都千代田区神田須田町 2-3-12 12KANDA 705。</li>
+              <li><strong>事業領域</strong>：宅地建物取引業、海外投資家向け不動産コンサルティング、資産運用サポート。</li>
               <li><strong>ブランドスローガン</strong>：「不動産提案に確かな指針を。」（羅針盤とS字シンボル）。</li>
             </ul>
 
-            <h2>2. 5大コア競争優位性と中期事業計画</h2>
+            <h2>2. 5大コア競争優位性と中期事業展開ロードマップ</h2>
             <table>
               <thead>
                 <tr>
                   <th>事業期別</th>
-                  <th>目標売上高</th>
-                  <th>想定営業利益</th>
-                  <th>専任体制</th>
-                  <th>人均創収（人効）</th>
-                  <th>戦略重点</th>
+                  <th>組織体制</th>
+                  <th>業務品質目標</th>
+                  <th>主要戦略重点</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>第 1 期</strong></td>
-                  <td><strong>7,150 万円</strong></td>
-                  <td>5,590 万円</td>
-                  <td><strong>2 名</strong></td>
-                  <td><strong>3,575 万円/人</strong></td>
-                  <td>小紅書集客基盤の確立、成約SOPの標準化</td>
+                  <td><strong>2 名体制</strong></td>
+                  <td>成約プロセス標準化率 100%</td>
+                  <td>小紅書集客基盤の確立、成約SOPの定着</td>
                 </tr>
                 <tr>
                   <td><strong>第 2 期</strong></td>
-                  <td><strong>1 億 5,000 万円</strong></td>
-                  <td>1 億 2,000 万円</td>
-                  <td><strong>3 名</strong></td>
-                  <td><strong>5,000 万円/人</strong></td>
-                  <td>高額投資物件仲介網の拡大、紹介制度運用</td>
+                  <td><strong>3 名体制</strong></td>
+                  <td>顧客満足度・再成約率 向上</td>
+                  <td>優良投資物件仲介網の拡大、法人紹介制度運用</td>
                 </tr>
                 <tr>
                   <td><strong>第 3 期</strong></td>
-                  <td><strong>3 億円</strong></td>
-                  <td>2 億 4,000 万円</td>
-                  <td><strong>5 名</strong></td>
-                  <td><strong>6,000 万円/人</strong></td>
-                  <td>海外アライアンス締結、組織的規模拡大</td>
+                  <td><strong>5 名体制</strong></td>
+                  <td>海外アライアンス網 確立</td>
+                  <td>多言語対応強化、組織的規模拡大</td>
                 </tr>
               </tbody>
             </table>
 
             <h2>3. 内部管理システム Sentis Realty Core への要請</h2>
-            <p>2名という極少人数で年間近20件・数億円単位の取引を完遂するためには、手作業のリマインドや紙束捜索を根絶し、以下の3本柱を担保する中枢が必要です：</p>
+            <p>少人数精鋭体制において高品質な取引を着実に完遂するためには、手作業のリマインドや紙束捜索を根絶し、以下の3本柱を担保する中枢が必要です：</p>
             <ol>
-              <li><strong>リードから決済までの全工程可視化</strong>：海外顧客特有の資金調達（送金・公証認証）と国内在住顧客（住宅ローン）の自動分岐。</li>
-              <li><strong>手戻りゼロの動的チェックリスト</strong>：物件属性・売主属性に応じた必要書類（重説部数、印紙税額、管理会社引渡届）の自動判定。</li>
+              <li><strong>リードから決済までの全工程可視化</strong>：海外顧客特有の決済プロセス（送金・公証認証）と国内在住顧客（住宅ローン）の自動分岐。</li>
+              <li><strong>手戻りゼロの動的チェックリスト</strong>：物件属性・売主属性に応じた必要書類（重説部数、法定公文書、管理会社引渡届）の自動判定。</li>
               <li><strong>純静的・ゼロサーバー運用</strong>：サーバー保守費や障害リスクを排除し、Vanguard 標準に準拠した即時立ち上げを実現。</li>
             </ol>
           </div>
@@ -1743,10 +1723,10 @@
             <p>相談・受付から最終決済・引渡まで、抜け漏れを防止するための5大フェーズを定義：</p>
             <ul>
               <li><strong>フェーズ 0（前置集客・相談）</strong>：小紅書（RED）反響、多言語（中/日/英）ヒアリング、VR内覧、購入意向分類。</li>
-              <li><strong>フェーズ 1（契約締結）</strong>：ATBB最新登記簿取得、重要事項説明書（第35条）作成・記名押印、手付金授受、印紙貼付。</li>
+              <li><strong>フェーズ 1（契約締結）</strong>：ATBB最新登記簿取得、重要事項説明書（第35条）作成・記名押印、契約着手手続き、法定証紙確認。</li>
               <li><strong>フェーズ 2（資金決済準備）</strong>：住宅ローン本審査申請（または海外全額送金手配）、新住所住民票・印鑑証明書回収、司法書士調整。</li>
               <li><strong>フェーズ 3（金消契約）</strong>：金融機関窓口での金銭消費貸借契約締結、新住所照合（全額自己資金客は本工程免除）。</li>
-              <li><strong>フェーズ 4（残金決済・引渡）</strong>：管理会社変更届・振替用紙取寄、3者支払明細書（残代金・手数料・登記費用）、実印押印、鍵引渡。</li>
+              <li><strong>フェーズ 4（残金決済・引渡）</strong>：管理会社変更届・振替用紙取寄、3者精算明細書（諸費用精算・登記関連）、実印押印、鍵引渡。</li>
             </ul>
 
             <h2>2. 顧客属性別（国内在住 vs 海外非居住）確認対照表</h2>
@@ -1801,7 +1781,7 @@
               <li><strong>物件台帳・登記原簿 (Property Ledger)</strong>：法務局ATBB登記情報連携、持分・私道負担・建蔽率・容積率管理。</li>
               <li><strong>売買契約・重説審査 (Contract & Legal)</strong>：第35条重要事項説明書ドラフト、ハザードマップ水防法条項検証、専任宅建士押印管理。</li>
               <li><strong>住宅ローン金融連携 (Mortgage Monitor)</strong>：事前/本審査進捗ステータス追跡、融資利用特約期日（D-Day）アラート。</li>
-              <li><strong>残金決済・引渡清算 (Settlement Workbench)</strong>：三方清算計算書作成、領収証印紙税自動判定（400円〜数万円）。</li>
+              <li><strong>残金決済・引渡清算 (Settlement Workbench)</strong>：三方清算計算書作成、領収証受領書式及び法定帳票照合。</li>
             </ul>
 
             <h2>2. 決算日逆算マイルストーン管理（リバースタイムライン）</h2>
