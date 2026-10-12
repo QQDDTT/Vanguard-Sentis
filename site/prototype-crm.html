@@ -107,11 +107,13 @@
       --shadow-drawer: 12px 0 36px rgba(0, 0, 0, 0.75);
     }
 
-    /* 风格切换按钮统一样式 (无符号纯文字规范) */
+    /* 风格切换按钮统一样式 (纯符号规范) */
     .btn-theme-toggle {
-      padding: 5px 12px;
-      font-size: 11.5px;
-      font-weight: 600;
+      width: 30px;
+      height: 28px;
+      padding: 0;
+      font-size: 14px;
+      line-height: 1;
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -1859,8 +1861,10 @@
         gap: 6px;
       }
       .btn-theme-toggle {
-        padding: 3px 7px;
-        font-size: 10px;
+        width: 26px;
+        height: 24px;
+        padding: 0;
+        font-size: 12px;
       }
 
       /* 2. ドロワーと遮光幕の位置補正 */
@@ -2104,7 +2108,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()">夜景深色切替</button>
+        <button type="button" class="btn-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()" title="夜景深色切替" aria-label="夜景深色切替">🌙</button>
 
         <button class="btn-office-action btn-away-action" onclick="alert('執務セッション中：席の切替には総務承認が必要です。')" title="離席または担当席切替">
           <span>⏻</span>
@@ -3096,7 +3100,15 @@
       document.documentElement.setAttribute('data-theme', theme);
       const btn = document.getElementById('btnThemeToggle');
       if (btn) {
-        btn.innerText = theme === 'dark' ? '和紙明色切替' : '夜景深色切替';
+        if (theme === 'dark') {
+          btn.innerHTML = '☀';
+          btn.title = '和紙明色切替';
+          btn.setAttribute('aria-label', '和紙明色切替');
+        } else {
+          btn.innerHTML = '🌙';
+          btn.title = '夜景深色切替';
+          btn.setAttribute('aria-label', '夜景深色切替');
+        }
       }
     }
 

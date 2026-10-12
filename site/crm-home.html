@@ -200,7 +200,6 @@
     }
 
     .btn-hud-mode-toggle,
-    .btn-hud-theme-toggle,
     .btn-hud-logout {
       padding: 7px 12px;
       font-size: 12px;
@@ -212,6 +211,17 @@
     }
 
     .btn-hud-theme-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      line-height: 1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
       border: 1px solid rgba(212, 175, 55, 0.4);
       background: rgba(212, 175, 55, 0.12);
       color: var(--brass-bright);
@@ -220,6 +230,7 @@
     .btn-hud-theme-toggle:hover {
       background: rgba(212, 175, 55, 0.25);
       border-color: var(--brass-gold);
+      transform: translateY(-1px);
     }
 
     .btn-hud-mode-toggle {
@@ -1329,7 +1340,7 @@
     <!-- 右侧状态与模式切换 -->
     <div class="hud-actions-group">
       <div class="hud-clock-display" id="hudClock">2026/10/04 00:00:00 JST</div>
-      <button type="button" class="btn-hud-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()">和紙明色切替</button>
+      <button type="button" class="btn-hud-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()" title="和紙明色切替" aria-label="和紙明色切替">☀</button>
       <button type="button" class="btn-hud-mode-toggle" id="btnModeToggle" onclick="toggleViewMode()">画巻表示切替</button>
       <button type="button" class="btn-hud-logout" onclick="handleLogout()">施錠退室</button>
     </div>
@@ -1938,7 +1949,15 @@
       document.documentElement.setAttribute('data-theme', theme);
       const btn = document.getElementById('btnThemeToggle');
       if (btn) {
-        btn.innerText = theme === 'dark' ? '和紙明色切替' : '夜景深色切替';
+        if (theme === 'dark') {
+          btn.innerHTML = '☀';
+          btn.title = '和紙明色切替';
+          btn.setAttribute('aria-label', '和紙明色切替');
+        } else {
+          btn.innerHTML = '🌙';
+          btn.title = '夜景深色切替';
+          btn.setAttribute('aria-label', '夜景深色切替');
+        }
       }
     }
 
