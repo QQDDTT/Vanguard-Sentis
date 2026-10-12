@@ -1281,6 +1281,11 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
+      /* 关键防溢出：平板及以下断点卡片强制单列自适应，杜绝 2 列强撑导致的横向滚动条 */
+      .deliverables-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
       .modal-body-scroller {
         padding: 24px 20px;
       }
@@ -1295,27 +1300,35 @@
       }
     }
 
-    /* 3. スマートフォン標準 (<= 640px) */
+    /* 3. スマートフォン標準 (<= 640px) - 移动端防溢出与按钮符号化规范核心落地 */
     @media (max-width: 640px) {
+      html, body {
+        overflow-x: hidden;
+      }
+
       body {
         font-size: 13px;
       }
 
-      /* ヘッダー極簡最適化 */
+      /* ヘッダー極簡最適化：タイトル完全性維持＆ボタン記号化 */
       .header-container {
         height: 52px;
         padding: 0 12px;
         gap: 8px;
+        justify-content: space-between;
       }
       .header-branding {
         gap: 8px;
         min-width: 0;
+        flex-shrink: 1;
+        overflow: hidden;
       }
       .vanguard-badge-symbol {
-        width: 26px;
-        height: 26px;
-        font-size: 12px;
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
         border-radius: 6px;
+        flex-shrink: 0;
       }
       .brand-platform {
         display: none !important;
@@ -1323,39 +1336,75 @@
       .brand-project {
         font-size: 13px;
         font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
       }
       .brand-project-full {
         display: none !important;
       }
       .brand-project-mobile {
         display: inline !important;
-      }
-      .btn-header-action {
-        display: none !important;
+        white-space: nowrap;
       }
       .header-right {
         gap: 6px;
+        flex-shrink: 0;
       }
       .release-status-badge {
         padding: 3px 8px;
         font-size: 10.5px;
         border-radius: 12px;
       }
+      .badge-text-full {
+        display: none !important;
+      }
+      .badge-text-short {
+        display: inline !important;
+        white-space: nowrap;
+      }
       .pulse-dot {
-        width: 5px;
-        height: 5px;
-      }
-      .btn-logout {
-        padding: 4px 8px;
-        font-size: 11px;
-      }
-      .btn-logout .btn-text {
-        font-size: 10.5px;
+        width: 6px;
+        height: 6px;
       }
 
-      /* ヒーロー看板 */
+      /* 顶部按钮极简符号化：隐藏文字标签，纯符号展示，节约宝贵横向空间 */
+      .btn-header-action {
+        display: inline-flex !important;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .btn-header-action .btn-text {
+        display: none !important;
+      }
+
+      .btn-logout {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .btn-logout .btn-text {
+        display: none !important;
+      }
+
+      /* ヒーロー看板：タイトル全体性維持・自然改行 */
       .hero-section {
-        padding: 20px 14px 16px;
+        padding: 24px 14px 16px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .hero-eyebrow {
         font-size: 9.5px;
@@ -1365,12 +1414,17 @@
         max-width: 100%;
         line-height: 1.4;
         text-align: center;
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       .hero-title {
-        font-size: 20px;
+        font-size: clamp(17px, 4.6vw, 21px);
         line-height: 1.35;
         letter-spacing: -0.4px;
         margin-bottom: 10px;
+        word-break: keep-all;
+        overflow-wrap: break-word;
       }
       .desktop-break {
         display: none;
@@ -1381,15 +1435,19 @@
         margin-bottom: 18px;
       }
 
-      /* 指標KPIグリッド（2x2タイルレイアウトで高さを節約） */
+      /* 指標KPIグリッド：2x2タイルレイアウト */
       .metrics-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
         margin-bottom: 14px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .metric-card {
         padding: 10px 10px;
         border-radius: 8px;
+        min-width: 0;
+        box-sizing: border-box;
       }
       .metric-value {
         font-size: 17px;
@@ -1402,6 +1460,9 @@
       .metric-label {
         font-size: 11px;
         margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .metric-sub {
         font-size: 9.5px;
@@ -1411,6 +1472,8 @@
       /* 成果物カタログ & 水平スクロールタブ */
       .catalog-section {
         padding: 12px 14px 60px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .filter-bar {
         flex-direction: column;
@@ -1418,6 +1481,8 @@
         gap: 8px;
         padding-bottom: 10px;
         margin-bottom: 16px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .tab-pills {
         overflow-x: auto;
@@ -1428,6 +1493,7 @@
         border-radius: 8px;
         display: flex;
         width: 100%;
+        box-sizing: border-box;
       }
       .tab-pills::-webkit-scrollbar {
         display: none;
@@ -1444,22 +1510,30 @@
         letter-spacing: 0.2px;
       }
 
-      /* 成果物カード一覧（1カラム縦並び） */
+      /* 成果物カード一覧（1カラム縦並び・完全防溢出） */
       .deliverables-grid {
         grid-template-columns: 1fr;
         gap: 14px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .deliverable-card {
-        padding: 18px 16px;
+        padding: 16px 14px;
         border-radius: 12px;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
       }
       .card-top-meta {
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
       .card-title {
-        font-size: 15.5px;
+        font-size: 15px;
+        font-weight: 800;
         margin-bottom: 8px;
         line-height: 1.35;
+        word-break: keep-all;
+        overflow-wrap: break-word;
       }
       .card-desc {
         font-size: 12px;
@@ -1474,17 +1548,64 @@
         font-size: 9.5px;
         padding: 2px 6px;
       }
+
+      /* 卡片底部操作栏：严密一行排列，按钮纯符号化，彻底根除文字折行与横向溢出 */
       .card-footer {
-        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
         gap: 8px;
-        padding-top: 10px;
+        padding-top: 12px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .card-status-info {
         font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        flex-shrink: 1;
       }
+      .card-actions-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      /* 移动端核心：成果物启动按钮全部采用符号化纯图标展示 */
       .btn-card-launch {
-        padding: 6px 12px;
-        font-size: 11.5px;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        border-radius: 7px;
+        flex-shrink: 0;
+      }
+      .btn-card-launch .btn-text {
+        display: none !important;
+      }
+      .btn-card-launch .btn-symbol {
+        font-size: 14px;
+        line-height: 1;
+        display: inline-block;
+      }
+
+      .btn-card-quick-preview {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        flex-shrink: 0;
       }
 
       /* 文書モーダル・全画面ポップアップ */
@@ -1498,10 +1619,35 @@
         border: none;
       }
       .modal-header {
-        padding: 12px 14px;
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .modal-header-titles {
+        min-width: 0;
+        overflow: hidden;
+        gap: 8px;
       }
       .modal-doc-title {
-        font-size: 13.5px;
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .modal-header-actions {
+        flex-shrink: 0;
+        gap: 6px;
+      }
+      .btn-modal-action-newtab {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+      }
+      .btn-modal-action-newtab .btn-text {
+        display: none !important;
       }
       .modal-body-scroller {
         padding: 18px 14px;
@@ -1535,6 +1681,8 @@
       .gateway-card {
         padding: 28px 18px;
         border-radius: 14px;
+        max-width: 100%;
+        box-sizing: border-box;
       }
       .gateway-title {
         font-size: 18px;
@@ -1555,10 +1703,14 @@
       /* フッター */
       .site-footer {
         padding: 24px 14px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .footer-container {
         padding: 0;
         gap: 16px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .footer-left {
         font-size: 12px;
@@ -1570,20 +1722,50 @@
         width: 100%;
         padding: 6px 10px;
         font-size: 11px;
+        box-sizing: border-box;
       }
     }
 
-    /* 4. 極小画面スマートフォン (<= 360px) */
-    @media (max-width: 360px) {
+    /* 4. 極小画面スマートフォン (<= 380px, e.g. iPhone SE / Mini) */
+    @media (max-width: 380px) {
       .header-container {
         padding: 0 8px;
+        gap: 6px;
       }
-      .brand-project-text {
-        max-width: 80px;
-        font-size: 11px;
+      .badge-text-short {
+        display: none !important;
+      }
+      .release-status-badge {
+        padding: 6px;
+        border-radius: 50%;
+      }
+      .pulse-dot {
+        margin: 0;
+      }
+      .btn-header-action {
+        display: none !important; /* 极小视口隐藏打印按钮，保留退出与状态点 */
       }
       .hero-title {
-        font-size: 17.5px;
+        font-size: 16.5px;
+      }
+      .deliverable-card {
+        padding: 14px 12px;
+      }
+      .btn-card-launch,
+      .btn-card-quick-preview {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+      }
+      .card-actions-group {
+        gap: 4px;
+      }
+    }
+
+    /* 5. 超狭画面 (<= 340px) */
+    @media (max-width: 340px) {
+      .brand-project-mobile {
+        display: none !important; /* 340px以下隐藏标题文字，只保留Logo，防止强行挤断 */
       }
       .metrics-grid {
         grid-template-columns: 1fr;
@@ -1650,13 +1832,13 @@
     <!-- 1. Global Header (全域ヘッダー) -->
     <header class="header-nav">
       <div class="header-container">
-        <a href="./index.html" class="header-branding">
+        <a href="./index.html" class="header-branding" title="Vanguard 詳細設計査閲ポータル">
           <div class="vanguard-badge-symbol">V</div>
           <div class="header-titles">
             <span class="brand-platform">VANGUARD PLATFORM</span>
             <span class="brand-project">
               <span class="brand-project-full">詳細設計査閲ポータル</span>
-              <span class="brand-project-mobile">SENTIS 査閲ポータル</span>
+              <span class="brand-project-mobile">SENTIS 査閲</span>
               <span class="sentis-tag">株式会社センティス (SENTIS)</span>
             </span>
           </div>
@@ -1666,13 +1848,15 @@
           <div class="release-status-badge">
             <span class="pulse-dot"></span>
             <span class="badge-text-full">査閲受付中 · Design Review v0.9</span>
-            <span class="badge-text-short">Review v0.9</span>
+            <span class="badge-text-short">v0.9</span>
           </div>
           <button class="btn-header-action" onclick="window.print()" title="査閲目録を印刷">
-            <span>🖨️</span> <span class="btn-text">印刷</span>
+            <span class="btn-symbol">🖨️</span>
+            <span class="btn-text">印刷</span>
           </button>
           <button class="btn-logout" onclick="handleLogout()" title="セッションを破棄して再施錠">
-            <span>⏻</span> <span class="btn-text">退出</span>
+            <span class="btn-symbol">⏻</span>
+            <span class="btn-text">退出</span>
           </button>
         </div>
       </div>
@@ -1693,7 +1877,7 @@
 
       <p class="hero-description">
         本ポータルは、株式会社センティス（SENTIS）の創業計画書及び不動産売買・住宅ローン審査実務規程に基づき、
-        Vanguard プラットフォームが策定した詳細設計仕様（要件定義書、業務SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様と共に確認・合意形成するための査閲ディレクトリ（Design Review Phase）です。
+        Vanguard プラットフォームが策定した詳細設計仕様（要件定義書、业务SOP、CI/VI資産、及び高保真画面プロトタイプ）をクライアント様と共に確認・合意形成するための査閲ディレクトリ（Design Review Phase）です。
       </p>
 
       <!-- 交付 KPI 看板（脱敏后：无任何具体金额数字） -->
@@ -1767,14 +1951,15 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
+              <span>●</span> Review Ready
             </div>
             <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
               </button>
-              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>概要書を開く</span>
+              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="概要書を開く">
+                <span class="btn-symbol">↗</span>
+                <span class="btn-text">概要書を開く</span>
               </a>
             </div>
           </div>
@@ -1802,14 +1987,15 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
+              <span>●</span> Review Ready
             </div>
             <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
               </button>
-              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>SOP仕様を開く</span>
+              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="SOP仕様を開く">
+                <span class="btn-symbol">↗</span>
+                <span class="btn-text">SOP仕様を開く</span>
               </a>
             </div>
           </div>
@@ -1837,14 +2023,15 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
+              <span>●</span> Review Ready
             </div>
             <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
               </button>
-              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>要件定義を開く</span>
+              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="要件定義を開く">
+                <span class="btn-symbol">↗</span>
+                <span class="btn-text">要件定義を開く</span>
               </a>
             </div>
           </div>
@@ -1872,14 +2059,15 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready (査閲待)
+              <span>●</span> Review Ready
             </div>
             <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
               </button>
-              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>計画日程を開く</span>
+              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="計画日程を開く">
+                <span class="btn-symbol">↗</span>
+                <span class="btn-text">計画日程を開く</span>
               </a>
             </div>
           </div>
@@ -1910,19 +2098,22 @@
             </div>
           </div>
 
-          <div class="card-footer" style="flex-wrap: wrap; gap: 8px;">
+          <div class="card-footer">
             <div class="card-status-info" style="color: #0284c7;">
-              <span>●</span> Prototype Active (検証用)
+              <span>●</span> Prototype Active
             </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="管理システム 執務室扉ログイン画面">
-                <span>扉ログイン</span>
+            <div class="card-actions-group">
+              <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="執務室扉ログイン画面">
+                <span class="btn-symbol">🚪</span>
+                <span class="btn-text">扉ログイン</span>
               </a>
-              <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="管理システム 執務室VRメインハブ主画面">
-                <span>VR執務室ハブ</span>
+              <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="執務室VRメインハブ主画面">
+                <span class="btn-symbol">🏛️</span>
+                <span class="btn-text">VR執務室ハブ</span>
               </a>
-              <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="管理システム 不動産売買台帳ワークベンチ">
-                <span>台帳画面</span>
+              <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="不動産売買台帳ワークベンチ">
+                <span class="btn-symbol">📋</span>
+                <span class="btn-text">台帳画面</span>
               </a>
             </div>
           </div>
@@ -1950,11 +2141,14 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #0284c7;">
-              <span>●</span> Prototype Active (検証用)
+              <span>●</span> Prototype Active
             </div>
-            <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-              <span>AI支援UIを体験</span>
-            </a>
+            <div class="card-actions-group">
+              <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="AI支援UIを体験">
+                <span class="btn-symbol">🤖</span>
+                <span class="btn-text">AI支援UIを体験</span>
+              </a>
+            </div>
           </div>
         </article>
 
@@ -1984,14 +2178,15 @@
 
           <div class="card-footer">
             <div class="card-status-info" style="color: #059669;">
-              <span>●</span> Design Delivered (配備済)
+              <span>●</span> Design Delivered
             </div>
             <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="この画面で簡易プレビュー">
-                <span>🔍</span>
+              <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
               </button>
-              <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch">
-                <span>素材一覧を開く</span>
+              <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="素材一覧を開く">
+                <span class="btn-symbol">🎨</span>
+                <span class="btn-text">素材一覧を開く</span>
               </a>
             </div>
           </div>
@@ -2010,7 +2205,8 @@
           </div>
           <div class="modal-header-actions">
             <a id="btnModalOpenTab" href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-modal-action-newtab" title="新しいタブで全画面表示">
-              <span>↗</span> 別タブで開く
+              <span class="btn-symbol">↗</span>
+              <span class="btn-text">別タブで開く</span>
             </a>
             <button class="btn-modal-close" onclick="closeDocModal()" title="閉じる (Esc)">✕</button>
           </div>

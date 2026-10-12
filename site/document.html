@@ -326,14 +326,18 @@
     }
 
     .doc-content table {
+      display: block;
       width: 100%;
+      max-width: 100%;
       border-collapse: separate;
       border-spacing: 0;
       margin: 20px 0 28px 0;
-      font-size: 13.5px;
+      font-size: 13px;
       border: 1px solid var(--vg-border-light);
       border-radius: 8px;
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
     }
 
     .doc-content th {
@@ -560,25 +564,82 @@
     }
 
     @media (max-width: 768px) {
+      html, body {
+        overflow-x: hidden;
+      }
       .nav-container {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
+        padding: 10px 14px;
+      }
+      .nav-branding-group {
+        min-width: 0;
+        overflow: hidden;
+      }
+      .doc-case-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .nav-actions {
-        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
       }
       .doc-select-box {
-        max-width: 100%;
         flex: 1;
+        min-width: 0;
+        max-width: none;
+        font-size: 12px;
+      }
+      /* 移动端按钮极简符号化：隐藏文字标签 */
+      .btn-nav-action {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .btn-nav-action .btn-text {
+        display: none !important;
+      }
+      .doc-page-container {
+        padding: 0 14px;
+        margin: 16px auto 36px auto;
+        width: 100%;
+        box-sizing: border-box;
       }
       .doc-paper-card {
-        padding: 20px 16px;
+        padding: 20px 14px;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .doc-content table {
         display: block;
         width: 100%;
+        max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+      }
+      .doc-content table th,
+      .doc-content table td {
+        white-space: normal;
+        min-width: 90px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .doc-content pre {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+        box-sizing: border-box;
       }
     }
   </style>
@@ -634,15 +695,18 @@
         </select>
 
         <button class="btn-nav-action" onclick="window.print()" title="本仕様書を印刷またはPDF出力">
-          <span>🖨️</span> 印刷
+          <span class="btn-symbol">🖨️</span>
+          <span class="btn-text">印刷</span>
         </button>
 
         <a href="./index.html" class="btn-nav-action btn-nav-primary" title="成果物総覧ポータル主画面へ">
-          <span>🏠</span> 主ポータル
+          <span class="btn-symbol">🏠</span>
+          <span class="btn-text">主ポータル</span>
         </a>
 
         <button class="btn-nav-action" onclick="window.close()" title="本タブを閉じる">
-          <span>✕</span> 閉じる
+          <span class="btn-symbol">✕</span>
+          <span class="btn-text">閉じる</span>
         </button>
       </div>
     </div>

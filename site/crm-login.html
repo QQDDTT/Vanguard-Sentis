@@ -470,6 +470,9 @@
       </div>
 
       <div class="terminal-intro">
+        <div class="prototype-banner-tag" style="background:rgba(212,175,55,0.12); border:1px solid rgba(212,175,55,0.35); border-radius:6px; padding:6px 10px; font-size:11px; color:#f3e5ab; margin-bottom:12px; text-align:center; font-family:var(--font-mono);">
+          【展示用画面 · 純粋静的プロトタイプ】実稼働バックエンド・外部サーバー通信は一切存在しません
+        </div>
         <h1>本社執務室 入室認証</h1>
         <p>関係者専用端末につき、暗証番号または社員証カードによる認証が必要です。</p>
       </div>
@@ -559,18 +562,31 @@
       }, 1300);
     }
 
-    // 密码输入开门逻辑（作为产品展示原型，免除阻碍，提供无门槛开门交互体验）
+    // 密码输入开门逻辑（真实模拟认证校验：验证是否为 SentisPass）
     async function handleDoorUnlock(event) {
       if (event) event.preventDefault();
       const entered = doorPassword.value;
       authError.style.display = 'none';
+
       if (!entered || entered.trim() === '') {
-        doorPassword.value = "SentisPass";
+        authError.innerText = "暗証番号を入力してください。(実演用暗証番号: SentisPass)";
+        authError.style.display = 'block';
+        doorPassword.focus();
+        return;
       }
-      grantAccessAndOpenDoor();
+
+      // 真实认证校验
+      if (entered.trim() === "SentisPass") {
+        grantAccessAndOpenDoor();
+      } else {
+        authError.innerText = "暗証番号が正しくありません。(実演用暗証番号: SentisPass)";
+        authError.style.display = 'block';
+        doorPassword.select();
+        doorPassword.focus();
+      }
     }
 
-    // 模拟 IC 卡快速感应触碰开门
+    // 模拟 IC 卡快速感应触碰开门（自动填入合法演示凭据并完成鉴权）
     function simulateIcCardTouch() {
       authError.style.display = 'none';
       doorPassword.value = "SentisPass";
