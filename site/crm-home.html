@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>株式会社センティス (SENTIS Realty) - 内部基幹システム 執務室VRメインハブ</title>
+  <title>株式会社センティス (SENTIS Realty) - 空間幾何データ中枢</title>
+  <meta name="description" content="株式会社センティス 空間幾何データ中枢。建築幾何構造主義と虚空光影による不動産売買業務統合基幹システム。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
 
   <!-- ======================================================================
-       绗竴闃插锛欸itHub Pages 鐩存帴銈偗銈汇偣闃绘柇銉绘瑕忋儔銉°偆銉冲挤鍒惰虎閫併偣銈儶銉椼儓
-       绗簩闃插锛氥偦銉冦偡銉с兂淇濇寔锛堝師鍨嬬礌鏉愬睍绀恒儮銉笺儔銉诲厤闃绘柇锛?       ====================================================================== -->
+       第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
+       第二防壁：セッション保持（原型素材展示モード・免阻断）
+       ====================================================================== -->
   <script>
     (function() {
       var currentHost = window.location.hostname;
       if (window.location.protocol === 'file:' || !currentHost) {
-        return; // 鏈湴鍙屽嚮绂荤嚎娴忚鏀捐
+        return; // 本地双击离线浏览放行
       }
       var authorizedHosts = ['vanguard-sentis.evotensor.dev', 'localhost', '127.0.0.1'];
       if (!authorizedHosts.includes(currentHost)) {
@@ -24,7 +26,9 @@
       }
 
       try {
-        var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "dark";
+        var initialTheme = localStorage.getItem("SENTIS_CRM_THEME") || "navy";
+        if (initialTheme === "dark") initialTheme = "navy";
+        if (initialTheme === "light") initialTheme = "washi";
         document.documentElement.setAttribute("data-theme", initialTheme);
       } catch (e) {}
     })();
@@ -32,36 +36,139 @@
 
   <style>
     /* ==========================================================================
-       SENTIS VR Office Interior Hub - First-Person POV Executive Desk System
+       SENTIS v2.0 Horology & Bespoke Compass Guilloché Multi-Theme System
+       (色彩 A: 皇室深海藍金 / 色彩 B: 越前白金和紙 / 色彩 C: 京都焙茶胡桃 / 伝統深森緑)
        ========================================================================== */
-    :root {
-      /* 基调与深胡桃木色系 */
-      --room-bg: #110e0c;
-      --walnut-deep: #1c1714;
-      --walnut-card: rgba(28, 23, 20, 0.94);
-      --walnut-border: rgba(212, 175, 55, 0.28);
-      
-      /* 黄铜金与暖调环境光 */
-      --brass-gold: #d4af37;
-      --brass-bright: #f6e6b4;
-      --brass-muted: #997a15;
-      --amber-ambient: rgba(212, 175, 55, 0.35);
+    :root,
+    [data-theme="navy"],
+    [data-theme="dark"] {
+      /* 色彩 A：皇室深海蓝与香槟玫瑰金 (Imperial Prussian Navy & Champagne Rose Gold) */
+      --void-bg: #0b1528;
+      --void-deep: #0f1e36;
+      --void-card: rgba(15, 30, 54, 0.92);
+      --void-border: rgba(229, 193, 133, 0.38);
+      --void-border-subtle: rgba(229, 193, 133, 0.14);
+      --viewport-grad: radial-gradient(circle at 50% 42%, #172b4d 0%, #0f1e36 58%, #08101f 100%);
+      --hud-bg: linear-gradient(180deg, rgba(11, 21, 40, 0.98) 0%, rgba(15, 30, 54, 0.90) 100%);
+
+      /* 18K 香槟玫瑰金与玑镂刻度 */
+      --gold-primary: #e5c185;
+      --gold-bright: #fbf0d9;
+      --gold-muted: rgba(229, 193, 133, 0.45);
+      --gold-ambient: rgba(229, 193, 133, 0.18);
+      --washi-inlay: #fbf9f4;
+      --washi-text: #1a1e24;
 
       /* 业务分类特征色 */
-      --color-crm-blue: #38bdf8;
+      --color-crm-cyan: #60a5fa;
       --color-sop-emerald: #34d399;
       --color-doc-amber: #fbbf24;
-      --color-seal-vermilion: #ef4444;
+      --color-seal-vermilion: #c83232;
+
+      /* 文字层级 */
+      --text-pure: #ffffff;
+      --text-primary: #f6f2e9;
+      --text-secondary: rgba(246, 242, 233, 0.78);
+      --text-muted: rgba(246, 242, 233, 0.50);
 
       /* 字体规范 */
       --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Toppan Bunkyu Mincho", "Noto Serif JP", serif;
       --font-sans: "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: "SF Mono", "Fira Code", "Roboto Mono", Consolas, monospace;
 
-      /* 阴影层次 */
-      --shadow-hud: 0 12px 32px rgba(0, 0, 0, 0.65);
-      --shadow-tooltip: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(212, 175, 55, 0.3);
-      --shadow-modal: 0 25px 60px rgba(0, 0, 0, 0.9);
+      /* 几何阴影 */
+      --shadow-hud: 0 8px 24px rgba(0, 0, 0, 0.65);
+      --shadow-prism: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 28px var(--gold-ambient);
+      --shadow-modal: 0 25px 60px rgba(0, 0, 0, 0.92);
+    }
+
+    /* 色彩 B：越前白金和纸与大马士革玄墨乌金 (Echizen Ivory Washi & Obsidian Gold - 日间亮色) */
+    [data-theme="washi"],
+    [data-theme="light"] {
+      --void-bg: #f6f2e9;
+      --void-deep: #ede5d5;
+      --void-card: rgba(251, 249, 244, 0.96);
+      --void-border: rgba(158, 123, 47, 0.42);
+      --void-border-subtle: rgba(26, 30, 36, 0.12);
+      --viewport-grad: radial-gradient(circle at 50% 42%, #fbf9f4 0%, #f2ece0 62%, #e6decb 100%);
+      --hud-bg: linear-gradient(180deg, #1a1e24 0%, #252a33 100%);
+
+      --gold-primary: #9e7b2f;
+      --gold-bright: #7a5c18;
+      --gold-muted: rgba(158, 123, 47, 0.38);
+      --gold-ambient: rgba(158, 123, 47, 0.14);
+      --washi-inlay: #ffffff;
+      --washi-text: #1a1e24;
+
+      --color-crm-cyan: #1d4ed8;
+      --color-sop-emerald: #1e6b45;
+      --color-doc-amber: #b45309;
+      --color-seal-vermilion: #b82c2c;
+
+      --text-pure: #1a1e24;
+      --text-primary: #222730;
+      --text-secondary: #4b5260;
+      --text-muted: #767e8c;
+
+      --shadow-hud: 0 4px 18px rgba(26, 30, 36, 0.18);
+      --shadow-prism: 0 12px 32px rgba(26, 30, 36, 0.12), 0 0 0 1px rgba(158, 123, 47, 0.25);
+      --shadow-modal: 0 20px 50px rgba(26, 30, 36, 0.35);
+    }
+
+    /* 色彩 C：京都焙茶胡桃与赤铜琥珀金 (Kyoto Roasted Walnut & Shakudo Amber Gold) */
+    [data-theme="walnut"] {
+      --void-bg: #1c1310;
+      --void-deep: #231814;
+      --void-card: rgba(35, 24, 20, 0.93);
+      --void-border: rgba(217, 155, 67, 0.42);
+      --void-border-subtle: rgba(217, 155, 67, 0.15);
+      --viewport-grad: radial-gradient(circle at 50% 42%, #33221b 0%, #231814 60%, #140d0a 100%);
+      --hud-bg: linear-gradient(180deg, rgba(22, 14, 11, 0.98) 0%, rgba(35, 24, 20, 0.92) 100%);
+
+      --gold-primary: #d99b43;
+      --gold-bright: #fae3be;
+      --gold-muted: rgba(217, 155, 67, 0.45);
+      --gold-ambient: rgba(217, 155, 67, 0.18);
+      --washi-inlay: #f5efe6;
+      --washi-text: #231814;
+
+      --color-crm-cyan: #f59e0b;
+      --color-sop-emerald: #34d399;
+      --color-doc-amber: #fbbf24;
+      --color-seal-vermilion: #a82424;
+
+      --text-pure: #fffaf2;
+      --text-primary: #f5efe6;
+      --text-secondary: rgba(245, 239, 230, 0.78);
+      --text-muted: rgba(245, 239, 230, 0.48);
+    }
+
+    /* 经典森绿：品牌深森绿与24K黄铜金 (Classic Forest Green & Brass Guilloché) */
+    [data-theme="forest"] {
+      --void-bg: #0f291e;
+      --void-deep: #184332;
+      --void-card: rgba(18, 48, 36, 0.92);
+      --void-border: rgba(212, 175, 55, 0.42);
+      --void-border-subtle: rgba(212, 175, 55, 0.16);
+      --viewport-grad: radial-gradient(circle at 50% 42%, #1f543f 0%, #143829 60%, #0a1f16 100%);
+      --hud-bg: linear-gradient(180deg, rgba(10, 31, 22, 0.98) 0%, rgba(20, 56, 41, 0.92) 100%);
+
+      --gold-primary: #d4af37;
+      --gold-bright: #f7e9b7;
+      --gold-muted: rgba(212, 175, 55, 0.45);
+      --gold-ambient: rgba(212, 175, 55, 0.18);
+      --washi-inlay: #fbf9f4;
+      --washi-text: #184332;
+
+      --color-crm-cyan: #38bdf8;
+      --color-sop-emerald: #4ade80;
+      --color-doc-amber: #fbbf24;
+      --color-seal-vermilion: #b82c2c;
+
+      --text-pure: #ffffff;
+      --text-primary: #f4f1ea;
+      --text-secondary: rgba(244, 241, 234, 0.80);
+      --text-muted: rgba(244, 241, 234, 0.50);
     }
 
     * {
@@ -75,14 +182,14 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background-color: var(--room-bg);
+      background-color: var(--void-bg);
       font-family: var(--font-sans);
-      color: #f3efe8;
+      color: var(--text-primary);
       user-select: none;
     }
 
     /* ==========================================================================
-       1. Top Ambient HUD (半透明执务室全域双轨制控制台)
+       1. Top Ambient HUD (极简建筑透视顶栏)
        ========================================================================== */
     .office-hud-bar {
       position: fixed;
@@ -95,11 +202,87 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
-      background: linear-gradient(180deg, rgba(20, 16, 13, 0.95) 0%, rgba(20, 16, 13, 0.82) 100%);
-      border-bottom: 1px solid var(--walnut-border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--hud-bg);
+      border-bottom: 1.5px solid var(--void-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       box-shadow: var(--shadow-hud);
+    }
+
+    /* 7大角色切换胶囊栏与3色彩主题选择器 */
+    .hud-center-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hud-role-selector {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid var(--void-border);
+      color: var(--gold-bright);
+      font-family: var(--font-serif);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+    }
+    [data-theme="washi"] .hud-role-selector,
+    [data-theme="light"] .hud-role-selector {
+      background: rgba(255, 255, 255, 0.12);
+      color: #f6e6b4;
+      border-color: rgba(229, 193, 133, 0.45);
+    }
+    .hud-role-selector option {
+      background: #0f1e36;
+      color: #f6f2e9;
+    }
+
+    .theme-pill-group {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.32);
+      border: 1px solid var(--void-border);
+      border-radius: 5px;
+      padding: 2px;
+      gap: 3px;
+    }
+
+    .btn-theme-pill {
+      padding: 4px 9px;
+      font-size: 11px;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(246, 242, 233, 0.72);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-theme-pill:hover {
+      color: #ffffff;
+      background: rgba(229, 193, 133, 0.15);
+    }
+    .btn-theme-pill.active {
+      background: var(--gold-primary);
+      color: #0b1528;
+      border-color: var(--gold-bright);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+    [data-theme="washi"] .hud-company-name,
+    [data-theme="light"] .hud-company-name {
+      color: #f6e6b4;
+    }
+    [data-theme="washi"] .hud-status-badge,
+    [data-theme="light"] .hud-status-badge {
+      color: rgba(246, 242, 233, 0.8);
+    }
+    [data-theme="washi"] .hud-clock-display,
+    [data-theme="light"] .hud-clock-display {
+      color: #e5c185;
     }
 
     .hud-branding-group {
@@ -111,23 +294,27 @@
     }
 
     .hud-brand-logo {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
     }
 
     .hud-title-wrap {
       display: flex;
       flex-direction: column;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .hud-company-name {
       font-family: var(--font-serif);
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--brass-bright);
+      letter-spacing: 1.2px;
+      color: var(--gold-bright);
+      white-space: nowrap;
+      line-height: 1.25;
     }
 
     .hud-status-badge {
@@ -135,54 +322,22 @@
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      color: rgba(240, 235, 225, 0.7);
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
     }
 
     .status-dot {
       width: 6.5px;
       height: 6.5px;
       border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 6px #10b981;
+      background: var(--color-sop-emerald);
+      box-shadow: 0 0 6px var(--color-sop-emerald);
+      animation: liveDotPulse 2s infinite ease-in-out;
     }
 
-    /* 中部业务直达导航 (规则约束：若有文字，禁止包含符号) */
-    .hud-shortcuts-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-hud-link {
-      padding: 7px 14px;
-      background: rgba(45, 37, 31, 0.55);
-      border: 1px solid rgba(212, 175, 55, 0.22);
-      border-radius: 6px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #e5ded5;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-hud-link:hover {
-      background: rgba(70, 58, 48, 0.85);
-      border-color: var(--brass-gold);
-      color: var(--brass-bright);
-      transform: translateY(-1px);
-    }
-
-    .btn-hud-portal {
-      background: rgba(37, 99, 235, 0.15);
-      border-color: rgba(96, 165, 250, 0.4);
-      color: #93c5fd;
-    }
-
-    .btn-hud-portal:hover {
-      background: rgba(37, 99, 235, 0.3);
-      border-color: #60a5fa;
-      color: #ffffff;
+    @keyframes liveDotPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 1; }
     }
 
     /* 右侧控制与退出操作 */
@@ -195,19 +350,8 @@
     .hud-clock-display {
       font-family: var(--font-mono);
       font-size: 11.5px;
-      color: rgba(212, 175, 55, 0.85);
-      letter-spacing: 0.5px;
-    }
-
-    .btn-hud-mode-toggle,
-    .btn-hud-logout {
-      padding: 7px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background: transparent;
+      color: var(--gold-primary);
+      letter-spacing: 0.8px;
     }
 
     .btn-hud-theme-toggle {
@@ -217,247 +361,50 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1;
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
       transition: all 0.2s ease;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      background: rgba(212, 175, 55, 0.12);
-      color: var(--brass-bright);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--gold-bright);
     }
 
     .btn-hud-theme-toggle:hover {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--brass-gold);
+      background: rgba(212, 175, 55, 0.22);
+      border-color: var(--gold-primary);
       transform: translateY(-1px);
     }
 
-    .btn-hud-mode-toggle {
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      color: var(--brass-bright);
-    }
-
-    .btn-hud-mode-toggle:hover {
-      background: rgba(212, 175, 55, 0.15);
-    }
-
     .btn-hud-logout {
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      border: 1px solid rgba(248, 113, 113, 0.35);
       color: #fca5a5;
+      white-space: nowrap;
     }
 
     .btn-hud-logout:hover {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--color-seal-vermilion);
       color: #ffffff;
+    }
+
+    .btn-hud-logout .btn-icon {
+      display: none;
+    }
+    .btn-hud-logout .btn-text {
+      display: inline;
     }
 
     /* ==========================================================================
-       明色和紙ステーショナリースタイル (Light Theme)
-       ========================================================================== */
-    [data-theme="light"] {
-      --room-bg: #ece6dc;
-      --walnut-deep: #f5efe6;
-      --walnut-card: rgba(253, 250, 245, 0.96);
-      --walnut-border: rgba(196, 177, 146, 0.5);
-      --brass-bright: #1a1e24;
-      --amber-ambient: rgba(180, 107, 20, 0.25);
-    }
-
-    [data-theme="light"] .office-hud-bar {
-      background: linear-gradient(180deg, rgba(253, 250, 245, 0.97) 0%, rgba(245, 239, 230, 0.93) 100%);
-      border-bottom: 1px solid #d8cebe;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    }
-
-    [data-theme="light"] .hud-company-name {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .hud-status-badge {
-      color: #5a616d;
-    }
-
-    [data-theme="light"] .btn-hud-link {
-      background: rgba(235, 227, 213, 0.65);
-      border-color: #c4b192;
-      color: #2c3038;
-    }
-
-    [data-theme="light"] .btn-hud-link:hover {
-      background: #ffffff;
-      border-color: #b82c2c;
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .btn-hud-portal {
-      background: rgba(37, 99, 235, 0.08);
-      border-color: rgba(37, 99, 235, 0.3);
-      color: #1d4ed8;
-    }
-
-    [data-theme="light"] .btn-hud-portal:hover {
-      background: rgba(37, 99, 235, 0.15);
-      color: #1e40af;
-    }
-
-    [data-theme="light"] .hud-clock-display {
-      color: #5a616d;
-    }
-
-    [data-theme="light"] .btn-hud-mode-toggle,
-    [data-theme="light"] .btn-hud-theme-toggle {
-      border: 1px solid #c4b192;
-      color: #2c3038;
-      background: rgba(253, 250, 245, 0.85);
-    }
-
-    [data-theme="light"] .btn-hud-mode-toggle:hover,
-    [data-theme="light"] .btn-hud-theme-toggle:hover {
-      background: #ffffff;
-      border-color: #1a1e24;
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .office-canvas {
-      background-image: url('./assets/office/office_hub_day.jpg');
-    }
-
-    [data-theme="light"] .office-ambient-overlay {
-      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 0%, rgba(235, 227, 213, 0.25) 75%, rgba(200, 190, 175, 0.45) 100%);
-    }
-
-    [data-theme="light"] .hotspot-label-pill {
-      background: rgba(253, 250, 245, 0.96);
-      border: 1px solid #c4b192;
-      color: #1a1e24;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    [data-theme="light"] .hotspot-tooltip-card {
-      background: rgba(253, 250, 245, 0.98);
-      border: 1px solid #c4b192;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(196, 177, 146, 0.3);
-    }
-
-    [data-theme="light"] .tooltip-title {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .tooltip-desc {
-      color: #4b5563;
-    }
-
-    [data-theme="light"] .tooltip-tag {
-      background: rgba(180, 107, 20, 0.12);
-      color: #b46b14;
-    }
-
-    [data-theme="light"] .tooltip-action-prompt {
-      background: #1a1e24;
-      color: #ffffff;
-      border-color: #1a1e24;
-    }
-
-    [data-theme="light"] .tooltip-action-prompt:hover {
-      background: #b82c2c;
-      border-color: #b82c2c;
-      color: #ffffff;
-    }
-
-    [data-theme="light"] .mobile-dossier-stream {
-      background: #f5efe6;
-    }
-
-    [data-theme="light"] .dossier-lead-banner {
-      background: #ffffff;
-      border-color: #d8cebe;
-    }
-
-    [data-theme="light"] .dossier-lead-title {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .dossier-lead-subtitle {
-      color: #5a616d;
-    }
-
-    [data-theme="light"] .dossier-card {
-      background: #ffffff;
-      border-color: #d8cebe;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="light"] .dossier-card-title {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .dossier-card-desc {
-      color: #4b5563;
-    }
-
-    [data-theme="light"] .dossier-tag-pill {
-      background: rgba(180, 107, 20, 0.1);
-      border-color: #c4b192;
-      color: #b46b14;
-    }
-
-    [data-theme="light"] .drawer-dialog {
-      background: #fbf9f4;
-      border-color: #c4b192;
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .drawer-header {
-      background: #f5efe6;
-      border-bottom-color: #d8cebe;
-    }
-
-    [data-theme="light"] .drawer-header-title {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .drawer-badge {
-      color: #b46b14;
-    }
-
-    [data-theme="light"] .drawer-body {
-      color: #2c3038;
-    }
-
-    [data-theme="light"] .sop-step-card {
-      background: #ffffff;
-      border-color: #d8cebe;
-    }
-
-    [data-theme="light"] .sop-step-card:hover {
-      border-color: #1a1e24;
-      background: #fdfaf5;
-    }
-
-    [data-theme="light"] .sop-step-name {
-      color: #1a1e24;
-    }
-
-    [data-theme="light"] .sop-step-detail {
-      color: #5a616d;
-    }
-
-    [data-theme="light"] .drawer-footer {
-      background: #f5efe6;
-      border-top-color: #d8cebe;
-    }
-
-    [data-theme="light"] .btn-dialog-close,
-    [data-theme="light"] .btn-drawer-secondary {
-      background: #ffffff;
-      border-color: #d8cebe;
-      color: #1a1e24;
-    }
-
-    /* ==========================================================================
-       2. VR Office Interior Panoramic Canvas (第一人称正面工作台全景)
+       2. 空间几何建筑控制台 (Architectural Spatial Console Layout)
        ========================================================================== */
     .office-viewport {
       position: relative;
@@ -468,690 +415,623 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #0d0a08;
+      background: var(--viewport-grad);
+      transition: background 0.35s ease;
     }
 
-    .office-canvas {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background-image: url('./assets/office/office_hub.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      transition: background-position 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-      transform-style: preserve-3d;
-      perspective: 1200px;
-    }
-
-    [data-theme="light"] .office-canvas {
-      background-image: url('./assets/office/office_hub_day.jpg');
-    }
-
-    /* 真实微暖阴影与全景暗角 */
-    .office-ambient-overlay {
+    /* 空间建筑轴测网格与数据光场 Canvas */
+    #spatialNexusCanvas {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(18, 14, 11, 0.35) 75%, rgba(10, 8, 6, 0.75) 100%);
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      z-index: 5;
+      z-index: 1;
+      opacity: 0.85;
+      transition: opacity 0.5s ease;
     }
 
-    /* ==========================================================================
-       3. VR Layered Composite Stage & Elements (独立剥离素材图层拼接与鼠标互动体系)
-       ========================================================================== */
-    .vr-composite-stage {
+    /* 空间全景光晕与暗角 */
+    .spatial-ambient-overlay {
       position: absolute;
       inset: 0;
+      background: radial-gradient(circle at 50% 48%, rgba(212, 175, 55, 0.04) 0%, transparent 65%),
+                  radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 空间控制台主容器：精密建筑网格布局，杜绝重叠与遮挡 */
+    .spatial-console-container {
+      position: relative;
+      z-index: 10;
       width: 100%;
-      height: 100%;
+      max-width: 1540px;
+      height: calc(100vh - 64px);
+      padding: 20px 28px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    /* 上部三大建筑基柱网格 (3-Column Architectural Symmetrical Grid) */
+    .spatial-columns-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr 1fr;
+      gap: 20px;
+      min-height: 0;
+    }
+
+    /* 基柱卡片通用结构 (精工雕琢玑镂黄铜角花边框) */
+    .spatial-column-card {
+      position: relative;
+      background: var(--void-card);
+      border: 1.5px solid var(--void-border);
+      border-radius: 6px;
+      box-shadow: var(--shadow-prism), inset 0 0 0 1px var(--void-border-subtle);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      padding: 18px 20px;
       overflow: hidden;
-      pointer-events: none;
-      transform-style: preserve-3d;
-      z-index: 10;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .spatial-column-card:hover {
+      border-color: var(--gold-primary);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 28px var(--gold-ambient);
+      transform: translateY(-2px);
     }
 
-    /* 独立复合构件基类 */
-    .vr-elem {
-      position: absolute;
-      pointer-events: auto;
-      cursor: pointer;
-      transform-origin: center center;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
-      will-change: transform, filter;
+    /* 卡片头部标头 */
+    .card-top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .card-title-text {
+      font-family: var(--font-serif);
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: var(--text-pure);
+    }
+    .card-spec-code {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
     }
 
-    .elem-plate {
-      position: relative;
-      width: 100%;
-      height: 100%;
+    /* 卡片主体内容滚动/伸缩容器 */
+    .card-main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+      scrollbar-width: none;
     }
-
-    .elem-visual {
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
+    .card-main-content::-webkit-scrollbar {
       display: none;
-      pointer-events: none;
-      user-select: none;
-      transition: opacity 0.3s ease;
     }
 
-    /* 日夜景切换显示对应的独立剥离切图素材 */
-    .elem-visual.night-visual { display: block; }
-    .elem-visual.day-visual { display: none; }
-    [data-theme="light"] .elem-visual.night-visual { display: none; }
-    [data-theme="light"] .elem-visual.day-visual { display: block; }
-
-    /* --- 构件 A: 業務推進行程白板 (Left Wall) --- */
-    .elem-whiteboard {
-      left: 1.308%;
-      top: 22.135%;
-      width: 21.075%;
-      height: 61.198%;
-      z-index: 12;
+    /* 卡片底部操作按钮容器 */
+    .card-bottom-action {
+      margin-top: 12px;
+      flex-shrink: 0;
     }
-    .elem-whiteboard:hover {
-      transform: translateZ(24px) scale(1.025);
-      filter: drop-shadow(0 8px 24px rgba(52, 211, 153, 0.75));
+    .btn-column-action {
+      width: 100%;
+      padding: 9px 16px;
+      background: rgba(22, 28, 40, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .elem-whiteboard .beacon-anchor {
-      position: absolute;
-      top: 36%;
-      left: 78%;
-      z-index: 25;
-    }
-    .elem-glass-sheen {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
-      background-size: 200% 200%;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
-    .elem-whiteboard:hover .elem-glass-sheen {
-      opacity: 1;
-      animation: sheenSlide 1.5s ease-out;
-    }
-    @keyframes sheenSlide {
-      0% { background-position: -150% -150%; }
-      100% { background-position: 150% 150%; }
+    .btn-column-action:hover {
+      background: rgba(35, 45, 64, 0.95);
+      border-color: var(--gold-primary);
+      color: var(--gold-bright);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
 
-    /* --- 构件 B: 办公桌台面基座 (Center Desk Surface) --- */
-    .elem-desk {
-      left: 13.808%;
-      top: 72.916%;
-      width: 71.947%;
-      height: 27.083%;
-      z-index: 10;
-      pointer-events: none; /* 键盘鼠标装饰，不阻挡其它点击 */
+    /* --- 1. 左柱：SOP 拓扑工程基柱 (Emerald) --- */
+    .column-sop {
+      border-left: 2px solid var(--color-sop-emerald);
+    }
+    .column-sop .card-status-dot {
+      background: var(--color-sop-emerald);
+      box-shadow: 0 0 8px var(--color-sop-emerald);
+    }
+    .sop-timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding: 2px 0;
+      flex: 1;
+      justify-content: space-between;
+    }
+    .sop-timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(52, 211, 153, 0.12);
+      transition: all 0.2s ease;
+    }
+    .sop-timeline-step:hover {
+      background: rgba(52, 211, 153, 0.06);
+      border-color: rgba(52, 211, 153, 0.35);
+      transform: translateX(2px);
+    }
+    .step-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--color-sop-emerald);
+      background: rgba(52, 211, 153, 0.12);
+      padding: 2px 6px;
+      border-radius: 2px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .step-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-pure);
+      line-height: 1.3;
+    }
+    .step-desc {
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* --- 构件 C: 基幹執務PC双屏电脑台账 (Center Desk) --- */
-    .elem-pc {
-      left: 32.703%;
-      top: 52.734%;
-      width: 35.247%;
-      height: 29.948%;
-      z-index: 15;
+    /* --- 2. 中柱：基幹売買台帳中枢 (Center Core Prism) --- */
+    .column-crm {
+      border-top: 2px solid var(--gold-primary);
+      border-bottom: 2px solid var(--color-crm-cyan);
     }
-    .elem-pc:hover {
-      transform: translateY(-8px) translateZ(35px) scale(1.035);
-      filter: drop-shadow(0 12px 32px rgba(56, 189, 248, 0.88));
+    .column-crm .card-status-dot {
+      background: var(--color-crm-cyan);
+      box-shadow: 0 0 8px var(--color-crm-cyan);
     }
-    .elem-pc .beacon-anchor {
-      position: absolute;
-      top: 68%;
-      left: 54%;
-      z-index: 25;
-    }
-    .pc-ambient-glow {
-      position: absolute;
-      inset: -8px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.3) 0%, transparent 72%);
-      opacity: 0.35;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    .elem-pc:hover .pc-ambient-glow {
-      opacity: 1;
-    }
-    .pc-screen-scanline {
+    .crm-scan-beam {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.85), transparent);
-      box-shadow: 0 0 12px #38bdf8;
-      opacity: 0.35;
-      animation: scanlineLoop 3.2s infinite linear;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-crm-cyan), transparent);
+      box-shadow: 0 0 12px var(--color-crm-cyan);
+      opacity: 0.6;
+      animation: scanBeamLoop 4s infinite linear;
       pointer-events: none;
     }
-    @keyframes scanlineLoop {
+    @keyframes scanBeamLoop {
       0% { top: 0%; opacity: 0; }
-      20% { opacity: 0.85; }
-      80% { opacity: 0.85; }
+      15% { opacity: 0.85; }
+      85% { opacity: 0.85; }
       100% { top: 100%; opacity: 0; }
     }
-    .pc-live-indicator {
-      position: absolute;
-      top: 8px;
-      left: 12px;
+    .crm-visual-showcase {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      padding: 3px 8px;
-      background: rgba(10, 16, 26, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.45);
-      border-radius: 12px;
+      justify-content: center;
+      flex: 1;
+      padding: 4px 0;
+      gap: 8px;
+    }
+    .crm-polyhedron-svg {
+      width: 100%;
+      max-height: 165px;
+      filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.15));
+    }
+    .crm-kpi-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .crm-kpi-box {
+      background: rgba(8, 11, 16, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 4px;
+      padding: 7px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .crm-kpi-box:hover {
+      border-color: var(--color-crm-cyan);
+      background: rgba(14, 20, 30, 0.85);
+    }
+    .kpi-label {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .kpi-value {
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 700;
-      color: #38bdf8;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-      pointer-events: none;
-      opacity: 0.85;
-      transition: all 0.3s ease;
+      color: var(--gold-bright);
     }
-    .pc-live-indicator .live-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: liveDotPulse 1.8s infinite ease-in-out;
-    }
-    @keyframes liveDotPulse {
-      0%, 100% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.3); opacity: 1; }
-    }
-    .power-on-flash {
-      animation: powerFlash 0.3s ease-out;
-    }
-    @keyframes powerFlash {
-      0% { filter: brightness(1) drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
-      50% { filter: brightness(1.6) drop-shadow(0 0 45px rgba(56, 189, 248, 1)); }
-      100% { filter: brightness(1); }
-    }
-
-    /* --- 构件 D: 专任宅建士朱肉印章台 (Desk Left) --- */
-    .elem-seal {
-      left: 26.5%;
-      top: 78.8%;
-      width: 12.7%;
-      height: 13.7%;
-      z-index: 20;
-    }
-    [data-theme="light"] .elem-seal {
-      left: 34.157%;
-      top: 81.38%;
-      width: 9.08%;
-      height: 11.06%;
-    }
-    .elem-seal:hover {
-      transform: translateY(-6px) translateZ(30px) scale(1.07);
-      filter: drop-shadow(0 8px 24px rgba(239, 68, 68, 0.85));
-    }
-    .elem-seal .beacon-anchor {
-      position: absolute;
-      top: 30%;
-      left: 48%;
-      z-index: 25;
-    }
-    .seal-glow-ring {
-      position: absolute;
-      inset: -6px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.35) 0%, transparent 70%);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .elem-seal:hover .seal-glow-ring {
-      opacity: 1;
-    }
-
-    /* --- 构件 E: 法定账簿・重要公文书架 (Right Wall) --- */
-    .elem-bookshelf {
-      left: 78.125%;
-      top: 9.114%;
-      width: 21.875%;
-      height: 90.885%;
-      z-index: 12;
-    }
-    .elem-bookshelf:hover {
-      transform: perspective(900px) rotateY(-2.5deg) translateZ(20px) scale(1.02);
-      filter: drop-shadow(-10px 8px 28px rgba(251, 191, 36, 0.7));
-    }
-    .elem-bookshelf .beacon-anchor {
-      position: absolute;
-      top: 48%;
-      left: 12%;
-      z-index: 25;
-    }
-    .shelf-gold-shimmer {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 20%, rgba(212, 175, 55, 0.22) 50%, transparent 80%);
-      background-size: 100% 200%;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .elem-bookshelf:hover .shelf-gold-shimmer {
-      opacity: 1;
-      animation: shelfShimmer 2s infinite ease-in-out;
-    }
-    @keyframes shelfShimmer {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 0% 100%; }
-    }
-
-    /* --- 构件 F: 施锭退室门 (Left Edge Corner) --- */
-    .elem-door {
-      left: 0.72%;
-      top: 59.89%;
-      width: 12.35%;
-      height: 24.74%;
-      z-index: 8;
-    }
-    .elem-door:hover {
-      transform: scale(1.03);
-      filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.75));
-    }
-    .elem-door .beacon-anchor {
-      position: absolute;
-      top: 50%;
-      left: 40%;
-      z-index: 25;
-    }
-
-    /* ==========================================================================
-       4. Beacon Anchors & Floating Cards (标牌指示与悬浮卡片体系)
-       ========================================================================== */
-    .beacon-anchor {
-      transform: translate(-50%, -50%);
+    .btn-core-entry {
+      width: 100%;
+      padding: 11px 18px;
+      background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+      border: 1px solid #f5e7b2;
+      border-radius: 4px;
+      color: #07080b;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
-    }
-
-    /* 脉冲式光圈指示标 */
-    .beacon-core {
-      position: relative;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(212, 175, 55, 0.9);
-      box-shadow: 0 0 16px var(--amber-ambient);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .beacon-pulse-ring {
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      border: 2px solid rgba(212, 175, 55, 0.6);
-      animation: beaconWave 2.4s infinite cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    @keyframes beaconWave {
-      0% { transform: scale(0.8); opacity: 0.9; }
-      100% { transform: scale(2.2); opacity: 0; }
-    }
-
-    /* 依物件分类的光效颜色 */
-    .category-crm .beacon-core { background: #38bdf8; }
-    .category-crm .beacon-pulse-ring { border-color: #38bdf8; }
-
-    .category-sop .beacon-core { background: #34d399; }
-    .category-sop .beacon-pulse-ring { border-color: #34d399; }
-
-    .category-doc .beacon-core { background: #fbbf24; }
-    .category-doc .beacon-pulse-ring { border-color: #fbbf24; }
-
-    .category-seal .beacon-core { background: #ef4444; }
-    .category-seal .beacon-pulse-ring { border-color: #ef4444; }
-
-    /* 悬浮在热区旁边的常驻名牌标签 */
-    .hotspot-label-pill {
-      position: absolute;
-      top: 50%;
-      left: 36px;
-      transform: translateY(-50%);
-      white-space: nowrap;
-      padding: 5px 12px;
-      background: rgba(24, 20, 16, 0.9);
-      border: 1px solid var(--walnut-border);
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
       transition: all 0.25s ease;
-      pointer-events: none;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+    .btn-core-entry:hover {
+      background: linear-gradient(135deg, #f5e7b2 0%, #d4af37 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5);
+      color: #000000;
     }
 
-    .vr-elem:hover .beacon-core {
-      transform: scale(1.25);
-      box-shadow: 0 0 24px rgba(212, 175, 55, 0.9);
+    /* --- 3. 右柱：法定帳簿・公文書架 (Amber) --- */
+    .column-doc {
+      border-right: 2px solid var(--color-doc-amber);
     }
-
-    .vr-elem:hover .hotspot-label-pill {
-      background: rgba(45, 37, 30, 0.98);
-      border-color: var(--brass-gold);
-      color: var(--brass-bright);
-      transform: translateY(-50%) translateX(4px);
+    .column-doc .card-status-dot {
+      background: var(--color-doc-amber);
+      box-shadow: 0 0 8px var(--color-doc-amber);
     }
-
-    /* 悬浮富交互卡片提示 */
-    .hotspot-tooltip-card {
-      position: absolute;
-      bottom: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      width: 320px;
-      background: var(--walnut-card);
-      border: 1px solid var(--brass-gold);
-      border-radius: 10px;
-      box-shadow: var(--shadow-tooltip);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 40;
-      overflow: hidden;
+    .doc-vault-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 2px 0;
+      flex: 1;
+      justify-content: space-between;
     }
-
-    .vr-elem:hover .hotspot-tooltip-card {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
-    }
-
-    /* 贴边防溢出 */
-    .align-left .hotspot-tooltip-card {
-      left: 0;
-      transform: translateY(10px);
-    }
-    .align-left:hover .hotspot-tooltip-card {
-      transform: translateY(0);
-    }
-
-    .align-right .hotspot-tooltip-card {
-      left: auto;
-      right: 0;
-      transform: translateY(10px);
-    }
-    .align-right:hover .hotspot-tooltip-card {
-      transform: translateY(0);
-    }
-
-    .tooltip-media-thumb {
-      width: 100%;
-      height: 128px;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-    }
-
-    .tooltip-content-body {
-      padding: 14px 16px;
-      text-align: left;
-    }
-
-    .tooltip-badge-row {
+    .doc-vault-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .tooltip-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      padding: 2px 6px;
+      padding: 9px 12px;
       border-radius: 4px;
-      background: rgba(212, 175, 55, 0.15);
-      color: var(--brass-bright);
-    }
-
-    .tooltip-status {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .tooltip-title {
-      font-family: var(--font-serif);
-      font-size: 15px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .tooltip-desc {
-      font-size: 12px;
-      color: rgba(230, 224, 215, 0.8);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .tooltip-action-prompt {
-      display: block;
-      width: 100%;
-      padding: 8px 12px;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 100%);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      border-radius: 6px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--brass-bright);
-      text-align: center;
-      letter-spacing: 0.5px;
-      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(251, 191, 36, 0.15);
       transition: all 0.2s ease;
     }
-
-    .tooltip-action-prompt:hover {
-      background: var(--brass-gold);
-      color: #14110e;
+    .doc-vault-item:hover {
+      background: rgba(251, 191, 36, 0.06);
+      border-color: rgba(251, 191, 36, 0.35);
+      transform: translateX(2px);
     }
-
-    /* 各热区在正面第一人称视角背景图上的绝对坐标 (基于 office_hub.jpg) */
-    /* 1. 战略白板 (Left Wall) */
-    #spotWhiteboard {
-      top: 38%;
-      left: 12%;
+    .doc-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
     }
-
-    /* 2. 办公桌双屏电脑 Workstation PC (Center Desk Direct POV) */
-    #spotWorkstation {
-      top: 66%;
-      left: 50%;
+    .doc-item-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-pure);
     }
-
-    /* 3. 文件柜公文架 Cabinet (Right Wall) */
-    #spotCabinet {
-      top: 46%;
-      left: 88%;
-    }
-
-    /* 4. 专任宅建士朱肉印章台 (Front Left Desk in Front of User) */
-    #spotSealDesk {
-      top: 80%;
-      left: 32%;
-    }
-
-    /* 5. 执务大门 Exit Door (Left Edge Corner) */
-    #spotExitDoor {
-      top: 68%;
-      left: 4%;
-    }
-
-    /* ==========================================================================
-       5. Mobile Responsive Dossier Stream (移动端工位卡片画卷模式)
-       ========================================================================== */
-    .mobile-dossier-stream {
-      display: none;
-      width: 100%;
-      height: 100%;
-      padding: 80px 16px 40px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      background: #110e0c;
-    }
-
-    .mobile-dossier-stream::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .mobile-dossier-stream::-webkit-scrollbar-track {
-      background: rgba(17, 14, 12, 0.95);
-    }
-
-    .mobile-dossier-stream::-webkit-scrollbar-thumb {
-      background: rgba(212, 175, 55, 0.35);
-      border-radius: 4px;
-    }
-
-    .dossier-lead-banner {
-      background: rgba(28, 23, 20, 0.95);
-      border: 1px solid var(--walnut-border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .dossier-lead-title {
-      font-family: var(--font-serif);
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--brass-bright);
-      margin-bottom: 4px;
-    }
-
-    .dossier-lead-subtitle {
-      font-size: 12px;
-      color: rgba(240, 235, 225, 0.7);
-    }
-
-    .dossier-card {
-      background: rgba(28, 23, 20, 0.95);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 12px;
-      margin-bottom: 18px;
+    .doc-item-sub {
+      font-size: 10px;
+      color: var(--text-secondary);
+      white-space: nowrap;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      text-overflow: ellipsis;
+    }
+    .doc-status-tag {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-weight: 600;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      color: var(--color-doc-amber);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .dossier-card-thumb {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    /* --- 4. 底部水平合规状态栏 (Compliance Status Bar) --- */
+    .spatial-compliance-bar {
+      height: 60px;
+      background: linear-gradient(90deg, rgba(16, 22, 33, 0.88) 0%, rgba(12, 16, 24, 0.96) 50%, rgba(16, 22, 33, 0.88) 100%);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      gap: 16px;
+      box-sizing: border-box;
+      flex-shrink: 0;
     }
-
-    .dossier-card-body {
-      padding: 18px 16px;
+    .compliance-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
-
-    .dossier-tag-pill {
-      display: inline-block;
+    .compliance-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--color-seal-vermilion);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      background: rgba(248, 113, 113, 0.08);
+      padding: 3px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .compliance-person {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .person-role {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+    }
+    .person-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-pure);
+    }
+    .person-id {
       font-family: var(--font-mono);
       font-size: 10.5px;
-      font-weight: 700;
-      color: var(--brass-bright);
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-bottom: 8px;
+      color: var(--gold-bright);
     }
-
-    .dossier-card-title {
-      font-family: var(--font-serif);
-      font-size: 16.5px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-
-    .dossier-card-desc {
-      font-size: 12.5px;
-      color: rgba(230, 224, 215, 0.75);
-      line-height: 1.55;
-      margin-bottom: 16px;
-    }
-
-    .btn-dossier-action {
-      display: block;
-      width: 100%;
-      height: 44px;
-      line-height: 42px;
-      background: linear-gradient(135deg, #d4af37 0%, #aa841e 100%);
-      color: #14110e;
-      border: 1px solid #f3e5ab;
-      border-radius: 6px;
-      font-size: 13.5px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      letter-spacing: 0.5px;
+    .compliance-center {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       cursor: pointer;
+      padding: 5px 12px;
+      border-radius: 4px;
+      background: rgba(248, 113, 113, 0.06);
+      border: 1px solid rgba(248, 113, 113, 0.22);
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
-
-    /* 移动端与平板响应式转换 */
-    @media (max-width: 860px) {
-      .office-hud-bar {
-        padding: 0 16px;
-      }
-      .hud-company-name {
-        font-size: 13px;
-      }
-      .hud-shortcuts-group {
-        display: none;
-      }
-      .hud-clock-display {
-        display: none;
-      }
-      .office-viewport.view-cards .office-canvas {
-        display: none;
-      }
-      .office-viewport.view-cards .mobile-dossier-stream {
-        display: block;
-      }
+    .compliance-center:hover {
+      background: rgba(248, 113, 113, 0.14);
+      border-color: var(--color-seal-vermilion);
+    }
+    .seal-stamp-mini {
+      font-family: var(--font-serif);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--color-seal-vermilion);
+      border: 1px dashed var(--color-seal-vermilion);
+      padding: 1px 5px;
+      border-radius: 50%;
+      letter-spacing: 1px;
+    }
+    .seal-status-text {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-primary);
+    }
+    .seal-alert-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-seal-vermilion);
+      box-shadow: 0 0 6px var(--color-seal-vermilion);
+      animation: liveDotPulse 1.8s infinite ease-in-out;
+    }
+    .btn-compliance-action {
+      background: transparent;
+      border: 1px solid rgba(248, 113, 113, 0.4);
+      color: #fca5a5;
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-compliance-action:hover {
+      background: rgba(248, 113, 113, 0.2);
+      color: #ffffff;
+    }
+    .compliance-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-compliance-portal {
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #93c5fd;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .btn-compliance-portal:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--color-crm-cyan);
+      color: #ffffff;
     }
 
     /* ==========================================================================
-       6. Interactive Drawers & Modals (SOP 白板与宅建士印章抽屉)
+       色彩 B：越前白金和纸与大马士革玄墨乌金 (Washi Ivory Light Mode Overrides)
+       ========================================================================== */
+    [data-theme="washi"] .spatial-column-card,
+    [data-theme="light"] .spatial-column-card {
+      background: #fbf9f4;
+      border-color: rgba(158, 123, 47, 0.45);
+      box-shadow: 0 12px 32px rgba(26, 30, 36, 0.10), inset 0 0 0 1px rgba(158, 123, 47, 0.18);
+    }
+
+    [data-theme="washi"] .spatial-column-card:hover,
+    [data-theme="light"] .spatial-column-card:hover {
+      border-color: var(--gold-primary);
+      box-shadow: 0 16px 36px rgba(26, 30, 36, 0.16), 0 0 20px rgba(158, 123, 47, 0.18);
+    }
+
+    [data-theme="washi"] .sop-timeline-step,
+    [data-theme="washi"] .doc-vault-item,
+    [data-theme="washi"] .crm-kpi-box,
+    [data-theme="light"] .sop-timeline-step,
+    [data-theme="light"] .doc-vault-item,
+    [data-theme="light"] .crm-kpi-box {
+      background: #f4efe4;
+      border-color: rgba(158, 123, 47, 0.28);
+    }
+
+    [data-theme="washi"] .btn-column-action,
+    [data-theme="light"] .btn-column-action {
+      background: #1a1e24;
+      border-color: #9e7b2f;
+      color: #f6e6b4;
+    }
+
+    [data-theme="washi"] .btn-column-action:hover,
+    [data-theme="light"] .btn-column-action:hover {
+      background: #2b313b;
+      border-color: #d4af37;
+      color: #ffffff;
+    }
+
+    [data-theme="washi"] .spatial-compliance-bar,
+    [data-theme="light"] .spatial-compliance-bar {
+      background: #1a1e24;
+      border-color: #9e7b2f;
+      color: #f6f2e9;
+      box-shadow: 0 6px 20px rgba(26, 30, 36, 0.18);
+    }
+    [data-theme="washi"] .spatial-compliance-bar .person-name,
+    [data-theme="light"] .spatial-compliance-bar .person-name {
+      color: #f6e6b4;
+    }
+    [data-theme="washi"] .spatial-compliance-bar .person-role,
+    [data-theme="washi"] .spatial-compliance-bar .seal-status-text,
+    [data-theme="light"] .spatial-compliance-bar .person-role,
+    [data-theme="light"] .spatial-compliance-bar .seal-status-text {
+      color: #e5ded5;
+    }
+
+    /* 拓扑快速跳转矩阵 */
+    .topology-launch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+      width: 100%;
+    }
+    .btn-topo-entry {
+      padding: 6px 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      font-family: var(--font-serif);
+      border: 1px solid var(--void-border);
+      background: rgba(0, 0, 0, 0.22);
+      color: var(--gold-bright);
+      border-radius: 3px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    [data-theme="washi"] .btn-topo-entry,
+    [data-theme="light"] .btn-topo-entry {
+      background: #efe9dc;
+      color: #1a1e24;
+      border-color: rgba(158, 123, 47, 0.45);
+    }
+    .btn-topo-entry:hover {
+      background: var(--gold-primary);
+      color: #0b1528;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       3. 模态弹窗系统 (Modals)
        ========================================================================== */
     .drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10, 8, 6, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 1000;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .drawer-overlay.active {
@@ -1160,380 +1040,601 @@
     }
 
     .drawer-dialog {
-      background: var(--walnut-card);
-      border: 1px solid var(--brass-gold);
-      border-radius: 14px;
+      background: var(--void-card);
+      border: 1px solid var(--gold-primary);
+      border-radius: 6px;
+      box-shadow: var(--shadow-modal);
       width: 100%;
-      max-width: 820px;
+      max-width: 760px;
       max-height: 85vh;
       display: flex;
       flex-direction: column;
-      box-shadow: var(--shadow-modal);
       overflow: hidden;
-      animation: dialogPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes dialogPop {
-      from { transform: scale(0.94) translateY(20px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
+    .drawer-overlay.active .drawer-dialog {
+      transform: translateY(0) scale(1);
     }
 
     .drawer-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 24px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-      background: rgba(36, 29, 24, 0.9);
+      padding: 16px 22px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(212, 175, 55, 0.05);
     }
 
     .drawer-header-title-group {
       display: flex;
       flex-direction: column;
+      gap: 2px;
     }
 
     .drawer-badge {
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--brass-bright);
-      margin-bottom: 4px;
-      text-transform: uppercase;
+      font-size: 10px;
+      color: var(--gold-bright);
+      letter-spacing: 1px;
     }
 
     .drawer-header-title {
       font-family: var(--font-serif);
-      font-size: 18px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.5px;
+      font-size: 16px;
+      color: var(--text-pure);
     }
 
     .btn-dialog-close {
-      padding: 6px 14px;
-      background: rgba(60, 48, 40, 0.6);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 6px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-secondary);
       font-size: 12px;
-      font-weight: 600;
-      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 3px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .btn-dialog-close:hover {
-      background: rgba(90, 72, 60, 0.8);
-      border-color: var(--brass-gold);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-pure);
     }
 
     .drawer-body {
-      padding: 24px;
+      padding: 22px;
       overflow-y: auto;
-      font-size: 13.5px;
-      line-height: 1.65;
-      color: rgba(240, 235, 225, 0.85);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .drawer-body p {
+      margin-bottom: 16px;
     }
 
     .sop-flow-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .sop-step-card {
-      background: rgba(38, 30, 25, 0.7);
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 8px;
-      padding: 16px;
-      transition: all 0.2s ease;
-    }
-
-    .sop-step-card:hover {
-      border-color: var(--brass-gold);
-      background: rgba(48, 38, 32, 0.9);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 4px;
+      padding: 12px;
     }
 
     .sop-step-num {
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--brass-bright);
-      margin-bottom: 6px;
+      font-size: 10px;
+      color: var(--gold-bright);
+      font-weight: 700;
+      margin-bottom: 4px;
     }
 
     .sop-step-name {
-      font-family: var(--font-serif);
-      font-size: 14.5px;
+      font-size: 13px;
       font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 6px;
+      color: var(--text-pure);
+      margin-bottom: 4px;
     }
 
     .sop-step-detail {
-      font-size: 12px;
-      color: rgba(220, 212, 200, 0.75);
-      line-height: 1.5;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--text-secondary);
     }
 
     .drawer-footer {
-      padding: 16px 24px;
-      border-top: 1px solid rgba(212, 175, 55, 0.2);
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 12px;
-      background: rgba(30, 24, 20, 0.9);
+      gap: 10px;
+      padding: 14px 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.2);
     }
 
-    .btn-drawer-primary {
-      padding: 9px 20px;
-      background: linear-gradient(135deg, #d4af37 0%, #aa841e 100%);
-      color: #14110e;
-      border: 1px solid #f3e5ab;
-      border-radius: 6px;
-      font-size: 13px;
+    .btn-modal-action-primary {
+      padding: 8px 18px;
+      background: var(--gold-primary);
+      color: #07080b;
       font-weight: 700;
-      text-decoration: none;
+      font-size: 12.5px;
+      border: none;
+      border-radius: 3px;
       cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
 
-    .btn-drawer-secondary {
-      padding: 9px 18px;
-      background: rgba(50, 40, 34, 0.6);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      color: #f1ede6;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
+    .btn-modal-action-primary:hover {
+      background: var(--gold-bright);
+    }
+
+    .btn-modal-action-secondary {
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-modal-action-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-pure);
+    }
+
+    /* 移动端画卷模式 (Mobile Responsive Dossier Stream) */
+    .mobile-dossier-stream {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 16px 14px 40px;
+      box-sizing: border-box;
+      z-index: 20;
+    }
+
+    .dossier-lead-banner {
+      margin-bottom: 16px;
+      padding: 14px;
+      background: rgba(14, 18, 26, 0.85);
+      border: 1px solid var(--void-border);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .dossier-lead-title {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--gold-bright);
+      margin-bottom: 3px;
+    }
+
+    .dossier-lead-subtitle {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .dossier-card {
+      background: var(--void-card);
+      border: 1px solid var(--void-border);
+      border-radius: 4px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-hud);
+    }
+
+    .dossier-card-body {
+      padding: 14px;
+    }
+
+    .dossier-tag-pill {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--gold-primary);
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .dossier-card-title {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 6px;
+    }
+
+    .dossier-card-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .btn-dossier-action {
+      display: block;
+      width: 100%;
+      padding: 9px;
+      text-align: center;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-bright);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      box-sizing: border-box;
+    }
+
+    /* ==========================================================================
+       响应式断点与移动端适配
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .spatial-console-container {
+        display: none;
+      }
+      .mobile-dossier-stream {
+        display: block;
+      }
+      .sop-flow-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .office-hud-bar {
+        padding: 0 12px;
+      }
+      .hud-company-name {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+      }
+      .hud-status-badge {
+        display: none !important;
+      }
+      .hud-clock-display {
+        display: none !important;
+      }
+      .hud-actions-group {
+        gap: 6px;
+      }
+      .btn-hud-logout .btn-text {
+        display: none !important;
+      }
+      .btn-hud-logout .btn-icon {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        line-height: 1;
+      }
+      .btn-hud-logout {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
 
   <!-- ======================================================================
-       1. Top Ambient HUD (半透明执务室全域双轨制控制台)
+       1. Top Ambient HUD (极简精工罗盘透视顶栏 · 7角色与3+1色彩主题切换)
        ====================================================================== -->
   <header class="office-hud-bar">
     <div class="hud-branding-group">
-      <img src="./assets/logo/sentis-emblem-128.png" alt="SENTIS" class="hud-brand-logo">
+      <img src="./assets/logo/apple-touch-icon.png" alt="SENTIS" class="hud-brand-logo">
       <div class="hud-title-wrap">
-        <span class="hud-company-name">株式会社センティス · 本社基幹執務室</span>
+        <span class="hud-company-name">株式会社センティス · 羅針盤統合経営中枢 (v2.0)</span>
         <div class="hud-status-badge">
           <span class="status-dot"></span>
-          <span>専任宅地建物取引士常駐 · 執務稼働中</span>
+          <span id="hudRoleStatus">R03 総合営業担当 (売買・賃貸・REINS・海外一貫) · 18工程288項目稼働中</span>
         </div>
       </div>
     </div>
 
-    <!-- 中部业务直达导航 (规则约束：若有文字，禁止包含符号) -->
-    <nav class="hud-shortcuts-group">
-      <a href="./prototype-crm.html" class="btn-hud-link">売買実務台帳</a>
-      <button type="button" class="btn-hud-link" onclick="openSopModal()">仲介実務SOP</button>
-      <button type="button" class="btn-hud-link" onclick="openArchiveModal()">法定帳簿書架</button>
-      <a href="./index.html" class="btn-hud-link btn-hud-portal">全社業務総覧</a>
-    </nav>
+    <!-- 中央：7大角色切换器 + 3大保留主体色彩方案切换胶囊 -->
+    <div class="hud-center-controls">
+      <select class="hud-role-selector" id="roleSelectorHud" onchange="switchHudRole(this.value)" aria-label="業務ロール切替">
+        <option value="R01">役職: R01 代表取締役 (全権統括・印章決済)</option>
+        <option value="R02">役職: R02 店長・営業責任者 (査定・銀行融資承認)</option>
+        <option value="R03" selected>役職: R03 総合営業担当 (売買/賃貸/REINS/海外)</option>
+        <option value="R04">役職: R04 宅地建物取引士 (調査/重説/契約作成)</option>
+        <option value="R05">役職: R05 賃貸管理・修繕担当 (家賃/更新/原状回復)</option>
+        <option value="R06">役職: R06 経理・税務担当 (入金/ローン/税理士連携)</option>
+        <option value="R07">役職: R07 人事・総務・システム管理 (採用/車両/権限)</option>
+      </select>
+
+      <div class="theme-pill-group" role="group" aria-label="主体色彩テーマ切替">
+        <button type="button" class="btn-theme-pill" data-theme-val="navy" onclick="selectMasterTheme('navy')">色彩A: 深海藍金</button>
+        <button type="button" class="btn-theme-pill" data-theme-val="washi" onclick="selectMasterTheme('washi')">色彩B: 越前和紙</button>
+        <button type="button" class="btn-theme-pill" data-theme-val="walnut" onclick="selectMasterTheme('walnut')">色彩C: 京都胡桃</button>
+        <button type="button" class="btn-theme-pill" data-theme-val="forest" onclick="selectMasterTheme('forest')">深森緑</button>
+      </div>
+    </div>
 
     <!-- 右侧状态与模式切换 -->
     <div class="hud-actions-group">
       <div class="hud-clock-display" id="hudClock">2026/10/04 00:00:00 JST</div>
-      <button type="button" class="btn-hud-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()" title="和紙明色切替" aria-label="和紙明色切替">☀</button>
-      <button type="button" class="btn-hud-mode-toggle" id="btnModeToggle" onclick="toggleViewMode()">画巻表示切替</button>
-      <button type="button" class="btn-hud-logout" onclick="handleLogout()">施錠退室</button>
+      <button type="button" class="btn-hud-theme-toggle" id="btnThemeToggle" onclick="toggleStyleTheme()" title="主体色彩順送り切替" aria-label="主体色彩順送り切替">✦</button>
+      <button type="button" class="btn-hud-logout" onclick="handleLogout()" title="施錠退室" aria-label="施錠退室">
+        <span class="btn-text">施錠退室</span>
+        <span class="btn-icon">🚪</span>
+      </button>
     </div>
   </header>
 
   <!-- ======================================================================
-       2. VR Office Interior Canvas & Interactive Composite Stage (正面第一人称视点)
+       2. 空间几何视界控制台 (Topology A: 罗盘中枢放射式指挥舱)
        ====================================================================== -->
   <main class="office-viewport" id="officeViewport">
     
-    <!-- PC 端第一人称全景画布 (复合图层拼接与鼠标互动舞台) -->
-    <div class="office-canvas" id="officeCanvas">
-      <div class="office-ambient-overlay"></div>
+    <!-- 空间建筑轴测网格 Canvas 画布 -->
+    <canvas id="spatialNexusCanvas"></canvas>
 
-      <!-- 独立复合图层交互舞台 -->
-      <div class="vr-composite-stage" id="vrStage">
+    <!-- 空间环境光晕与暗角 -->
+    <div class="spatial-ambient-overlay"></div>
 
-        <!-- 1. 白板 (Left Wall Whiteboard) -->
-        <div class="vr-elem elem-whiteboard category-sop align-left" id="elemWhiteboard" onclick="openSopModal()" title="業務推進行程白板">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_whiteboard_day.png" class="elem-visual day-visual" alt="業務推進行程白板">
-            <img src="./assets/office/elements/elem_whiteboard_night.png" class="elem-visual night-visual" alt="業務推進行程白板">
-            <div class="elem-glass-sheen"></div>
+    <!-- 桌面端：拓扑 A 罗盘中枢放射式 3 列对称矩阵与水平合规底栏 -->
+    <div class="spatial-console-container">
+      
+      <!-- 上部：三大核心基柱网格 -->
+      <div class="spatial-columns-grid">
+
+        <!-- 1. 左翼：売買・賃貸一貫SOP & 担当自主チェック (Wing 1 - Emerald) -->
+        <section class="spatial-column-card column-sop" id="monoWhiteboard">
+          <div class="card-top-header">
+            <div class="card-title-group">
+              <span class="card-status-dot"></span>
+              <h2 class="card-title-text">売買・賃貸一貫進捗 ＆ 自主確認</h2>
+            </div>
+            <span class="card-spec-code">WING // 01</span>
           </div>
+
+          <div class="card-main-content">
+            <div class="sop-timeline-list">
+              <div class="sop-timeline-step">
+                <span class="step-badge">01-03</span>
+                <div class="step-info">
+                  <div class="step-title">反響受付・来店・物件査定 (売買/賃貸一貫)</div>
+                  <div class="step-desc">担当営業が売買・賃貸・海外案件を一貫ヒアリング＆査定書作成</div>
+                </div>
+              </div>
+
+              <div class="sop-timeline-step">
+                <span class="step-badge">04-05</span>
+                <div class="step-info">
+                  <div class="step-title">媒介契約・REINS登録・マイソク図面作成</div>
+                  <div class="step-desc">担当営業がREINS登録・広告図面作成・ポータル出稿を直轄実行</div>
+                </div>
+              </div>
+
+              <div class="sop-timeline-step">
+                <span class="step-badge">REQ-01</span>
+                <div class="step-info">
+                  <div class="step-title">担当自主確認チェックリスト (初期見積・契約書類)</div>
+                  <div class="step-desc">会社標準チェックリストにより担当者自身が提出前に100%自主点検</div>
+                </div>
+              </div>
+
+              <div class="sop-timeline-step">
+                <span class="step-badge">REQ-02</span>
+                <div class="step-info">
+                  <div class="step-title">案内車両 予約時間表 (社用車1〜3号 予約制)</div>
+                  <div class="step-desc">09:00〜20:00 時間軸マトリクスで全員予約制・重複防止</div>
+                </div>
+              </div>
+
+              <div class="sop-timeline-step">
+                <span class="step-badge">09-12</span>
+                <div class="step-info">
+                  <div class="step-title">銀行融資双軌確認 (担当自主＋部長承認) ＆ 決済</div>
+                  <div class="step-desc">ローン審査は担当または部長確認・精算書及び入金は経理連携</div>
+                </div>
+              </div>
+
+              <div class="sop-timeline-step">
+                <span class="step-badge">REQ-05</span>
+                <div class="step-info">
+                  <div class="step-title">17 定期顧客あいさつ CRM リマインダー</div>
+                  <div class="step-desc">引渡後1ヶ月・半年・1年・季節挨拶の自動通知＆履歴記録</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-bottom-action">
+            <button type="button" class="btn-column-action" onclick="openSopModal()">v2.0 業務要件・役割分担を展開</button>
+          </div>
+        </section>
+
+        <!-- 2. 中央核心：SENTIS 精工玑镂罗盘中枢 (Topology A: Central Horological Compass Hub) -->
+        <section class="spatial-column-card column-crm" id="monoPC">
+          <div class="crm-scan-beam"></div>
           
-          <div class="beacon-anchor">
-            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
-            <div class="hotspot-label-pill">業務推進行程白板</div>
+          <div class="card-top-header">
+            <div class="card-title-group">
+              <span class="card-status-dot"></span>
+              <h2 class="card-title-text">SENTIS 羅針盤中枢 (Topology A)</h2>
+            </div>
+            <span class="card-spec-code">GUILLOCHÉ COMPASS // 02</span>
           </div>
 
-          <!-- 悬浮卡片 -->
-          <div class="hotspot-tooltip-card">
-            <img src="./assets/office/whiteboard_sop.jpg" alt="SOP白板" class="tooltip-media-thumb">
-            <div class="tooltip-content-body">
-              <div class="tooltip-badge-row">
-                <span class="tooltip-tag">不動産売買実務規範</span>
-                <span class="tooltip-status">標準6大工程策定済</span>
+          <div class="card-main-content">
+            <div class="crm-visual-showcase">
+              <!-- 0.1mm 精工雕琢玑镂黄铜罗盘 SVG (Horological Guilloché Compass Rose) -->
+              <svg class="crm-polyhedron-svg" viewBox="0 0 320 190">
+                <defs>
+                  <radialGradient id="compassGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#e5c185" stop-opacity="0.28"/>
+                    <stop offset="65%" stop-color="#d4af37" stop-opacity="0.06"/>
+                    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <!-- 放射背景光晕与水平经纬准星线 -->
+                <circle cx="160" cy="95" r="84" fill="url(#compassGlow)"/>
+                <line x1="20" y1="95" x2="300" y2="95" stroke="#d4af37" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.55"/>
+                <line x1="160" y1="10" x2="160" y2="180" stroke="#d4af37" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.55"/>
+                <!-- 外层18工程精密钟表刻度环 -->
+                <circle cx="160" cy="95" r="76" stroke="#d4af37" stroke-width="1.2" fill="none" opacity="0.85"/>
+                <circle cx="160" cy="95" r="68" stroke="#d4af37" stroke-width="0.7" stroke-dasharray="2,4" fill="none" opacity="0.7"/>
+                <circle cx="160" cy="95" r="54" stroke="#38bdf8" stroke-width="0.8" fill="rgba(212,175,55,0.04)"/>
+                <circle cx="160" cy="95" r="36" stroke="#d4af37" stroke-width="0.6" stroke-dasharray="1.5,2.5" fill="none"/>
+                <!-- 八芒星罗盘指针 -->
+                <polygon points="160,18 167,85 160,95 153,85" fill="#e5c185"/>
+                <polygon points="160,172 167,105 160,95 153,105" fill="rgba(229,193,133,0.45)"/>
+                <polygon points="83,95 150,88 160,95 150,102" fill="rgba(229,193,133,0.45)"/>
+                <polygon points="237,95 170,88 160,95 170,102" fill="#e5c185"/>
+                <!-- 对角副指针 -->
+                <line x1="112" y1="47" x2="208" y2="143" stroke="#d4af37" stroke-width="0.9" opacity="0.65"/>
+                <line x1="208" y1="47" x2="112" y2="143" stroke="#d4af37" stroke-width="0.9" opacity="0.65"/>
+                <!-- 中心陀飞轮轴心与 S 徽标 -->
+                <circle cx="160" cy="95" r="14" fill="#0f1e36" stroke="#e5c185" stroke-width="1.5"/>
+                <text x="160" y="99" text-anchor="middle" font-size="12" font-weight="bold" fill="#e5c185" font-family="serif">S</text>
+                <!-- 象限业务铭文 -->
+                <text x="54" y="34" font-size="8.5" fill="#e5c185" font-family="monospace">I. 売買・賃貸一貫</text>
+                <text x="210" y="34" font-size="8.5" fill="#e5c185" font-family="monospace">II. 自主確認チェック</text>
+                <text x="54" y="166" font-size="8.5" fill="#38bdf8" font-family="monospace">III. 案内車両予約表</text>
+                <text x="206" y="166" font-size="8.5" fill="#f87171" font-family="monospace">IV. 宅建重説スタジオ</text>
+              </svg>
+
+              <!-- 核心业务指标面板 -->
+              <div class="crm-kpi-grid">
+                <div class="crm-kpi-box">
+                  <span class="kpi-label">売買・賃貸在案総額</span>
+                  <span class="kpi-value">¥28.6億</span>
+                </div>
+                <div class="crm-kpi-box">
+                  <span class="kpi-label">自主チェック・車両予約</span>
+                  <span class="kpi-value">14件 / 3台</span>
+                </div>
+                <div class="crm-kpi-box">
+                  <span class="kpi-label">宅建重説・定期挨拶</span>
+                  <span class="kpi-value">100% 稼働</span>
+                </div>
               </div>
-              <div class="tooltip-title">不動産売買仲介 業務推進行程</div>
-              <div class="tooltip-desc">
-                顧客集客から物件調査・役所照会、重要事項説明(35条)、売買契約(37条)、住宅ローン金消、残金決済引渡に至る一貫実務標準。
+
+              <!-- 保留4套拓扑布局：一键直达 prototype-crm.html 的 3 大专属拓扑视图 -->
+              <div class="topology-launch-grid">
+                <a href="./prototype-crm.html?topo=D" class="btn-topo-entry" title="拓扑D：左70%超宽总台账 + 右30%多标签抽屉">拓扑D: 総台帳・抽斗</a>
+                <a href="./prototype-crm.html?topo=C" class="btn-topo-entry" title="拓扑C：上下分屏 + 底部全宽车辆与重说时间表">拓扑C: 車両・日程軸</a>
+                <a href="./prototype-crm.html?topo=B" class="btn-topo-entry" title="拓扑B：左7角色树 + 中台账 + 右宅建重说三栏工作台">拓扑B: 三欄協同台</a>
               </div>
-              <div class="tooltip-action-prompt">実務工程規範を展開</div>
             </div>
           </div>
-        </div>
 
-        <!-- 2. 办公桌基座台面 (Center Desk Surface) -->
-        <div class="vr-elem elem-desk" id="elemDesk">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_desk_day.png" class="elem-visual day-visual" alt="執務机台座">
-            <img src="./assets/office/elements/elem_desk_night.png" class="elem-visual night-visual" alt="執務机台座">
+          <div class="card-bottom-action">
+            <a href="./prototype-crm.html" class="btn-core-entry">不動産統合業務台帳 (全拓扑・3色彩対応) へ入室</a>
           </div>
-        </div>
+        </section>
 
-        <!-- 3. 基幹執務PC双屏电脑台账 (Center Desk) -->
-        <div class="vr-elem elem-pc category-crm" id="elemPC" onclick="handlePCClick(event)" title="売買実務台帳">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_dual_pc_day.png" class="elem-visual day-visual" alt="基幹執務PC台帳">
-            <img src="./assets/office/elements/elem_dual_pc_night.png" class="elem-visual night-visual" alt="基幹執務PC台帳">
-            <div class="pc-ambient-glow"></div>
-            <div class="pc-screen-scanline"></div>
-            <div class="pc-live-indicator">
-              <span class="live-dot"></span>
-              <span class="live-text">LIVE · 東京中央</span>
+        <!-- 3. 右翼：宅建士重説・契約作成スタジオ & 賃貸経理 (Wing 3 - Amber) -->
+        <section class="spatial-column-card column-doc" id="monoBookshelf">
+          <div class="card-top-header">
+            <div class="card-title-group">
+              <span class="card-status-dot"></span>
+              <h2 class="card-title-text">宅建士重説・契約作成 ＆ 部門連携</h2>
+            </div>
+            <span class="card-spec-code">TAKKEN STUDIO // 03</span>
+          </div>
+
+          <div class="card-main-content">
+            <div class="doc-vault-list">
+              <div class="doc-vault-item">
+                <div class="doc-item-left">
+                  <div class="doc-item-title">07-08 宅建士 物件調査・重説・契約書作成</div>
+                  <div class="doc-item-sub">13契約書作成は宅建士が一括担当・営業と直接重説日程確認</div>
+                </div>
+                <span class="doc-status-tag">宅建士専管</span>
+              </div>
+
+              <div class="doc-vault-item">
+                <div class="doc-item-left">
+                  <div class="doc-item-title">10-11 賃貸管理・修繕・オーナー送金精算</div>
+                  <div class="doc-item-sub">家賃入金消込・督促・退去立会・原状回復見積・工事手配</div>
+                </div>
+                <span class="doc-status-tag">賃貸管理部</span>
+              </div>
+
+              <div class="doc-vault-item">
+                <div class="doc-item-left">
+                  <div class="doc-item-title">12-14 経理入金確認・ローン精算・税理士連携</div>
+                  <div class="doc-item-sub">仲介手数料入金・領収書発行・月次試算表・インボイス監査</div>
+                </div>
+                <span class="doc-status-tag">経理・税務</span>
+              </div>
+
+              <div class="doc-vault-item">
+                <div class="doc-item-left">
+                  <div class="doc-item-title">15-18 人事採用・総務車両備品・外部士業連携</div>
+                  <div class="doc-item-sub">司法書士/測量士手配(営業)・宅建免許/システム権限(総務)</div>
+                </div>
+                <span class="doc-status-tag">総務・全社</span>
+              </div>
             </div>
           </div>
 
-          <div class="beacon-anchor">
-            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
-            <div class="hotspot-label-pill">基幹執務PC台帳</div>
+          <div class="card-bottom-action">
+            <button type="button" class="btn-column-action" onclick="openArchiveModal()">法定帳簿・公文書架を展開</button>
           </div>
+        </section>
 
-          <!-- 悬浮卡片 -->
-          <div class="hotspot-tooltip-card">
-            <img src="./assets/office/desk_workstation.jpg" alt="CRM執務デスク" class="tooltip-media-thumb">
-            <div class="tooltip-content-body">
-              <div class="tooltip-badge-row">
-                <span class="tooltip-tag">売買基幹業務統合管理</span>
-                <span class="tooltip-status">社内稼働中 · オンライン</span>
-              </div>
-              <div class="tooltip-title">不動産売買業務統合台帳</div>
-              <div class="tooltip-desc">
-                買付証明受領案件、重要事項調査進捗、物件登記データベース、売買契約・残金決済台帳の一元即時照会。
-              </div>
-              <div class="tooltip-action-prompt">売買実務台帳を開く</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. 专任宅建士朱肉印章台 (Front Left Desk) -->
-        <div class="vr-elem elem-seal category-seal" id="elemSeal" onclick="openSealModal()" title="専任宅建士印章台">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_seal_day.png" class="elem-visual day-visual" alt="専任宅建士印章台">
-            <img src="./assets/office/elements/elem_seal_night.png" class="elem-visual night-visual" alt="専任宅建士印章台">
-            <div class="seal-glow-ring"></div>
-          </div>
-
-          <div class="beacon-anchor">
-            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
-            <div class="hotspot-label-pill">専任宅建士印章台</div>
-          </div>
-
-          <!-- 悬浮卡片 -->
-          <div class="hotspot-tooltip-card">
-            <div class="tooltip-content-body">
-              <div class="tooltip-badge-row">
-                <span class="tooltip-tag">宅地建物取引業法遵守</span>
-                <span class="tooltip-status">専任取引士常駐</span>
-              </div>
-              <div class="tooltip-title">専任宅建士・公印審査基準</div>
-              <div class="tooltip-desc">
-                宅建業法第35条・第37条書面への専任取引士記名押印、重要事項説明の適法性監査、手付金保全措置の適法確認。
-              </div>
-              <div class="tooltip-action-prompt">法令審査マニュアルを確認</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. 法定账簿・重要公文书架 (Right Wall) -->
-        <div class="vr-elem elem-bookshelf category-doc align-right" id="elemBookshelf" onclick="openArchiveModal()" title="法定帳簿・重要公文書架">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_bookshelf_day.png" class="elem-visual day-visual" alt="法定帳簿・重要公文書架">
-            <img src="./assets/office/elements/elem_bookshelf_night.png" class="elem-visual night-visual" alt="法定帳簿・重要公文書架">
-            <div class="shelf-gold-shimmer"></div>
-          </div>
-
-          <div class="beacon-anchor">
-            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
-            <div class="hotspot-label-pill">法定帳簿・重要公文書架</div>
-          </div>
-
-          <!-- 悬浮卡片 -->
-          <div class="hotspot-tooltip-card">
-            <img src="./assets/office/binder_shelves.jpg" alt="公文書バインダー棚" class="tooltip-media-thumb">
-            <div class="tooltip-content-body">
-              <div class="tooltip-badge-row">
-                <span class="tooltip-tag">宅建業法第49条 法定帳簿</span>
-                <span class="tooltip-status">原本5年間保管規程</span>
-              </div>
-              <div class="tooltip-title">重要取引公文書・法令様式書架</div>
-              <div class="tooltip-desc">
-                宅地建物取引業法第35条重要事項説明書原本、第37条売買契約書、登記全部事項証明書、公図・地積測量図、固定資産税評価証明書及びハザードマップ保管バインダー。
-              </div>
-              <div class="tooltip-action-prompt">法定帳簿書架を展開</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. 执务大门 Exit Door (Left Edge Corner) -->
-        <div class="vr-elem elem-door category-doc align-left" id="elemDoor" onclick="handleLogout()" title="執務室施錠退室">
-          <div class="elem-plate">
-            <img src="./assets/office/elements/elem_door_day.png" class="elem-visual day-visual" alt="執務室施錠退室">
-            <img src="./assets/office/elements/elem_door_night.png" class="elem-visual night-visual" alt="執務室施錠退室">
-          </div>
-
-          <div class="beacon-anchor">
-            <div class="beacon-core"><div class="beacon-pulse-ring"></div></div>
-            <div class="hotspot-label-pill">執務室施錠退室</div>
-          </div>
-
-          <!-- 悬浮卡片 -->
-          <div class="hotspot-tooltip-card">
-            <div class="tooltip-content-body">
-              <div class="tooltip-title">執務室セキュア退室</div>
-              <div class="tooltip-desc">
-                現在の執務セッションを終了し、執務室玄関ドアへ戻ります。
-              </div>
-              <div class="tooltip-action-prompt">施錠して退室する</div>
-            </div>
-          </div>
-        </div>
-
-      </div> <!-- /.vr-composite-stage -->
-    </div> <!-- /.office-canvas -->
-  </main>
-
-
-    <!-- 移动端工位卡片画卷模式 (Mobile Responsive Dossier Stream) -->
-    <div class="mobile-dossier-stream" id="dossierStream">
-      <div class="dossier-lead-banner">
-        <h2 class="dossier-lead-title">株式会社センティス 執務工位一覧</h2>
-        <p class="dossier-lead-subtitle">タッチして各業務モジュールを即座に起動できます</p>
       </div>
 
-      <!-- 卡片 1: 执务机台账 -->
+      <!-- 下部：专任宅建士合规状态栏与全社看板 (Horizontal Compliance & Governance Hub) -->
+      <footer class="spatial-compliance-bar" id="monoSeal">
+        <div class="compliance-left">
+          <span class="compliance-badge">COMPLIANCE // 04</span>
+          <div class="compliance-person">
+            <span class="person-role">専任宅地建物取引士 常駐審査席</span>
+            <span class="person-name">能勢 秀樹 課長</span>
+            <span class="person-id">登録番号 (東京) 第092318号</span>
+          </div>
+        </div>
+
+        <div class="compliance-center" onclick="openSealModal()" title="専任取引士審査規範を確認">
+          <div class="seal-stamp-mini">専任公印</div>
+          <div class="seal-status-text">
+            <span class="seal-alert-dot"></span>
+            <span>第35条・37条 書面押印審査待機：<strong>2件</strong></span>
+          </div>
+          <button type="button" class="btn-compliance-action">審査規範を確認</button>
+        </div>
+
+        <div class="compliance-right">
+          <a href="./index.html" class="btn-compliance-portal">全社業務総覧</a>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- 移动端画卷模式 (Mobile Responsive Dossier Stream) -->
+    <div class="mobile-dossier-stream" id="dossierStream">
+      <div class="dossier-lead-banner">
+        <h2 class="dossier-lead-title">株式会社センティス 空間業務一覧</h2>
+        <p class="dossier-lead-subtitle">タップして各業務モジュールを即座に起動できます</p>
+      </div>
+
+      <!-- 卡片 1: 业务台账 -->
       <article class="dossier-card">
-        <img src="./assets/office/desk_workstation.jpg" alt="執務PC" class="dossier-card-thumb">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">基幹業務システム</span>
+          <span class="dossier-tag-pill">基幹業務システム // 02</span>
           <h3 class="dossier-card-title">不動産売買業務統合台帳 (CRM)</h3>
           <p class="dossier-card-desc">
-            顧客カルテ・物件データベース・重要事項調査・契約決済パイプラインを統合管理。
+            顧客カルテ・物件データベース・重要事項調査・契約決済パイプラインを一元即時照会。
           </p>
           <a href="./prototype-crm.html" class="btn-dossier-action">台帳システム起動</a>
         </div>
@@ -1541,12 +1642,11 @@
 
       <!-- 卡片 2: 白板 SOP -->
       <article class="dossier-card">
-        <img src="./assets/office/whiteboard_sop.jpg" alt="SOP白板" class="dossier-card-thumb">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">標準業務規範</span>
-          <h3 class="dossier-card-title">不動産売買6大工程 ＆ 標準SOP</h3>
+          <span class="dossier-tag-pill">標準業務規範 // 01</span>
+          <h3 class="dossier-card-title">不動産売買仲介 標準業務6大工程 (SOP)</h3>
           <p class="dossier-card-desc">
-            集客から物件調査、重要事項説明(35条)、売買契約(37条)、金消、残金決済引渡までの業務工程。
+            集客反響から物件調査、重要事項説明(35条)、売買契約(37条)、金消、残金決済引渡までの一貫標準。
           </p>
           <button type="button" class="btn-dossier-action" onclick="openSopModal()">業務SOP仕様確認</button>
         </div>
@@ -1554,12 +1654,11 @@
 
       <!-- 卡片 3: 法定账簿公文档案柜 -->
       <article class="dossier-card">
-        <img src="./assets/office/binder_shelves.jpg" alt="公文書棚" class="dossier-card-thumb">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">法定帳簿・公文書管理</span>
+          <span class="dossier-tag-pill">法定帳簿・公文書管理 // 03</span>
           <h3 class="dossier-card-title">法定帳簿・重要取引公文書架</h3>
           <p class="dossier-card-desc">
-            宅建業法第49条法定帳簿、35条重要事項説明書原本、37条売買契約書、法務局公図・測量図および役所調査台帳。
+            宅建業法第49条法定帳簿、35条重要事項説明書原本、37条売買契約書原本、登記公図。
           </p>
           <button type="button" class="btn-dossier-action" onclick="openArchiveModal()">公文書架を展開</button>
         </div>
@@ -1568,7 +1667,7 @@
       <!-- 卡片 4: 宅建士法令审查 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">法令遵守統制</span>
+          <span class="dossier-tag-pill">法令遵守統制 // 04</span>
           <h3 class="dossier-card-title">専任宅建士・公印審査デスク</h3>
           <p class="dossier-card-desc">
             法定35条・37条書面の専任宅地建物取引士記名押印規程、適法性審査チェックリスト。
@@ -1581,9 +1680,9 @@
       <article class="dossier-card">
         <div class="dossier-card-body">
           <span class="dossier-tag-pill">全社統括ポータル</span>
-          <h3 class="dossier-card-title">株式会社センティス 全社総覧看板</h3>
+          <h3 class="dossier-card-title">全社成果物総覧看板</h3>
           <p class="dossier-card-desc">
-            会社組織概要、経営理念、不動産取引業免許情報、全社実績および公式コーポレートポータルへ移動。
+            内部基幹システム策定・DEL-01~04 成果物総覧ポータルへ移動。
           </p>
           <a href="./index.html" class="btn-dossier-action">全社ポータルを開く</a>
         </div>
@@ -1595,7 +1694,7 @@
        3. Modals: SOP 白板仕様ダイアログ
        ====================================================================== -->
   <div class="drawer-overlay" id="sopModalOverlay" onclick="handleOverlayClick(event, 'sopModalOverlay')">
-    <div class="drawer-dialog" role="dialog" aria-modal="true">
+    <div class="drawer-dialog" role="dialog" aria-modal="true" aria-label="不動産売買仲介 標準業務6大工程 (SOP)">
       <div class="drawer-header">
         <div class="drawer-header-title-group">
           <span class="drawer-badge">STANDARD OPERATING PROCEDURE</span>
@@ -1645,218 +1744,191 @@
         </div>
       </div>
       <div class="drawer-footer">
-        <a href="./prototype-crm.html" class="btn-drawer-primary">売買実務台帳で案件を進行</a>
-        <button type="button" class="btn-drawer-secondary" onclick="closeSopModal()">閉じる</button>
+        <a href="./prototype-crm.html" class="btn-modal-action-primary">売買実務台帳で案件を進行</a>
+        <button type="button" class="btn-modal-action-secondary" onclick="closeSopModal()">閉じる</button>
       </div>
     </div>
   </div>
 
   <!-- ======================================================================
-       4. Modals: 宅建士法令・印章審査ダイアログ
+       4. Modals: 専任宅建士・公印法令審査基準ダイアログ
        ====================================================================== -->
   <div class="drawer-overlay" id="sealModalOverlay" onclick="handleOverlayClick(event, 'sealModalOverlay')">
-    <div class="drawer-dialog" role="dialog" aria-modal="true">
+    <div class="drawer-dialog" role="dialog" aria-modal="true" aria-label="専任宅地建物取引士 法令審査規程">
       <div class="drawer-header">
         <div class="drawer-header-title-group">
-          <span class="drawer-badge">COMPLIANCE & LEGAL GOVERNANCE</span>
-          <h3 class="drawer-header-title">専任宅地建物取引士 法令監査・公印管理規程</h3>
+          <span class="drawer-badge">STATUTORY COMPLIANCE // ART. 35 & 37</span>
+          <h3 class="drawer-header-title">専任宅地建物取引士 法令審査規程</h3>
         </div>
         <button type="button" class="btn-dialog-close" onclick="closeSealModal()">閉じる</button>
       </div>
       <div class="drawer-body">
-        <p>宅地建物取引業法第15条（専任の宅地建物取引士）および第35条・第37条に基づく法令統制マニュアルです。</p>
+        <p>株式会社センティスにおける専任宅地建物取引士（常駐業務拠点）による重要公文書記名押印および適法性審査基準です。</p>
         
-        <div class="sop-flow-grid" style="grid-template-columns: 1fr 1fr;">
-          <div class="sop-step-card">
-            <div class="sop-step-num">REGULATION 01</div>
-            <div class="sop-step-name">第35条 重要事項説明書 押印規程</div>
-            <div class="sop-step-detail">
-              売買契約締結に先立ち、専任宅建士が自ら調査結果を精査し記名押印。買主に対して宅地建物取引士証を提示して口頭説明を実施。
-            </div>
-          </div>
+        <div style="background: rgba(248, 113, 113, 0.08); border: 1px solid rgba(248, 113, 113, 0.25); border-radius: 4px; padding: 14px; margin-bottom: 16px;">
+          <div style="font-weight: 700; color: #fca5a5; margin-bottom: 6px;">専任取引士 記名押印必須書面</div>
+          <ul style="padding-left: 20px; line-height: 1.6; font-size: 12.5px;">
+            <li>宅地建物取引業法第35条 重要事項説明書（交付および対面/IT重説の実施）</li>
+            <li>宅地建物取引業法第37条 売買契約書面（遅滞なき交付および記名押印）</li>
+            <li>宅地建物取引業法第34条の2 媒介契約書面</li>
+          </ul>
+        </div>
 
-          <div class="sop-step-card">
-            <div class="sop-step-num">REGULATION 02</div>
-            <div class="sop-step-name">第37条 契約書面 押印規程</div>
-            <div class="sop-step-detail">
-              契約締結後、遅滞なく当事者双方に交付する37条書面に専任宅建士が記名押印。手付金保全措置、瑕疵担保責任、解除事由の適法確認。
-            </div>
-          </div>
+        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+          ※ 専任宅建士の記名押印は、朱肉による物理公印と電子署名（当番確認済）の二重監査プロトコルを採用しています。
         </div>
       </div>
       <div class="drawer-footer">
-        <button type="button" class="btn-drawer-primary" onclick="closeSealModal(); openArchiveModal();">法定帳簿・保管公文書架を確認</button>
-        <button type="button" class="btn-drawer-secondary" onclick="closeSealModal()">閉じる</button>
+        <a href="./prototype-crm.html" class="btn-modal-action-primary">台帳システムで押印待機案件を確認</a>
+        <button type="button" class="btn-modal-action-secondary" onclick="closeSealModal()">閉じる</button>
       </div>
     </div>
   </div>
 
   <!-- ======================================================================
-       5. Modals: 法定帳簿・重要取引公文書架ダイアログ (Archive Shelf Modal)
+       5. Modals: 法定帳簿・重要公文書架ダイアログ
        ====================================================================== -->
   <div class="drawer-overlay" id="archiveModalOverlay" onclick="handleOverlayClick(event, 'archiveModalOverlay')">
-    <div class="drawer-dialog" role="dialog" aria-modal="true" style="max-width: 920px;">
+    <div class="drawer-dialog" role="dialog" aria-modal="true" aria-label="法定帳簿・重要公文書架アーカイブ">
       <div class="drawer-header">
         <div class="drawer-header-title-group">
-          <span class="drawer-badge">STATUTORY BOOKS & OFFICIAL LEGAL ARCHIVES</span>
-          <h3 class="drawer-header-title">宅地建物取引業法 法定帳簿 ＆ 取引公文書保管庫</h3>
+          <span class="drawer-badge">STATUTORY ARCHIVE // 5-YEAR RETENTION</span>
+          <h3 class="drawer-header-title">法定帳簿・重要取引公文書架</h3>
         </div>
         <button type="button" class="btn-dialog-close" onclick="closeArchiveModal()">閉じる</button>
       </div>
       <div class="drawer-body">
-        <p>株式会社センティスにおける宅地建物取引業法第49条（帳簿の備付け）および取引公文書の厳格保管・原本管理体系です。電子契約および書面原本を統合保管し、都庁立入検査・税務監査・専任取引士審査に対応しています。</p>
+        <p>宅地建物取引業法第49条に基づき、センティスで締結されたすべての不動産売買取引録および重要公文書原本を5年間適正に保管・管理します。</p>
         
-        <div class="sop-flow-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-          <!-- 書架 01 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">STATUTORY 01 · 法定必備帳簿</div>
-            <div class="sop-step-name">宅建業法第49条 取引台帳</div>
-            <div class="sop-step-detail">
-              取引年月日、物件所在、売買金額、売主・買主商号氏名、仲介報酬受領額を取引の都度遅滞なく記帳。各事業年度末閉鎖後5年間原本保管。
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.18); border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 700; color: var(--text-pure); font-size: 13px;">宅建業法第49条 業務帳簿</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">各事業年度末の閉鎖後5年間保存。取引毎の氏名・物件・代金・報酬額を網羅。</div>
             </div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sop-emerald); font-weight: 700;">保存中</span>
           </div>
 
-          <!-- 書架 02 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">STATUTORY 02 · 重要説明原本</div>
-            <div class="sop-step-name">第35条 重要事項説明書 保管庫</div>
-            <div class="sop-step-detail">
-              専任宅建士記名原本およびIT重説録画記録。インフラ整備状況、都市計画制限、土砂・洪水ハザードマップ判定、金銭貸借特約の完全保管。
+          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.18); border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 700; color: var(--text-pure); font-size: 13px;">重要事項説明書 (35条) 控えおよび添付資料</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">登記全部事項証明書、公図、地積測量図、建築確認済証、固定資産税評価証明書。</div>
             </div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sop-emerald); font-weight: 700;">原本完備</span>
           </div>
 
-          <!-- 書架 03 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">STATUTORY 03 · 契約書面原本</div>
-            <div class="sop-step-name">第37条 売買契約書 原本管理庫</div>
-            <div class="sop-step-detail">
-              売主買主記名押印済契約原本、手付金受受領収証、印紙税納付確認書、瑕疵担保・契約不適合責任免責特約および融資利用特約解除期日管理票。
+          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.18); border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 700; color: var(--text-pure); font-size: 13px;">売買契約書 (37条) 控え・手付金領収書</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">売主・買主原本調印済原本、特約条項確認覚書、本人確認記録（AML）。</div>
             </div>
-          </div>
-
-          <!-- 書架 04 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">OFFICIAL 04 · 法務局公的証明</div>
-            <div class="sop-step-name">登記原簿・公図・地積測量図</div>
-            <div class="sop-step-detail">
-              法務局発行の登記全部事項証明書（甲区所有権・乙区抵当権）、法14条地図（公図）、地積測量図、建物図面・各階平面図の原本電子アーカイブ。
-            </div>
-          </div>
-
-          <!-- 書架 05 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">OFFICIAL 05 · 行政照会台帳</div>
-            <div class="sop-step-name">役所調査記録・道路台帳</div>
-            <div class="sop-step-detail">
-              建築基準法第42条道路判定記録、都市計画図（用途地域・建ぺい率・容積率）、埋蔵文化財包蔵地照会、自治体浸水・内水ハザードマップ原本。
-            </div>
-          </div>
-
-          <!-- 書架 06 -->
-          <div class="sop-step-card">
-            <div class="sop-step-num">COMPLIANCE 06 · 法令遵守確認</div>
-            <div class="sop-step-name">犯罪収益移転防止・本人確認台帳</div>
-            <div class="sop-step-detail">
-              取引相手方の公的身分証写し、法人取引時の履歴事項全部証明書および実質的支配者申告書、反社会的勢力排除宣誓書の適法管理。
-            </div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--color-sop-emerald); font-weight: 700;">保管済</span>
           </div>
         </div>
       </div>
       <div class="drawer-footer">
-        <a href="./prototype-crm.html" class="btn-drawer-primary">売買実務台帳へ連動照会</a>
-        <button type="button" class="btn-drawer-secondary" onclick="closeArchiveModal()">閉じる</button>
+        <a href="./prototype-crm.html" class="btn-modal-action-primary">台帳システムで取引公文を照会</a>
+        <button type="button" class="btn-modal-action-secondary" onclick="closeArchiveModal()">閉じる</button>
       </div>
     </div>
   </div>
 
   <!-- ======================================================================
-       Vanilla JS: 空間インタラクション制御
+       6. 核心脚本：Canvas 网格、时钟、主题切换与模态控制
        ====================================================================== -->
   <script>
+    // 1. 空间建筑轴测网格 Canvas 动态渲染 (Isometric Vector Grid)
+    const nexusCanvas = document.getElementById('spatialNexusCanvas');
+    const nexusCtx = nexusCanvas ? nexusCanvas.getContext('2d') : null;
+    let nexusWidth = 0, nexusHeight = 0;
+    let nexusTime = 0;
 
-    // ======================================================================
-    // 3D 空间鼠标互动与多层景深视差物理引擎 (VR Parallax Engine)
-    // ======================================================================
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
-    let isParallaxActive = false;
+    const metroNodes = [
+      { name: "GINZA 6-CHOME", val: "¥8.4億", xRatio: 0.22, yRatio: 0.42 },
+      { name: "TORANOMON", val: "¥5.2億", xRatio: 0.78, yRatio: 0.32 },
+      { name: "ROPPONGI 3-CHOME", val: "¥12.5億", xRatio: 0.44, yRatio: 0.74 },
+      { name: "AOYAMA 5-CHOME", val: "¥9.6億", xRatio: 0.84, yRatio: 0.68 }
+    ];
 
-    const baseCanvas = document.getElementById('officeCanvas');
-    const elemWhiteboard = document.getElementById('elemWhiteboard');
-    const elemPC = document.getElementById('elemPC');
-    const elemDesk = document.getElementById('elemDesk');
-    const elemBookshelf = document.getElementById('elemBookshelf');
-    const elemSeal = document.getElementById('elemSeal');
-    const elemDoor = document.getElementById('elemDoor');
-
-    window.addEventListener('mousemove', (e) => {
-      if (window.innerWidth <= 860) return;
-      isParallaxActive = true;
-      const halfW = window.innerWidth / 2;
-      const halfH = window.innerHeight / 2;
-      targetX = (e.clientX - halfW) / halfW;
-      targetY = (e.clientY - halfH) / halfH;
-    });
-
-    window.addEventListener('mouseleave', () => {
-      targetX = 0;
-      targetY = 0;
-    });
-
-    function updateParallax() {
-      if (isParallaxActive && window.innerWidth > 860) {
-        currentX += (targetX - currentX) * 0.08;
-        currentY += (targetY - currentY) * 0.08;
-
-        if (baseCanvas) {
-          baseCanvas.style.backgroundPosition = "calc(50% + " + (-currentX * 12) + "px) calc(50% + " + (-currentY * 8) + "px)";
-        }
-
-        if (elemWhiteboard && !elemWhiteboard.matches(':hover')) {
-          elemWhiteboard.style.transform = "translate3d(" + (currentX * 9) + "px, " + (currentY * 5) + "px, 0)";
-        }
-        if (elemBookshelf && !elemBookshelf.matches(':hover')) {
-          elemBookshelf.style.transform = "translate3d(" + (currentX * 7) + "px, " + (currentY * 4) + "px, 0)";
-        }
-        if (elemDesk) {
-          elemDesk.style.transform = "translate3d(" + (currentX * 11) + "px, " + (currentY * 7) + "px, 0)";
-        }
-        if (elemPC && !elemPC.matches(':hover')) {
-          elemPC.style.transform = "translate3d(" + (currentX * 15) + "px, " + (currentY * 9) + "px, 0)";
-        }
-        if (elemSeal && !elemSeal.matches(':hover')) {
-          elemSeal.style.transform = "translate3d(" + (currentX * 18) + "px, " + (currentY * 11) + "px, 0)";
-        }
-        if (elemDoor && !elemDoor.matches(':hover')) {
-          elemDoor.style.transform = "translate3d(" + (currentX * 5) + "px, " + (currentY * 3) + "px, 0)";
-        }
-      }
-      requestAnimationFrame(updateParallax);
-    }
-    requestAnimationFrame(updateParallax);
-
-    function handlePCClick(e) {
-      if (e) e.stopPropagation();
-      if (elemPC) {
-        elemPC.classList.add('power-on-flash');
-        setTimeout(() => {
-          window.location.href = './prototype-crm.html';
-        }, 220);
-      } else {
-        window.location.href = './prototype-crm.html';
+    function resizeNexusCanvas() {
+      if (!nexusCanvas) return;
+      nexusWidth = window.innerWidth;
+      nexusHeight = window.innerHeight;
+      nexusCanvas.width = nexusWidth * window.devicePixelRatio;
+      nexusCanvas.height = nexusHeight * window.devicePixelRatio;
+      if (nexusCtx) {
+        nexusCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
       }
     }
+    window.addEventListener('resize', resizeNexusCanvas);
+    resizeNexusCanvas();
 
+    function drawSpatialNexus() {
+      if (!nexusCtx) return;
+      nexusTime += 0.008;
 
-    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
-    const officeViewport = document.getElementById('officeViewport');
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const cWidth = nexusWidth;
+      const cHeight = nexusHeight;
+
+      nexusCtx.clearRect(0, 0, cWidth, cHeight);
+      nexusCtx.save();
+
+      const gridStroke = isLight ? "rgba(180, 140, 24, 0.07)" : "rgba(212, 175, 55, 0.06)";
+      const diagStroke = isLight ? "rgba(56, 189, 248, 0.05)" : "rgba(56, 189, 248, 0.04)";
+      const nodeFill = isLight ? "#b48c18" : "#d4af37";
+      const textFill = isLight ? "rgba(30, 41, 59, 0.65)" : "rgba(212, 175, 55, 0.55)";
+
+      // 正交网格
+      nexusCtx.strokeStyle = gridStroke;
+      nexusCtx.lineWidth = 0.8;
+      const gridSize = 72;
+      for (let x = 0; x < cWidth; x += gridSize) {
+        nexusCtx.beginPath();
+        nexusCtx.moveTo(x, 0);
+        nexusCtx.lineTo(x, cHeight);
+        nexusCtx.stroke();
+      }
+      for (let y = 0; y < cHeight; y += gridSize) {
+        nexusCtx.beginPath();
+        nexusCtx.moveTo(0, y);
+        nexusCtx.lineTo(cWidth, y);
+        nexusCtx.stroke();
+      }
+
+      // 30° 建筑轴测斜线
+      nexusCtx.strokeStyle = diagStroke;
+      nexusCtx.lineWidth = 0.6;
+      nexusCtx.beginPath();
+      for (let i = -cHeight; i < cWidth + cHeight; i += gridSize * 2) {
+        nexusCtx.moveTo(i, 0);
+        nexusCtx.lineTo(i + cHeight * 0.577, cHeight);
+      }
+      nexusCtx.stroke();
+
+      // 都心高净值不动产地理节点脉冲
+      nexusCtx.font = "9.5px monospace";
+      metroNodes.forEach((node, idx) => {
+        const nx = cWidth * node.xRatio;
+        const ny = cHeight * node.yRatio;
+        const pulse = Math.sin(nexusTime * 2 + idx) * 1.5;
+
+        nexusCtx.fillStyle = nodeFill;
+        nexusCtx.beginPath();
+        nexusCtx.arc(nx, ny, 2.5 + pulse * 0.4, 0, Math.PI * 2);
+        nexusCtx.fill();
+
+        nexusCtx.fillStyle = textFill;
+        nexusCtx.fillText(`${node.name} [${node.val}]`, nx + 8, ny + 3);
+      });
+
+      nexusCtx.restore();
+      requestAnimationFrame(drawSpatialNexus);
+    }
+    requestAnimationFrame(drawSpatialNexus);
+
+    // 2. 实时更新东京时间
     const hudClock = document.getElementById('hudClock');
-    const sopModalOverlay = document.getElementById('sopModalOverlay');
-    const sealModalOverlay = document.getElementById('sealModalOverlay');
-    const archiveModalOverlay = document.getElementById('archiveModalOverlay');
-    const btnModeToggle = document.getElementById('btnModeToggle');
-
-    // 实时更新东京时间
     function updateTokyoClock() {
       const now = new Date();
       const options = {
@@ -1877,32 +1949,11 @@
     setInterval(updateTokyoClock, 1000);
     updateTokyoClock();
 
-    // 视图模式切换 (全景模式 vs 工位画卷卡片模式)
-    function toggleViewMode() {
-      const isCardView = officeViewport.classList.toggle('view-cards');
-      if (btnModeToggle) {
-        btnModeToggle.innerText = isCardView ? "パノラマ全景表示" : "画巻表示切替";
-      }
-    }
+    // 3. 模态框打开与关闭控制
+    const sopModalOverlay = document.getElementById('sopModalOverlay');
+    const sealModalOverlay = document.getElementById('sealModalOverlay');
+    const archiveModalOverlay = document.getElementById('archiveModalOverlay');
 
-    // 移动端默认激活画卷模式与窗口调整监听
-    function handleScreenAdaptation() {
-      if (window.innerWidth <= 860) {
-        if (!officeViewport.classList.contains('view-cards')) {
-          officeViewport.classList.add('view-cards');
-          if (btnModeToggle) btnModeToggle.innerText = "パノラマ全景表示";
-        }
-      } else {
-        if (officeViewport.classList.contains('view-cards')) {
-          officeViewport.classList.remove('view-cards');
-          if (btnModeToggle) btnModeToggle.innerText = "画巻表示切替";
-        }
-      }
-    }
-    window.addEventListener('resize', handleScreenAdaptation);
-    handleScreenAdaptation();
-
-    // SOP 模态框打开与关闭
     function openSopModal() {
       if (sopModalOverlay) sopModalOverlay.classList.add('active');
     }
@@ -1910,7 +1961,6 @@
       if (sopModalOverlay) sopModalOverlay.classList.remove('active');
     }
 
-    // 宅建士模态框打开与关闭
     function openSealModal() {
       if (sealModalOverlay) sealModalOverlay.classList.add('active');
     }
@@ -1918,7 +1968,6 @@
       if (sealModalOverlay) sealModalOverlay.classList.remove('active');
     }
 
-    // 法定账簿公文档案柜模态框打开与关闭
     function openArchiveModal() {
       if (archiveModalOverlay) archiveModalOverlay.classList.add('active');
     }
@@ -1926,14 +1975,12 @@
       if (archiveModalOverlay) archiveModalOverlay.classList.remove('active');
     }
 
-    // 遮罩点击关闭
     function handleOverlayClick(event, overlayId) {
       if (event.target.id === overlayId) {
         document.getElementById(overlayId).classList.remove('active');
       }
     }
 
-    // ESC 快捷键关闭
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeSopModal();
@@ -1942,37 +1989,62 @@
       }
     });
 
-    // 主题风格双模切换与持久化控制器
+    // 4. 多色彩主题 (色彩A: navy / 色彩B: washi / 色彩C: walnut / forest) 与 7大角色持久化控制器
     const THEME_STORAGE_KEY = 'SENTIS_CRM_THEME';
+    const ROLE_STORAGE_KEY = 'SENTIS_CRM_ROLE';
+    const THEME_ORDER = ['navy', 'washi', 'walnut', 'forest'];
+
+    const ROLE_DESCRIPTIONS = {
+      R01: 'R01 代表取締役 (全権統括・印章決済・経営ダッシュボード)',
+      R02: 'R02 店長・営業責任者 (査定・銀行融資部長承認・成約統括)',
+      R03: 'R03 総合営業担当 (売買・賃貸・REINS・海外一貫・自主チェック)',
+      R04: 'R04 宅地建物取引士 (07調査・08重説・13契約書作成・直接日程調整)',
+      R05: 'R05 賃貸管理・修繕担当 (10家賃入金/更新・11退去/原状回復見積)',
+      R06: 'R06 経理・税務担当 (12決済入金/領収書・14月次試算表/税理士連携)',
+      R07: 'R07 人事・総務・システム管理 (15採用労務・16車両備品/免許/権限)'
+    };
 
     function applyStyleTheme(theme) {
+      if (theme === 'dark') theme = 'navy';
+      if (theme === 'light') theme = 'washi';
+      if (!THEME_ORDER.includes(theme)) theme = 'navy';
       document.documentElement.setAttribute('data-theme', theme);
-      const btn = document.getElementById('btnThemeToggle');
-      if (btn) {
-        if (theme === 'dark') {
-          btn.innerHTML = '☀';
-          btn.title = '和紙明色切替';
-          btn.setAttribute('aria-label', '和紙明色切替');
-        } else {
-          btn.innerHTML = '🌙';
-          btn.title = '夜景深色切替';
-          btn.setAttribute('aria-label', '夜景深色切替');
-        }
-      }
+      document.querySelectorAll('.btn-theme-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-theme-val') === theme);
+      });
+    }
+
+    function selectMasterTheme(theme) {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      applyStyleTheme(theme);
     }
 
     function toggleStyleTheme() {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const nextTheme = current === 'dark' ? 'light' : 'dark';
-      localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-      applyStyleTheme(nextTheme);
+      let current = document.documentElement.getAttribute('data-theme') || 'navy';
+      if (current === 'dark') current = 'navy';
+      if (current === 'light') current = 'washi';
+      const idx = THEME_ORDER.indexOf(current);
+      const nextTheme = THEME_ORDER[(idx + 1) % THEME_ORDER.length];
+      selectMasterTheme(nextTheme);
     }
 
-    // 初始化时载入存储的主题
-    const initialSavedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
-    applyStyleTheme(initialSavedTheme);
+    function switchHudRole(roleCode) {
+      localStorage.setItem(ROLE_STORAGE_KEY, roleCode);
+      const statusEl = document.getElementById('hudRoleStatus');
+      if (statusEl && ROLE_DESCRIPTIONS[roleCode]) {
+        statusEl.textContent = ROLE_DESCRIPTIONS[roleCode];
+      }
+      const sel = document.getElementById('roleSelectorHud');
+      if (sel && sel.value !== roleCode) sel.value = roleCode;
+    }
 
-    // 登出并安全锁门 (退回管理系统登录门)
+    const initialSavedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'navy';
+    applyStyleTheme(initialSavedTheme);
+    const initialSavedRole = localStorage.getItem(ROLE_STORAGE_KEY) || 'R03';
+    switchHudRole(initialSavedRole);
+
+    // 5. 施锭退室逻辑
+    const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
     function handleLogout() {
       sessionStorage.removeItem(SESSION_STORAGE_KEY);
       localStorage.removeItem(SESSION_STORAGE_KEY);

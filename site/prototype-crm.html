@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>株式会社センティス (SENTIS Realty) - 不動産売買業務統合台帳システム</title>
+  <meta name="description" content="株式会社センティス 不動産売買業務統合台帳システム。顧客・物件・契約進捗・売上KPIをリアルタイム管理する高保真CRMプロトタイプ。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+  <link rel="stylesheet" href="./assets/css/sentis-horology-v2.css">
 
   <!-- ======================================================================
        第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
@@ -2064,7 +2066,7 @@
         <button type="button" class="btn-office-action btn-menu-drawer" id="mobile-menu-btn" title="業務区分目録を展開">
           <span>☰</span>
         </button>
-        <a href="./crm-home.html" class="brand-logo-link" title="執務室メインハブへ戻る">
+        <a href="./crm-home.html" class="brand-logo-link" title="空間幾何データ中枢へ戻る">
           <img src="./assets/logo/sentis-emblem-64.png" alt="SENTIS 羅針盤エンブレム" class="brand-logo-img" />
         </a>
         <div class="brand-titles">
@@ -2093,7 +2095,7 @@
 
       <!-- ユーザーログイン情報（通常業務席） -->
       <div class="header-user-section">
-        <a href="./crm-home.html" onclick="if(window.opener && window.history.length <= 2){window.close(); return false;}" class="btn-office-action btn-portal-back" title="執務室メインハブへ戻る">
+        <a href="./crm-home.html" onclick="if(window.opener && window.history.length <= 2){window.close(); return false;}" class="btn-office-action btn-portal-back" title="空間幾何データ中枢へ戻る">
           <span>←</span>
         </a>
 
@@ -2145,27 +2147,27 @@
         <ul class="module-nav-list">
           <li class="module-nav-item active" data-target="mod-consult">
             <span class="module-idx">1</span>
-            <span>商談・反響受付台帳</span>
+            <span>商談・反響・賃貸11・海外18</span>
           </li>
           <li class="module-nav-item" data-target="mod-property">
             <span class="module-idx">2</span>
-            <span>物件台帳・登記原簿</span>
+            <span>物件台帳・07調査全18項目</span>
           </li>
           <li class="module-nav-item" data-target="mod-contract">
             <span class="module-idx">3</span>
-            <span>売買契約・重説審査</span>
+            <span>13重説・契約書作成 (宅建士専権)</span>
           </li>
           <li class="module-nav-item" data-target="mod-mortgage">
             <span class="module-idx">4</span>
-            <span>住宅ローン金融連携</span>
+            <span>06/08銀行融資 (営業・部長双軌)</span>
           </li>
           <li class="module-nav-item" data-target="mod-closing">
             <span class="module-idx">5</span>
-            <span>残金決済・引渡清算</span>
+            <span>10決済・12賃貸管理・15経理</span>
           </li>
           <li class="module-nav-item" data-target="mod-ledger">
             <span class="module-idx">6</span>
-            <span>法定帳票・公印管理</span>
+            <span>法定帳票・14車両予約・17定期挨拶</span>
           </li>
         </ul>
 
@@ -2704,8 +2706,8 @@
       </div>
 
       <div class="footer-tools">
-        <a class="btn-footer-link" onclick="window.print()" title="A4帳票印刷">🖨️</a>
-        <a class="btn-footer-link" onclick="toggleDeskLight()" title="デスクライト調光">💡</a>
+        <button type="button" class="btn-footer-link" onclick="window.print()" title="A4帳票印刷" aria-label="A4帳票印刷" style="background:none; border:none; cursor:pointer; font-size:16px;">🖨️</button>
+        <button type="button" class="btn-footer-link" onclick="toggleDeskLight()" title="デスクライト調光" aria-label="デスクライト調光" style="background:none; border:none; cursor:pointer; font-size:16px;">💡</button>
       </div>
     </footer>
 
@@ -3123,6 +3125,7 @@
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
     applyStyleTheme(savedTheme);
   </script>
+  <script src="./assets/js/sentis-horology-v2.js"></script>
 </body>
 </html>
 

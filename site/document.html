@@ -4,9 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>成果物仕様書リーダー | Vanguard × 株式会社センティス (SENTIS)</title>
+  <meta name="description" content="株式会社センティス 成果物仕様書リーダー。DEL-01~04 業務課題、プロセス規约、CRMシステム設計仕様のインタラクティブ閲覧。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- PWA 渐进式 Web 应用配置 -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sentis CRM">
 
   <!-- ======================================================================
        第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
@@ -38,7 +47,7 @@
 
       --vg-text-primary: #090d16;
       --vg-text-secondary: #475569;
-      --vg-text-tertiary: #94a3b8;
+      --vg-text-tertiary: #64748b;
 
       --vg-accent-primary: #090d16;
       --vg-accent-sentis: #184332;
@@ -686,11 +695,12 @@
 
       <div class="nav-actions">
         <!-- 仕様書クイック切り替え -->
-        <select id="docSelectBox" class="doc-select-box" onchange="switchDoc(this.value)">
+        <select id="docSelectBox" class="doc-select-box" aria-label="仕様書切り替え" title="仕様書切り替え" onchange="switchDoc(this.value)">
           <option value="doc01">DEL-03: 01. プロジェクト概要及び業務課題定義書</option>
           <option value="doc02">DEL-04: 02. 不動産売買標準業務フロー設計書</option>
           <option value="doc03">DEL-05: 03. 次世代システム要件定義及びアーキテクチャ設計書</option>
           <option value="doc04">DEL-06: 04. 導入展開計画及びプロジェクト推進日程表</option>
+          <option value="doc05">DEL-08: 05. 株式会社 SENTIS 综合业务管理系统要件定义书（基于客户手写反馈精校版 v2.0）</option>
           <option value="docAssets">DEL-07: SENTIS 品牌公式 CI/VI 資産パッケージ</option>
         </select>
 
@@ -727,7 +737,7 @@
           <span>←</span> 前の仕様書
         </a>
         <div style="font-size:12px; color:#64748b; font-family:var(--vg-font-mono);">
-          SENTIS REALTY CORE · DESIGN REVIEW SPECIFICATION (v0.9)
+          SENTIS REALTY CORE · DESIGN REVIEW SPECIFICATION (v2.0 · 288 ITEMS)
         </div>
         <a href="#" id="btnNextDoc" class="btn-page-step" style="visibility:hidden;">
           次の仕様書 <span>→</span>
@@ -737,15 +747,15 @@
   </main>
 
   <!-- 全域フッター -->
-  <footer class="site-footer">
-    <div class="footer-container">
+  <footer class="site-footer" style="padding: 24px 0; border-top: 1px solid var(--vg-border-light); background: #ffffff; color: #475569; font-size: 12px;">
+    <div class="footer-container" style="max-width: 960px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
       <div>
-        <strong>VANGUARD PLATFORM</strong> ｜ 株式会社センティス (SENTIS REALTY CO., LTD.) 詳細設計査閲仕様書群 (Design Review v0.9)
-        <div style="font-size:11px; color:#94a3b8; margin-top:2px;">
+        <strong style="color: #090d16;">VANGUARD PLATFORM</strong> ｜ 株式会社センティス (SENTIS REALTY CO., LTD.) 詳細設計査閲仕様書群 (Design Review v0.9)
+        <div style="font-size:11px; color:#64748b; margin-top:2px;">
           ※掲載データは個人情報保護法（APPI）に配慮した検証用架空シミュレーション（脱敏）データです。
         </div>
       </div>
-      <div>
+      <div style="color: #64748b;">
         © 2026 Vanguard. Zero Server Runtime · Pure Vanilla Web Architecture.
       </div>
     </div>
@@ -758,7 +768,7 @@
     const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
     const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
 
-    const docOrder = ["doc01", "doc02", "doc03", "doc04", "docAssets"];
+    const docOrder = ["doc05", "doc01", "doc02", "doc03", "doc04", "docAssets"];
 
     // SHA-256 计算工具
     async function computeSha256(text) {
@@ -880,6 +890,19 @@
     window.addEventListener('popstate', () => {
       renderDocument(getRequestedDocKey());
     });
+  </script>
+
+  <!-- PWA Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').then(function(reg) {
+          console.log('[Sentis PWA] Service Worker registered with scope:', reg.scope);
+        }).catch(function(err) {
+          console.warn('[Sentis PWA] Service Worker registration failed:', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,509 @@
+/* ==========================================================================
+   SENTIS Realty Core v2.0 - Horology & Bespoke Compass Guilloché Stylesheet
+   - 保留 3 大主体色彩方案 (色彩A: 深海藍金 / 色彩B: 越前和紙 / 色彩C: 京都胡桃 + 伝統深森緑)
+   - 保留 4 大空间构图拓扑 (拓扑A: 羅針盤中枢 / 拓扑B: 三欄作業台 / 拓扑C: 車両日程軸 / 拓扑D: 総台帳・抽斗)
+   ========================================================================== */
+
+:root,
+[data-theme="navy"] {
+  --v2-bg-main: #0b1528;
+  --v2-bg-grad: radial-gradient(circle at 50% 20%, #172b4d 0%, #0f1e36 60%, #08101f 100%);
+  --v2-header-bg: linear-gradient(180deg, #091224 0%, #0f1e36 100%);
+  --v2-panel-bg: rgba(15, 30, 54, 0.94);
+  --v2-card-inlay: #fbf9f4;
+  --v2-card-inlay-alt: #f3ede0;
+  --v2-inlay-text: #1a1e24;
+  --v2-inlay-muted: #5a616d;
+  --v2-gold: #e5c185;
+  --v2-gold-bright: #fbf0d9;
+  --v2-gold-border: rgba(229, 193, 133, 0.42);
+  --v2-gold-subtle: rgba(229, 193, 133, 0.16);
+  --v2-text-main: #f6f2e9;
+  --v2-text-sub: rgba(246, 242, 233, 0.75);
+  --v2-hanko-red: #c83232;
+  --v2-emerald: #1e6b45;
+  --v2-emerald-bright: #34d399;
+}
+
+[data-theme="washi"],
+[data-theme="light"] {
+  --v2-bg-main: #efe9dc;
+  --v2-bg-grad: radial-gradient(circle at 50% 20%, #fbf9f4 0%, #f2ece0 62%, #e4dac6 100%);
+  --v2-header-bg: linear-gradient(180deg, #1a1e24 0%, #252b34 100%);
+  --v2-panel-bg: #fbf9f4;
+  --v2-card-inlay: #ffffff;
+  --v2-card-inlay-alt: #f6f1e6;
+  --v2-inlay-text: #1a1e24;
+  --v2-inlay-muted: #555d69;
+  --v2-gold: #9e7b2f;
+  --v2-gold-bright: #785a16;
+  --v2-gold-border: rgba(158, 123, 47, 0.45);
+  --v2-gold-subtle: rgba(158, 123, 47, 0.16);
+  --v2-text-main: #1a1e24;
+  --v2-text-sub: #4b5260;
+  --v2-hanko-red: #b82c2c;
+  --v2-emerald: #1e6b45;
+  --v2-emerald-bright: #15803d;
+}
+
+[data-theme="walnut"],
+[data-theme="dark"] {
+  --v2-bg-main: #18110e;
+  --v2-bg-grad: radial-gradient(circle at 50% 20%, #33221b 0%, #231814 60%, #120c09 100%);
+  --v2-header-bg: linear-gradient(180deg, #150d0a 0%, #231814 100%);
+  --v2-panel-bg: rgba(35, 24, 20, 0.95);
+  --v2-card-inlay: #f5efe6;
+  --v2-card-inlay-alt: #ebe1d1;
+  --v2-inlay-text: #231814;
+  --v2-inlay-muted: #5c4f46;
+  --v2-gold: #d99b43;
+  --v2-gold-bright: #fae3be;
+  --v2-gold-border: rgba(217, 155, 67, 0.45);
+  --v2-gold-subtle: rgba(217, 155, 67, 0.18);
+  --v2-text-main: #f5efe6;
+  --v2-text-sub: rgba(245, 239, 230, 0.76);
+  --v2-hanko-red: #a82424;
+  --v2-emerald: #246a48;
+  --v2-emerald-bright: #34d399;
+}
+
+[data-theme="forest"] {
+  --v2-bg-main: #0d241a;
+  --v2-bg-grad: radial-gradient(circle at 50% 20%, #1f543f 0%, #143829 60%, #091c14 100%);
+  --v2-header-bg: linear-gradient(180deg, #0a1f16 0%, #184332 100%);
+  --v2-panel-bg: rgba(20, 56, 41, 0.94);
+  --v2-card-inlay: #fbf9f4;
+  --v2-card-inlay-alt: #f1ece1;
+  --v2-inlay-text: #143829;
+  --v2-inlay-muted: #4b5e54;
+  --v2-gold: #d4af37;
+  --v2-gold-bright: #f7e9b7;
+  --v2-gold-border: rgba(212, 175, 55, 0.45);
+  --v2-gold-subtle: rgba(212, 175, 55, 0.18);
+  --v2-text-main: #f4f1ea;
+  --v2-text-sub: rgba(244, 241, 234, 0.78);
+  --v2-hanko-red: #b82c2c;
+  --v2-emerald: #1e6b45;
+  --v2-emerald-bright: #4ade80;
+}
+
+/* 覆盖主工作台背景与顶栏色系联动 */
+.office-header {
+  background: var(--v2-header-bg) !important;
+  border-bottom: 1.5px solid var(--v2-gold-border) !important;
+}
+.office-header .brand-main,
+.office-header .company-name {
+  color: #f6e6b4 !important;
+}
+.office-body-workbench {
+  background: var(--v2-bg-grad) !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 14px 22px 36px !important;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   v2.0 顶部控制中枢条 (7大角色切换 + 4大拓扑视图切换 + 3+1主体色彩切换)
+   ========================================================================== */
+.v2-horology-command-bar {
+  width: 100%;
+  max-width: 1560px;
+  background: var(--v2-panel-bg);
+  border: 1.5px solid var(--v2-gold-border);
+  border-radius: 5px;
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 0 0 1px var(--v2-gold-subtle);
+  z-index: 25;
+  flex-shrink: 0;
+}
+
+.v2-bar-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.v2-bar-label {
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--v2-gold);
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+
+.v2-role-select {
+  background: var(--v2-card-inlay);
+  color: var(--v2-inlay-text);
+  border: 1px solid var(--v2-gold);
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.v2-pill-group {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--v2-gold-border);
+  border-radius: 4px;
+  padding: 2px;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+[data-theme="washi"] .v2-pill-group,
+[data-theme="light"] .v2-pill-group {
+  background: #e8dfd0;
+}
+
+.v2-switch-btn {
+  padding: 5px 11px;
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--v2-text-main);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.v2-switch-btn:hover {
+  border-color: var(--v2-gold);
+  background: var(--v2-gold-subtle);
+}
+.v2-switch-btn.active {
+  background: var(--v2-gold);
+  color: #0b1528;
+  border-color: var(--v2-gold-bright);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   拓扑容器通用样式
+   ========================================================================== */
+.v2-topology-stage {
+  width: 100%;
+  max-width: 1560px;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+.v2-topology-stage.active {
+  display: flex;
+  animation: fadeIn 0.22s ease-out;
+}
+
+/* 精工雕琢珐琅外框与和纸内嵌卡片 */
+.v2-horology-frame {
+  background: var(--v2-panel-bg);
+  border: 1.5px solid var(--v2-gold-border);
+  border-radius: 5px;
+  padding: 14px 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28), inset 0 0 0 1px var(--v2-gold-subtle);
+  color: var(--v2-text-main);
+  position: relative;
+}
+
+.v2-frame-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--v2-gold-border);
+  padding-bottom: 9px;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.v2-frame-title {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--v2-gold-bright);
+  letter-spacing: 0.6px;
+}
+[data-theme="washi"] .v2-frame-title,
+[data-theme="light"] .v2-frame-title {
+  color: #1a1e24;
+}
+
+.v2-frame-badge {
+  font-family: monospace;
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid var(--v2-gold);
+  color: var(--v2-gold);
+  background: var(--v2-gold-subtle);
+  white-space: nowrap;
+}
+
+/* 和纸台账表格 (Washi Ledger Table) */
+.v2-washi-sheet {
+  background: var(--v2-card-inlay);
+  color: var(--v2-inlay-text);
+  border: 1px solid var(--v2-gold-border);
+  border-radius: 4px;
+  padding: 12px 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.v2-master-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.v2-master-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: var(--v2-inlay-text);
+}
+.v2-master-table th {
+  background: var(--v2-card-inlay-alt);
+  border-bottom: 2px solid var(--v2-inlay-text);
+  border-right: 1px solid rgba(158, 123, 47, 0.25);
+  padding: 8px 10px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+.v2-master-table td {
+  border-bottom: 1px solid rgba(158, 123, 47, 0.22);
+  border-right: 1px solid rgba(158, 123, 47, 0.14);
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+.v2-master-table tr:hover td {
+  background: rgba(212, 175, 55, 0.10);
+}
+
+/* 朱肉印章微缩徽标 */
+.v2-mini-hanko {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--v2-hanko-red);
+  color: var(--v2-hanko-red);
+  border-radius: 50%;
+  font-family: var(--font-serif);
+  font-size: 9.5px;
+  font-weight: 900;
+  transform: rotate(-6deg);
+  background: rgba(200, 50, 50, 0.06);
+  line-height: 1.05;
+  text-align: center;
+}
+
+.v2-tag-pill {
+  display: inline-block;
+  padding: 2px 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.v2-tag-sale { background: rgba(30, 107, 69, 0.14); color: #1e6b45; border: 1px solid rgba(30, 107, 69, 0.35); }
+.v2-tag-lease { background: rgba(29, 78, 216, 0.12); color: #1d4ed8; border: 1px solid rgba(29, 78, 216, 0.32); }
+.v2-tag-overseas { background: rgba(180, 83, 9, 0.14); color: #b45309; border: 1px solid rgba(180, 83, 9, 0.35); }
+.v2-tag-alert { background: rgba(200, 50, 50, 0.12); color: #b82c2c; border: 1px solid rgba(200, 50, 50, 0.35); }
+
+/* ==========================================================================
+   拓扑 D：左 70% 超宽全案总台账 + 右 30% 多标签精密抽屉 (Wide Master Register + Folio Drawers)
+   ========================================================================== */
+.v2-topo-d-grid {
+  display: grid;
+  grid-template-columns: 2.25fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.v2-folio-drawer-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.v2-folio-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.v2-folio-tab-btn {
+  padding: 7px 8px;
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--v2-text-main);
+  border: 1px solid var(--v2-gold-border);
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+}
+[data-theme="washi"] .v2-folio-tab-btn,
+[data-theme="light"] .v2-folio-tab-btn {
+  background: #e9e0cf;
+  color: #1a1e24;
+}
+.v2-folio-tab-btn.active {
+  background: var(--v2-gold);
+  color: #0b1528;
+  border-color: var(--v2-gold-bright);
+}
+
+.v2-folio-pane {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.v2-folio-pane.active {
+  display: flex;
+}
+
+.v2-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 9px;
+  background: var(--v2-card-inlay);
+  color: var(--v2-inlay-text);
+  border: 1px solid rgba(158, 123, 47, 0.28);
+  border-radius: 3px;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.v2-check-row input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #1e6b45;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   拓扑 C：上下双层分屏 + 底部全宽 09:00-20:00 案内車両予約時間表 & 宅建重説日程軸
+   ========================================================================== */
+.v2-topo-c-upper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.v2-chronometer-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+  font-size: 11.5px;
+  background: var(--v2-card-inlay);
+  color: var(--v2-inlay-text);
+}
+.v2-chronometer-table th,
+.v2-chronometer-table td {
+  border: 1px solid rgba(158, 123, 47, 0.32);
+  padding: 7px 6px;
+  text-align: center;
+}
+.v2-chronometer-table th {
+  background: var(--v2-card-inlay-alt);
+  font-family: monospace;
+  font-weight: 700;
+}
+.v2-slot-booked {
+  background: linear-gradient(135deg, #1e6b45 0%, #14532d 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-size: 10.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.v2-slot-jusetsu {
+  background: linear-gradient(135deg, #b82c2c 0%, #7f1d1d 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-size: 10.5px;
+}
+.v2-slot-free {
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 10.5px;
+  transition: background 0.15s ease;
+}
+.v2-slot-free:hover {
+  background: rgba(212, 175, 55, 0.25);
+  color: #1a1e24;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   拓扑 B：三栏精密钟表台账工作台 (左18% 7角色与18工程树 + 中52% 営業一貫台帳 + 右30% 宅建重説スタジオ)
+   ========================================================================== */
+.v2-topo-b-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr 370px;
+  gap: 14px;
+  align-items: start;
+}
+
+.v2-stage-tree-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 540px;
+  overflow-y: auto;
+}
+.v2-stage-tree-item {
+  padding: 6px 9px;
+  border-radius: 3px;
+  border: 1px solid var(--v2-gold-subtle);
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 11.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+[data-theme="washi"] .v2-stage-tree-item,
+[data-theme="light"] .v2-stage-tree-item {
+  background: #f3ede0;
+  color: #1a1e24;
+}
+.v2-stage-tree-item:hover,
+.v2-stage-tree-item.active {
+  border-color: var(--v2-gold);
+  background: var(--v2-gold-subtle);
+  font-weight: 700;
+}
+
+@media (max-width: 1180px) {
+  .v2-topo-d-grid,
+  .v2-topo-b-grid,
+  .v2-topo-c-upper {
+    grid-template-columns: 1fr;
+  }
+}
+

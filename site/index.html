@@ -4,9 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vanguard × 株式会社センティス (SENTIS) - 内部基幹システム策定 成果物総覧ポータル</title>
+  <meta name="description" content="Vanguard × 株式会社センティス (SENTIS) 内部基幹システム策定・DEL-01~04 成果物総覧ポータル。業務課題定義、SOP業務プロセス、高保真CRMプロトタイプ仕様を網羅。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
+
+  <!-- PWA 渐进式 Web 应用配置 -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sentis CRM">
 
   <!-- ======================================================================
        第一防壁：GitHub Pages 直接アクセス阻断・正規ドメイン強制転送スクリプト
@@ -40,7 +49,7 @@
       --vg-text-primary: #090d16;
       --vg-text-secondary: #334155;
       --vg-text-muted: #64748b;
-      --vg-text-tertiary: #94a3b8;
+      --vg-text-tertiary: #64748b;
 
       /* 极细科技感边框 */
       --vg-border-light: #e2e8f0;
@@ -839,6 +848,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .card-status-info {
@@ -863,6 +874,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
       transition: all 0.2s ease;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     }
@@ -885,6 +897,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
       transition: all 0.15s ease;
     }
 
@@ -898,6 +911,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 桌面宽屏下遵循“有文字无符号”铁律：默认隐藏按钮内辅助图标 */
+    .btn-card-launch .btn-symbol,
+    .btn-card-quick-preview .btn-symbol,
+    .btn-card-view-doc .btn-symbol {
+      display: none;
     }
 
     .btn-card-quick-preview {
@@ -1607,6 +1628,14 @@
         border-radius: 7px;
         flex-shrink: 0;
       }
+      .btn-card-quick-preview .btn-text {
+        display: none !important;
+      }
+      .btn-card-quick-preview .btn-symbol {
+        font-size: 14px;
+        line-height: 1;
+        display: inline-block;
+      }
 
       /* 文書モーダル・全画面ポップアップ */
       .doc-modal-overlay {
@@ -1847,8 +1876,8 @@
         <div class="header-right">
           <div class="release-status-badge">
             <span class="pulse-dot"></span>
-            <span class="badge-text-full">査閲受付中 · Design Review v0.9</span>
-            <span class="badge-text-short">v0.9</span>
+            <span class="badge-text-full">査閲受付中 · Design Review v2.0 (288項目反映)</span>
+            <span class="badge-text-short">v2.0</span>
           </div>
           <button class="btn-header-action" onclick="window.print()" title="査閲目録を印刷">
             <span class="btn-symbol">🖨️</span>
@@ -1883,15 +1912,15 @@
       <!-- 交付 KPI 看板（脱敏后：无任何具体金额数字） -->
       <div class="metrics-grid">
         <div class="metric-card">
-          <div class="metric-value">02 <span style="font-size:16px; font-weight:normal; color:#64748b;">系統</span></div>
+          <div class="metric-value">04 <span style="font-size:16px; font-weight:normal; color:#64748b;">トポロジー × 3+1色彩</span></div>
           <div class="metric-label">画面プロトタイプ</div>
-          <div class="metric-sub">6大台帳執務デスク ＋ AI事務補佐（検証画面）</div>
+          <div class="metric-sub">トポA(羅針盤)・B(三欄)・C(車両予約)・D(総台帳) ＋ 色彩A/B/C</div>
         </div>
 
         <div class="metric-card">
-          <div class="metric-value">04 <span style="font-size:16px; font-weight:normal; color:#64748b;">篇</span></div>
+          <div class="metric-value">05 <span style="font-size:16px; font-weight:normal; color:#64748b;">篇 (288項目)</span></div>
           <div class="metric-label">公式策定仕様書</div>
-          <div class="metric-sub">概要課題・SOPフロー・システム要件・推進日程</div>
+          <div class="metric-sub">顧客赤字フィードバック288項目・7大ロール・18区分要件完備</div>
         </div>
 
         <div class="metric-card">
@@ -1910,10 +1939,13 @@
 
     <!-- 3. Deliverables Filter & Catalog Grid (成果物一覧) -->
     <main class="catalog-section">
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--vg-text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>📦</span> 策定成果物・設計仕様書一覧
+      </h2>
       <div class="filter-bar">
         <div class="tab-pills">
-          <button class="tab-pill active" data-filter="all">すべて表示 (7)</button>
-          <button class="tab-pill" data-filter="document">📄 業務設計仕様書 (4)</button>
+          <button class="tab-pill active" data-filter="all">すべて表示 (8)</button>
+          <button class="tab-pill" data-filter="document">📄 業務設計仕様書 (5)</button>
           <button class="tab-pill" data-filter="prototype">💻 画面様板プロトタイプ (2)</button>
           <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
         </div>
@@ -1928,6 +1960,43 @@
         <!-- ==================================================================
              CATEGORY 1: BUSINESS DESIGN & SPECIFICATIONS (業務設計・仕様策定書群)
              ================================================================== -->
+
+        <!-- DEL-08: 文档 05 (顧客赤字フィードバック反映・総合不動産管理システム要件定義書 v2.0) -->
+        <article class="deliverable-card" data-category="document">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-category-badge badge-doc">CLIENT FEEDBACK / SPEC-05 (v2.0)</span>
+              <span class="card-code">DEL-08</span>
+            </div>
+            <h3 class="card-title">05. 株式会社 SENTIS 综合业务管理系统要件定义书（基于客户手写反馈精校版 v2.0）</h3>
+            <p class="card-desc">
+              クライアント手書き赤字フィードバック原本（全20頁・18大カテゴリ・計288項目）を100%反映した最新版要件定義書。
+              基于客户在 20 页《业务角色与具体业务清单》（286 项印刷 + 2 项手写新增 = 288 项）上的红色手写批注全面重构。涵盖四大核心设计转向、20 模块向 7 大实操角色收敛（RBAC）、六大核心专项要件（担当自查 Checklist、看房车辆预约时间表、重说直连排期、宅建士契约书作成、定期お客様あいさつ、担当/部长双轨确认）、七大业务子系统全量映射矩阵及 Out-of-Scope 裁剪清单。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">赤字フィードバック288項目</span>
+              <span class="card-tag">7大ロール正規化</span>
+              <span class="card-tag">13重説・宅建士専権</span>
+              <span class="card-tag">14車両予約・重説時間軸</span>
+              <span class="card-tag">4大トポロジー×3+1色彩</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="card-status-info" style="color: #059669;">
+              <span>●</span> v2.0 Updated
+            </div>
+            <div class="card-actions-group">
+              <button class="btn-card-quick-preview" onclick="openDocModal('doc05')" title="簡易プレビュー">
+                <span class="btn-symbol">🔍</span>
+              </button>
+              <a href="./document.html?id=doc05" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="v2.0 要件定義書を開く">
+                <span class="btn-symbol">↗</span>
+                <span class="btn-text">v2.0 要件書を開く</span>
+              </a>
+            </div>
+          </div>
+        </article>
 
         <!-- DEL-03: 文档 01 (业务概况与课题定义) -->
         <article class="deliverable-card" data-category="document">
@@ -2084,17 +2153,17 @@
               <span class="card-category-badge badge-prototype">INTERACTIVE PROTOTYPE</span>
               <span class="card-code">DEL-01</span>
             </div>
-            <h3 class="card-title">内部基幹管理システム（執務室VR ＆ 業務台帳スイート）</h3>
+            <h3 class="card-title">内部基幹管理システム v2.0（精工雕琢羅針盤・4大トポロジー A/B/C/D ＆ 3+1主体色彩スイート）</h3>
             <p class="card-desc">
-              クライアント提出用プロダクト資料群。執務室エントランス扉ログイン画面（暗号/IC解錠）、
-              正面視点VR執務室メインハブ（白板SOP・PC・公文書・印章台）、及び日常執務を完全再現した高保真台帳ワークベンチ（6大台帳・自動隠蔽サイドバー・朱肉押印）で構成。
+              クライアント提出用プロダクト資料群。空間幾何次元認証ゲートウェイ（暗号/セッション同調）、
+              精工雕琢と繁複物質風（Horology &amp; Bespoke Compass Guilloché）に基づく全18カテゴリ・288項目・7大ロール対応スイート。トポロジーA（羅針盤中枢）・B（三欄作業台）・C（案内車両予約時間表＆重説日程軸）・D（左70%総台帳＋右30%四段抽斗）と、色彩A（皇室深海藍金）・色彩B（越前白金和紙）・色彩C（京都焙茶胡桃）・深森緑をリアルタイム切替。
             </p>
             <div class="card-tags">
-              <span class="card-tag">執務室扉ログイン</span>
-              <span class="card-tag">VR執務室ハブ</span>
+              <span class="card-tag">空間幾何認証門</span>
+              <span class="card-tag">空間幾何データ中枢</span>
               <span class="card-tag">不動産売買業務台帳</span>
-              <span class="card-tag">和紙・執務室美学</span>
-              <span class="card-tag">朱肉押印実務</span>
+              <span class="card-tag">建築幾何構造主義</span>
+              <span class="card-tag">虚空光影美学</span>
             </div>
           </div>
 
@@ -2103,17 +2172,29 @@
               <span>●</span> Prototype Active
             </div>
             <div class="card-actions-group">
-              <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="執務室扉ログイン画面">
-                <span class="btn-symbol">🚪</span>
-                <span class="btn-text">扉ログイン</span>
+              <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何次元 認証ゲートウェイ">
+                <span class="btn-symbol">⬡</span>
+                <span class="btn-text">認証ゲートウェイ</span>
               </a>
-              <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="執務室VRメインハブ主画面">
-                <span class="btn-symbol">🏛️</span>
-                <span class="btn-text">VR執務室ハブ</span>
+              <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何データ中枢メイン画面">
+                <span class="btn-symbol">◈</span>
+                <span class="btn-text">トポA:羅針盤中枢</span>
               </a>
-              <a href="./prototype-crm.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="不動産売買台帳ワークベンチ">
+              <a href="./prototype-crm.html?topo=D&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーD：70%広幅総台帳＋30%四段抽斗（色彩B:和紙）">
                 <span class="btn-symbol">📋</span>
-                <span class="btn-text">台帳画面</span>
+                <span class="btn-text">トポD:総台帳・抽斗</span>
+              </a>
+              <a href="./prototype-crm.html?topo=C&theme=walnut" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーC：案内車両予約時間表＆重説・決済日程軸（色彩C:胡桃）">
+                <span class="btn-symbol">🚐</span>
+                <span class="btn-text">トポC:車両予約軸</span>
+              </a>
+              <a href="./prototype-crm.html?topo=B&theme=navy" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーB：三欄精密時計ワークベンチ（色彩A:深海藍）">
+                <span class="btn-symbol">⚖️</span>
+                <span class="btn-text">トポB:三欄作業台</span>
+              </a>
+              <a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）">
+                <span class="btn-symbol">📋</span>
+                <span class="btn-text">A4公文帳票</span>
               </a>
             </div>
           </div>
@@ -2433,6 +2514,19 @@
         closeDocModal();
       }
     });
+  </script>
+
+  <!-- PWA Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').then(function(reg) {
+          console.log('[Sentis PWA] Service Worker registered with scope:', reg.scope);
+        }).catch(function(err) {
+          console.warn('[Sentis PWA] Service Worker registration failed:', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>

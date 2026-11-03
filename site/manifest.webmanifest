@@ -1,0 +1,92 @@
+{
+  "id": "/?sentis_crm_system",
+  "name": "株式会社センティス (SENTIS) - 内部基幹システム策定 成果物総覧ポータル",
+  "short_name": "Sentis CRM",
+  "description": "Vanguard × 株式会社センティス (SENTIS) 内部基幹システム策定・DEL-01~04 成果物総覧ポータル兼高保真業務コンソール",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "ja",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "real-estate"],
+  "icons": [
+    {
+      "src": "./assets/logo/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/logo/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "空間幾何データ中枢",
+      "short_name": "空間中枢",
+      "description": "SENTIS 内部基幹システム 空間幾何データ中枢",
+      "url": "./crm-home.html",
+      "icons": [
+        {
+          "src": "./assets/logo/favicon-32x32.png",
+          "sizes": "32x32"
+        }
+      ]
+    },
+    {
+      "name": "顧客・案件台帳",
+      "short_name": "業務台帳",
+      "description": "リアルタイム取引管理・物件進捗・顧客インサイト台帳",
+      "url": "./prototype-crm.html",
+      "icons": [
+        {
+          "src": "./assets/logo/favicon-32x32.png",
+          "sizes": "32x32"
+        }
+      ]
+    },
+    {
+      "name": "設計仕様総覧",
+      "short_name": "仕様書",
+      "description": "DEL-01~04 システム要件定義書・業務SOP全景",
+      "url": "./document.html",
+      "icons": [
+        {
+          "src": "./assets/logo/favicon-32x32.png",
+          "sizes": "32x32"
+        }
+      ]
+    }
+  ]
+}
