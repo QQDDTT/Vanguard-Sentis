@@ -9,8 +9,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
 
-  <!-- PWA 渐进式 Web 应用配置 -->
-  <link rel="manifest" href="./manifest.webmanifest">
+  <!-- PWA 渐进式 Web 应用配置（仅在 HTTP/HTTPS 环境下挂载 manifest，避免本地 file:/// CORS 告警） -->
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      var manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = './manifest.webmanifest';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
   <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -129,6 +136,8 @@
     .nav-titles {
       display: flex;
       flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .nav-titles .platform-tag {
@@ -146,6 +155,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    #navDocTitle {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
     }
 
     .nav-titles .doc-case-badge {
@@ -156,6 +174,7 @@
       padding: 1px 6px;
       border-radius: 4px;
       font-family: var(--vg-font-mono);
+      flex-shrink: 0;
     }
 
     /* 快速切换与操作栏 */
@@ -199,6 +218,11 @@
       text-decoration: none;
       transition: all 0.15s ease;
       white-space: nowrap;
+    }
+
+    /* 桌面宽屏下遵循“有文字无符号”铁律：隐藏按钮内辅助图标 */
+    .btn-nav-action .btn-symbol {
+      display: none;
     }
 
     .btn-nav-action:hover {
@@ -602,17 +626,23 @@
         min-width: 0;
         max-width: none;
         font-size: 12px;
+        min-height: 44px;
       }
-      /* 移动端按钮极简符号化：隐藏文字标签 */
+      /* 移动端按钮极简符号化：隐藏文字标签，确保 44x44px 触控热区 */
       .btn-nav-action {
-        width: 32px;
-        height: 32px;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
         padding: 0;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 13px;
+        font-size: 14px;
         flex-shrink: 0;
+      }
+      .btn-nav-action .btn-symbol {
+        display: inline-flex !important;
       }
       .btn-nav-action .btn-text {
         display: none !important;

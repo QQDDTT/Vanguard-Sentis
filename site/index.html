@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png">
 
   <!-- PWA 渐进式 Web 应用配置 -->
-  <link rel="manifest" href="./manifest.webmanifest">
+  <script>if(window.location.protocol.startsWith('http')){var ml=document.createElement('link');ml.rel='manifest';ml.href='./manifest.webmanifest';document.head.appendChild(ml);}</script>
   <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -915,8 +915,11 @@
     }
 
     /* 桌面宽屏下遵循“有文字无符号”铁律：默认隐藏按钮内辅助图标 */
-    .btn-card-launch .btn-symbol,
-    .btn-card-quick-preview .btn-symbol,
+    .btn-header-action .btn-symbol, .btn-logout .btn-symbol, .btn-modal-action-newtab .btn-symbol, .btn-card-launch .btn-symbol, .btn-card-view-doc .btn-symbol { display: none; }
+    .btn-card-quick-preview .btn-symbol { display: inline-flex; }
+    /* 完美闭合 */ .btn-unused-placeholder { display: none; }
+    .btn-unused-placeholder-2,
+    .btn-card-quick-preview-unused,
     .btn-card-view-doc .btn-symbol {
       display: none;
     }
@@ -1285,6 +1288,11 @@
       .brand-project {
         font-size: 13.5px;
       }
+      @media (max-width: 640px) { .btn-logout .btn-symbol, .btn-modal-action-newtab .btn-symbol { display: inline-flex !important; } } .btn-header-action .btn-symbol { display: inline-flex !important; }
+      .btn-header-action { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; }
+      @media (max-width: 640px) { .btn-logout { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      .tab-pill { min-height: 44px; display: inline-flex; align-items: center; }
       .btn-header-action .btn-text {
         display: none;
       }
@@ -1402,6 +1410,11 @@
         font-size: 13px;
         flex-shrink: 0;
       }
+      @media (max-width: 640px) { .btn-logout .btn-symbol, .btn-modal-action-newtab .btn-symbol { display: inline-flex !important; } } .btn-header-action .btn-symbol { display: inline-flex !important; }
+      .btn-header-action { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; }
+      @media (max-width: 640px) { .btn-logout { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      .tab-pill { min-height: 44px; display: inline-flex; align-items: center; }
       .btn-header-action .btn-text {
         display: none !important;
       }
@@ -1976,8 +1989,8 @@
             <div class="card-tags">
               <span class="card-tag">赤字フィードバック288項目</span>
               <span class="card-tag">7大ロール正規化</span>
-              <span class="card-tag">13重説・宅建士専権</span>
-              <span class="card-tag">14車両予約・重説時間軸</span>
+              <span class="card-tag">07-13契約作成・08重説</span>
+              <span class="card-tag">02-9車両予約・03-17挨拶</span>
               <span class="card-tag">4大トポロジー×3+1色彩</span>
             </div>
           </div>
@@ -2192,9 +2205,9 @@
                 <span class="btn-symbol">⚖️</span>
                 <span class="btn-text">トポB:三欄作業台</span>
               </a>
-              <a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）">
+              <a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）" style="display:none;">
                 <span class="btn-symbol">📋</span>
-                <span class="btn-text">A4公文帳票</span>
+              </a><a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）"><span class="btn-symbol">📄</span><span class="btn-text">A4公文帳票</span></a><a style="display:none;">
               </a>
             </div>
           </div>

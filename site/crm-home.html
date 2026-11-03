@@ -981,6 +981,54 @@
       color: #e5ded5;
     }
 
+    [data-theme="washi"] .drawer-dialog,
+    [data-theme="light"] .drawer-dialog {
+      background: #fbf9f4;
+      color: #1a1e24;
+      border-color: #9e7b2f;
+    }
+    [data-theme="washi"] .drawer-header,
+    [data-theme="light"] .drawer-header {
+      background: #f2ece0;
+      border-bottom-color: rgba(158, 123, 47, 0.3);
+    }
+    [data-theme="washi"] .drawer-footer,
+    [data-theme="light"] .drawer-footer {
+      background: #f2ece0;
+      border-top-color: rgba(158, 123, 47, 0.25);
+    }
+    [data-theme="washi"] .btn-dialog-close,
+    [data-theme="washi"] .btn-modal-action-secondary,
+    [data-theme="light"] .btn-dialog-close,
+    [data-theme="light"] .btn-modal-action-secondary {
+      border-color: rgba(26, 30, 36, 0.35);
+      color: #1a1e24;
+    }
+    [data-theme="washi"] .sop-step-card,
+    [data-theme="light"] .sop-step-card {
+      background: #f4efe4;
+      border-color: rgba(158, 123, 47, 0.35);
+    }
+    [data-theme="washi"] .dossier-lead-banner,
+    [data-theme="light"] .dossier-lead-banner {
+      background: #1a1e24;
+      color: #f6f2e9;
+    }
+    [data-theme="washi"] .dossier-lead-title,
+    [data-theme="light"] .dossier-lead-title {
+      color: #f6e6b4;
+    }
+    [data-theme="washi"] .dossier-lead-subtitle,
+    [data-theme="light"] .dossier-lead-subtitle {
+      color: #e5ded5;
+    }
+    [data-theme="washi"] .btn-dossier-action,
+    [data-theme="light"] .btn-dossier-action {
+      background: #1a1e24;
+      color: #f6e6b4;
+      border-color: #9e7b2f;
+    }
+
     /* 拓扑快速跳转矩阵 */
     .topology-launch-grid {
       display: grid;
@@ -1280,6 +1328,27 @@
        响应式断点与移动端适配
        ========================================================================== */
     @media (max-width: 1024px) {
+      .office-hud-bar {
+        height: auto;
+        min-height: 60px;
+        flex-wrap: wrap;
+        padding: 8px 14px;
+        gap: 8px;
+      }
+      .office-viewport {
+        padding-top: 112px;
+      }
+      .hud-center-controls {
+        width: 100%;
+        order: 3;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .hud-role-selector {
+        flex: 1;
+        min-width: 180px;
+      }
       .spatial-console-container {
         display: none;
       }
@@ -1293,20 +1362,68 @@
 
     @media (max-width: 640px) {
       .office-hud-bar {
-        padding: 0 12px;
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      .office-viewport {
+        padding-top: 174px;
+      }
+      .hud-branding-group {
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
+      }
+      .hud-title-wrap {
+        min-width: 0;
+        overflow: hidden;
       }
       .hud-company-name {
         font-size: 12px;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .hud-status-badge {
-        display: none !important;
+        font-size: 9.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .hud-clock-display {
         display: none !important;
       }
       .hud-actions-group {
         gap: 6px;
+        flex-shrink: 0;
+      }
+      .hud-center-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .hud-role-selector {
+        width: 100%;
+        min-height: 44px;
+        font-size: 12px;
+      }
+      .theme-pill-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+        padding: 3px;
+      }
+      .btn-theme-pill {
+        min-height: 44px;
+        padding: 4px 2px;
+        font-size: 10.5px;
+        text-align: center;
+      }
+      .btn-hud-theme-toggle {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
       }
       .btn-hud-logout .btn-text {
         display: none !important;
@@ -1315,14 +1432,22 @@
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1;
       }
       .btn-hud-logout {
-        width: 32px;
-        height: 32px;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
         padding: 0;
         display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-dossier-action {
+        min-height: 44px;
+        display: flex;
         align-items: center;
         justify-content: center;
       }
@@ -1350,12 +1475,12 @@
     <div class="hud-center-controls">
       <select class="hud-role-selector" id="roleSelectorHud" onchange="switchHudRole(this.value)" aria-label="業務ロール切替">
         <option value="R01">役職: R01 代表取締役 (全権統括・印章決済)</option>
-        <option value="R02">役職: R02 店長・営業責任者 (査定・銀行融資承認)</option>
-        <option value="R03" selected>役職: R03 総合営業担当 (売買/賃貸/REINS/海外)</option>
-        <option value="R04">役職: R04 宅地建物取引士 (調査/重説/契約作成)</option>
-        <option value="R05">役職: R05 賃貸管理・修繕担当 (家賃/更新/原状回復)</option>
-        <option value="R06">役職: R06 経理・税務担当 (入金/ローン/税理士連携)</option>
-        <option value="R07">役職: R07 人事・総務・システム管理 (採用/車両/権限)</option>
+        <option value="R02">役職: R02 店長・営業責任者 (査定・01-9/10部長承認)</option>
+        <option value="R03" selected>役職: R03 総合営業担当 (売買/賃貸/REINS/03-17挨拶)</option>
+        <option value="R04">役職: R04 宅地建物取引士 (07/08調査重説・07-13契約作成)</option>
+        <option value="R05">役職: R05 賃貸管理・修繕担当 (10管理・11修繕・13退去精算)</option>
+        <option value="R06">役職: R06 経理・税務担当 (12入金歩合・14税理士窓口)</option>
+        <option value="R07">役職: R07 人事・総務・システム管理 (15採用・16備品・18権限)</option>
       </select>
 
       <div class="theme-pill-group" role="group" aria-label="主体色彩テーマ切替">
@@ -1423,7 +1548,7 @@
               </div>
 
               <div class="sop-timeline-step">
-                <span class="step-badge">REQ-01</span>
+                <span class="step-badge">02-4/7</span>
                 <div class="step-info">
                   <div class="step-title">担当自主確認チェックリスト (初期見積・契約書類)</div>
                   <div class="step-desc">会社標準チェックリストにより担当者自身が提出前に100%自主点検</div>
@@ -1431,7 +1556,7 @@
               </div>
 
               <div class="sop-timeline-step">
-                <span class="step-badge">REQ-02</span>
+                <span class="step-badge">02-9</span>
                 <div class="step-info">
                   <div class="step-title">案内車両 予約時間表 (社用車1〜3号 予約制)</div>
                   <div class="step-desc">09:00〜20:00 時間軸マトリクスで全員予約制・重複防止</div>
@@ -1439,18 +1564,18 @@
               </div>
 
               <div class="sop-timeline-step">
-                <span class="step-badge">09-12</span>
+                <span class="step-badge">01-9/10</span>
                 <div class="step-info">
-                  <div class="step-title">銀行融資双軌確認 (担当自主＋部長承認) ＆ 決済</div>
-                  <div class="step-desc">ローン審査は担当または部長確認・精算書及び入金は経理連携</div>
+                  <div class="step-title">銀行融資双軌確認 (担当自主＋部長承認) ＆ 02-13決済</div>
+                  <div class="step-desc">01-9/10・04-9ローン審査は担当または部長確認・02-13決済日程調整</div>
                 </div>
               </div>
 
               <div class="sop-timeline-step">
-                <span class="step-badge">REQ-05</span>
+                <span class="step-badge">03-17</span>
                 <div class="step-info">
-                  <div class="step-title">17 定期顧客あいさつ CRM リマインダー</div>
-                  <div class="step-desc">引渡後1ヶ月・半年・1年・季節挨拶の自動通知＆履歴記録</div>
+                  <div class="step-title">03-17 定期顧客あいさつ CRM リマインダー</div>
+                  <div class="step-desc">引渡後1ヶ月・半年・1年・季節挨拶の自動通知＆履歴記録 (17は剪定)</div>
                 </div>
               </div>
             </div>
@@ -1511,18 +1636,18 @@
                 <text x="206" y="166" font-size="8.5" fill="#f87171" font-family="monospace">IV. 宅建重説スタジオ</text>
               </svg>
 
-              <!-- 核心业务指标面板 -->
+              <!-- 核心业务指标面板（脱敏構造指標） -->
               <div class="crm-kpi-grid">
                 <div class="crm-kpi-box">
-                  <span class="kpi-label">売買・賃貸在案総額</span>
-                  <span class="kpi-value">¥28.6億</span>
+                  <span class="kpi-label">要件定義網羅項目</span>
+                  <span class="kpi-value">288項目</span>
                 </div>
                 <div class="crm-kpi-box">
-                  <span class="kpi-label">自主チェック・車両予約</span>
+                  <span class="kpi-label">02-4/7確認・02-9車両</span>
                   <span class="kpi-value">14件 / 3台</span>
                 </div>
                 <div class="crm-kpi-box">
-                  <span class="kpi-label">宅建重説・定期挨拶</span>
+                  <span class="kpi-label">07-13重説契約・03-17挨拶</span>
                   <span class="kpi-value">100% 稼働</span>
                 </div>
               </div>
@@ -1555,32 +1680,32 @@
             <div class="doc-vault-list">
               <div class="doc-vault-item">
                 <div class="doc-item-left">
-                  <div class="doc-item-title">07-08 宅建士 物件調査・重説・契約書作成</div>
-                  <div class="doc-item-sub">13契約書作成は宅建士が一括担当・営業と直接重説日程確認</div>
+                  <div class="doc-item-title">07/08 宅建士 物件調査・重説・07-13契約書作成</div>
+                  <div class="doc-item-sub">07-13契約書作成は宅建士が一括担当・02-8営業と直接重説日程確認</div>
                 </div>
                 <span class="doc-status-tag">宅建士専管</span>
               </div>
 
               <div class="doc-vault-item">
                 <div class="doc-item-left">
-                  <div class="doc-item-title">10-11 賃貸管理・修繕・オーナー送金精算</div>
-                  <div class="doc-item-sub">家賃入金消込・督促・退去立会・原状回復見積・工事手配</div>
+                  <div class="doc-item-title">10/11/13 賃貸管理・修繕・退去原状回復精算</div>
+                  <div class="doc-item-sub">10契約更新・11修繕手配・13退去立会/敷金精算/オーナー送金</div>
                 </div>
                 <span class="doc-status-tag">賃貸管理部</span>
               </div>
 
               <div class="doc-vault-item">
                 <div class="doc-item-left">
-                  <div class="doc-item-title">12-14 経理入金確認・ローン精算・税理士連携</div>
-                  <div class="doc-item-sub">仲介手数料入金・領収書発行・月次試算表・インボイス監査</div>
+                  <div class="doc-item-title">12/14 経理入金確認・営業歩合・税理士窓口連携</div>
+                  <div class="doc-item-sub">12仲介手数料入金/歩合計算/経費精算・14税理士月次資料共有</div>
                 </div>
                 <span class="doc-status-tag">経理・税務</span>
               </div>
 
               <div class="doc-vault-item">
                 <div class="doc-item-left">
-                  <div class="doc-item-title">15-18 人事採用・総務車両備品・外部士業連携</div>
-                  <div class="doc-item-sub">司法書士/測量士手配(営業)・宅建免許/システム権限(総務)</div>
+                  <div class="doc-item-title">15/16/18 人事採用・総務備品車両・情報システム権限</div>
+                  <div class="doc-item-sub">15採用労務・16備品/反社チェック・18アカウント/権限/ログ管理</div>
                 </div>
                 <span class="doc-status-tag">総務・全社</span>
               </div>
@@ -1624,53 +1749,53 @@
     <!-- 移动端画卷模式 (Mobile Responsive Dossier Stream) -->
     <div class="mobile-dossier-stream" id="dossierStream">
       <div class="dossier-lead-banner">
-        <h2 class="dossier-lead-title">株式会社センティス 空間業務一覧</h2>
-        <p class="dossier-lead-subtitle">タップして各業務モジュールを即座に起動できます</p>
+        <h2 class="dossier-lead-title">株式会社センティス 羅針盤業務中枢 (v2.0)</h2>
+        <p class="dossier-lead-subtitle" id="mobileRoleStatusBanner">R03 総合営業担当 · 18有効業務分類・288項目稼働中</p>
       </div>
 
       <!-- 卡片 1: 业务台账 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">基幹業務システム // 02</span>
-          <h3 class="dossier-card-title">不動産売買業務統合台帳 (CRM)</h3>
+          <span class="dossier-tag-pill">基幹業務システム // 01〜18 (06/17剪定)</span>
+          <h3 class="dossier-card-title">不動産統合業務台帳 (拓扑D/C/B・3色彩対応)</h3>
           <p class="dossier-card-desc">
-            顧客カルテ・物件データベース・重要事項調査・契約決済パイプラインを一元即時照会。
+            01〜05売買賃貸一貫・02-4/7担当自主確認・02-9案内車両予約・07-13宅建士契約作成・03-17定期挨拶を一元照会。
           </p>
-          <a href="./prototype-crm.html" class="btn-dossier-action">台帳システム起動</a>
+          <a href="./prototype-crm.html" class="btn-dossier-action">統合業務台帳を起動</a>
         </div>
       </article>
 
       <!-- 卡片 2: 白板 SOP -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">標準業務規範 // 01</span>
-          <h3 class="dossier-card-title">不動産売買仲介 標準業務6大工程 (SOP)</h3>
+          <span class="dossier-tag-pill">v2.0 要件定義 // 288項目</span>
+          <h3 class="dossier-card-title">売買・賃貸一貫進捗 ＆ 7ロール責任分担 (SOP)</h3>
           <p class="dossier-card-desc">
-            集客反響から物件調査、重要事項説明(35条)、売買契約(37条)、金消、残金決済引渡までの一貫標準。
+            02-4/7自主チェックリスト、02-8重説直接調整、02-9車両時間表、01-9/10融資双軌確認、03-17定期顧客挨拶。
           </p>
-          <button type="button" class="btn-dossier-action" onclick="openSopModal()">業務SOP仕様確認</button>
+          <button type="button" class="btn-dossier-action" onclick="openSopModal()">v2.0 業務要件・役割分担を確認</button>
         </div>
       </article>
 
       <!-- 卡片 3: 法定账簿公文档案柜 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">法定帳簿・公文書管理 // 03</span>
-          <h3 class="dossier-card-title">法定帳簿・重要取引公文書架</h3>
+          <span class="dossier-tag-pill">宅建士・管理・経理・総務 // 07〜18</span>
+          <h3 class="dossier-card-title">07-13契約作成・10/11/13賃貸・12/14経理</h3>
           <p class="dossier-card-desc">
-            宅建業法第49条法定帳簿、35条重要事項説明書原本、37条売買契約書原本、登記公図。
+            宅建業法第49条法定帳簿、35条重要事項説明書原本、07-13売買賃貸契約書作成（宅建士専管）、14税理士窓口連携。
           </p>
-          <button type="button" class="btn-dossier-action" onclick="openArchiveModal()">公文書架を展開</button>
+          <button type="button" class="btn-dossier-action" onclick="openArchiveModal()">公文書架・部門連携を展開</button>
         </div>
       </article>
 
       <!-- 卡片 4: 宅建士法令审查 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">法令遵守統制 // 04</span>
+          <span class="dossier-tag-pill">法令遵守統制 // 07・08</span>
           <h3 class="dossier-card-title">専任宅建士・公印審査デスク</h3>
           <p class="dossier-card-desc">
-            法定35条・37条書面の専任宅地建物取引士記名押印規程、適法性審査チェックリスト。
+            法定35条・37条書面の専任宅地建物取引士記名押印規程、07-1〜13調査・契約作成および08-1〜5重説適法性審査。
           </p>
           <button type="button" class="btn-dossier-action" onclick="openSealModal()">法令審査基準表示</button>
         </div>
@@ -1679,10 +1804,10 @@
       <!-- 卡片 5: 全社业务总览门户 -->
       <article class="dossier-card">
         <div class="dossier-card-body">
-          <span class="dossier-tag-pill">全社統括ポータル</span>
-          <h3 class="dossier-card-title">全社成果物総覧看板</h3>
+          <span class="dossier-tag-pill">全社統括ポータル // DEL-01〜08</span>
+          <h3 class="dossier-card-title">全社成果物・v2.0要件定義総覧看板</h3>
           <p class="dossier-card-desc">
-            内部基幹システム策定・DEL-01~04 成果物総覧ポータルへ移動。
+            DEL-08 システム要件定義書（全288項目）および DEL-01〜04 成果物総覧ポータルへ移動。
           </p>
           <a href="./index.html" class="btn-dossier-action">全社ポータルを開く</a>
         </div>
@@ -1694,52 +1819,52 @@
        3. Modals: SOP 白板仕様ダイアログ
        ====================================================================== -->
   <div class="drawer-overlay" id="sopModalOverlay" onclick="handleOverlayClick(event, 'sopModalOverlay')">
-    <div class="drawer-dialog" role="dialog" aria-modal="true" aria-label="不動産売買仲介 標準業務6大工程 (SOP)">
+    <div class="drawer-dialog" role="dialog" aria-modal="true" aria-label="SENTIS v2.0 業務要件・7ロール責任分担 (全288項目)">
       <div class="drawer-header">
         <div class="drawer-header-title-group">
-          <span class="drawer-badge">STANDARD OPERATING PROCEDURE</span>
-          <h3 class="drawer-header-title">不動産売買仲介 標準業務6大工程 (SOP)</h3>
+          <span class="drawer-badge">SENTIS REALTY CORE v2.0 // 288 ITEMS SOP</span>
+          <h3 class="drawer-header-title">売買・賃貸一貫進捗 ＆ 7ロール責任分担 (v2.0)</h3>
         </div>
         <button type="button" class="btn-dialog-close" onclick="closeSopModal()">閉じる</button>
       </div>
       <div class="drawer-body">
-        <p>株式会社センティスにおける国内実需・投資用不動産売買仲介の標準業務フローです。専任宅建士によるコンプライアンス管理のもと、全6工程で品質管理を徹底します。</p>
+        <p>株式会社センティス実務フィードバック（全20ページ・288項目、06現在なし・17いらない剪定済）に基づく18有効業務分類の標準運用プロトコルです。</p>
         
         <div class="sop-flow-grid">
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 01</div>
-            <div class="sop-step-name">集客・反響初動</div>
-            <div class="sop-step-detail">ポータルサイト・小紅書・紹介反響の即時ヒアリング。購入希望条件の精査および資金計画予備審査。</div>
+            <div class="sop-step-num">01〜05 営業一貫</div>
+            <div class="sop-step-name">売買・賃貸・REINS・海外一貫対応</div>
+            <div class="sop-step-detail">01〜05の反響受付・来店・査定・媒介契約・REINS登録・マイソク図面作成は担当営業が一貫して直轄遂行。</div>
           </div>
 
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 02</div>
-            <div class="sop-step-name">物件調査・査定</div>
-            <div class="sop-step-detail">役所調査（都市計画・建築確認）、法務局登記情報、現地現況確認、インフラ配管調査の実施。</div>
+            <div class="sop-step-num">02-4 / 02-7 自主点検</div>
+            <div class="sop-step-name">担当自主確認チェックリスト</div>
+            <div class="sop-step-detail">02-4初期費用見積・02-7契約必要書類は独立承認ゲート（06）を設けず、会社標準チェックリストで担当者自身が100%自主確認。</div>
           </div>
 
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 03</div>
-            <div class="sop-step-name">重要事項説明 (35条)</div>
-            <div class="sop-step-detail">専任宅建士による重要事項説明書の作成・法令適合審査。取引士証提示のうえ買主へ対面・IT重説実施。</div>
+            <div class="sop-step-num">02-8 / 07-13 / 08</div>
+            <div class="sop-step-name">宅建士調査・重説・07-13契約書作成</div>
+            <div class="sop-step-detail">07-13契約書作成および08-1〜5重説は宅建士が専管。02-8重説日程は営業担当が宅建士と直接確認して即時確定。</div>
           </div>
 
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 04</div>
-            <div class="sop-step-name">売買契約締結 (37条)</div>
-            <div class="sop-step-detail">売買契約書の締結、手付金の受受、特約条項確認、専任宅建士による37条書面への記名押印。</div>
+            <div class="sop-step-num">02-9 車両予約制</div>
+            <div class="sop-step-name">案内車両 予約時間表 (09:00〜20:00)</div>
+            <div class="sop-step-detail">内見案内用の社用車（1〜3号車）は時間表マトリクスによる全員予約制を採用し、重複ブッキングを防止。</div>
           </div>
 
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 05</div>
-            <div class="sop-step-name">住宅ローン・金消契約</div>
-            <div class="sop-step-detail">金融機関との金銭消費貸借契約締結、司法書士手配、抵当権設定手続及び決済日程の確定調整。</div>
+            <div class="sop-step-num">01-9/10・04-9・02-13</div>
+            <div class="sop-step-name">銀行融資双軌確認 ＆ 決済日程調整</div>
+            <div class="sop-step-detail">銀行ローン事前審査・本申込は担当自主確認または部長承認の双軌制。02-13決済日変更は銀行・司法書士と即時連動。</div>
           </div>
 
           <div class="sop-step-card">
-            <div class="sop-step-num">STEP 06</div>
-            <div class="sop-step-name">残金決済・登記引渡</div>
-            <div class="sop-step-detail">残代金決済、固定資産税等精算、所有権移転登記申請、鍵の引渡し及び仲介手数料の受領完了。</div>
+            <div class="sop-step-num">03-17 定期顧客挨拶</div>
+            <div class="sop-step-name">引渡後 定期顧客あいさつ CRM (17剪定)</div>
+            <div class="sop-step-detail">独立17モジュールは廃止し、03-17として引渡後1ヶ月・半年・1年・季節挨拶リマインダーを担当営業が継続実施。</div>
           </div>
         </div>
       </div>
@@ -1844,10 +1969,10 @@
     let nexusTime = 0;
 
     const metroNodes = [
-      { name: "GINZA 6-CHOME", val: "¥8.4億", xRatio: 0.22, yRatio: 0.42 },
-      { name: "TORANOMON", val: "¥5.2億", xRatio: 0.78, yRatio: 0.32 },
-      { name: "ROPPONGI 3-CHOME", val: "¥12.5億", xRatio: 0.44, yRatio: 0.74 },
-      { name: "AOYAMA 5-CHOME", val: "¥9.6億", xRatio: 0.84, yRatio: 0.68 }
+      { name: "GINZA 6-CHOME", val: "01〜05 一貫", xRatio: 0.22, yRatio: 0.42 },
+      { name: "TORANOMON", val: "02-4/7 自主確認", xRatio: 0.78, yRatio: 0.32 },
+      { name: "ROPPONGI 3-CHOME", val: "07-13 契約作成", xRatio: 0.44, yRatio: 0.74 },
+      { name: "AOYAMA 5-CHOME", val: "03-17 定期挨拶", xRatio: 0.84, yRatio: 0.68 }
     ];
 
     function resizeNexusCanvas() {
@@ -1867,7 +1992,8 @@
       if (!nexusCtx) return;
       nexusTime += 0.008;
 
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const isLight = currentTheme === 'light' || currentTheme === 'washi';
       const cWidth = nexusWidth;
       const cHeight = nexusHeight;
 
@@ -1995,13 +2121,13 @@
     const THEME_ORDER = ['navy', 'washi', 'walnut', 'forest'];
 
     const ROLE_DESCRIPTIONS = {
-      R01: 'R01 代表取締役 (全権統括・印章決済・経営ダッシュボード)',
-      R02: 'R02 店長・営業責任者 (査定・銀行融資部長承認・成約統括)',
-      R03: 'R03 総合営業担当 (売買・賃貸・REINS・海外一貫・自主チェック)',
-      R04: 'R04 宅地建物取引士 (07調査・08重説・13契約書作成・直接日程調整)',
-      R05: 'R05 賃貸管理・修繕担当 (10家賃入金/更新・11退去/原状回復見積)',
-      R06: 'R06 経理・税務担当 (12決済入金/領収書・14月次試算表/税理士連携)',
-      R07: 'R07 人事・総務・システム管理 (15採用労務・16車両備品/免許/権限)'
+      R01: 'R01 代表取締役 (全権統括・印章決済・全288項目監査)',
+      R02: 'R02 店長・営業責任者 (査定・01-9/10・04-9融資部長承認)',
+      R03: 'R03 総合営業担当 (01〜05一貫・02-4/7自主確認・03-17挨拶)',
+      R04: 'R04 宅地建物取引士 (07調査・08重説・07-13契約作成・02-8直接調整)',
+      R05: 'R05 賃貸管理・修繕担当 (10契約管理・11修繕・13退去精算)',
+      R06: 'R06 経理・税務担当 (12手数料入金/歩合・14税理士窓口連携)',
+      R07: 'R07 人事・総務・システム管理 (15採用労務・16備品車両・18権限)'
     };
 
     function applyStyleTheme(theme) {
@@ -2033,6 +2159,10 @@
       const statusEl = document.getElementById('hudRoleStatus');
       if (statusEl && ROLE_DESCRIPTIONS[roleCode]) {
         statusEl.textContent = ROLE_DESCRIPTIONS[roleCode];
+      }
+      const mobileStatusEl = document.getElementById('mobileRoleStatusBanner');
+      if (mobileStatusEl && ROLE_DESCRIPTIONS[roleCode]) {
+        mobileStatusEl.textContent = ROLE_DESCRIPTIONS[roleCode];
       }
       const sel = document.getElementById('roleSelectorHud');
       if (sel && sel.value !== roleCode) sel.value = roleCode;

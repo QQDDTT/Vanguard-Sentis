@@ -1307,7 +1307,7 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
         </ol>
 
         <h2>八、 精工雕琢罗盘（Horology Guilloché）× 4大画面拓扑 × 3+1主体色彩落地导览</h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:18px; margin:20px 0;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:18px; margin:20px 0;">
           <div style="border:1px solid #cbd5e1; border-radius:8px; overflow:hidden; background:#fff;">
             <img src="./assets/office/v2_topo_a_navy.jpg" alt="Topology A Navy" style="width:100%; height:220px; object-fit:cover; display:block;" />
             <div style="padding:12px 14px;">

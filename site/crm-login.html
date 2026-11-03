@@ -610,22 +610,46 @@
     /* 移动端响应式微调 */
     @media (max-width: 640px) {
       .spatial-top-coordinate-hud {
-        left: 16px;
-        right: 16px;
-        top: 16px;
+        left: 12px;
+        right: 12px;
+        top: 10px;
         font-size: 9.5px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        padding-bottom: 8px;
+      }
+      .login-theme-pills {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+        width: 100%;
+      }
+      .btn-login-theme {
+        min-height: 44px;
+        padding: 4px 2px;
+        font-size: 10px;
+        text-align: center;
+      }
+      .role-select-control {
+        min-height: 44px;
+      }
+      .btn-quick-sync {
+        min-height: 44px;
       }
       .spatial-monolith-terminal {
-        margin: 0 16px;
-        padding: 28px 20px;
+        margin: 56px 12px 0;
+        padding: 20px 16px;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
       }
       .spatial-geometric-compass {
-        width: 360px;
-        height: 360px;
+        width: 320px;
+        height: 320px;
       }
-      .ring-outer-grid { width: 340px; height: 340px; }
-      .ring-mid-ticks { width: 280px; height: 280px; }
-      .ring-inner-axis { width: 200px; height: 200px; }
+      .ring-outer-grid { width: 300px; height: 300px; }
+      .ring-mid-ticks { width: 240px; height: 240px; }
+      .ring-inner-axis { width: 180px; height: 180px; }
     }
   </style>
 </head>
@@ -691,13 +715,13 @@
         <div class="auth-input-group" style="margin-bottom: 14px;">
           <label for="loginRoleSelect" class="auth-input-label">ROLE SELECTION // 7大執務ロール選択</label>
           <select id="loginRoleSelect" class="role-select-control" onchange="localStorage.setItem('SENTIS_CRM_ROLE', this.value)">
-            <option value="R03" selected>R03 総合営業担当 (売買・賃貸・REINS・海外一貫)</option>
-            <option value="R04">R04 宅地建物取引士 (07調査・08重説・13契約書作成)</option>
+            <option value="R03" selected>R03 総合営業担当 (01〜05一貫・02-4/7確認・03-17挨拶)</option>
+            <option value="R04">R04 宅地建物取引士 (07調査・08重説・07-13契約書作成)</option>
             <option value="R01">R01 代表取締役 (阿部 翔平 · 全権統括・印章決済)</option>
-            <option value="R02">R02 店長・営業責任者 (査定・銀行融資部長承認)</option>
-            <option value="R05">R05 賃貸管理・修繕担当 (10管理・11退去/原状回復)</option>
-            <option value="R06">R06 経理・税務担当 (12決済入金・14税理士連携)</option>
-            <option value="R07">R07 人事・総務・システム管理 (15採用・16車両/権限)</option>
+            <option value="R02">R02 店長・営業責任者 (査定・01-9/10・04-9融資部長承認)</option>
+            <option value="R05">R05 賃貸管理・修繕担当 (10契約管理・11修繕・13退去精算)</option>
+            <option value="R06">R06 経理・税務担当 (12手数料入金/歩合・14税理士連携)</option>
+            <option value="R07">R07 人事・総務・システム管理 (15採用・16備品車両・18権限)</option>
           </select>
 
           <label for="doorPassword" class="auth-input-label">ACCESS KEY // 認証暗証番号</label>
