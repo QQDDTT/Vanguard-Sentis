@@ -235,9 +235,9 @@
                       <td><strong>ST-26-101</strong></td>
                       <td><span class="v2-tag-pill v2-tag-sale">04 売買仲介</span></td>
                       <td>千代田区神田錦町 1棟ビル<br><span style="font-size:10.5px; color:#666;">買主: 鈴木HD様 (担当: 小林)</span></td>
-                      <td><strong>¥165,000,000</strong></td>
+                      <td><strong>[売買価格Tier-S・脱敏済]</strong></td>
                       <td>09-6 REINS登録済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-4/7 担当Checklist済</span></td>
-                      <td>SMBC 1.4億円 (01-9/10)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
+                      <td>SMBC 事業融資枠 (01-9/10)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
                       <td>07-13 宅建士作成完 (能勢)<br>02-8 直約: 11/06 14:00重説</td>
                       <td><span class="v2-mini-hanko">能勢<br>検印</span></td>
                     </tr>
@@ -245,7 +245,7 @@
                       <td><strong>ST-26-102</strong></td>
                       <td><span class="v2-tag-pill v2-tag-lease">05 賃貸仲介</span></td>
                       <td>港区六本木3丁目 レジデンス<br><span style="font-size:10.5px; color:#666;">借主: 渡辺 健太 様 (担当: 小林)</span></td>
-                      <td><strong>¥480,000 / 月</strong></td>
+                      <td><strong>[月額賃料Tier-A・脱敏済]</strong></td>
                       <td>05-7 初期費用明細済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-4 担当自分確認済</span></td>
                       <td>05-4 保証会社承認済<br><span style="color:#1e6b45; font-weight:700;">05-12 鍵引渡前条件充足</span></td>
                       <td>07-13 賃貸契約・重説作成済<br>02-9 車両1号 13:00案内予約</td>
@@ -255,7 +255,7 @@
                       <td><strong>ST-26-103</strong></td>
                       <td><span class="v2-tag-pill v2-tag-overseas">04/19 海外売買</span></td>
                       <td>中央区銀座6丁目 商業区分<br><span style="font-size:10.5px; color:#666;">買主: 陳様 (19-3 原語/漢字照合済)</span></td>
-                      <td><strong>¥285,000,000</strong></td>
+                      <td><strong>[売買価格Tier-SS・脱敏済]</strong></td>
                       <td>09-4 中国語広告・19-1翻訳済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-7 必要書類担当確認済</span></td>
                       <td>19-8/14-4 非居住者税務確認<br><span style="color:#b45309; font-weight:700;">担当確認済 / 部長確認待</span></td>
                       <td>07-8 IT重説 (Zoom) 直約済<br>20-1/2 司法書士・税理士連携</td>
@@ -265,7 +265,7 @@
                       <td><strong>ST-26-104</strong></td>
                       <td><span class="v2-tag-pill v2-tag-sale">04 売買仲介</span></td>
                       <td>板橋区中丸町 中古一戸建<br><span style="font-size:10.5px; color:#666;">買主: 鈴木 隆一 様 (担当: 小林)</span></td>
-                      <td><strong>¥52,000,000</strong></td>
+                      <td><strong>[売買価格Tier-A・脱敏済]</strong></td>
                       <td>09-2 間取図・02-4見積済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-13 決済日程担当調整済</span></td>
                       <td>みずほ銀行 本審査 (04-9)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
                       <td>07-7 法定記名押印・交付完<br>03-17 引渡後定期挨拶登録済</td>
@@ -275,7 +275,7 @@
                       <td><strong>ST-26-105</strong></td>
                       <td><span class="v2-tag-pill v2-tag-lease">10/11/13 受託管理</span></td>
                       <td>練馬区豊玉北 1棟マンション<br><span style="font-size:10.5px; color:#666;">オーナー: 佐藤資産管理様 (全18戸)</span></td>
-                      <td><strong>¥1,920,000 / 月</strong></td>
+                      <td><strong>[管理総賃料Tier-M・脱敏済]</strong></td>
                       <td>13-2 家賃入金消込完<br><span style="color:#1e6b45; font-weight:700;">✓ 11-8 302号室修繕検収済</span></td>
                       <td>13-6 月次収支精算書作成<br><span style="color:#1e6b45; font-weight:700;">R05賃貸管理＋R06経理確認</span></td>
                       <td>10-12 更新契約2件・13-8敷金照合<br><span style="font-size:10px; color:#666;">(※10-18定期報告書は省略)</span></td>
@@ -403,9 +403,9 @@
               <span class="v2-frame-badge">REQ-SP-06</span>
             </div>
             <div class="v2-washi-sheet" style="font-size:12px; line-height:1.65;">
-              <div><strong>・SMBC 融資 (神田錦町 1.4億)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
-              <div><strong>・みずほ本審査 (板橋戸建 4,800万)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
-              <div><strong>・非居住者決済 (銀座商業 2.85億)</strong>：<span style="color:#b45309; font-weight:700;">[担当自分確認: 済] [部長確認: 本日決裁]</span></div>
+              <div><strong>・SMBC 融資 (神田錦町・融資枠Tier-S)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
+              <div><strong>・みずほ本審査 (板橋戸建・融資枠Tier-A)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
+              <div><strong>・非居住者決済 (銀座商業・融資枠Tier-SS)</strong>：<span style="color:#b45309; font-weight:700;">[担当自分確認: 済] [部長確認: 本日決裁]</span></div>
             </div>
           </div>
 

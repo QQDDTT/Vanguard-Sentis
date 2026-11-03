@@ -181,6 +181,7 @@
     html, body {
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       background-color: var(--void-bg);
       font-family: var(--font-sans);
@@ -1139,7 +1140,12 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: var(--text-secondary);
       font-size: 12px;
-      padding: 5px 12px;
+      padding: 6px 12px;
+      min-width: 46px;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 3px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -1209,6 +1215,11 @@
 
     .btn-modal-action-primary {
       padding: 8px 18px;
+      min-height: 46px;
+      min-width: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: var(--gold-primary);
       color: #07080b;
       font-weight: 700;
@@ -1226,6 +1237,11 @@
 
     .btn-modal-action-secondary {
       padding: 8px 16px;
+      min-height: 46px;
+      min-width: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: transparent;
       color: var(--text-secondary);
       font-size: 12.5px;

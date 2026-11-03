@@ -408,9 +408,10 @@
 
 .v2-check-row {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 8px 10px;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  min-height: 44px;
   background: var(--v2-card-inlay);
   color: var(--v2-inlay-text);
   border: 1px solid rgba(158, 123, 47, 0.28);
@@ -421,12 +422,43 @@
   word-break: break-word;
 }
 .v2-check-row input[type="checkbox"] {
-  margin-top: 2px;
-  width: 16px;
-  height: 16px;
-  accent-color: #1e6b45;
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   cursor: pointer;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  position: relative;
+}
+.v2-check-row input[type="checkbox"]::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #1e6b45;
+  border-radius: 3px;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+.v2-check-row input[type="checkbox"]:checked::before {
+  background: #1e6b45;
+  border-color: #1e6b45;
+}
+.v2-check-row input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
 }
 
 /* ==========================================================================

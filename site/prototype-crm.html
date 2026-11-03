@@ -570,6 +570,7 @@
       padding: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       background-color: var(--desk-base);
       color: var(--ink-dark);
@@ -591,6 +592,7 @@
       flex-direction: column;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       background: var(--desk-gradient);
       position: relative;
@@ -1829,18 +1831,30 @@
     }
 
     @media (max-width: 768px) {
-      /* 1. Header 緊湊布局 */
+      /* 1. Header 緊湊布局 (Momus >= 44x44px 触控鉄律準拠) */
       .office-header {
-        padding: 0 8px;
-        height: 48px;
-        min-height: 48px;
-        gap: 6px;
+        padding: 0 6px;
+        height: 52px;
+        min-height: 52px;
+        gap: 4px;
+      }
+      .header-branding {
+        gap: 4px;
       }
       .brand-titles {
         gap: 0;
       }
       .company-name {
-        font-size: 13px;
+        font-size: 12.5px;
+      }
+      .brand-logo-link {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       .brand-logo-img {
         width: 26px;
@@ -1850,7 +1864,7 @@
         display: none !important;
       }
       .user-profile-badge {
-        padding: 2px 4px;
+        padding: 2px;
         background: transparent;
         border: none;
       }
@@ -1860,22 +1874,50 @@
         font-size: 9.5px;
       }
       .header-user-section {
-        gap: 6px;
+        gap: 4px;
       }
+      .btn-office-action,
       .btn-theme-toggle {
-        width: 26px;
-        height: 24px;
-        padding: 0;
-        font-size: 12px;
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        padding: 0 !important;
+        font-size: 14px;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .drawer-pin-btn,
+      .drawer-close-btn {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .quick-action-btn {
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .ai-input-text {
+        min-height: 44px !important;
+      }
+      .ai-send-btn {
+        min-width: 56px !important;
+        min-height: 44px !important;
       }
 
       /* 2. ドロワーと遮光幕の位置補正 */
       .drawer-backdrop {
-        top: 48px;
+        top: 52px;
         bottom: 30px;
       }
       .office-sidebar-drawer, .ai-agent-drawer {
-        top: 48px;
+        top: 52px;
         bottom: 30px;
         width: 86vw;
         max-width: 320px;
@@ -1975,18 +2017,21 @@
       }
       .interactive-stamp-btn {
         width: 100%;
+        min-height: 44px;
         justify-content: center;
         padding: 8px 12px;
       }
 
-      /* 8. ハンドル：移動端触控最適化・タップ領域拡張 */
+      /* 8. ハンドル：移動端触控最適化・タップ領域拡張 (>= 44x44px) */
       .btn-menu-drawer {
         display: inline-flex !important;
         margin-right: 2px;
       }
       .binder-index-handle {
-        width: 32px;
-        height: 44px;
+        width: 44px !important;
+        height: 48px !important;
+        min-width: 44px !important;
+        min-height: 48px !important;
         opacity: 0.95;
         border-radius: 0 8px 8px 0;
         box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.35);
@@ -2005,8 +2050,10 @@
         font-size: 17px;
       }
       .ai-agent-handle {
-        width: 32px;
-        height: 44px;
+        width: 44px !important;
+        height: 48px !important;
+        min-width: 44px !important;
+        min-height: 48px !important;
         opacity: 0.95;
         border-radius: 8px 0 0 8px;
         box-shadow: -2px 3px 12px rgba(0, 0, 0, 0.35);
@@ -2027,9 +2074,9 @@
 
       /* 9. フッター下部 */
       .office-footer {
-        height: 30px;
+        height: auto;
         min-height: 30px;
-        padding: 0 8px;
+        padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
         gap: 6px;
       }
       .footer-status-pills {
@@ -2040,15 +2087,10 @@
         font-size: 10px;
         padding: 2px 6px;
         border-radius: 2px;
-        max-width: calc(100% - 68px);
+        max-width: 100%;
       }
       .footer-tools {
-        gap: 4px;
-      }
-      .btn-footer-link {
-        width: 24px;
-        height: 22px;
-        font-size: 12px;
+        display: none !important;
       }
     }
   </style>
@@ -2194,44 +2236,44 @@
           </div>
 
           <!-- ==============================================================
-               モジュール 1：商談・反響受付台帳
+               モジュール 1：01〜05・09・19 総合営業（売買・賃貸・REINS・海外・02-4/7自主確認）台帳
                ============================================================== -->
           <section id="mod-consult" class="module-pane active">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>01</span> 商談・反響受付台帳
-                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">当番確認済</span>
+                  <span>01〜05</span> 商談・反響・売買04・賃貸05・海外19 統合営業台帳
+                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">02-4/7自査済</span>
                 </h2>
-                <p class="paper-title-desc">ポータル反響（SUUMO / HOME'S）、電話受電、初回来店ヒアリング及び媒介委託記録台帳</p>
+                <p class="paper-title-desc">顧客赤字反映：③と④同一営業・賃貸と売買兼任・02-4見積/02-7契約書類の担当者自分確認Checklist・09 REINS/中英広告</p>
               </div>
               <div class="dossier-code-meta">
-                文書番号: ST-CNS-202610-008<br>
-                法定保存: 5年間 (宅建業法第49条)
+                文書番号: ST-CNS-202611-288<br>
+                法定保存: 5年間 (宅建業法第49条 / APPI脱敏済)
               </div>
             </div>
 
             <div class="section-cards-grid">
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">📞 本日受電・接客進行状況</span>
+                  <span class="paper-card-title">📞 03/04/05 総合営業（売買・賃貸兼任）進行状況</span>
                   <span class="hanko-stamp green" style="width:40px; height:40px; font-size:9px;">完結</span>
                 </div>
-                <p style="font-size:12px; color:#555;">累計受電記録：<strong>14 件</strong> ｜ 現地内覧手配：<strong>5 組</strong> ｜ 買付証明受領：<strong>2 件</strong></p>
+                <p style="font-size:12px; color:#555;">累計反響対応：<strong>14 件</strong> ｜ 02-9 車両予約内見：<strong>5 組</strong> ｜ 04-6 買付/05-2 賃貸申込：<strong>4 件</strong></p>
                 <div style="margin-top:10px; font-size:12px; background:#faf6ee; padding:8px 10px; border-left:3px solid #8e7a63;">
-                  <strong>最新案件：</strong>新宿区中古戸建（加藤様 / ご予算 7,500万円）、担当小林が公図・登記事項調査着手。
+                  <strong>最新案件：</strong>新宿区中古戸建（加藤様 / 価格帯Tier-A・APPI脱敏済）、担当小林が 02-4 諸費用見積・02-7 必要書類自主確認Checklist完了。
                 </div>
               </div>
 
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">📌 媒介契約 締結待機案件</span>
-                  <span style="color:#b82c2c; font-weight:bold; font-size:12px;">押印待機 2件</span>
+                  <span class="paper-card-title">📌 04-3 媒介契約 ＆ 09 REINS・19 海外顧客対応</span>
+                  <span style="color:#b82c2c; font-weight:bold; font-size:12px;">02-7自査完了</span>
                 </div>
-                <p style="font-size:12px; color:#555;">売主様専任媒介依頼（専任宅建士による調査義務履行確認中）：</p>
+                <p style="font-size:12px; color:#555;">売主様媒介依頼・09-4 中国語広告翻訳・19-3 原語/漢字氏名照合：</p>
                 <ul style="padding-left:18px; font-size:12px; color:#444; margin-top:6px;">
-                  <li>練馬区関町北 マンション（専任媒介契約書・レインズ登録原稿作成中）</li>
-                  <li>世田谷区松原 土地（一般媒介契約書・境界確認図写し受領済）</li>
+                  <li>練馬区関町北 マンション（04-3 専任媒介契約・09-6 REINS登録原稿完了）</li>
+                  <li>中央区銀座 商業区分（19-1 資料翻訳・19-3 パスポート/漢字表記一致確認済）</li>
                 </ul>
               </div>
             </div>
@@ -2242,40 +2284,40 @@
                 <thead>
                   <tr>
                     <th>受付番号</th>
-                    <th>受付日時</th>
-                    <th>依頼主氏名</th>
-                    <th>希望物件種別 / 予算</th>
-                    <th>担当宅建士</th>
-                    <th>商談ステータス</th>
+                    <th>業務区分</th>
+                    <th>依頼主氏名 (APPI脱敏)</th>
+                    <th>希望物件種別 / 価格帯区分</th>
+                    <th>担当営業 / 宅建士</th>
+                    <th>02-4/7 自主確認・進捗</th>
                     <th>公印照合</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>ST-2026-091</td>
-                    <td>10/03 10:15</td>
+                    <td>04 売買仲介</td>
                     <td>鈴木 隆一 様</td>
-                    <td>板橋区中丸町 戸建 / 5,200万円</td>
-                    <td>能勢 秀樹</td>
-                    <td><span style="color:#246a48; font-weight:bold;">買付証明書 提出済</span></td>
+                    <td>板橋区中丸町 戸建 / [価格帯Tier-A・脱敏済]</td>
+                    <td>小林 / 能勢</td>
+                    <td><span style="color:#246a48; font-weight:bold;">04-6 買付受領・02-7 書類自査済</span></td>
                     <td><span class="hanko-stamp" style="width:34px; height:34px; font-size:9px;">能勢</span></td>
                   </tr>
                   <tr>
                     <td>ST-2026-090</td>
-                    <td>10/03 09:30</td>
+                    <td>05 賃貸仲介</td>
                     <td>渡辺 健太 様</td>
-                    <td>中野区区分マンション / 3,800万円</td>
-                    <td>佐々木 健</td>
-                    <td>現地ご案内・融資事前打診</td>
-                    <td><span style="color:#999; font-size:11px;">未押印</span></td>
+                    <td>港区六本木 レジデンス / [賃料Tier-A・脱敏済]</td>
+                    <td>小林 / 能勢</td>
+                    <td>05-7 初期費用明細・02-4 自分確認済</td>
+                    <td><span class="hanko-stamp green" style="width:34px; height:34px; font-size:9px;">営業</span></td>
                   </tr>
                   <tr>
                     <td>ST-2026-089</td>
-                    <td>10/02 16:40</td>
-                    <td>合同会社アクト 様</td>
-                    <td>杉並区 1棟アパート / 1億2,000万円</td>
-                    <td>能勢 秀樹</td>
-                    <td>資金証明書確認・現地精査完了</td>
+                    <td>04/19 海外売買</td>
+                    <td>陳 様 (非居住者)</td>
+                    <td>中央区銀座 商業区分 / [価格帯Tier-SS・脱敏済]</td>
+                    <td>小林 / 能勢</td>
+                    <td>19-3 表記照合・14-4 源泉徴収確認済</td>
                     <td><span class="hanko-stamp" style="width:34px; height:34px; font-size:9px;">能勢</span></td>
                   </tr>
                 </tbody>
@@ -2284,110 +2326,109 @@
           </section>
 
           <!-- ==============================================================
-               モジュール 2：物件台帳・登記原簿
+               モジュール 2：物件台帳・07調査全18項目・08-1〜4調査整理
                ============================================================== -->
           <section id="mod-property" class="module-pane">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>02</span> 物件台帳・登記簿・法規調査原簿
+                  <span>07/08</span> 物件台帳・07専門調査(全18項)・08-1〜4調査整理原簿
                   <span class="hanko-stamp green square" style="font-size:11px; padding:2px 6px;">公図照合済</span>
                 </h2>
-                <p class="paper-title-desc">法務局全部事項証明書、地積測量図、役所都市計画道路・建築確認台帳記載事項照会</p>
+                <p class="paper-title-desc">第7〜8頁 07調査項目(No.1〜18) ＆ 第10頁 08-1〜4(必要/不足書類・登記/役所/管理調査整理) 宅建士統合原簿</p>
               </div>
               <div class="dossier-code-meta">
                 所轄法務局: 東京法務局 板橋出張所<br>
-                更新日時: 令和8年10月03日 登記オンライン照会
+                更新日時: 令和8年11月03日 08-2 登記・役所照会完
               </div>
             </div>
 
             <div class="section-cards-grid">
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">🏡 板橋区中丸町 中古一戸建 (案件C)</span>
-                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px;">査定</span>
+                  <span class="paper-card-title">🏡 板橋区中丸町 中古一戸建 (07調査 No.1〜18)</span>
+                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px;">調査完</span>
                 </div>
                 <div style="font-size:12px; line-height:1.65; color:#444;">
-                  <strong>所在地：</strong>東京都板橋区中丸町14番2号<br>
-                  <strong>土地権利：</strong>所有権（地目：宅地 / 112.40㎡）<br>
-                  <strong>建物構造：</strong>木造スレート葺2階建（延床：98.20㎡ / 平成29年築）<br>
-                  <strong>法令制限：</strong>第1種中高層住居専用地域（建蔽率60% / 容積率200%）<br>
-                  <strong>道路接道：</strong>南側公道 幅員4.8mに間口8.2m接道（セットバック不要）<br>
-                  <strong>査定評価額：</strong>5,180万円 ～ 5,350万円
+                  <strong>07-1〜3 登記/権利/差押：</strong>所有権（甲区・乙区照合済、差押・仮差押なし）<br>
+                  <strong>07-4〜6 都市計画/用途/接道：</strong>第1種中高層住居専用（建蔽60%/容積200%・南側公道4.8m接道）<br>
+                  <strong>07-7〜10 私道/インフラ/境界：</strong>私道負担なし・上下水道/都市ガス完備・07-10 境界標確認済<br>
+                  <strong>07-11〜12 ハザード/告知事項：</strong>水防法浸水想定区域図添付済・心理的/物理的瑕疵なし<br>
+                  <strong>査定評価区分：</strong>[評価額Tier-A・APPI脱敏済]（04-1 査定根拠記録済）
                 </div>
               </div>
 
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">🏢 練馬区豊玉北 区分収益マンション</span>
+                  <span class="paper-card-title">🏢 練馬区豊玉北 区分収益マンション (07-13〜18)</span>
                   <span class="hanko-stamp green" style="width:36px; height:36px; font-size:9px;">適法</span>
                 </div>
                 <div style="font-size:12px; line-height:1.65; color:#444;">
-                  <strong>所在地：</strong>東京都練馬区豊玉北5丁目18番6号<br>
-                  <strong>専有面積：</strong>45.60㎡（壁芯） / バルコニー：6.20㎡<br>
-                  <strong>権利態様：</strong>敷地権（所有権割合 4560/380000）<br>
-                  <strong>修繕積立金：</strong>8,900円/月 ｜ 管理費：6,400円/月<br>
-                  <strong>現況運用：</strong>賃貸中（オーナーチェンジ / 実質利回り 4.8%）
+                  <strong>07-13 マンション規約・ペット/事務所規定：</strong>管理規約写し受領・用途制限確認済<br>
+                  <strong>07-14 修繕積立金・管理費・滞納有無：</strong>[月額基準Tier-B・脱敏済]（滞納金ゼロ確認済）<br>
+                  <strong>07-15 長期修繕計画・大規模修繕履歴：</strong>令和6年外壁改修実施済・次回計画確認済<br>
+                  <strong>07-16〜18 賃貸借引継・反社条項・特約：</strong>オーナーチェンジ引継条件・暴力団排除条項適合<br>
+                  <strong>08-3 表記一致検証：</strong>当事者氏名・住所・物件表示の完全一致確認済
                 </div>
               </div>
             </div>
 
             <div class="sign-section-box">
               <div class="sign-titles">
-                <strong>法務局登記事項証明書 精査証明（令和8年10月度 調査員）</strong><br>
-                甲区所有権確認・乙区抵当権設定状況精査、差押等の嘱託なきことを証明す。
+                <strong>08-1〜4 物件調査整理 ＆ 07-1,2 調査根拠・未確認事項ゼロ証明（R04 専任宅建士）</strong><br>
+                甲区所有権確認・乙区抵当権設定状況精査、役所・管理会社調査の完全性を証明す。
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '調査済')">
-                  押印查収 (登記簿照合)
+                  押印查収 (08-2 登記・法規照合)
                 </button>
               </div>
             </div>
           </section>
 
           <!-- ==============================================================
-               モジュール 3：売買契約・重説審査
+               モジュール 3：07-13 契約書作成・08-5 重説起案・07-7 記名押印（宅建士専管）
                ============================================================== -->
           <section id="mod-contract" class="module-pane">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>03</span> 売買契約書・重要事項説明書（宅建業法第35条・37条）
+                  <span>07-13</span> 契約書作成・重要事項説明・記名押印（宅建士専管）
                   <span class="hanko-stamp" style="width:48px; height:48px; font-size:10px;">宅建士印</span>
                 </h2>
-                <p class="paper-title-desc">法定重説交付・宅建士記名押印、手付金保全措置、瑕疵担保・契約不適合責任条項審査</p>
+                <p class="paper-title-desc">顧客赤字反映：第9頁「07-13 契約書作成」追加・第10頁「08-1〜5 宅建士統合（08-6草案回付は×廃止）」・02-8 営業直接重説予約</p>
               </div>
               <div class="dossier-code-meta">
                 法定根拠: 宅地建物取引業法第35条・第37条<br>
-                交付要件: 契約締結前書面交付完了
+                02-8 重説日程: 営業担当⇄宅建士 ダイレクト確定済
               </div>
             </div>
 
             <div class="paper-card" style="margin-bottom:20px;">
               <div class="paper-card-header">
-                <span class="paper-card-title">📜 契約締結前 重点コンプライアンス点検簿</span>
-                <span style="font-size:12px; color:#246a48; font-weight:bold;">点検適合 5/5</span>
+                <span class="paper-card-title">📜 07-1〜13 ＆ 08-1〜5 宅建士 契約・重説一貫点検簿</span>
+                <span style="font-size:12px; color:#246a48; font-weight:bold;">点検適合 100%</span>
               </div>
               <ul class="audit-step-list">
                 <li class="audit-step-item">
                   <span class="step-check-mark">✓</span>
                   <div class="step-info">
-                    <div class="step-title">重要事項説明書の専任宅建士記名押印並びに説明受諾</div>
-                    <div class="step-desc">土砂災害警戒区域・水防法ハザードマップ・石綿調査記録の有無を口頭説明。専任宅建士 能勢秀樹による取引士証提示確認済。</div>
+                    <div class="step-title">07-13 契約書作成 ＆ 08-5 重説草案の宅建士直接作成（08-6 回付廃止）</div>
+                    <div class="step-desc">専任宅建士 能勢秀樹が 08-1〜4 調査結果から直接 35条重説および 37条契約書を作成。07-3/4 契約書と重説の無矛盾検証完了。</div>
                   </div>
                 </li>
                 <li class="audit-step-item">
                   <span class="step-check-mark">✓</span>
                   <div class="step-info">
-                    <div class="step-title">手付解除期日及び住宅ローン特約期日の設定整合性</div>
-                    <div class="step-desc">手付解除期日は契約締結日より14日間（令和8年10月17日迄）；融資利用特約解除期日は令和8年10月24日迄に設定。</div>
+                    <div class="step-title">02-8 営業担当からの直接重説日時確定 ＆ 07-5,8 対面/IT重説実施</div>
+                    <div class="step-desc">店長仲介を省き、営業担当（小林）が宅建士（能勢）と直接重説日時を確定。取引士証提示・水防法ハザード説明完了。</div>
                   </div>
                 </li>
                 <li class="audit-step-item">
                   <span class="step-check-mark">✓</span>
                   <div class="step-info">
-                    <div class="step-title">印紙税貼付及び契約割印の検認</div>
-                    <div class="step-desc">売買代金5,200万円（課税文書印紙税額：10,000円 / 売主買主双方合意の上貼付及び消印を確認）。</div>
+                    <div class="step-title">07-7 重要事項説明書・37条契約書への宅建士記名押印（二重チェック）</div>
+                    <div class="step-desc">取引金額区分（[価格帯Tier-A・APPI脱敏済]）に応じた法定印紙貼付・当事者署名押印・07-12 完了記録の保存完了。</div>
                   </div>
                 </li>
               </ul>
@@ -2395,8 +2436,8 @@
 
             <div class="sign-section-box">
               <div class="sign-titles">
-                <strong>宅地建物取引業者・専任宅地建物取引士 契印欄</strong><br>
-                本書面の記載事項は適法正当にして虚偽なきことを証し、社印並びに取引士職印を捺印す。
+                <strong>宅地建物取引業者・専任宅地建物取引士 07-7 法定記名押印欄</strong><br>
+                本書面の記載事項は適法正当にして調査資料と相違なきことを証し、社印並びに取引士職印を捺印す。
               </div>
               <div class="sign-seals">
                 <div class="hanko-stamp">
@@ -2408,120 +2449,122 @@
                   <span style="font-size:8px;">取引士</span>
                 </div>
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '契印済')">
-                  契印捺印 (重説・契約書締結)
+                  07-7 契印捺印 (重説・契約書締結)
                 </button>
               </div>
             </div>
           </section>
 
           <!-- ==============================================================
-               モジュール 4：住宅ローン金融連携
+               モジュール 4：01-9,10・04-9 銀行融資・借入「担当／部長 双軌確認」
                ============================================================== -->
           <section id="mod-mortgage" class="module-pane">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>04</span> 住宅ローン審査・金融機関連携台帳
-                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">本審査中</span>
+                  <span>01-9/10</span> 銀行融資・借入条件「営業担当／部長 双軌確認」台帳
+                  <span class="hanko-stamp square" style="font-size:11px; padding:2px 6px;">双軌確認済</span>
                 </h2>
-                <p class="paper-title-desc">事前審査打診、本審査書類徴求、金銭消費貸借契約（金消）日程調整及び抵当権設定事前確認</p>
+                <p class="paper-title-desc">顧客赤字反映：第1頁 01-9,10「担当自分確認 / また部長確認」・第5頁 04-9 ローン審査支援・融資特約期日管理</p>
               </div>
               <div class="dossier-code-meta">
                 連携行: 三井住友銀行 / 三菱UFJ銀行 / みずほ銀行<br>
-                融資特約期日: 令和8年10月24日
+                決裁軌道: 営業担当確認 ＋ 部長(R02)確認
               </div>
             </div>
 
             <div class="section-cards-grid">
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">🏦 三井住友銀行 (SMBC) 本審査進捗</span>
-                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px; border-color:#d97706; color:#d97706;">審査中</span>
+                  <span class="paper-card-title">🏦 01-9/10 銀行融資申請・借入条件 双軌確認ステータス</span>
+                  <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px; border-color:#d97706; color:#d97706;">双軌済</span>
                 </div>
                 <p style="font-size:12px; color:#444; line-height:1.65;">
-                  <strong>借入申込人：</strong>鈴木 隆一 様<br>
-                  <strong>借入希望額：</strong>4,800万円（固定変動選択型 / 変動金利 年0.375%）<br>
-                  <strong>本審査書類提出：</strong>令和8年9月28日（池袋ローン営業部）<br>
-                  <strong>結果回答目処：</strong>本日（10月3日 16:00電話口頭連絡予定）
+                  <strong>借入申込案件：</strong>板橋区中丸町戸建（鈴木 隆一 様）<br>
+                  <strong>希望融資枠区分：</strong>[融資枠Tier-A・変動優遇基準 / APPI脱敏済]<br>
+                  <strong>第1軌（営業担当自分確認）：</strong>小林 総合 [確認済・04-9 審査書類完備]<br>
+                  <strong>第2軌（部長確認）：</strong>佐藤 統括 [承認済・金消日程調整可]
                 </p>
               </div>
 
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">📝 銀行提出原本 備忘点検目録</span>
+                  <span class="paper-card-title">📝 04-9・02-7 金融機関提出原本 営業自主点検目録</span>
                   <span style="color:#246a48; font-weight:bold; font-size:12px;">完納受領済</span>
                 </div>
                 <ul style="font-size:12px; color:#444; padding-left:18px; line-height:1.65;">
-                  <li>住民票謄本（世帯全員記載・マイナンバー非記載） [済]</li>
-                  <li>源泉徴収票原本並びに納税証明書（直近3年分） [済]</li>
-                  <li>売買契約書写し・重要事項説明書写し（取引士印有） [済]</li>
-                  <li>建築確認済証・検査済証写し（役所照合済） [済]</li>
+                  <li>本人確認書類・住民票謄本（マイナンバー非記載・08-1照合） [済]</li>
+                  <li>所得証明・納税証明書（直近3期分・02-7 担当自分確認） [済]</li>
+                  <li>07-13 売買契約書写し・重要事項説明書写し（取引士印有） [済]</li>
+                  <li>建築確認済証・検査済証・登記事項証明書（08-2照合） [済]</li>
                 </ul>
               </div>
             </div>
 
             <div class="sign-section-box">
               <div class="sign-titles">
-                <strong>融資利用特約条項（契約書第13条）期日管理</strong><br>
-                期日までに金融機関の承認が得られぬ場合、手付金を全額無利息返還の上白紙解除手続へ。
+                <strong>01-9,10 融資利用特約条項・金消契約 双軌確認欄（営業担当 ＋ 営業部長）</strong><br>
+                社長決裁から委譲された双軌確認ルールに基づき、融資条件および特約期日の整合性を承認す。
               </div>
               <div class="sign-seals">
-                <button class="interactive-stamp-btn" onclick="stampAction(this, '承認受領')">
-                  融資承認通知 受取押印
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '双軌承認')">
+                  01-9/10 融資双軌承認印
                 </button>
               </div>
             </div>
           </section>
 
           <!-- ==============================================================
-               モジュール 5：残金決済・引渡清算
+               モジュール 5：02-13 決済引渡・10/11/13 賃貸管理・12/14 経理税務
                ============================================================== -->
           <section id="mod-closing" class="module-pane">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>05</span> 残金決済・所有権移転・引渡清算書
-                  <span class="hanko-stamp green" style="width:48px; height:48px; font-size:10px;">期日確定</span>
+                  <span>10〜14</span> 決済引渡(02-13)・賃貸管理(10/11/13)・経理税務(12/14)台帳
+                  <span class="hanko-stamp green" style="width:48px; height:48px; font-size:10px;">精算確定</span>
                 </h2>
-                <p class="paper-title-desc">残代金授受、固定資産税・都市計画税日割精算、司法書士登記申請及び鍵受領完了書面</p>
+                <p class="paper-title-desc">顧客赤字反映：02-13決済日変更は営業自分調整・10/11/13賃貸管理統合(10-18報告書省略)・12/14経理税理士連携</p>
               </div>
               <div class="dossier-code-meta">
-                執行金融機関: 三井住友銀行 池袋支店 応接室<br>
-                決済予定日: 令和8年11月10日 (大安)
+                所管ロール: R03営業 / R05賃貸管理 / R06経理<br>
+                電子帳簿保存法(12-18)・インボイス(14-3)準拠
               </div>
             </div>
 
             <div class="paper-card">
               <div class="paper-card-header">
-                <span class="paper-card-title">🧮 公租公課（固定資産税・都市計画税）日割清算書</span>
-                <span style="font-size:12px; color:#555;">清算起算日: 1月1日基準</span>
+                <span class="paper-card-title">🧮 04-16/13-6/12-10 決済日割精算・オーナー月次送金・歩合計算明細（APPI脱敏済）</span>
+                <span style="font-size:12px; color:#555;">全項目 照合完了</span>
               </div>
               <div class="ledger-table-wrap" style="margin: 10px 0;">
                 <table class="ledger-table">
                   <thead>
                     <tr>
-                      <th>清算項目</th>
-                      <th>年間賦課税額</th>
-                      <th>買主負担日数 (11/10〜12/31)</th>
-                      <th>日割清算金（税込）</th>
+                      <th>業務区分・原表番号</th>
+                      <th>対象案件・管理区分</th>
+                      <th>執行・確認ルール (赤字反映)</th>
+                      <th>精算ステータス (脱敏区分)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>固定資産税</td>
-                      <td>128,400 円</td>
-                      <td>52 日間</td>
-                      <td>18,292 円</td>
+                      <td>04-15〜18 / 02-13 売買決済</td>
+                      <td>板橋区戸建・神田1棟ビル</td>
+                      <td>02-13 決済日程は営業自身が直接調整・20-1 司法書士連携</td>
+                      <td>[残代金・固都税日割 精算完]</td>
                     </tr>
                     <tr>
-                      <td>都市計画税</td>
-                      <td>24,600 円</td>
-                      <td>52 日間</td>
-                      <td>3,504 円</td>
+                      <td>10-1〜19 / 11 修繕 / 13 精算</td>
+                      <td>練馬区1棟マンション (全18戸)</td>
+                      <td>R05 賃貸管理が一貫担当（10-18 定期報告書は省略）</td>
+                      <td>[13-6 オーナー月次送金 完了]</td>
                     </tr>
                     <tr style="font-weight:bold; background:#faf3e3;">
-                      <td colspan="3">公租公課日割清算金 合計授受額</td>
-                      <td>21,796 円</td>
+                      <td>12-1〜18 経理 / 14 税理士連携</td>
+                      <td>全社仲介報酬・インセンティブ</td>
+                      <td>12-10 成約社員歩合計算・14-3 インボイス・14-4 源泉徴収</td>
+                      <td>[12-18 電帳法保存・税理士共有済]</td>
                     </tr>
                   </tbody>
                 </table>
@@ -2530,69 +2573,69 @@
 
             <div class="sign-section-box">
               <div class="sign-titles">
-                <strong>引渡完了確認証 兼 仲介手数料清算領収証</strong><br>
-                司法書士 登記申請受託書原本受領、所有権移転登記申請の嘱託完了を証明す。
+                <strong>04-18 引渡完了確認 ＆ 13-6 オーナー収支精算 ＆ 12-14 月次損益締め承認証</strong><br>
+                司法書士登記嘱託、賃貸オーナー送金、および経理インボイス・電帳法保存の完了を証明す。
               </div>
               <div class="sign-seals">
-                <button class="interactive-stamp-btn" onclick="stampAction(this, '決済完了')">
-                  決済執行印 (領収証発行)
+                <button class="interactive-stamp-btn" onclick="stampAction(this, '決済精算完')">
+                  決済・経理精算 執行印
                 </button>
               </div>
             </div>
           </section>
 
           <!-- ==============================================================
-               モジュール 6：法定帳票・公印管理
+               モジュール 6：15/16/18 人事総務・16-8公印・02-9車両予約・03-17定期挨拶
                ============================================================== -->
           <section id="mod-ledger" class="module-pane">
             <div class="paper-header-block">
               <div class="paper-title-area">
                 <h2>
-                  <span>06</span> 法定帳簿・会社公印・経営実績管理簿
+                  <span>15/16/18</span> 人事総務・16-8公印・02-9車両予約・03-17定期挨拶台帳
                   <span class="hanko-stamp" style="width:48px; height:48px; font-size:10px;">総務管理</span>
                 </h2>
-                <p class="paper-title-desc">宅地建物取引業法第49条の規定による帳簿、公印押印管理台帳、媒介報酬手数料集計表</p>
+                <p class="paper-title-desc">顧客赤字反映：15人事＋16総務＋18システム権限統合・02-9案内車両予約表・03-17定期顧客挨拶（06仕入・17法務は除外済）</p>
               </div>
               <div class="dossier-code-meta">
-                法定備置義務: 各事業年度末閉鎖後5年間<br>
-                様式準拠: 宅地建物取引業法施行規則 別記様式第十八号
+                所管ロール: R07 人事・総務・システム管理<br>
+                除外確認: 06(現在なし)・17(いらない) 完全除外
               </div>
             </div>
 
             <div class="section-cards-grid">
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">📑 会社公印・職印 押印記録（当月度）</span>
+                  <span class="paper-card-title">📑 16-8 公印押印・16-10 物件鍵・16-11/02-9 社用車予約管理</span>
                   <span class="hanko-stamp" style="width:36px; height:36px; font-size:9px;">監査済</span>
                 </div>
                 <ul style="font-size:12px; color:#444; line-height:1.85; padding-left:18px;">
-                  <li>会社代表印（実印）：3件（媒介委託及び金消立会契約）</li>
-                  <li>会社角印（社印）：24件（請求書・領収証・受領確認書）</li>
-                  <li>専任宅建士職印：18件（重要事項説明書・37条書面交付原本）</li>
+                  <li>16-8 会社公印（実印・角印・宅建士職印）：押印申請・01-17 代表承認ログ記録済</li>
+                  <li>16-10/03-8 物件鍵・セキュリティカード：貸出・戸締り確認・返却台帳 100%照合</li>
+                  <li>02-9/16-11 案内車両タイムテーブル：社用車3台 オンライン全員予約制で稼働中</li>
                 </ul>
               </div>
 
               <div class="paper-card">
                 <div class="paper-card-header">
-                  <span class="paper-card-title">📈 媒介仲介報酬 営業取扱累計</span>
-                  <span style="font-size:12px; color:#246a48; font-weight:bold;">予算達成率 112%</span>
+                  <span class="paper-card-title">💌 03-17 定期顧客あいさつ ＆ 15 人事給与・18 権限監査</span>
+                  <span style="font-size:12px; color:#246a48; font-weight:bold;">全件正常稼働</span>
                 </div>
                 <p style="font-size:12px; color:#444; line-height:1.65;">
-                  当期成約件数：<strong>11 件</strong><br>
-                  売買仲介取扱高総計：<strong>4億9,200万円</strong><br>
-                  当期手数料粗利益額：<strong>1,771万円</strong> (国土交通省告示 報酬上限額遵守)
+                  <strong>03-17 定期顧客挨拶：</strong>引渡1ヶ月・半年・1周年・季節挨拶リマインダー稼働中<br>
+                  <strong>15-11〜12 給与・歩合集計：</strong>勤怠締め・成約インセンティブ反映（[APPI脱敏済]）<br>
+                  <strong>18-1〜4 権限・退職即停止：</strong>7ロールRBAC制御・退職者アカウント即時遮断済
                 </p>
               </div>
             </div>
 
             <div class="sign-section-box">
               <div class="sign-titles">
-                <strong>第1期 事業年度 帳簿点検監査証明</strong><br>
-                宅地建物取引業者帳簿記載事項（法第49条）に欠落なきことを確認査定す。
+                <strong>15/16/18 人事総務・システム権限・宅建業法第49条帳簿 統合監査証明</strong><br>
+                公印・鍵・社用車・RBAC権限および法定5年/10年保存帳簿に欠落なきことを確認査定す。
               </div>
               <div class="sign-seals">
                 <button class="interactive-stamp-btn" onclick="stampAction(this, '監査済')">
-                  総務監査印 押印
+                  総務・システム監査印 押印
                 </button>
               </div>
             </div>
@@ -2654,11 +2697,11 @@
               <span>🤖 専属宅建AI</span>
               <span>10:45</span>
             </div>
-            <strong>【融資利用特約の重要確認事項】</strong><br>
+            <strong>【01-9,10 融資双軌確認 ＆ 特約条項の重要確認事項】</strong><br>
             1. <strong>解除期日</strong>：融資承認予定日（10/24）と解除権行使期限を同日または直後に明確設定。<br>
-            2. <strong>義務規定</strong>：買主の故意の不承認（虚偽申告・書類不提出）は特約適用外とし、違約解約扱いとなる旨を明記。<br>
-            3. <strong>金融機関指定</strong>：三井住友銀行を指定し、事前承認金額（4,850万円）を明記。<br>
-            ※ ドラフト条項は『モジュール3: 売買契約・重説審査』の特約欄に転記支援可能です。
+            2. <strong>双軌確認</strong>：01-9,10「担当自分確認 / また部長確認」に基づき、営業担当および部長の双軌承認を記録。<br>
+            3. <strong>金融機関指定</strong>：三井住友銀行を指定し、事前承認枠（[融資枠Tier-A・脱敏済]）を明記。<br>
+            ※ ドラフト条項は『07-13 契約書作成・重説審査』の特約欄に転記支援可能です。
           </div>
 
           <!-- 執務支援クイックアクション提案 -->
@@ -3027,7 +3070,14 @@
 
     drawerNavItems.forEach(item => {
       item.addEventListener('click', () => {
+        if (typeof window.switchSentisTopology === 'function') {
+          window.switchSentisTopology('paper');
+        }
         switchModule(item.dataset.target);
+        const sheet = document.querySelector('.dossier-paper-sheet');
+        if (sheet) {
+          sheet.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 

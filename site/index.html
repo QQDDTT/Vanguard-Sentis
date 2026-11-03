@@ -1147,6 +1147,10 @@
 
     .doc-content table {
       width: 100%;
+      max-width: 100%;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border-collapse: collapse;
       margin: 20px 0;
       font-size: 13px;
@@ -1291,7 +1295,7 @@
       @media (max-width: 640px) { .btn-logout .btn-symbol, .btn-modal-action-newtab .btn-symbol { display: inline-flex !important; } } .btn-header-action .btn-symbol { display: inline-flex !important; }
       .btn-header-action { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; }
       @media (max-width: 640px) { .btn-logout { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
-      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 46px !important; height: 46px !important; min-width: 46px; min-height: 46px; } }
       .tab-pill { min-height: 44px; display: inline-flex; align-items: center; }
       .btn-header-action .btn-text {
         display: none;
@@ -1349,8 +1353,29 @@
       .header-branding {
         gap: 8px;
         min-width: 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
         flex-shrink: 1;
         overflow: hidden;
+      }
+      .gateway-input,
+      .gateway-btn-submit {
+        min-height: 44px !important;
+      }
+      .btn-table-asset {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px !important;
+        min-width: 46px !important;
+        padding: 6px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        background: #f8fafc;
+        color: #0f172a;
+        font-weight: 600;
+        text-decoration: none;
       }
       .vanguard-badge-symbol {
         width: 28px;
@@ -1413,7 +1438,7 @@
       @media (max-width: 640px) { .btn-logout .btn-symbol, .btn-modal-action-newtab .btn-symbol { display: inline-flex !important; } } .btn-header-action .btn-symbol { display: inline-flex !important; }
       .btn-header-action { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; }
       @media (max-width: 640px) { .btn-logout { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
-      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 44px !important; height: 44px !important; min-width: 44px; min-height: 44px; } }
+      @media (max-width: 640px) { .btn-card-launch, .btn-card-quick-preview, .btn-modal-action-newtab, .btn-modal-close { width: 46px !important; height: 46px !important; min-width: 46px; min-height: 46px; } }
       .tab-pill { min-height: 44px; display: inline-flex; align-items: center; }
       .btn-header-action .btn-text {
         display: none !important;
@@ -2332,7 +2357,7 @@
             <div class="seal-circle-stamp">VG</div>
             <div>
               <div style="font-weight:700; color:#090d16;">Vanguard 設計提出</div>
-              <div style="font-size:10px; color:#64748b;">2026-10-03 Review v0.9</div>
+              <div style="font-size:10px; color:#64748b;">2026-11-03 Review v2.0 (288項目)</div>
             </div>
           </div>
 
