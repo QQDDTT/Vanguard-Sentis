@@ -692,8 +692,31 @@
         box-sizing: border-box;
       }
     }
+    /* ===== 幻灯片形式 (Slide Deck)：一屏完形，固定画幅内翻页 ===== */
+    body.deck-mode { height: 100vh; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+    body.deck-mode .doc-nav-header { flex-shrink: 0; }
+    body.deck-mode .doc-page-container { flex: 1; min-height: 0; max-width: 1240px; margin: 12px auto; padding: 0 16px; display: flex; box-sizing: border-box; }
+    body.deck-mode .doc-paper-card { flex: 1; min-width: 0; min-height: 0; padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    body.deck-mode #docRenderArea { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    body.deck-mode .doc-footer-nav { flex-shrink: 0; margin: 0; padding: 4px 14px; border-top: 1px solid var(--vg-border-light); border-radius: 0; background: #ffffff; }
+    body.deck-mode .btn-page-step { min-height: 44px; display: inline-flex; align-items: center; }
+    body.deck-mode .site-footer { display: none; }
+    body.deck-mode .btn-page-step { white-space: nowrap; }
+    .platform-tag, .doc-case-badge, .doc-badge-pill, .btn-table-asset { font-size: 12px !important; }
+    @media (max-width: 640px) {
+      body.deck-mode .doc-footer-nav { justify-content: space-between; gap: 8px; padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px)); }
+      body.deck-mode .doc-footer-nav > div { display: none; }
+      body.deck-mode .btn-page-step { padding: 0 14px; }
+      body.deck-mode .doc-page-container { margin: 8px auto; padding: 0 8px; }
+    }
+    @media print {
+      body.deck-mode { height: auto; overflow: visible; display: block; }
+      body.deck-mode .doc-page-container { display: block; margin: 0; padding: 0; }
+      body.deck-mode .doc-paper-card { display: block; overflow: visible; }
+      body.deck-mode #docRenderArea { display: block; }
+    }
   </style>
-</head>
+  <link rel="stylesheet" href="./assets/css/slide-deck.css">
 <body>
 
   <!-- ======================================================================
@@ -804,6 +827,9 @@
 
   <!-- 成果物データ辞書スクリプト -->
   <script src="./js/docs-data.js"></script>
+  <script src="./assets/js/flows-data.js"></script>
+  <script src="./assets/js/flowchart.js"></script>
+  <script src="./assets/js/slide-deck.js"></script>
 
   <script>
     const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
@@ -879,8 +905,11 @@
       document.getElementById('navDocTitle').innerText = doc.title;
       document.title = `${doc.title} | 株式会社センティス (SENTIS) 成果物`;
 
-      // 注入本文
-      document.getElementById('docRenderArea').innerHTML = doc.content;
+      // 注入本文（幻灯片形式：按 h2/h3 切页，固定画幅内翻页）
+      if (window.__sentisDeck) { window.__sentisDeck.destroy(); window.__sentisDeck = null; }
+      document.body.classList.add('deck-mode');
+      document.getElementById('docRenderArea').classList.add('is-deck');
+      window.__sentisDeck = SentisSlideDeck.mount(document.getElementById('docRenderArea'), doc.content, { useHash: true });
 
       // 更新前后导航按钮
       const currentIndex = docOrder.indexOf(docKey);
@@ -905,8 +934,7 @@
         btnNext.style.visibility = 'hidden';
       }
 
-      // 回滚到顶部
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // 画面固定（Y 轴零延展）：无需回滚页面
     }
 
     function switchDoc(docKey) {

@@ -34,6 +34,7 @@
   </script>
   
   <link rel="stylesheet" href="./assets/css/portal.css">
+<link rel="stylesheet" href="./assets/css/slide-deck.css">
 </head>
 <body>
 
@@ -182,15 +183,15 @@
 
     <!-- 3. Deliverables Filter & Catalog Grid (成果物一覧) -->
     <main class="catalog-section">
-      <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--vg-text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-        <span>📦</span> 策定成果物・設計仕様書一覧
+      <h2 class="list-heading">
+        <span>📦</span> 策定成果物・設計仕様書 査閲チェックリスト
       </h2>
       <div class="filter-bar">
         <div class="tab-pills">
           <button class="tab-pill active" data-filter="all">すべて表示 (8)</button>
-          <button class="tab-pill" data-filter="document">📄 業務設計仕様書 (5)</button>
-          <button class="tab-pill" data-filter="prototype">💻 画面様板プロトタイプ (2)</button>
-          <button class="tab-pill" data-filter="assets">🎨 ブランド資産 (1)</button>
+          <button class="tab-pill" data-filter="document">業務設計仕様書 (5)</button>
+          <button class="tab-pill" data-filter="prototype">画面様板プロトタイプ (2)</button>
+          <button class="tab-pill" data-filter="assets">ブランド資産 (1)</button>
         </div>
 
         <div class="catalog-count-note">
@@ -198,323 +199,185 @@
         </div>
       </div>
 
-      <div class="deliverables-grid" id="deliverables-container">
+      <div class="deliverables-list" id="deliverables-container">
 
-        <!-- ==================================================================
-             CATEGORY 1: BUSINESS DESIGN & SPECIFICATIONS (業務設計・仕様策定書群)
-             ================================================================== -->
+        <!-- ================= GROUP 1: 業務設計仕様書 ================= -->
+        <section class="list-group" data-category="document" aria-labelledby="grp-doc">
+          <h3 class="list-group-title" id="grp-doc">業務設計仕様書 <span class="list-group-count">5</span></h3>
+          <ol class="deliverable-list">
 
-        <!-- DEL-08: 文档 05 (顧客赤字フィードバック反映・総合不動産管理システム要件定義書 v2.0) -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">CLIENT FEEDBACK / SPEC-05 (v2.0)</span>
-              <span class="card-code">DEL-08</span>
-            </div>
-            <h3 class="card-title">05. 株式会社 SENTIS 総合業務管理システム要件定義書（顧客手書き赤字フィードバック精校版 v2.0）</h3>
-            <p class="card-desc">
-              クライアント手書き赤字フィードバック原本（全20頁・18大カテゴリ・計288項目）を100%反映した最新版要件定義書。
-              20ページの「業務ロールと具体業務一覧」（印刷286項目＋手書き追加2項目＝288項目）への赤字批注を全面反映し、四大設計転換、20モジュールから7大実務ロールへの収敛（RBAC）、六大専項要件（担当自主Checklist・案内車両予約時間表・重説直接日程・宅建士契約書作成・定期お客様あいさつ・担当/部長双軌確認）、七大業務サブシステム全量マッピング、Out-of-Scope裁剪一覧を網羅。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">赤字フィードバック288項目</span>
-              <span class="card-tag">7大ロール正規化</span>
-              <span class="card-tag">07-13契約作成・08重説</span>
-              <span class="card-tag">02-9車両予約・03-17挨拶</span>
-              <span class="card-tag">4大トポロジー×3+1色彩</span>
-            </div>
-          </div>
+            <li class="deliverable-row" data-category="document">
+              <span class="row-code">DEL-08</span>
+              <div class="row-main">
+                <h4 class="row-title">05. 株式会社 SENTIS 総合業務管理システム要件定義書（顧客手書き赤字フィードバック精校版 v2.0）</h4>
+                <p class="row-summary">赤字フィードバック全20頁・18カテゴリ・288項目を100%反映。7大ロールRBAC・六大専項要件・Out-of-Scope裁剪を網羅。</p>
+              </div>
+              <span class="row-status is-updated"><span class="row-dot"></span>v2.0 Updated</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('doc05')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=doc05" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="v2.0 要件定義書を開く">
+                  <span class="btn-symbol">↗</span>
+                  <span class="btn-text">v2.0 要件書を開く</span>
+                </a>
+              </div>
+            </li>
 
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #059669;">
-              <span>●</span> v2.0 Updated
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc05')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=doc05" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="v2.0 要件定義書を開く">
-                <span class="btn-symbol">↗</span>
-                <span class="btn-text">v2.0 要件書を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
+            <li class="deliverable-row" data-category="document">
+              <span class="row-code">DEL-03</span>
+              <div class="row-main">
+                <h4 class="row-title">01. プロジェクト概要及び業務課題定義書</h4>
+                <p class="row-summary">少人数精鋭体制の高人効モデル、5大競争優位性とシステム基本理念を定義する業務設計書。</p>
+              </div>
+              <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="概要書を開く">
+                  <span class="btn-symbol">📄</span>
+                  <span class="btn-text">概要書を開く</span>
+                </a>
+              </div>
+            </li>
 
-        <!-- DEL-03: 文档 01 (业务概况与课题定义) -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">BUSINESS DESIGN / SPEC-01</span>
-              <span class="card-code">DEL-03</span>
-            </div>
-            <h3 class="card-title">01. プロジェクト概要及び業務課題定義書</h3>
-            <p class="card-desc">
-              少人数精鋭体制における仲介業務高人効モデルの確立と、取引リスク・手戻りゼロを担保する業務設計書。
-              国内優良実需・投資物件仲介を中核とする事業戦略、5大競争優位性、及びシステム基本理念を定義。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">高人効モデル設計</span>
-              <span class="card-tag">国内実需・投資仲介</span>
-              <span class="card-tag">5大競争優位性</span>
-              <span class="card-tag">システム基本構想</span>
-            </div>
-          </div>
+            <li class="deliverable-row" data-category="document">
+              <span class="row-code">DEL-04</span>
+              <div class="row-main">
+                <h4 class="row-title">02. 不動産売買標準業務フロー設計書 (SOP)</h4>
+                <p class="row-summary">相談・物件調査・重説・契約・ローン・決済・登記の全7段階SOP。国内住宅ローン仲介と犯収法eKYC・AMLを網羅。</p>
+              </div>
+              <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="SOP仕様を開く">
+                  <span class="btn-symbol">🧭</span>
+                  <span class="btn-text">SOP仕様を開く</span>
+                </a>
+              </div>
+            </li>
 
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc01')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=doc01" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="概要書を開く">
-                <span class="btn-symbol">↗</span>
-                <span class="btn-text">概要書を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
+            <li class="deliverable-row" data-category="document">
+              <span class="row-code">DEL-05</span>
+              <div class="row-main">
+                <h4 class="row-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h4>
+                <p class="row-summary">5大基幹モジュール、7大エンティティERモデル、RBAC 4級権限マトリクス、動的Checklist判定エンジンを定義。</p>
+              </div>
+              <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="要件定義を開く">
+                  <span class="btn-symbol">🏗️</span>
+                  <span class="btn-text">要件定義を開く</span>
+                </a>
+              </div>
+            </li>
 
-        <!-- DEL-04: 文档 02 (SOP业务流) -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-workflow">BUSINESS DESIGN / SOP-02</span>
-              <span class="card-code">DEL-04</span>
-            </div>
-            <h3 class="card-title">02. 不動産売買標準業務フロー設計書 (SOP)</h3>
-            <p class="card-desc">
-              ①相談買付 ➔ ②物件・法令調査 ➔ ③重説35条 ➔ ④契約締結 ➔ ⑤ローン・金消 ➔ ⑥司法書士照合・残金決済 ➔ ⑦登記移転引渡の全7段階SOP。
-              国内住宅ローン仲介実務を基軸とし、犯罪収益移転防止法（犯収法eKYC）、外為法事前排查、受款AML審査、非居住者源泉税管理を完備。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">全7段階標準実務</span>
-              <span class="card-tag">犯収法eKYC・本人確認</span>
-              <span class="card-tag">外為法事前排查・AML</span>
-              <span class="card-tag">住宅ローン・司法書士連携</span>
-            </div>
-          </div>
+            <li class="deliverable-row" data-category="document">
+              <span class="row-code">DEL-06</span>
+              <div class="row-main">
+                <h4 class="row-title">04. 導入展開計画及びプロジェクト推進日程表</h4>
+                <p class="row-summary">フェーズ1〜4の段階展開スケジュール、週次マイルストーン、研修手順、データ保全・ロールバック対策。</p>
+              </div>
+              <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="計画日程を開く">
+                  <span class="btn-symbol">🗓️</span>
+                  <span class="btn-text">計画日程を開く</span>
+                </a>
+              </div>
+            </li>
+          </ol>
+        </section>
 
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc02')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=doc02" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="SOP仕様を開く">
-                <span class="btn-symbol">↗</span>
-                <span class="btn-text">SOP仕様を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
+        <!-- ================= GROUP 2: 画面様板プロトタイプ ================= -->
+        <section class="list-group" data-category="prototype" aria-labelledby="grp-proto">
+          <h3 class="list-group-title" id="grp-proto">画面様板プロトタイプ <span class="list-group-count">2</span></h3>
+          <ol class="deliverable-list">
 
-        <!-- DEL-05: 文档 03 (要件定义与架构) -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">SYSTEM ARCHITECTURE / REQ-03</span>
-              <span class="card-code">DEL-05</span>
-            </div>
-            <h3 class="card-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h3>
-            <p class="card-desc">
-              Sentis Realty Core の5大基幹モジュール、7大エンティティERデータモデル、RBAC 4級ロール権限マトリクス、
-              動的スマートChecklist判定エンジン、Zero Server Prototype と本番実装規約の階層分離、及び個人情報保護法（APPI）脱敏仕様。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">ERデータモデル設計</span>
-              <span class="card-tag">RBAC 4級権限マトリクス</span>
-              <span class="card-tag">アーキテクチャ階層分離</span>
-              <span class="card-tag">APPI脱敏・監査ログ規程</span>
-            </div>
-          </div>
+            <li class="deliverable-row is-wide" data-category="prototype">
+              <span class="row-code">DEL-01</span>
+              <div class="row-main">
+                <h4 class="row-title">内部基幹管理システム v2.0（精工雕琢羅針盤・4大トポロジー A/B/C/D ＆ 3+1主体色彩スイート）</h4>
+                <p class="row-summary">認証ゲートウェイから羅針盤中枢・総台帳・車両予約軸・三欄作業台・A4公文帳票まで、全18カテゴリ・288項目・7大ロールをリアルタイム切替で体験。</p>
+              </div>
+              <span class="row-status is-proto"><span class="row-dot"></span>Prototype Active</span>
+              <div class="row-actions">
+                <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何次元 認証ゲートウェイ">
+                  <span class="btn-symbol">⬡</span>
+                  <span class="btn-text">認証ゲートウェイ</span>
+                </a>
+                <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何データ中枢メイン画面">
+                  <span class="btn-symbol">◈</span>
+                  <span class="btn-text">トポA:羅針盤中枢</span>
+                </a>
+                <a href="./prototype-crm.html?topo=D&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーD：70%広幅総台帳＋30%四段抽斗（色彩B:和紙）">
+                  <span class="btn-symbol">📋</span>
+                  <span class="btn-text">トポD:総台帳・抽斗</span>
+                </a>
+                <a href="./prototype-crm.html?topo=C&theme=walnut" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーC：案内車両予約時間表＆重説・決済日程軸（色彩C:胡桃）">
+                  <span class="btn-symbol">🚐</span>
+                  <span class="btn-text">トポC:車両予約軸</span>
+                </a>
+                <a href="./prototype-crm.html?topo=B&theme=navy" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーB：三欄精密時計ワークベンチ（色彩A:深海藍）">
+                  <span class="btn-symbol">⚖️</span>
+                  <span class="btn-text">トポB:三欄作業台</span>
+                </a>
+                <a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）">
+                  <span class="btn-symbol">📄</span>
+                  <span class="btn-text">A4公文帳票</span>
+                </a>
+              </div>
+            </li>
 
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc03')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=doc03" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="要件定義を開く">
-                <span class="btn-symbol">↗</span>
-                <span class="btn-text">要件定義を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
+            <li class="deliverable-row" data-category="prototype">
+              <span class="row-code">DEL-02</span>
+              <div class="row-main">
+                <h4 class="row-title">SENTIS AI 宅建事務補佐官（対話型アシスタント・プロトタイプ）</h4>
+                <p class="row-summary">重要事項説明書レビュー・ハザード説明チェック・住宅ローン管理支援の画面導線を示すUI/UX概念実証（Mock）。</p>
+              </div>
+              <span class="row-status is-proto"><span class="row-dot"></span>Prototype Active</span>
+              <div class="row-actions">
+                <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="AI支援UIを体験">
+                  <span class="btn-symbol">🤖</span>
+                  <span class="btn-text">AI支援UIを体験</span>
+                </a>
+              </div>
+            </li>
+          </ol>
+        </section>
 
-        <!-- DEL-06: 文档 04 (推进日程与计划) -->
-        <article class="deliverable-card" data-category="document">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-doc">PROJECT ROADMAP / PLN-04</span>
-              <span class="card-code">DEL-06</span>
-            </div>
-            <h3 class="card-title">04. 導入展開計画及びプロジェクト推進日程表</h3>
-            <p class="card-desc">
-              フェーズ1（基盤確立）からフェーズ4（本稼働）までの4段階展開スケジュール。
-              週次マイルストーン、専任宅建士・営業担当者向け研修手順、及びデータ保全・ロールバック対策を完備。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">4段階ロードマップ</span>
-              <span class="card-tag">週次マイルストーン</span>
-              <span class="card-tag">受入検査基準</span>
-              <span class="card-tag">緊急切戻し規程</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #d97706;">
-              <span>●</span> Review Ready
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('doc04')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=doc04" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="計画日程を開く">
-                <span class="btn-symbol">↗</span>
-                <span class="btn-text">計画日程を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ==================================================================
-             CATEGORY 2: INTERACTIVE PROTOTYPES (画面様板プロトタイプ群)
-             ================================================================== -->
-
-        <!-- DEL-01: 画面样板 (Interactive Prototype & VR System Suite) -->
-        <article class="deliverable-card" data-category="prototype">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-prototype">INTERACTIVE PROTOTYPE</span>
-              <span class="card-code">DEL-01</span>
-            </div>
-            <h3 class="card-title">内部基幹管理システム v2.0（精工雕琢羅針盤・4大トポロジー A/B/C/D ＆ 3+1主体色彩スイート）</h3>
-            <p class="card-desc">
-              クライアント提出用プロダクト資料群。空間幾何次元認証ゲートウェイ（暗号/セッション同調）、
-              精工雕琢と繁複物質風（Horology &amp; Bespoke Compass Guilloché）に基づく全18カテゴリ・288項目・7大ロール対応スイート。トポロジーA（羅針盤中枢）・B（三欄作業台）・C（案内車両予約時間表＆重説日程軸）・D（左70%総台帳＋右30%四段抽斗）と、色彩A（皇室深海藍金）・色彩B（越前白金和紙）・色彩C（京都焙茶胡桃）・深森緑をリアルタイム切替。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">空間幾何認証門</span>
-              <span class="card-tag">空間幾何データ中枢</span>
-              <span class="card-tag">不動産売買業務台帳</span>
-              <span class="card-tag">建築幾何構造主義</span>
-              <span class="card-tag">虚空光影美学</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #0284c7;">
-              <span>●</span> Prototype Active
-            </div>
-            <div class="card-actions-group">
-              <a href="./crm-login.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何次元 認証ゲートウェイ">
-                <span class="btn-symbol">⬡</span>
-                <span class="btn-text">認証ゲートウェイ</span>
-              </a>
-              <a href="./crm-home.html" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="空間幾何データ中枢メイン画面">
-                <span class="btn-symbol">◈</span>
-                <span class="btn-text">トポA:羅針盤中枢</span>
-              </a>
-              <a href="./prototype-crm.html?topo=D&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーD：70%広幅総台帳＋30%四段抽斗（色彩B:和紙）">
-                <span class="btn-symbol">📋</span>
-                <span class="btn-text">トポD:総台帳・抽斗</span>
-              </a>
-              <a href="./prototype-crm.html?topo=C&theme=walnut" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーC：案内車両予約時間表＆重説・決済日程軸（色彩C:胡桃）">
-                <span class="btn-symbol">🚐</span>
-                <span class="btn-text">トポC:車両予約軸</span>
-              </a>
-              <a href="./prototype-crm.html?topo=B&theme=navy" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="トポロジーB：三欄精密時計ワークベンチ（色彩A:深海藍）">
-                <span class="btn-symbol">⚖️</span>
-                <span class="btn-text">トポB:三欄作業台</span>
-              </a>
-              <a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）" style="display:none;">
-                <span class="btn-symbol">📋</span>
-              </a><a href="./prototype-crm.html?topo=paper&theme=washi" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="A4公文帳票ビュー（全6台帳）"><span class="btn-symbol">📄</span><span class="btn-text">A4公文帳票</span></a><a style="display:none;">
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- DEL-02: AI Agent Prototype (Concept) -->
-        <article class="deliverable-card" data-category="prototype">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-prototype">CONCEPT / AI PROTOTYPE</span>
-              <span class="card-code">DEL-02</span>
-            </div>
-            <h3 class="card-title">SENTIS AI 宅建事務補佐官（対話型アシスタント・プロトタイプ）</h3>
-            <p class="card-desc">
-              右端の活頁インデックスから滑出するAI事務補佐官の【UI/UX 概念実証シミュレーション（Mock）】。
-              将来の構想機能として「重要事項説明書レビュー支援」「ハザード説明チェック支援」「住宅ローンスケジュール管理支援」の画面導線・対話体験を提示。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">UI/UX 概念実証Mock</span>
-              <span class="card-tag">重要事項説明書レビュー支援</span>
-              <span class="card-tag">ハザード説明チェック支援</span>
-              <span class="card-tag">住宅ローンスケジュール管理支援</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #0284c7;">
-              <span>●</span> Prototype Active
-            </div>
-            <div class="card-actions-group">
-              <a href="./prototype-crm.html?drawer=ai" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="AI支援UIを体験">
-                <span class="btn-symbol">🤖</span>
-                <span class="btn-text">AI支援UIを体験</span>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ==================================================================
-             CATEGORY 3: BRAND ASSET KIT (公式ブランドCI/VI資産)
-             ================================================================== -->
-
-        <!-- DEL-07: 品牌资产包 (Assets) -->
-        <article class="deliverable-card" data-category="assets">
-          <div>
-            <div class="card-top-meta">
-              <span class="card-category-badge badge-assets">BRAND ASSET / VI-01</span>
-              <span class="card-code">DEL-07</span>
-            </div>
-            <h3 class="card-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h3>
-            <p class="card-desc">
-              「羅針盤（Compass）とSカーブ」を象徴とするSENTIS企業ロゴ・エンブレム全規格素材。
-              512px高解像度印刷用から、256px、64px、32px、Apple Touch Icon、及びWindows ICOまで透過PNGにて完備。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">512×512 透明PNG</span>
-              <span class="card-tag">Favicon ICO</span>
-              <span class="card-tag">Apple Touch Icon</span>
-              <span class="card-tag">800px 横幅レターヘッド</span>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-status-info" style="color: #059669;">
-              <span>●</span> Design Delivered
-            </div>
-            <div class="card-actions-group">
-              <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="簡易プレビュー">
-                <span class="btn-symbol">🔍</span>
-              </button>
-              <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="素材一覧を開く">
-                <span class="btn-symbol">🎨</span>
-                <span class="btn-text">素材一覧を開く</span>
-              </a>
-            </div>
-          </div>
-        </article>
+        <!-- ================= GROUP 3: ブランド資産 ================= -->
+        <section class="list-group" data-category="assets" aria-labelledby="grp-assets">
+          <h3 class="list-group-title" id="grp-assets">ブランド資産 <span class="list-group-count">1</span></h3>
+          <ol class="deliverable-list">
+            <li class="deliverable-row" data-category="assets">
+              <span class="row-code">DEL-07</span>
+              <div class="row-main">
+                <h4 class="row-title">SENTIS 品牌公式 CI/VI 資産パッケージ</h4>
+                <p class="row-summary">羅針盤とSカーブの企業ロゴ・エンブレム全規格素材。512px印刷用からFavicon・Apple Touch Icon・ICOまで透過PNGで完備。</p>
+              </div>
+              <span class="row-status is-done"><span class="row-dot"></span>Design Delivered</span>
+              <div class="row-actions">
+                <button class="btn-card-quick-preview" onclick="openDocModal('docAssets')" title="スライドプレビュー" aria-label="スライドプレビュー">
+                  <span class="btn-symbol">🔍</span>
+                </button>
+                <a href="./document.html?id=docAssets" target="_blank" rel="noopener noreferrer" class="btn-card-launch" title="素材一覧を開く">
+                  <span class="btn-symbol">🎨</span>
+                  <span class="btn-text">素材一覧を開く</span>
+                </a>
+              </div>
+            </li>
+          </ol>
+        </section>
 
       </div>
     </main>
@@ -581,6 +444,9 @@
 
   <!-- 成果物仕様書データストア（DEL-03〜DEL-07） -->
   <script src="./js/docs-data.js"></script>
+  <script src="./assets/js/flows-data.js"></script>
+  <script src="./assets/js/flowchart.js"></script>
+  <script src="./assets/js/slide-deck.js"></script>
 
   <!-- ======================================================================
        Vanilla JS : セキュリティ認証ゲートウェイ ＆ 成果物ポータル制御
@@ -680,15 +546,11 @@
     window.addEventListener('DOMContentLoaded', () => {
       checkCurrentSession();
 
-      // 卡片全域可点击跳转增强：点击卡片空白区或标题直接触发独立新网页打开
-      document.querySelectorAll('.deliverable-card').forEach(card => {
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', (e) => {
-          // 若点击的是预览按钮、独立新开按钮或链接本身，则不重复触发
-          if (e.target.closest('.btn-card-quick-preview') || e.target.closest('a') || e.target.closest('button')) {
-            return;
-          }
-          const primaryLaunchBtn = card.querySelector('.btn-card-launch');
+      // 清单行增强：点击行空白区直接打开主入口（多入口的原型行除外）
+      document.querySelectorAll('.deliverable-row:not(.is-wide)').forEach(row => {
+        row.addEventListener('click', (e) => {
+          if (e.target.closest('a') || e.target.closest('button')) return;
+          const primaryLaunchBtn = row.querySelector('.btn-card-launch');
           if (primaryLaunchBtn && primaryLaunchBtn.href) {
             window.open(primaryLaunchBtn.href, '_blank', 'noopener,noreferrer');
           }
@@ -700,7 +562,7 @@
     // 成果物ポータル機能（タブ切り替え・インラインドキュメント表示）
     // ======================================================================
     const tabPills = document.querySelectorAll('.tab-pill');
-    const deliverableCards = document.querySelectorAll('.deliverable-card');
+    const listGroups = document.querySelectorAll('.list-group');
 
     tabPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -708,25 +570,20 @@
         pill.classList.add('active');
 
         const filter = pill.dataset.filter;
-        const gridEl = document.getElementById('deliverables-container');
-        if (gridEl) gridEl.classList.toggle('is-filtered', filter !== 'all');
-        deliverableCards.forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
+        listGroups.forEach(group => {
+          group.style.display = (filter === 'all' || group.dataset.category === filter) ? '' : 'none';
         });
       });
     });
 
     // documentStore is loaded globally from ./js/docs-data.js
 
-    // ドキュメントモーダル表示・非表示ロジック
+    // ドキュメントモーダル表示・非表示ロジック（スライドデッキ形式）
     const docModalOverlay = document.getElementById('docModalOverlay');
     const modalDocId = document.getElementById('modalDocId');
     const modalDocTitle = document.getElementById('modalDocTitle');
     const modalDocBody = document.getElementById('modalDocBody');
+    let modalDeck = null;
 
     function openDocModal(docKey) {
       const doc = documentStore[docKey];
@@ -734,7 +591,9 @@
 
       modalDocId.innerText = doc.id;
       modalDocTitle.innerText = doc.title;
-      modalDocBody.innerHTML = doc.content;
+      if (modalDeck) { modalDeck.destroy(); modalDeck = null; }
+      modalDocBody.classList.add('is-deck');
+      modalDeck = SentisSlideDeck.mount(modalDocBody, doc.content, { useHash: false });
 
       const btnModalOpenTab = document.getElementById('btnModalOpenTab');
       if (btnModalOpenTab) {
@@ -748,6 +607,7 @@
     function closeDocModal() {
       docModalOverlay.classList.remove('active');
       document.body.style.overflow = '';
+      if (modalDeck) { modalDeck.destroy(); modalDeck = null; }
     }
 
     docModalOverlay.addEventListener('click', (e) => {

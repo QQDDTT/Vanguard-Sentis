@@ -1899,6 +1899,63 @@
       .deliverable-card .card-desc { -webkit-line-clamp: 5; }
     }
 
+    /* ==========================================================================
+       [L1 Portal] 成果物チェックリスト形式 (清单行 · 分类分组)
+       ========================================================================== */
+    .list-heading { font-size: 1.25rem; font-weight: 700; color: var(--vg-text-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .deliverables-list { display: flex; flex-direction: column; gap: 20px; width: 100%; min-width: 0; }
+    .catalog-section { width: 100%; box-sizing: border-box; }
+    .list-group-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; color: var(--vg-text-secondary); margin: 0 0 8px; letter-spacing: 0.4px; }
+    .list-group-count { font-family: var(--vg-font-mono); font-size: 12px; font-variant-numeric: tabular-nums; background: #e2e8f0; color: #334155; border-radius: 10px; padding: 1px 9px; }
+    .deliverable-list { list-style: none; margin: 0; padding: 0; background: #ffffff; border: 1px solid var(--vg-border-light); border-radius: 12px; overflow: hidden; box-shadow: var(--vg-shadow-sm); }
+    .deliverable-row {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) 152px 232px;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--vg-border-light);
+      min-width: 0;
+      transition: background-color 0.15s ease;
+    }
+    .deliverable-row:last-child { border-bottom: 0; }
+    .deliverable-row:not(.is-wide) { cursor: pointer; }
+    .deliverable-row:hover { background: #f8fafc; }
+    .row-code { font-family: var(--vg-font-mono); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--vg-text-tertiary); }
+    .row-main { min-width: 0; }
+    .row-title { font-size: 15px; font-weight: 800; line-height: 1.4; color: var(--vg-text-primary); margin: 0 0 2px; text-wrap: balance; }
+    .row-summary { font-size: 13.5px; line-height: 1.6; color: var(--vg-text-secondary); margin: 0; max-width: 56em; text-wrap: pretty; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+    .row-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .row-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .row-status.is-updated, .row-status.is-done { color: #059669; }
+    .row-status.is-review { color: #d97706; }
+    .row-status.is-proto { color: #0284c7; }
+    .row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+    .deliverable-row.is-wide { grid-template-columns: 84px minmax(0, 1fr) 152px; }
+    .deliverable-row.is-wide .row-actions { grid-column: 2 / -1; justify-content: flex-start; }
+
+    @media (max-width: 1100px) {
+      .deliverable-row { grid-template-columns: 72px minmax(0, 1fr) auto; }
+      .deliverable-row .row-status { grid-column: 2; grid-row: 2; }
+      .deliverable-row .row-actions { grid-column: 3; grid-row: 1 / span 2; }
+      .deliverable-row.is-wide { grid-template-columns: 72px minmax(0, 1fr); }
+      .deliverable-row.is-wide .row-status { grid-column: 2; grid-row: 2; }
+      .deliverable-row.is-wide .row-actions { grid-column: 2; grid-row: 3; }
+    }
+    @media (max-width: 860px) {
+      .deliverable-row, .deliverable-row.is-wide {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "code status" "main main" "actions actions";
+        gap: 8px 12px;
+        padding: 14px;
+      }
+      .deliverable-row .row-code { grid-area: code; grid-column: auto; grid-row: auto; }
+      .deliverable-row .row-status { grid-area: status; grid-column: auto; grid-row: auto; justify-self: end; }
+      .deliverable-row .row-main { grid-area: main; grid-column: auto; grid-row: auto; }
+      .deliverable-row .row-actions { grid-area: actions; grid-column: auto; grid-row: auto; justify-content: flex-start; }
+      .row-title { font-size: 14.5px; }
+    }
+
     /* D14 减弱动态 */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }

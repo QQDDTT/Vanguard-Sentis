@@ -3,7 +3,7 @@
  * PWA 渐进式 Web 应用缓存与离线可用性中枢
  */
 
-const CACHE_NAME = 'sentis-crm-pwa-v3';
+const CACHE_NAME = 'sentis-crm-pwa-v4';
 
 const PRECACHE_ASSETS = [
   './',
@@ -13,6 +13,12 @@ const PRECACHE_ASSETS = [
   './document.html',
   './login.html',
   './prototype-crm.html',
+  './assets/css/portal.css',
+  './assets/css/slide-deck.css',
+  './assets/js/slide-deck.js',
+  './assets/js/flowchart.js',
+  './assets/js/flows-data.js',
+  './js/docs-data.js',
   './assets/logo/apple-touch-icon.png',
   './assets/logo/favicon-32x32.png',
   './assets/logo/favicon.ico',

@@ -25,7 +25,7 @@ const documentStore = {
             <div><strong>案件标识：</strong><code>sentis-crm-system</code></div>
             <div><strong>所属分類：</strong>製品企画・業務アーキテクチャ</div>
             <div><strong>策定担当：</strong>Vanguard 策定評議会</div>
-            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v2.0)</div>
           </div>
         </div>
 
@@ -101,7 +101,7 @@ const documentStore = {
             <div><strong>案件标识：</strong><code>sentis-crm-system</code></div>
             <div><strong>管理区分：</strong>標準業務手順書（SOP）</div>
             <div><strong>適用法令：</strong>宅建業法35条・37条・49条実務対応</div>
-            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v2.0)</div>
           </div>
         </div>
 
@@ -237,7 +237,7 @@ const documentStore = {
             <div><strong>システム呼称：</strong>Sentis Realty Core</div>
             <div><strong>稼働モデル：</strong>Vanilla Web (Zero-Build)</div>
             <div><strong>配信方式：</strong>GitHub Pages ＋ 独自ドメイン (CNAME)</div>
-            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v2.0)</div>
           </div>
         </div>
 
@@ -460,7 +460,7 @@ const documentStore = {
 
         <h2>6. 技術基盤と稼働アーキテクチャの階層分離規約</h2>
         <div class="doc-code-preview">
-【フェーズ A: 現行成果物 · Zero Server Runtime Prototype (Design Review v0.9)】
+【フェーズ A: 現行成果物 · Zero Server Runtime Prototype (Design Review v2.0)】
 ・アーキテクチャ: 純粋 Vanilla Web (HTML5 / CSS3 / ES6)
 ・稼働層: ブラウザ内ローカルメモリ + SessionStorage / LocalStorage + SameSite=Lax Cookie
 ・目的: 業務動線の高保真ウォークスルー、動的Checklist判定ロジック検証、費用試算UI即時検証
@@ -502,7 +502,7 @@ const documentStore = {
             <div><strong>展開期間：</strong>2026年10月 〜 2026年12月（計8週間・予定）</div>
             <div><strong>査閲責任者：</strong>株式会社センティス 代表取締役 阿部 翔平</div>
             <div><strong>策定総括：</strong>Vanguard 策定評議会</div>
-            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v0.9)</div>
+            <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v2.0)</div>
           </div>
         </div>
 
@@ -1341,6 +1341,38 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
             </div>
           </div>
         </div>
+
+        <!-- FLOWCHARTS-BEGIN -->
+        <h2>九、 全业务流程图（End-to-End Business Flowcharts）</h2>
+        <p>以下流程图以泳道（角色/外部方）× 业务步骤呈现 288 项业务活动的全部执行路径，编号（如 <code>04-9</code>、<code>07-13</code>）与原表及第四章要件一一对应；已划除或不设立的 06、17、08-6、08-14、19-4~7 不出现在流程中。</p>
+        <h3>9.1 全社业务总览流程（咨询 → 签约交割 → 管理精算 → 税务）</h3>
+        <p>以 7 大角色泳道呈现从客户咨询到售后定期问候、管理精算、月结税务的主干链路；虚线为支撑或旁路关系。</p>
+        <div class="flowchart" data-flow="overview"></div>
+        <h3>9.2 买卖仲介业务流程（04 / 02-4,7,8,9,13 / 01-9,10）</h3>
+        <p>③与④同一营业担当贯通到底；02-4/7 担当自查、02-8 直约宅建士重说、02-9 车辆预约、02-13 决算延期担当自行调整、01-9/10 融资担当/部长双轨确认均已落入流程。</p>
+        <div class="flowchart" data-flow="sale"></div>
+        <h3>9.3 租赁仲介业务流程（05 / 02-8 / 02-9）</h3>
+        <p>租赁与买卖由同一营业担当负责；重说由营业直接与宅建士约定（02-8）；交钥匙后移交租赁管理（R05）并进入 10/11/13 受托管理。05-16 申请取消可在 05-3~05-12 任一环节发生，需恢复房源募集状态。</p>
+        <div class="flowchart" data-flow="lease"></div>
+        <h3>9.4 宅建士：调查整理 → 契约书·重说作成 → 重说实施与记名押印（07 / 08）</h3>
+        <p>08-6（草案回付）与 08-14（抽检补凭证）已划除；宅建士自行完成 08-1~5 与 07-13，随后由营业直接约定重说日时（02-8）。</p>
+        <div class="flowchart" data-flow="takken"></div>
+        <h3>9.5 租赁受托管理：租金 → 报修·修缮 → 续租/退房 → 业主精算（10 / 11 / 13）</h3>
+        <p>11 修缮手配并入 10；13 业主精算由赁贷管理担当负责并与经理协同；10-18（定期管理报告书）不作为强制任务。</p>
+        <div class="flowchart" data-flow="pm"></div>
+        <h3>9.6 经理·税务：开票入金 → 付款提成 → 月结 → 税理士 → 纳税（12 / 13 / 14）</h3>
+        <p>12、13、14 由同一经理税务担当执行；向非居住者支付时联动 19-8 / 20-2 确认源泉征收；电子凭证按电子账簿保存法归档（12-18）。</p>
+        <div class="flowchart" data-flow="finance"></div>
+        <h3>9.7 人事·总务·系统管理：入职 → 账号 → 日常总务 → 薪资 → 离职（15 / 16 / 18）</h3>
+        <p>15 与 16 由同一人事总务担当执行，并兼任 18 系统管理员；离职时一键注销账号、会话与外部分享链接（18-4）。</p>
+        <div class="flowchart" data-flow="hr"></div>
+        <h3>9.8 经营决裁与店长督办（01 / 02）</h3>
+        <p>店长权限内事项当场审批，超权限升级至代表；02-4/7/8/9/13 已下放营业自查、直约、预约，不再经店长审批；01-9/10 融资由担当自查或部长确认。</p>
+        <div class="flowchart" data-flow="exec"></div>
+        <h3>9.9 房源上架 · 海外客户 · 外部专家协同（09 / 19 / 20）</h3>
+        <p>09、19、20 均并入营业担当；19-4~7 已划除，仅保留翻译（1~3）、税务转达（8）、委任寄送（9）与国内交接（10）。</p>
+        <div class="flowchart" data-flow="market"></div>
+        <!-- FLOWCHARTS-END -->
       </div>
     `
   }
