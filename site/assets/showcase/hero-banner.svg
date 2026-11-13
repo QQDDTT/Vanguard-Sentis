@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="stBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="55%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="cobaltLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <pattern id="stGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1E293B" stroke-width="0.9"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif; font-weight: 800; fill: #F8FAFC; }
+    .mono { font-family: "SF Mono", "JetBrains Mono", Consolas, monospace; }
+    .compass-rot { transform-origin: 195px 222px; animation: rotateCompass 24s linear infinite; }
+    .compass-rev { transform-origin: 195px 222px; animation: rotateRev 16s linear infinite; }
+    .pulse-milestone { animation: msPulse 2.2s infinite ease-in-out; }
+    @keyframes rotateCompass {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes rotateRev {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes msPulse {
+      0%, 100% { r: 7px; opacity: 1; }
+      50% { r: 10px; opacity: 0.55; }
+    }
+  </style>
+
+  <!-- Main Frame & Grid -->
+  <rect width="1200" height="420" rx="18" fill="url(#stBg)" stroke="#334155" stroke-width="2"/>
+  <rect x="18" y="18" width="1164" height="384" rx="14" fill="url(#stGrid)" opacity="0.65"/>
+
+  <!-- Tokyo Skyline Silhouette at Bottom of Canvas -->
+  <path d="M 20 398 L 20 365 L 65 365 L 65 340 L 95 340 L 95 368 L 135 368 L 135 320 L 165 320 L 165 365 L 210 365 L 222 275 L 228 240 L 234 275 L 246 365 L 295 365 L 295 330 L 340 330 L 340 360 L 410 360 L 410 315 L 455 315 L 455 362 L 520 362 L 520 335 L 570 335 L 570 368 L 650 368 L 650 310 L 700 310 L 700 365 L 790 365 L 790 338 L 845 338 L 845 368 L 940 368 L 940 325 L 990 325 L 990 365 L 1080 365 L 1080 342 L 1140 342 L 1140 368 L 1180 368 L 1180 398 Z" fill="#060911" opacity="0.75"/>
+
+  <!-- Top Header Strip -->
+  <rect x="34" y="28" width="1132" height="52" rx="10" fill="#0F172A" stroke="#334155"/>
+  <circle cx="60" cy="54" r="6" fill="#F59E0B">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="78" y="59" class="title" font-size="16">株式会社センティス (SENTIS) · REALTY CORE v2.0 統合基幹システム査閲ポータル</text>
+  <rect x="785" y="39" width="175" height="30" rx="6" fill="#1E293B" stroke="#F59E0B"/>
+  <text x="798" y="58" class="mono" font-size="11.5" fill="#FDE68A">288 赤字フィードバック反映</text>
+  <rect x="972" y="39" width="178" height="30" rx="6" fill="#1E293B" stroke="#38BDF8"/>
+  <text x="984" y="58" class="mono" font-size="11.5" fill="#38BDF8">4 トポロジー × 3+1 色彩</text>
+
+  <!-- Left: Horology & Bespoke Realty Compass (「不動産提案に確かな指針を」) -->
+  <g>
+    <circle cx="195" cy="222" r="118" fill="#090D16" stroke="#334155" stroke-width="2"/>
+    <circle cx="195" cy="222" r="102" fill="none" stroke="url(#goldAccent)" stroke-width="1.5" stroke-dasharray="6 4" class="compass-rot"/>
+    <circle cx="195" cy="222" r="82" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="14 8" class="compass-rev"/>
+    <!-- Compass Rose Points -->
+    <polygon points="195,112 212,205 305,222 212,239 195,332 178,239 85,222 178,205" fill="url(#goldAccent)" fill-opacity="0.2" stroke="#F59E0B" stroke-width="1.8" class="compass-rot"/>
+    <circle cx="195" cy="222" r="32" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+    <text x="171" y="227" class="mono" font-size="13" font-weight="700" fill="#FDE68A">SENTIS</text>
+    <text x="95" y="366" class="mono" font-size="11" fill="#94A3B8">「不動産提案に確かな指針を。」</text>
+  </g>
+
+  <!-- Right Top: D-14 / D-10 / D-2 Settlement Reverse Risk Timeline -->
+  <rect x="348" y="96" width="818" height="156" rx="12" fill="#0F172A" fill-opacity="0.92" stroke="#334155"/>
+  <text x="370" y="125" class="title" font-size="14" fill="#FDE68A">⏱️ 決済逆算リスク管理タイムライン (D-14 / D-10 / D-2 REVERSE COUNTDOWN ENGINE)</text>
+  <text x="975" y="125" class="mono" font-size="11" fill="#34D399">● 宅建業法 35/37/49条 準拠</text>
+
+  <!-- Timeline Axis -->
+  <line x1="395" y1="182" x2="1115" y2="182" stroke="url(#cobaltLine)" stroke-width="4"/>
+
+  <!-- Node 1: Contract & 35条重説 -->
+  <circle cx="425" cy="182" r="7" fill="#2563EB" class="pulse-milestone"/>
+  <text x="380" y="162" class="mono" font-size="11" font-weight="700" fill="#60A5FA">07-13 契約 / 08 重説</text>
+  <text x="380" y="210" class="mono" font-size="10.5" fill="#94A3B8">重要事項説明・手付金領収</text>
+  <text x="380" y="226" class="mono" font-size="10" fill="#64748B">案内車両予約 (02-9) 連動</text>
+
+  <!-- Node 2: D-14 -->
+  <circle cx="645" cy="182" r="7" fill="#38BDF8" class="pulse-milestone"/>
+  <text x="605" y="162" class="mono" font-size="11" font-weight="700" fill="#38BDF8">D-14 現地内覧・実測</text>
+  <text x="605" y="210" class="mono" font-size="10.5" fill="#94A3B8">設備状況確認・修繕照合</text>
+  <text x="605" y="226" class="mono" font-size="10" fill="#64748B">火災保険・金消契約手配</text>
+
+  <!-- Node 3: D-10 -->
+  <circle cx="865" cy="182" r="7" fill="#F59E0B" class="pulse-milestone"/>
+  <text x="820" y="162" class="mono" font-size="11" font-weight="700" fill="#FBBF24">D-10 管理会社・司法書士</text>
+  <text x="820" y="210" class="mono" font-size="10.5" fill="#94A3B8">口座振替用紙・固都税日割</text>
+  <text x="820" y="226" class="mono" font-size="10" fill="#64748B">抵当権抹消・登記書類精査</text>
+
+  <!-- Node 4: D-2 & D-0 -->
+  <circle cx="1085" cy="182" r="7" fill="#10B981" class="pulse-milestone"/>
+  <text x="1015" y="162" class="mono" font-size="11" font-weight="700" fill="#34D399">D-2 三合一送審 → 決済</text>
+  <text x="1015" y="210" class="mono" font-size="10.5" fill="#94A3B8">銀行送金明細・部長二重承認</text>
+  <text x="1015" y="226" class="mono" font-size="10" fill="#64748B">03-17 定期お客様あいさつ</text>
+
+  <!-- Right Bottom: 4 Topologies + 7 Roles Summary Cards -->
+  <g transform="translate(348, 266)">
+    <rect width="194" height="112" rx="10" fill="#0F172A" stroke="#2563EB"/>
+    <text x="14" y="26" class="mono" font-size="11" fill="#60A5FA">TOPOLOGY A · 羅針盤</text>
+    <text x="14" y="48" class="title" font-size="13">ギョーシェ彫り中枢盤</text>
+    <text x="14" y="70" class="mono" font-size="10.5" fill="#94A3B8">全18区分・7大ロール統括</text>
+    <text x="14" y="92" class="mono" font-size="10" fill="#FDE68A">Royal Blue / Washi / Walnut</text>
+  </g>
+
+  <g transform="translate(556, 266)">
+    <rect width="194" height="112" rx="10" fill="#0F172A" stroke="#38BDF8"/>
+    <text x="14" y="26" class="mono" font-size="11" fill="#38BDF8">TOPOLOGY B · 三欄台</text>
+    <text x="14" y="48" class="title" font-size="13">担当自査 Checklist 台</text>
+    <text x="14" y="70" class="mono" font-size="10.5" fill="#94A3B8">担当確認 ＋ 部長承認二段階</text>
+    <text x="14" y="92" class="mono" font-size="10" fill="#34D399">印紙税・仲介報酬自動試算</text>
+  </g>
+
+  <g transform="translate(764, 266)">
+    <rect width="194" height="112" rx="10" fill="#0F172A" stroke="#F59E0B"/>
+    <text x="14" y="26" class="mono" font-size="11" fill="#FBBF24">TOPOLOGY C · 車両/重説</text>
+    <text x="14" y="48" class="title" font-size="13">案内車両予約＆重説軸</text>
+    <text x="14" y="70" class="mono" font-size="10.5" fill="#94A3B8">02-9 社用車ガントチャート</text>
+    <text x="14" y="92" class="mono" font-size="10" fill="#FDE68A">08 重説スケジュール直結</text>
+  </g>
+
+  <g transform="translate(972, 266)">
+    <rect width="194" height="112" rx="10" fill="#0F172A" stroke="#10B981"/>
+    <text x="14" y="26" class="mono" font-size="11" fill="#34D399">TOPOLOGY D · 70:30</text>
+    <text x="14" y="48" class="title" font-size="13">左70%総台帳＋右四段抽斗</text>
+    <text x="14" y="70" class="mono" font-size="10.5" fill="#94A3B8">07-13 契約書作成・49条帳簿</text>
+    <text x="14" y="92" class="mono" font-size="10" fill="#34D399">03-17 挨拶リマインダー</text>
+  </g>
+</svg>
