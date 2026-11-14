@@ -63,7 +63,13 @@
             group.nodes.push(n);
           }
         });
-        groups.forEach(function (g) { slides.push(g); });
+        groups.forEach(function (g, gi) {
+          // 仅有 h2 标题、无正文的章节首页会形成空白幻灯片：并入下一页（h2 已作为 eyebrow 显示）
+          var onlyHeading = gi === 0 && groups.length > 1 && g.nodes.every(function (n) {
+            return n.nodeType === 1 && n.tagName === 'H2';
+          });
+          if (!onlyHeading) slides.push(g);
+        });
       } else {
         slides.push(sec);
       }

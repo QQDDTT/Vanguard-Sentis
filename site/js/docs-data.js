@@ -330,6 +330,9 @@ const documentStore = {
               <td>海外非居住富裕層</td>
               <td>パスポート認証、公証役場宣誓書、AML海外送金着金確認票</td>
             </tr>
+          </tbody>
+        </table>
+
         <h2>4. 核心データモデル設計 (Entity-Relationship Data Model)</h2>
         <p>不動産取引ライフサイクル及び宅建業法第49条法定帳簿の追溯要件に基づき、7大コアエンティティを設計：</p>
         <table>
