@@ -1,9 +1,9 @@
 /**
- * Sentis Internal Core System - Service Worker
+ * Sentis Internal Core System - Service Worker (v5)
  * PWA 渐进式 Web 应用缓存与离线可用性中枢
  */
 
-const CACHE_NAME = 'sentis-crm-pwa-v4';
+const CACHE_NAME = 'sentis-crm-pwa-v5';
 
 const PRECACHE_ASSETS = [
   './',
@@ -15,9 +15,11 @@ const PRECACHE_ASSETS = [
   './prototype-crm.html',
   './assets/css/portal.css',
   './assets/css/slide-deck.css',
+  './assets/css/sentis-horology-v2.css',
   './assets/js/slide-deck.js',
   './assets/js/flowchart.js',
   './assets/js/flows-data.js',
+  './assets/js/sentis-horology-v2.js',
   './js/docs-data.js',
   './assets/logo/apple-touch-icon.png',
   './assets/logo/favicon-32x32.png',
@@ -63,7 +65,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. 请求拦截：针对文档采用网络优先（断网回退缓存），针对静态资产采用缓存优先（后台更新）
+// 3. 请求拦截：针对 HTML / JS / CSS 采用 Network-First（确保发布后立即呈现最新文档与流程图），针对图标/字体采用 Stale-While-Revalidate
 self.addEventListener('fetch', (event) => {
   const req = event.request;
 
@@ -71,8 +73,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 页面导航请求：Network-First，断网回退至缓存页面
-  if (req.mode === 'navigate') {
+  const url = new URL(req.url);
+  const isCodeOrDoc =
+    req.mode === 'navigate' ||
+    url.pathname.endsWith('.html') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.webmanifest');
+
+  if (isCodeOrDoc) {
     event.respondWith(
       fetch(req).then((networkRes) => {
         if (networkRes && networkRes.status === 200) {
@@ -85,14 +94,15 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         return caches.match(req).then((cachedRes) => {
           if (cachedRes) return cachedRes;
-          return caches.match('./index.html');
+          if (req.mode === 'navigate') return caches.match('./index.html');
+          return new Response('/* Offline */', { status: 503, statusText: 'Offline' });
         });
       })
     );
     return;
   }
 
-  // 静态资源请求：Stale-While-Revalidate（缓存响应加速，后台拉取更新）
+  // 图像与其它静态资产：Stale-While-Revalidate，确保离线未命中时始终返回合法 Response
   event.respondWith(
     caches.match(req).then((cachedRes) => {
       const fetchPromise = fetch(req).then((networkRes) => {
@@ -104,7 +114,7 @@ self.addEventListener('fetch', (event) => {
         }
         return networkRes;
       }).catch(() => {
-        // 静默捕获离线错误
+        return cachedRes || new Response('', { status: 504, statusText: 'Offline cache miss' });
       });
 
       return cachedRes || fetchPromise;

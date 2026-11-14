@@ -1,75 +1,55 @@
-﻿# Vanguard-Sentis: 房产中介内部综合业务管理系统 (Realty Core)
+<div align="center">
 
-<p align="center">
-  <img src="site/assets/logo/sentis-logo-full-400w.png" alt="株式会社 SENTIS" width="320" /><br>
-  <strong>「不動産提案に確かな指針を。」</strong>
-</p>
+# 🏢 Vanguard-Sentis · 株式会社 SENTIS 不动产综合业务管理系统 (Realty Core v2.0)
+
+**「不動産提案に確かな指針を。」—— 288 项客户手写反馈精校要件、9 幅端到端泳道流程图、幻灯片查阅门户与四大拓扑高保真原型**
 
 [![Deploy to GitHub Pages](https://github.com/QQDDTT/Vanguard-Sentis/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/QQDDTT/Vanguard-Sentis/actions/workflows/deploy-pages.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status: Detailed Design](https://img.shields.io/badge/Status-Detailed%20Design%20(M2)-amber.svg)](#)
+[![Live Portal](https://img.shields.io/badge/Live_Portal-vanguard--sentis.evotensor.dev-2563EB?style=flat-square)](https://vanguard-sentis.evotensor.dev)
+[![Status](https://img.shields.io/badge/Status-Design_Review_v2.0_(288_Items)-F59E0B?style=flat-square)](site/index.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-10B981?style=flat-square)](LICENSE)
 
-> 本仓库为 **Vanguard 平台** 下的独立案件公开资产仓，专门管理 **株式会社 SENTIS（センティス）** 不动产买卖内部业务管理系统（Sentis Realty Core）的业务调研、系统设计文档以及设计展示样板网页。
+<br/>
 
----
+<img src="site/assets/showcase/hero-banner.svg" alt="Sentis Realty Core v2.0 Hero Banner" width="100%"/>
 
-## 1. 业务背景与系统定位
-
-**株式会社 SENTIS**（代表取締役：阿部 翔平 / 東京都千代田区神田須田町 2-3-12）是一家专注于**高额不动产（2~10 亿日元）与海外华人富裕层客户**的专业不动产经纪机构。
-
-面对长达数月的买卖契约、银行房贷审查、金融借贷契约与决算过户全链路，为支持 2~5 人小团队达成亿元级业务规模，本项目打造轻量、自包含、高人效的业务管理指挥中心：
-- **前置获客对接**：小红书 (RED) 私域线索沉淀、多语言（中/日/英）咨询与视频/VR 远程看房；
-- **动态智能 Checklist 引擎**：根据公寓/一户建、法人/个人卖主、在日贷款/海外全款自动生成法定重说份数与所需资料清单；
-- **决算反向倒排风控 (D-14/D-10/D-2)**：自动提醒验房预约、管理会社振替用纸提前索取、三合一支付明细银行送审；
-- **高额交易财务结算**：内置法定中介费上限核算（3%+6万+税）与契约书/领收书印纸税阶梯匹配。
+</div>
 
 ---
 
-## 2. 线上设计展示样板网页 (Showcase)
-
-本项目设计展示样板网页采用**日本不动产事务所纸质办公美学（Paper-textured Office Stationery）**与纯原生前端技术（Vanilla HTML/CSS/JS）构建，并通过 GitHub Actions 自动持续部署：
-
-- 🌐 **专属独立域名访问**：**[https://vanguard-sentis.evotensor.dev](https://vanguard-sentis.evotensor.dev)**（已启用免费专属 HTTPS）
-- 🔗 **GitHub 默认域名**：[https://qqddtt.github.io/Vanguard-Sentis/](https://qqddtt.github.io/Vanguard-Sentis/)（自动 301 重定向）
-- 💻 **本地离线双击浏览**：克隆本仓库后，直接在文件管理器中双击 [`site/index.html`](./site/index.html) 即可开箱体验，无需任何本地 Server 或 Node.js 运行环境。
+> [!IMPORTANT]
+> **⚠️ 商业咨询原型与不动产/财税测算免责声明 (Legal & Tax Calculation Disclaimer)**
+> 本仓库（`QQDDTT/Vanguard-Sentis`）及线上查阅门户（`https://vanguard-sentis.evotensor.dev`）所交付的要件定义书、SOP 泳道流程图、印纸税/法定中介费（`3% + 6万日元 + 税`）/非居住者源泉税测算器及高保真 CRM 原型，**仅作为信息系统要件定义（Design Review v2.0）与纯静态前端交互演示参考，不构成正式法律意见、税理士财税申报或专任宅地建物取引士（宅建士）法定第 35 条重说 / 第 37 条书面背书**。实际不动产交易须由持牌专任宅建士、司法书士及经办银行核验签署。
 
 ---
 
-## 3. 仓库目录结构
+## 1. 交付成果物矩阵 (`DEL-01 ~ DEL-08`)
 
-```text
-Vanguard-Sentis/
-├── .github/
-│   └── workflows/
-│       └── deploy-pages.yml    # GitHub Actions 自动化部署工作流
-├── docs/                       # 核心业务梳理与系统设计文档
-│   ├── 01_overview.md          # 公司画像、商业战略与财务计划
-│   ├── 02_business_workflow.md # 四大阶段业务 SOP 与境内外双轨风控
-│   ├── 03_system_requirements.md# 内部管理系统功能矩阵与计算器设计
-│   └── 04_project_schedule.md  # M1~M5 工程研发进度表与甘特图
-├── raw/                        # 原始业务调研资料归档
-│   ├── 創業計画書.pdf          # 株式会社 SENTIS 商业计划书
-│   ├── 売買契約の流れ.docx     # 签约与决算实务 SOP
-│   └── 売買契約流れ　ローン利用.pdf # 银行房贷利用指南
-├── site/                       # 设计展示样板网页产物
-│   ├── index.html              # 纯静态高保真纸质办公室风控制台原型
-│   ├── favicon.ico             # 浏览器原生标签页图标
-│   ├── assets/
-│   │   └── logo/               # SENTIS 官方 CI/VI 全规格多尺寸素材库
-│   │       ├── sentis-emblem-512.png # 高清罗盘透明徽标 (512x512)
-│   │       ├── sentis-logo-full-400w.png # 完整组合透明标志
-│   │       ├── apple-touch-icon.png  # 移动端桌面图标 (180x180)
-│   │       └── ... (各尺寸 PNG 与 ICO)
-│   └── CNAME                   # 自定义域名配置文件 (vanguard-sentis.evotensor.dev)
-├── metadata.json               # 案件元数据与规范校验
-└── README.md                   # 本说明文档
-```
+| 成果物编号 | 类别 | 核心名称与规格内容 | 查阅入口 |
+| :--- | :---: | :--- | :--- |
+| **`DEL-08`** | 📄 核心要件 | **05. 综合业务管理系统要件定义书（v2.0 精校版）**：100% 反映 **288 项手写批注**、7 大角色 (`R01~R07`) 收敛、7 大业务子系统 (`S1~S7`，剔除 `06/17`) 及 **第九章 9 幅端到端泳道流程图** | [`docs/05_requirements_definition.md`](docs/05_requirements_definition.md) |
+| **`DEL-01`** | 💻 画面原型 | **内部基干管理系统 v2.0 高保真原型套件**：空间几何门禁 + **4 大拓扑（A 罗盘中枢 / B 三栏工作台 / C 看房车辆预约时间表&重说排期 / D 左70%总台账+右30%四段抽屉）× 3+1 主题色彩** | [`site/prototype-crm.html`](site/prototype-crm.html) |
+| **`DEL-02`** | 💻 画面原型 | **执务室空间全景导航与罗盘数据中枢（VR Office Hub）**：360° 罗盘指挥舱、物件资料柜、决算白板与多角色业务沙盘 | [`site/crm-home.html`](site/crm-home.html) |
+| **`DEL-03 ~ 06`** | 📄 基础规范 | **01 业务课题定义 / 02 买卖与跨境 SOP / 03 系统架构与 7 角色 RBAC / 04 研发推进 5 阶段日程表 / 06 测试与验证规范** | [`site/index.html`](site/index.html) |
+| **`DEL-07`** | 🎨 品牌资产 | **株式会社 SENTIS 官方 CI/VI 多规格罗盘徽标与印鉴素材包** | [`site/assets/logo/`](site/assets/logo/) |
 
 ---
 
-## 4. 平台规范与协议
+## 2. 目录结构与验证工具
 
-本项目遵循 **Vanguard 平台化双层仓库规范**：
-- 核心平台规范库（Private）：仅维护通用模板、Windows 原生 PowerShell 自动化脚本与架构规范。
-- 案件独立公开仓（Public）：维护独立案件的完整生命周期资产与在线静态样板。
+- `docs/`：全套 Markdown 规格书（`01`~`06`），其中 `05_requirements_definition.md` 为 v2.0 288 项主权威源。
+- `site/`：零后端纯静态交付门户（`index.html` 清单式主页、`document.html` 幻灯片查阅器、`prototype-crm.html` 与 `crm-home.html` 业务原型）。
+- `tools/`：Windows 原生 PowerShell 自动化生成与质量门禁脚本（`gen-flows.ps1` 泳道图同源生成器、`verify-site.ps1` 自动化验证套件）。
 
+---
+
+## 3. 在线访问与本地离线双击体验
+
+- 🌐 **专属独立 HTTPS 域名**：**[https://vanguard-sentis.evotensor.dev](https://vanguard-sentis.evotensor.dev)**
+- 💻 **本地零环境双击浏览**：克隆仓库后直接双击打开 [`site/index.html`](site/index.html) 即可完整体验，无需安装任何本地 Server 或外部语言运行时。
+
+---
+
+## 4. 开源许可证 (License)
+
+本公开案件展示仓中的脱敏前端原型代码与 SVG 视觉资产采用 **[MIT License](LICENSE)** 授权。客户原始商业资料与平台核心工具链受专有保密协议保护。

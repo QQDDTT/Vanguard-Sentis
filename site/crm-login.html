@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <title>株式会社センティス (SENTIS Realty) - 空間幾何次元 認証ゲートウェイ</title>
   <meta name="description" content="株式会社センティス 空間幾何次元認証ゲートウェイ。建築幾何構造主義と虚空光影による高水準認証プロトタイプ。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
@@ -724,22 +726,20 @@
             <option value="R07">R07 人事・総務・システム管理 (15採用・16備品車両・18権限)</option>
           </select>
 
-          <label for="doorPassword" class="auth-input-label">ACCESS KEY // 認証暗証番号</label>
+          <label for="doorPassword" class="auth-input-label">ACCESS KEY // 認証暗証番号 [L2 UI実演素材・直接入室可]</label>
           <div class="input-field-wrapper">
             <input 
               type="password" 
               id="doorPassword" 
               class="auth-input-control" 
-              placeholder="実演用暗証キー: SentisPass" 
-              value="SentisPass"
+              placeholder="査閲アクセスキーを入力（または下のボタンで直接入室）" 
               autocomplete="current-password"
-              required
             >
           </div>
         </div>
 
         <div class="auth-error-notice" id="authError">
-          暗証番号が正しくありません。(実演用暗証キー: SentisPass)
+          暗証番号が正しくありません。L1 ポータルと同一の査閲キーを入力するか、下の「総合業務台帳へ直接入室」をご利用ください。
         </div>
 
         <div class="action-buttons-group">
@@ -757,7 +757,7 @@
   </div>
 
   <script>
-    // 散列目标值 (SentisPass)
+    // [L2 Target Product Prototype] SHA-256 ダイジェスト検証（ソースコード内に平文キー非保持）
     const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
     const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
 
@@ -886,23 +886,30 @@
       }, 1100);
     }
 
-    // 密码输入开门逻辑
-    function handleDoorUnlock(event) {
+    // SHA-256 計算ヘルパー（ソースコード内に平文パスワードを保持しない）
+    async function computeSha256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // [L2 Target Product Prototype] 暗証番号またはUI実演入室（No-Blocking Rule準拠）
+    async function handleDoorUnlock(event) {
       if (event) event.preventDefault();
-      const entered = doorPassword.value;
+      const entered = (doorPassword.value || '').trim();
       authError.style.display = 'none';
 
-      if (!entered || entered.trim() === '') {
-        authError.innerText = "暗証番号を入力してください。(実演用暗証キー: SentisPass)";
-        authError.style.display = 'block';
-        doorPassword.focus();
+      if (!entered) {
+        // L2 プロトタイプ実演モード：未入力でもスムーズに拓扑A（羅針盤中枢）へ入室可能
+        grantAccessAndEnter();
         return;
       }
 
-      if (entered.trim() === "SentisPass") {
+      const hash = await computeSha256(entered);
+      if (hash === TARGET_AUTH_HASH) {
         grantAccessAndEnter();
       } else {
-        authError.innerText = "暗証番号が正しくありません。(実演用暗証キー: SentisPass)";
+        authError.innerText = "暗証番号が一致しません（空欄のまま「羅針盤中枢へ入室」を押すとL2実演モードで直接入室できます）。";
         authError.style.display = 'block';
         doorPassword.select();
         doorPassword.focus();
@@ -912,7 +919,6 @@
     // 快捷同步同调
     function simulateQuickSync() {
       authError.style.display = 'none';
-      doorPassword.value = "SentisPass";
       grantAccessAndEnter();
     }
 

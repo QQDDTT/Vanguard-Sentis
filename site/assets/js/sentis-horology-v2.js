@@ -193,7 +193,7 @@
           </div>
         </div>
 
-        <div id="v2RolePermissionBanner" style="width:100%; font-size:11px; padding:4px 10px; border-radius:3px; background:rgba(0,0,0,0.22); border-left:3px solid var(--v2-gold); color:var(--v2-text-sub);">
+        <div id="v2RolePermissionBanner" style="width:100%; font-size:12px; padding:4px 10px; border-radius:3px; background:rgba(0,0,0,0.22); border-left:3px solid var(--v2-gold); color:var(--v2-text-sub);">
           【R03 総合営業担当】売買04＋賃貸05＋掲載09＋海外19＋士業20＋02-4/7担当自主Checklist＋02-9車両予約＋03-17定期挨拶 一貫モード
         </div>
       </div>
@@ -208,8 +208,8 @@
             <div class="v2-frame-header">
               <div>
                 <div class="v2-frame-title">SENTIS 総合営業（04売買・05賃貸・09掲載・19海外・20士業）＆ 10賃貸管理 統合主台帳 (Topology D · 70%)</div>
-                <div style="font-size:11px; color:var(--v2-text-sub); margin-top:2px;">
-                  ※ 顧客赤字フィードバック反映：③と④同一営業・賃貸と売買兼任・02-4/7担当自主確認Checklist・01-9/10銀行融資(担当/部長双軌確認)・07-13宅建士契約書作成
+                <div style="font-size:12px; color:var(--v2-text-sub); margin-top:2px;">
+                  ※ 顧客赤字フィードバック反映：③と④同一営業・賃貸と売買兼任・02-4/7担当自主確認Checklist・04-9顧客ローン＆01-9/10会社融資(担当/部長双軌確認)・07-13宅建士契約書作成
                 </div>
               </div>
               <span class="v2-frame-badge">全20頁・288項目準拠</span>
@@ -225,7 +225,7 @@
                       <th>物件所在地・顧客氏名 (19-3表記照合)</th>
                       <th>取引価格 / 賃料</th>
                       <th>02-4/7 担当自主確認 ＆ 09 REINS</th>
-                      <th>01-9/10・04-9 融資 (担当/部長)</th>
+                      <th>04-9 顧客ローン / 01-9 会社融資双軌</th>
                       <th>07-13 契約書・02-8 重説直約</th>
                       <th>公印・状態</th>
                     </tr>
@@ -234,17 +234,17 @@
                     <tr>
                       <td><strong>ST-26-101</strong></td>
                       <td><span class="v2-tag-pill v2-tag-sale">04 売買仲介</span></td>
-                      <td>千代田区神田錦町 1棟ビル<br><span style="font-size:10.5px; color:#666;">買主: 鈴木HD様 (担当: 小林)</span></td>
+                      <td>千代田区神田錦町 1棟ビル<br><span style="font-size:12px; color:#666;">買主: 鈴木HD様 (担当: 小林)</span></td>
                       <td><strong>[売買価格Tier-S・脱敏済]</strong></td>
                       <td>09-6 REINS登録済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-4/7 担当Checklist済</span></td>
-                      <td>SMBC 事業融資枠 (01-9/10)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
+                      <td>04-9/10 顧客ローン審査 ＋ 01-9双軌<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
                       <td>07-13 宅建士作成完 (能勢)<br>02-8 直約: 11/06 14:00重説</td>
                       <td><span class="v2-mini-hanko">能勢<br>検印</span></td>
                     </tr>
                     <tr>
                       <td><strong>ST-26-102</strong></td>
                       <td><span class="v2-tag-pill v2-tag-lease">05 賃貸仲介</span></td>
-                      <td>港区六本木3丁目 レジデンス<br><span style="font-size:10.5px; color:#666;">借主: 渡辺 健太 様 (担当: 小林)</span></td>
+                      <td>港区六本木3丁目 レジデンス<br><span style="font-size:12px; color:#666;">借主: 渡辺 健太 様 (担当: 小林)</span></td>
                       <td><strong>[月額賃料Tier-A・脱敏済]</strong></td>
                       <td>05-7 初期費用明細済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-4 担当自分確認済</span></td>
                       <td>05-4 保証会社承認済<br><span style="color:#1e6b45; font-weight:700;">05-12 鍵引渡前条件充足</span></td>
@@ -254,7 +254,7 @@
                     <tr>
                       <td><strong>ST-26-103</strong></td>
                       <td><span class="v2-tag-pill v2-tag-overseas">04/19 海外売買</span></td>
-                      <td>中央区銀座6丁目 商業区分<br><span style="font-size:10.5px; color:#666;">買主: 陳様 (19-3 原語/漢字照合済)</span></td>
+                      <td>中央区銀座6丁目 商業区分<br><span style="font-size:12px; color:#666;">買主: 陳様 (19-3 原語/漢字照合済)</span></td>
                       <td><strong>[売買価格Tier-SS・脱敏済]</strong></td>
                       <td>09-4 中国語広告・19-1翻訳済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-7 必要書類担当確認済</span></td>
                       <td>19-8/14-4 非居住者税務確認<br><span style="color:#b45309; font-weight:700;">担当確認済 / 部長確認待</span></td>
@@ -264,21 +264,21 @@
                     <tr>
                       <td><strong>ST-26-104</strong></td>
                       <td><span class="v2-tag-pill v2-tag-sale">04 売買仲介</span></td>
-                      <td>板橋区中丸町 中古一戸建<br><span style="font-size:10.5px; color:#666;">買主: 鈴木 隆一 様 (担当: 小林)</span></td>
+                      <td>板橋区中丸町 中古一戸建<br><span style="font-size:12px; color:#666;">買主: 鈴木 隆一 様 (担当: 小林)</span></td>
                       <td><strong>[売買価格Tier-A・脱敏済]</strong></td>
                       <td>09-2 間取図・02-4見積済<br><span style="color:#1e6b45; font-weight:700;">✓ 02-13 決済日程担当調整済</span></td>
-                      <td>みずほ銀行 本審査 (04-9)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
+                      <td>みずほ銀行 顧客本審査 (04-9/10)<br><span style="color:#1e6b45; font-weight:700;">担当確認済 ＋ 部長確認済</span></td>
                       <td>07-7 法定記名押印・交付完<br>03-17 引渡後定期挨拶登録済</td>
                       <td><span class="v2-mini-hanko">能勢<br>職印</span></td>
                     </tr>
                     <tr>
                       <td><strong>ST-26-105</strong></td>
                       <td><span class="v2-tag-pill v2-tag-lease">10/11/13 受託管理</span></td>
-                      <td>練馬区豊玉北 1棟マンション<br><span style="font-size:10.5px; color:#666;">オーナー: 佐藤資産管理様 (全18戸)</span></td>
+                      <td>練馬区豊玉北 1棟マンション<br><span style="font-size:12px; color:#666;">オーナー: 佐藤資産管理様 (全18戸)</span></td>
                       <td><strong>[管理総賃料Tier-M・脱敏済]</strong></td>
                       <td>13-2 家賃入金消込完<br><span style="color:#1e6b45; font-weight:700;">✓ 11-8 302号室修繕検収済</span></td>
                       <td>13-6 月次収支精算書作成<br><span style="color:#1e6b45; font-weight:700;">R05賃貸管理＋R06経理確認</span></td>
-                      <td>10-12 更新契約2件・13-8敷金照合<br><span style="font-size:10px; color:#666;">(※10-18定期報告書は省略)</span></td>
+                      <td>10-12 更新契約2件・13-8敷金照合<br><span style="font-size:12px; color:#666;">(※10-18定期報告書は省略)</span></td>
                       <td><span class="v2-mini-hanko">管理<br>之印</span></td>
                     </tr>
                   </tbody>
@@ -303,7 +303,7 @@
 
             <!-- 抽斗 壱：担当自主確認チェックリスト (REQ-SP-01: 02-4 & 02-7) -->
             <div class="v2-folio-pane active" id="folio-1">
-              <div style="font-size:11.5px; color:var(--v2-gold); font-weight:700;">
+              <div style="font-size:12px; color:var(--v2-gold); font-weight:700;">
                 【REQ-SP-01】02-4 見積書 ＆ 02-7 契約必要書類「担当者自分確認」Checklist
               </div>
               <label class="v2-check-row">
@@ -320,7 +320,7 @@
               </label>
               <label class="v2-check-row">
                 <input type="checkbox" checked>
-                <span><strong>01-9, 10 銀行融資・借入条件双軌確認</strong>：「担当自分確認 / また部長確認」反映—担当営業確認および部長承認の双軌ステータス記録</span>
+                <span><strong>04-9/10 顧客住宅ローン審査 ＆ 01-9/10 会社銀行借入双軌確認</strong>：「担当自分確認 / また部長確認」反映—顧客ローン進捗(04-9)および会社借入・変動金利(01-9/10)の担当/部長双軌確認記録</span>
               </label>
             </div>
 
@@ -399,13 +399,13 @@
 
           <div class="v2-horology-frame">
             <div class="v2-frame-header">
-              <span class="v2-frame-title">II. 01-9,10 銀行融資・借入「担当/部長双軌確認」</span>
+              <span class="v2-frame-title">II. 04-9 顧客ローン ＆ 01-9,10 会社借入「担当/部長双軌確認」</span>
               <span class="v2-frame-badge">REQ-SP-06</span>
             </div>
             <div class="v2-washi-sheet" style="font-size:12px; line-height:1.65;">
-              <div><strong>・SMBC 融資 (神田錦町・融資枠Tier-S)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
-              <div><strong>・みずほ本審査 (板橋戸建・融資枠Tier-A)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
-              <div><strong>・非居住者決済 (銀座商業・融資枠Tier-SS)</strong>：<span style="color:#b45309; font-weight:700;">[担当自分確認: 済] [部長確認: 本日決裁]</span></div>
+              <div><strong>・SMBC 運転・事業借入枠 (01-9/10 会社融資)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
+              <div><strong>・みずほ 顧客住宅ローン本審査 (04-9/10 板橋戸建)</strong>：<span style="color:#1e6b45; font-weight:700;">[担当自分確認: 済] [部長確認: 済]</span></div>
+              <div><strong>・非居住者決済・税務確認 (19-8/14-4 銀座商業)</strong>：<span style="color:#b45309; font-weight:700;">[担当自分確認: 済] [部長確認: 本日決裁]</span></div>
             </div>
           </div>
 

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <title>Vanguard × 株式会社センティス (SENTIS) - 内部基幹システム策定 成果物総覧ポータル</title>
   <meta name="description" content="Vanguard × 株式会社センティス (SENTIS) 内部基幹システム策定・DEL-01~04 成果物総覧ポータル。業務課題定義、SOP業務プロセス、高保真CRMプロトタイプ仕様を網羅。">
   <link rel="icon" type="image/x-icon" href="./assets/logo/favicon.ico">
@@ -78,8 +80,8 @@
       </form>
 
       <div class="gateway-footer-note">
-        <strong>【情報セキュリティ規範】</strong><br>
-        本成果物群は宅地建物取引業法第49条及び社外秘規程に基づき保護されています。
+        <strong>【L1 査閲ゲートウェイ・脱敏データ規範】</strong><br>
+        本ポータルは静的フロントエンド査閲環境であり、掲載データは個人情報保護法（APPI）及び宅建業法第49条規範に準拠した架空・脱敏済シミュレーションデータです（実顧客機密は一切含まれません）。
       </div>
     </div>
   </div>
@@ -228,7 +230,7 @@
               <span class="row-code">DEL-03</span>
               <div class="row-main">
                 <h4 class="row-title">01. プロジェクト概要及び業務課題定義書</h4>
-                <p class="row-summary">少人数精鋭体制の高人効モデル、5大競争優位性とシステム基本理念を定義する業務設計書。</p>
+                <p class="row-summary">少人数精鋭体制の高人効モデル、5大競争優位性とシステム基本理念（範囲の正本は DEL-08）を定義する業務設計書。</p>
               </div>
               <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
               <div class="row-actions">
@@ -264,7 +266,7 @@
               <span class="row-code">DEL-05</span>
               <div class="row-main">
                 <h4 class="row-title">03. 次世代システム要件定義及びアーキテクチャ設計書</h4>
-                <p class="row-summary">5大基幹モジュール、7大エンティティERモデル、RBAC 4級権限マトリクス、動的Checklist判定エンジンを定義。</p>
+                <p class="row-summary">7サブシステム・10エンティティER・RBAC 7ロール権限マトリクス・動的Checklist判定エンジンを定義（v2.0 整合）。</p>
               </div>
               <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
               <div class="row-actions">
@@ -282,7 +284,7 @@
               <span class="row-code">DEL-06</span>
               <div class="row-main">
                 <h4 class="row-title">04. 導入展開計画及びプロジェクト推進日程表</h4>
-                <p class="row-summary">フェーズ1〜4の段階展開スケジュール、週次マイルストーン、研修手順、データ保全・ロールバック対策。</p>
+                <p class="row-summary">フェーズ1〜5の段階展開（P3 進行中）、7サブシステム別検収、研修手順、データ保全・ロールバック対策。</p>
               </div>
               <span class="row-status is-review"><span class="row-dot"></span>Review Ready</span>
               <div class="row-actions">
@@ -414,9 +416,9 @@
           <div class="footer-copy">
             © 2026 Vanguard & 株式会社センティス (SENTIS REALTY CO., LTD.) All Rights Reserved.
           </div>
-          <div class="footer-disclaimer" style="margin-top: 6px; font-size: 11px; color: #64748b; line-height: 1.5;">
+          <div class="footer-disclaimer" style="margin-top: 6px; font-size: 12px; color: #64748b; line-height: 1.5;">
             <strong>【個人情報保護（APPI）及び架空データ注記】</strong> 本ポータル及びプロトタイプに掲載された取引案件情報（物件名、所在、当事者氏名、契約金額等）は、システム要件・業務動線検証を目的とした架空のシミュレーション（脱敏）データです。実在の個人・法人・物件とは一切関係ありません。<br>
-            <strong>【プロトタイプ仕様明記】</strong> 本画面群は GitHub Pages 静的ホスティング規格に準拠した UI/UX 概念実証（Zero Server Runtime Prototype）モデルです。フロントエンドでの動的Checklist判定やAIアシスタントは画面動作シミュレーションであり、本番稼働時にマイクロサービス及び法規DBとの連携を予定しています。
+            <strong>【プロトタイプ仕様・テレメトリ明記】</strong> 本画面群は GitHub Pages 静的ホスティング規格に準拠した UI/UX 概念実証（Zero Server Runtime Prototype）モデルです。CDN エッジ層（Cloudflare）により匿名パフォーマンス計測（Web Analytics）が自動付与される場合がありますが、業務入力データの外部送信・収集は一切行いません。
           </div>
         </div>
 
@@ -425,7 +427,7 @@
             <div class="seal-circle-stamp">VG</div>
             <div>
               <div style="font-weight:700; color:#090d16;">Vanguard 設計提出</div>
-              <div style="font-size:10px; color:#64748b;">2026-11-03 Review v2.0 (288項目)</div>
+              <div style="font-size:12px; color:#64748b;">2026-11-14 Review v2.0 (288項目)</div>
             </div>
           </div>
 
@@ -433,7 +435,7 @@
             <div class="seal-circle-stamp" style="border-color:#d97706; color:#d97706;">REV</div>
             <div>
               <div style="font-weight:700; color:#090d16;">SENTIS 査閲確認</div>
-              <div style="font-size:10px; color:#64748b;">Internal Review (照合中)</div>
+              <div style="font-size:12px; color:#64748b;">Internal Review (照合中)</div>
             </div>
           </div>
         </div>
@@ -442,18 +444,17 @@
 
   </div> <!-- /.portal-main-wrapper -->
 
-  <!-- 成果物仕様書データストア（DEL-03〜DEL-07） -->
+  <!-- 成果物仕様書データストア（DEL-03〜DEL-08） -->
   <script src="./js/docs-data.js"></script>
   <script src="./assets/js/flows-data.js"></script>
   <script src="./assets/js/flowchart.js"></script>
   <script src="./assets/js/slide-deck.js"></script>
 
   <!-- ======================================================================
-       Vanilla JS : セキュリティ認証ゲートウェイ ＆ 成果物ポータル制御
+       Vanilla JS : [L1 Portal] 査閲ゲートウェイ ＆ 成果物ポータル制御
        ====================================================================== -->
   <script>
-    // 目标密码 SHA-256 散列值 (echo -n "SentisPass" | sha256)
-    // 8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de
+    // [L1 Portal] クライアント側 SHA-256 ダイジェスト検証（平文キー非保持）
     const TARGET_AUTH_HASH = "8d448ff45ff5abebd8785fa7dafcf08aa5342f4a46b8ceb338aeadd22cf6e2de";
     const SESSION_STORAGE_KEY = "SENTIS_GATEWAY_AUTH_STATE";
 

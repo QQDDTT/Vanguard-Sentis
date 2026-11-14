@@ -152,7 +152,15 @@
         el.classList.toggle('is-active', k === i);
         el.classList.toggle('is-before', k < i);
         el.classList.toggle('is-after', k > i);
-        if (k === i) { el.removeAttribute('aria-hidden'); } else { el.setAttribute('aria-hidden', 'true'); }
+        if (k === i) {
+          el.removeAttribute('aria-hidden');
+          Array.prototype.forEach.call(el.querySelectorAll('img[data-src]'), function (img) {
+            img.src = img.getAttribute('data-src');
+            img.removeAttribute('data-src');
+          });
+        } else {
+          el.setAttribute('aria-hidden', 'true');
+        }
       });
       var inner = slideEls[i].querySelector('.sd-slide-inner');
       if (inner) inner.scrollTop = 0;

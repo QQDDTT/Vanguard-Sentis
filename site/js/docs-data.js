@@ -29,6 +29,9 @@ const documentStore = {
           </div>
         </div>
 
+        <blockquote>
+          <strong>【v2.0 範囲整合】</strong>本書は買売仲介を中心に記述した初期設計に、v2.0 の整合注記を加えたものです。システム範囲・ロール・業務番号の<strong>正本は DEL-08（要件定義書 v2.0：7サブシステム／7ロール／288項目）</strong>とし、買売＋賃貸＋受託管理＋経理税務＋人事総務＋システム管理を対象とします。本書と DEL-08 に差異がある場合は DEL-08 が優先します。全業務フローは DEL-08 第九章のフロー図を参照してください。
+        </blockquote>
         <h2>1. 商業背景と株式会社センティス（SENTIS）のポジショニング</h2>
         <p>株式会社 SENTIS は令和8年（2026年）5月に設立された、日本国内優良不動産売買仲介（実需・投資・住宅ローン実務）を主軸とし、海外投資家向け越境コンサルティングにも対応する精鋭不動産プロフェッショナルファームです。</p>
         <ul>
@@ -105,6 +108,9 @@ const documentStore = {
           </div>
         </div>
 
+        <blockquote>
+          <strong>【v2.0 範囲整合】</strong>本書は買売仲介を中心に記述した初期設計に、v2.0 の整合注記を加えたものです。システム範囲・ロール・業務番号の<strong>正本は DEL-08（要件定義書 v2.0：7サブシステム／7ロール／288項目）</strong>とし、買売＋賃貸＋受託管理＋経理税務＋人事総務＋システム管理を対象とします。本書と DEL-08 に差異がある場合は DEL-08 が優先します。全業務フローは DEL-08 第九章のフロー図を参照してください。
+        </blockquote>
         <h2>1. 全体7段階エンドツーエンド実務フロー (E2E Transaction Lifecycle)</h2>
         <p>国内不動産売買仲介（実需・投資用）を主軸とし、宅地建物取引業法第35条・37条及び金融機関・司法書士実務に即した手戻りゼロの全7段階SOP：</p>
         <ul>
@@ -223,7 +229,7 @@ const documentStore = {
     code: "DEL-05",
     category: "ARCHITECTURE / DOC",
     title: "03. 次世代システム要件定義及びアーキテクチャ設計書",
-    subtitle: "5大基幹モジュール・動的Checklist判定エンジン・システム境界マトリクス及び技術基盤",
+    subtitle: "7サブシステム・動的Checklist判定エンジン・システム境界マトリクス及び技術基盤",
     badgeClass: "badge-doc",
     content: `
       <div class="doc-content">
@@ -231,7 +237,7 @@ const documentStore = {
           <div class="doc-badge-pill">DEL-05 ｜ アーキテクチャ</div>
           <h1>03. 次世代システム要件定義及びアーキテクチャ設計書</h1>
           <p class="doc-lead-desc">
-            Sentis Realty Core の5大基幹モジュール定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、及びシステム管轄境界の設計仕様。
+            Sentis Realty Core の7サブシステム（v2.0）定義、物件・売主・買主属性に応じた動的スマートChecklist判定エンジン、及びシステム管轄境界の設計仕様。
           </p>
           <div class="doc-meta-table">
             <div><strong>システム呼称：</strong>Sentis Realty Core</div>
@@ -286,14 +292,18 @@ const documentStore = {
           </tbody>
         </table>
 
-        <h2>2. 主要5大コアモジュール仕様</h2>
+        <h2>2. 主要コアモジュール仕様（v2.0：7サブシステムへ拡張）</h2>
+        <p>範囲の正本は DEL-08（7サブシステム／288項目）です。以下は旧版の売買中心モジュールに、賃貸・経理・人事・管理系を加えた v2.0 の全体像です。</p>
         <ul>
-          <li><strong>商談・反響受付台帳 (Consult Hub)：</strong>ポータル・小紅書リードの即時登録、買主属性（国内ローン/海外全額）ルーティング。</li>
-          <li><strong>物件台帳・登記原簿 (Property Ledger)：</strong>法務局ATBB登記情報連携、持分・私道負担・建蔽率・容積率管理。</li>
-          <li><strong>売買契約・重説審査 (Contract & Legal)：</strong>第35条重要事項説明書ドラフト、ハザードマップ水防法条項検証、専任宅建士押印管理。</li>
-          <li><strong>住宅ローン金融連携 (Mortgage Monitor)：</strong>事前/本審査進捗ステータス追跡、融資利用特約期日（D-Day）アラート。</li>
-          <li><strong>残金決済・引渡清算 (Settlement Workbench)：</strong>三方清算計算書作成、領収証受領書式及び法定帳票照合。</li>
+          <li><strong>S1 経営決裁・店長督促 (Executive Console)：</strong>超権限決裁（01）、反響配分・未返信督促・歩合配分（02）。</li>
+          <li><strong>S2 総合営業ワークベンチ (Consult Hub / Sales CRM)：</strong>反響受付・内見（03）、買売（04）・賃貸（05）、掲載・REINS（09）、海外顧客（19）、外部専門家（20）、02-4/7 担当自査、02-9 車両予約、03-17 定期あいさつ。</li>
+          <li><strong>S3 宅建士専門確認・契約書作成 (Contract &amp; Legal)：</strong>07-1〜13、08-1〜5。第35条重説ドラフト、ハザード水防法条項検証、記名押印管理。</li>
+          <li><strong>S4 賃貸受託管理・修繕 (Property Management Hub)：</strong>10 賃貸管理、11 修繕手配、13 オーナー月次精算・預り金。</li>
+          <li><strong>S5 経理・歩合・税務 (Accounting &amp; Tax Center)：</strong>12 収入経費・歩合、14 税理士窓口・インボイス・源泉徴収、電子帳簿保存法対応。</li>
+          <li><strong>S6 人事・総務 (HR &amp; General Affairs Hub)：</strong>15 人事労務、16 総務・公印・鍵・車両台帳。</li>
+          <li><strong>S7 システム管理・監査 (System Admin &amp; Security)：</strong>18 アカウント・権限・バックアップ・監査ログ。</li>
         </ul>
+        <p>なお、06 物件仕入れ（「現在なし」）と 17 コンプライアンス専任（「いらない」）はシステム範囲外です。</p>
 
         <h2>3. 動的スマートChecklist判定ルール</h2>
         <table>
@@ -334,7 +344,7 @@ const documentStore = {
         </table>
 
         <h2>4. 核心データモデル設計 (Entity-Relationship Data Model)</h2>
-        <p>不動産取引ライフサイクル及び宅建業法第49条法定帳簿の追溯要件に基づき、7大コアエンティティを設計：</p>
+        <p>不動産取引ライフサイクル及び宅建業法第49条法定帳簿の追溯要件に基づき、7大コアエンティティを設計（v2.0 では賃貸管理・精算・車両予約・外部専門家・定期あいさつ等を加えた<strong>10エンティティ</strong>へ拡張。正本は DEL-08 第六章）：</p>
         <table>
           <thead>
             <tr>
@@ -390,76 +400,42 @@ const documentStore = {
           </tbody>
         </table>
 
-        <h2>5. RBAC 4級ロール権限マトリクス (Role-Based Access Control)</h2>
+        <h2>5. RBAC 7ロール権限マトリクス (Role-Based Access Control · v2.0)</h2>
+        <p>旧版の「4級ロール（R1 専任宅建士／R2 仲介営業／R3 外部司法書士／R4 内部監査役）」は<strong>廃止</strong>しました。クライアント赤字（DEL-08）に基づき、20 モジュールを <strong>R01〜R07 の 7 ロール</strong>へ収斂し、一人多役の兼任（Multi-Role Binding）を前提とします。外部司法書士・税理士等はシステムロールではなく、案件に紐づく<strong>外部専門家タスク（20-1〜7）</strong>として限定リンクで扱います。「内部監査役／コンプライアンス専任」は 17 の削除（「いらない」）に伴い設けず、監査は R07 の監査ログ（18-11〜13）で担保します。</p>
         <table>
           <thead>
             <tr>
-              <th>業務機能モジュール / 台帳権限</th>
-              <th>R1: 専任宅建士</th>
-              <th>R2: 仲介営業担当</th>
-              <th>R3: 外部司法書士</th>
-              <th>R4: 内部監査役</th>
+              <th>業務機能 / 原表番号</th>
+              <th>R01 代表</th>
+              <th>R02 店長</th>
+              <th>R03 総合営業</th>
+              <th>R04 宅建士</th>
+              <th>R05 賃貸管理</th>
+              <th>R06 経理税務</th>
+              <th>R07 人事総務・システム</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>顧客反響・案件作成</td>
-              <td>閲覧・監理</td>
-              <td><strong>全権（作成・更新）</strong></td>
-              <td>アクセス権なし</td>
-              <td>閲覧・監査</td>
-            </tr>
-            <tr>
-              <td>第35条重要事項説明書 審査</td>
-              <td><strong>最終承認・記名押印</strong></td>
-              <td>原案作成・情報収集</td>
-              <td>権利・登記部分の閲覧</td>
-              <td>合規点検</td>
-            </tr>
-            <tr>
-              <td>第37条契約書・特約審査</td>
-              <td><strong>最終承認・記名押印</strong></td>
-              <td>起草・特約協議</td>
-              <td>決済・引渡条項の閲覧</td>
-              <td>合規点検</td>
-            </tr>
-            <tr>
-              <td>住宅ローン審査進捗管理</td>
-              <td>期日承認</td>
-              <td>ステータス更新</td>
-              <td>閲覧（抵当権設定用）</td>
-              <td>リスク監視</td>
-            </tr>
-            <tr>
-              <td>三方清算支払明細書</td>
-              <td>最終承認</td>
-              <td>作成・提出</td>
-              <td><strong>登記税・報酬額入力</strong></td>
-              <td>財務精算確認</td>
-            </tr>
-            <tr>
-              <td>残金決済・引渡立会</td>
-              <td>立会確認</td>
-              <td>現場進行・領収証交付</td>
-              <td><strong>登記申請原本受領</strong></td>
-              <td>完了監査</td>
-            </tr>
-            <tr>
-              <td>宅建業法第49条法定帳簿</td>
-              <td><strong>調印・帳簿ロック</strong></td>
-              <td>閲覧のみ</td>
-              <td>アクセス権なし</td>
-              <td><strong>7年保存監査</strong></td>
-            </tr>
-            <tr>
-              <td>犯収法 eKYC / AML監査</td>
-              <td>最終確認</td>
-              <td>証憑収集・提出</td>
-              <td>印鑑証明照合</td>
-              <td><strong>反社・制裁スクリーニング</strong></td>
-            </tr>
+            <tr><td>顧客対応・内見・車両予約 (03 / 02-9)</td><td>閲覧</td><td>配分・督促</td><td><strong>◎ 実行</strong></td><td>閲覧</td><td>－</td><td>－</td><td>－</td></tr>
+            <tr><td>見積・契約書類 担当自査 (02-4 / 02-7)</td><td>－</td><td>閲覧</td><td><strong>◎ 担当自査</strong></td><td>閲覧</td><td>－</td><td>－</td><td>－</td></tr>
+            <tr><td>契約書作成・重説・記名押印 (07 / 08-1〜5)</td><td>閲覧</td><td>閲覧</td><td>日時直約 (02-8)</td><td><strong>◎ 実行・記名押印</strong></td><td>－</td><td>－</td><td>－</td></tr>
+            <tr><td>買売・賃貸仲介 (04 / 05)</td><td>閲覧</td><td>権限内承認</td><td><strong>◎ 実行</strong></td><td>同席・説明</td><td>入居引継 (05-15)</td><td>請求連動</td><td>－</td></tr>
+            <tr><td>顧客住宅ローン支援 (04-9, 10, 14)</td><td>－</td><td>閲覧</td><td><strong>◎ 実行</strong></td><td>閲覧</td><td>－</td><td>－</td><td>－</td></tr>
+            <tr><td>公司融資・借入確認 (01-9, 10)</td><td>○ 最終</td><td>○ 部長確認</td><td>◎ 担当自分確認</td><td>－</td><td>－</td><td>－</td><td>－</td></tr>
+            <tr><td>賃貸管理・修繕・退去精算 (10 / 11)</td><td>閲覧</td><td>閲覧</td><td>引継</td><td>－</td><td><strong>◎ 実行</strong></td><td>支払連動</td><td>－</td></tr>
+            <tr><td>経理・歩合・オーナー精算・税務 (12 / 13 / 14)</td><td>○ 決裁</td><td>分配確認 (02-11)</td><td>催促対応 (12-4)</td><td>－</td><td>精算実務 (13)</td><td><strong>◎ 実行</strong></td><td>－</td></tr>
+            <tr><td>人事・総務・公印・鍵・車両 (15 / 16)</td><td>○ 用印承認 (01-16)</td><td>－</td><td>車両・鍵 利用</td><td>－</td><td>－</td><td>給与連動</td><td><strong>◎ 実行</strong></td></tr>
+            <tr><td>アカウント・権限・監査ログ (18)</td><td>閲覧</td><td>－</td><td>－</td><td>－</td><td>－</td><td>－</td><td><strong>◎ 実行</strong></td></tr>
+            <tr><td>経営決裁・督促 (01 / 02)</td><td><strong>◎ 実行</strong></td><td><strong>◎ 実行</strong></td><td>－</td><td>－</td><td>－</td><td>－</td><td>－</td></tr>
           </tbody>
         </table>
+        <blockquote>
+          <strong>権限分離（SoD）原則：</strong><br>
+          1. 営業担当（R03）は重要事項説明書・契約書の<strong>記名押印を実行できない</strong>（R04 専任宅建士のみ、07-7）。<br>
+          2. 宅建業法第49条法定帳簿の調印ロックは R04 が実施し、ロック後は読み取り専用（システム管理者を含め改変不可）。<br>
+          3. 一人が複数ロールを兼任する場合も、押印・決裁・公印使用（01-16 ⇄ 16-8）は<strong>操作者と承認者を別の人物</strong>に分離して記録する。<br>
+          4. 外部専門家は限定リンクで案件単位・項目単位の閲覧のみ（商業条件・内部リード情報は遮断）。
+        </blockquote>
 
         <h2>6. 技術基盤と稼働アーキテクチャの階層分離規約</h2>
         <div class="doc-code-preview">
@@ -491,7 +467,7 @@ const documentStore = {
     code: "DEL-06",
     category: "ROADMAP / DOC",
     title: "04. 導入展開計画及びプロジェクト推進日程表",
-    subtitle: "8週間4段階展開ロードマップ・受入検査基準・研修規程及び緊急切戻し対策",
+    subtitle: "5段階展開ロードマップ（v2.0 再編）・受入検査基準・研修規程及び緊急切戻し対策",
     badgeClass: "badge-doc",
     content: `
       <div class="doc-content">
@@ -499,17 +475,18 @@ const documentStore = {
           <div class="doc-badge-pill">DEL-06 ｜ ロードマップ</div>
           <h1>04. 導入展開計画及びプロジェクト推進日程表</h1>
           <p class="doc-lead-desc">
-            フェーズ1（基盤仕様確定）からフェーズ4（本番受渡・運用開始）までの8週間マイルストーン展開及び品質保証規程。
+            フェーズ1（基盤仕様確定）からフェーズ5（本稼働・受渡）までの5段階マイルストーン展開及び品質保証規程。
           </p>
           <div class="doc-meta-table">
-            <div><strong>展開期間：</strong>2026年10月 〜 2026年12月（計8週間・予定）</div>
+            <div><strong>展開期間：</strong>2026年10月 〜 2026年12月（P3 進行中／P4〜P5 予定）</div>
             <div><strong>査閲責任者：</strong>株式会社センティス 代表取締役 阿部 翔平</div>
             <div><strong>策定総括：</strong>Vanguard 策定評議会</div>
             <div><strong>状態：</strong>詳細設計査閲段階 (Design Review v2.0)</div>
           </div>
         </div>
 
-        <h2>1. 4段階フェーズ別日程表</h2>
+        <h2>1. 5段階フェーズ別日程表（v2.0 再編）</h2>
+        <p>日付は2026-11-14時点の計画値です。<strong>完了</strong>は実績、<strong>予定</strong>は今後の計画（クライアント協議で確定）。</p>
         <table>
           <thead>
             <tr>
@@ -517,39 +494,51 @@ const documentStore = {
               <th>期間</th>
               <th>主要タスク</th>
               <th>受入成果物</th>
+              <th>状態</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>P1: 基盤仕様確定</strong></td>
-              <td>Week 1〜2</td>
-              <td>創業計画書照合、SOPフロー文書化、VIロゴ全規格作成、事前審査プロセス確立</td>
-              <td>要件定義書 4篇、ブランドロゴキット (DEL-03〜07)</td>
+              <td>10/04〜10/18</td>
+              <td>創業計画書照合、売買SOP文書化、VIロゴ全規格、初版プロトタイプ</td>
+              <td>DEL-03〜07 初版</td>
+              <td>完了</td>
             </tr>
             <tr>
-              <td><strong>P2: プロトタイプ構築</strong></td>
-              <td>Week 3〜4</td>
-              <td>6大台帳画面様板設計、AI補佐官スライドドロワー実装、朱肉押印UI開発</td>
-              <td>統合執務画面プロトタイプ (DEL-01, DEL-02)</td>
+              <td><strong>P2: 赤字反映・v2.0 再構築</strong></td>
+              <td>10/19〜11/03</td>
+              <td>顧客手書き赤字（全20頁・288項目）の反映、20モジュール→7ロール収斂、4トポロジー×3+1色彩プロトタイプ</td>
+              <td>DEL-08 要件定義書、DEL-01 プロトタイプ v2.0</td>
+              <td>完了</td>
             </tr>
             <tr>
-              <td><strong>P3: 内部試運用</strong></td>
-              <td>Week 5〜6</td>
-              <td>模擬案件（板橋区物件C等）による実務ウォークスルーテスト、操作性評価</td>
-              <td>受入テスト検収書、修正パッチ</td>
+              <td><strong>P3: 設計査閲・整合化</strong></td>
+              <td>11/04〜11/20</td>
+              <td>全文書の v2.0 整合（RBAC・範囲・工程）、全業務フロー図（9図）、スライド査閲形式、監査指摘の是正</td>
+              <td>DEL-03〜08 整合版、第九章フロー図</td>
+              <td>進行中</td>
             </tr>
             <tr>
-              <td><strong>P4: 本稼働・受渡</strong></td>
-              <td>Week 7〜8</td>
-              <td>GitHub Pages本番ドメイン運用、業務マニュアル整備、運用引き継ぎ</td>
-              <td>成果物総覧ポータル正式受渡・運用開始</td>
+              <td><strong>P4: 7サブシステム別 検収・内部試運用</strong></td>
+              <td>11/21〜12/05（予定）</td>
+              <td>S1 経営・店長／S2 総合営業／S3 宅建士／S4 賃貸管理／S5 経理税務／S6 人事総務／S7 システム管理 を順次ウォークスルー</td>
+              <td>サブシステム別受入テスト検収書</td>
+              <td>予定</td>
+            </tr>
+            <tr>
+              <td><strong>P5: 本稼働・受渡</strong></td>
+              <td>12/06〜12/20（予定）</td>
+              <td>本番ドメイン運用、業務マニュアル整備、運用引き継ぎ</td>
+              <td>成果物総覧ポータル正式受渡</td>
+              <td>予定</td>
             </tr>
           </tbody>
         </table>
 
         <h2>2. 品質保証と切戻し（ロールバック）規程</h2>
-        <p>本システムは完全静的ファイル（HTML5 / Vanilla CSS / Vanilla JS）で構成されているため、Gitリビジョン管理により任意のコミット時点へ秒単位でロールバック可能です。外部依存データベースの破損リスクは原理的にゼロとなっています。</p>
-        
+        <p>本システムは完全静的ファイル（HTML5 / Vanilla CSS / Vanilla JS）で構成されているため、Gitリビジョン管理により任意のコミット時点へ秒単位でロールバック可能です。受入前には、断リンク・タグ整合・空白スライド・触控熱区（44×44px以上）・横方向溢出ゼロの自動／半自動検証（<code>tools/verify-site.ps1</code>）を実施します。</p>
+
         <h2>3. 検討中・将来課題協議事項 (Pending Discussions)</h2>
         <ul>
           <li><strong>海外送金AML審査期間：</strong>受取金融機関の海外資金着金チェック猶予期間（通常2〜4週間）の標準設定値確定。</li>
@@ -1312,7 +1301,7 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
         <h2>八、 精工雕琢罗盘（Horology Guilloché）× 4大画面拓扑 × 3+1主体色彩落地导览</h2>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:18px; margin:20px 0;">
           <div style="border:1px solid #cbd5e1; border-radius:8px; overflow:hidden; background:#fff;">
-            <img src="./assets/office/v2_topo_a_navy.jpg" alt="Topology A Navy" style="width:100%; height:220px; object-fit:cover; display:block;" />
+            <img data-src="./assets/office/v2_topo_a_navy.jpg" loading="lazy" decoding="async" width="800" height="440" alt="Topology A Navy" style="width:100%; height:220px; object-fit:cover; display:block;" />
             <div style="padding:12px 14px;">
               <strong style="font-size:13.5px; color:#090d16;">【拓扑 A × 色彩 A：皇室深海藍金】全社经营罗盘指挥舱</strong>
               <p style="font-size:12px; color:#475569; margin:4px 0 8px 0;">中央玑镂罗盘与 4 大业务翼舱，全览 288 项业务与 7 大角色进度。</p>
@@ -1320,7 +1309,7 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
             </div>
           </div>
           <div style="border:1px solid #cbd5e1; border-radius:8px; overflow:hidden; background:#fff;">
-            <img src="./assets/office/v2_topo_d_washi.jpg" alt="Topology D Washi" style="width:100%; height:220px; object-fit:cover; display:block;" />
+            <img data-src="./assets/office/v2_topo_d_washi.jpg" loading="lazy" decoding="async" width="800" height="440" alt="Topology D Washi" style="width:100%; height:220px; object-fit:cover; display:block;" />
             <div style="padding:12px 14px;">
               <strong style="font-size:13.5px; color:#090d16;">【拓扑 D × 色彩 B：越前白金和紙】左 70% 总台账 + 右 30% 四段抽屉</strong>
               <p style="font-size:12px; color:#475569; margin:4px 0 8px 0;">日间亮色和纸护眼模式，主台账 + 宅建士重说/双轨融资/租赁受托/海外客户抽屉。</p>
@@ -1328,7 +1317,7 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
             </div>
           </div>
           <div style="border:1px solid #cbd5e1; border-radius:8px; overflow:hidden; background:#fff;">
-            <img src="./assets/office/v2_topo_c_walnut.jpg" alt="Topology C Walnut" style="width:100%; height:220px; object-fit:cover; display:block;" />
+            <img data-src="./assets/office/v2_topo_c_walnut.jpg" loading="lazy" decoding="async" width="800" height="440" alt="Topology C Walnut" style="width:100%; height:220px; object-fit:cover; display:block;" />
             <div style="padding:12px 14px;">
               <strong style="font-size:13.5px; color:#090d16;">【拓扑 C × 色彩 C：京都焙茶胡桃】看房车辆预约时间表 &amp; 重说直连日程轴</strong>
               <p style="font-size:12px; color:#475569; margin:4px 0 8px 0;">专为客户红笔批注「車両時間表作って、みんな予約制で」与「直接宅建確認」打造。</p>
@@ -1336,7 +1325,7 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
             </div>
           </div>
           <div style="border:1px solid #cbd5e1; border-radius:8px; overflow:hidden; background:#fff;">
-            <img src="./assets/office/v2_topo_b_tri.jpg" alt="Topology B Tri-Column" style="width:100%; height:220px; object-fit:cover; display:block;" />
+            <img data-src="./assets/office/v2_topo_b_tri.jpg" loading="lazy" decoding="async" width="800" height="440" alt="Topology B Tri-Column" style="width:100%; height:220px; object-fit:cover; display:block;" />
             <div style="padding:12px 14px;">
               <strong style="font-size:13.5px; color:#090d16;">【拓扑 B × 三栏精密钟表工作台】担当自查 Checklist &amp; 宅建士契约书作成</strong>
               <p style="font-size:12px; color:#475569; margin:4px 0 8px 0;">左栏分类索引、中栏担当自查与调查核对、右栏 07-13 宅建士契约书与重说作成对照。</p>
@@ -1351,8 +1340,8 @@ STAFF_USER (18-1 员工账号: 兼任角色组 R01~R07, 在职/休假/离职一�
         <h3>9.1 全社业务总览流程（咨询 → 签约交割 → 管理精算 → 税务）</h3>
         <p>以 7 大角色泳道呈现从客户咨询到售后定期问候、管理精算、月结税务的主干链路；虚线为支撑或旁路关系。</p>
         <div class="flowchart" data-flow="overview"></div>
-        <h3>9.2 买卖仲介业务流程（04 / 02-4,7,8,9,13 / 01-9,10）</h3>
-        <p>③与④同一营业担当贯通到底；02-4/7 担当自查、02-8 直约宅建士重说、02-9 车辆预约、02-13 决算延期担当自行调整、01-9/10 融资担当/部长双轨确认均已落入流程。</p>
+        <h3>9.2 买卖仲介业务流程（04 / 02-4,7,8,9,13）</h3>
+        <p>③与④同一营业担当贯通到底；02-4/7 担当自查、02-8 直约宅建士重说、02-9 车辆预约、02-13 决算延期担当自行调整、04-9/10/14 客户住宅贷款审查与特约监控均已落入流程（注：01-9/10 公司银行借入双轨确认归属 9.8 经营决裁流）。</p>
         <div class="flowchart" data-flow="sale"></div>
         <h3>9.3 租赁仲介业务流程（05 / 02-8 / 02-9）</h3>
         <p>租赁与买卖由同一营业担当负责；重说由营业直接与宅建士约定（02-8）；交钥匙后移交租赁管理（R05）并进入 10/11/13 受托管理。05-16 申请取消可在 05-3~05-12 任一环节发生，需恢复房源募集状态。</p>
